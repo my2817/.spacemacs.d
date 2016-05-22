@@ -114,6 +114,12 @@ Each entry is either:
           :submode graphviz-dot-mode
           :front "\\/\\*-- \\(dot\\)"
           :back "\\(!dot\\) --\\*\\/")))
+      (mmm-add-mode-ext-class 'html-mode nil 'html-java)
+      (mmm-add-classes
+       '((html-java
+          :submode javascript-mode
+          :front "<script type=\"text/javascript\">"
+          :back "</script>")))
       )
     ))
 
