@@ -37,6 +37,7 @@
     mmm-mode
     (highlight-symbol :location local)
     (tcl-dc-mode :location local)
+    (htmlize :location local)
     )
 
   "The list of Lisp packages required by the my-config layer.
