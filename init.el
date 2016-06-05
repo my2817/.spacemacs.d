@@ -10,13 +10,16 @@
 ;;; License: GPLv3
 
 ;; Without this comment emacs25 adds (package-initialize) here
-(require 'package)
-(add-to-list 'package-archives
-          '("popkit" . "http://elpa.popkit.org/packages/"))
- (package-initialize)
+;;(require 'package)
+;;(add-to-list 'package-archives
+;;             '("popkit" . "http://elpa.popkit.org/packages/"))
+;;(add-to-list 'package-archives
+;;             '("org" . "http://orgmode.org/elpa/"))
+
+;;(package-initialize)
 
 (setq gc-cons-threshold 100000000)
-(defconst spacemacs-version         "0.105.14" "Spacemacs version.")
+(defconst spacemacs-version         "0.105.20" "Spacemacs version.")
 (defconst spacemacs-emacs-min-version   "24.3" "Minimal version of Emacs.")
 
 (if (not (version<= spacemacs-emacs-min-version emacs-version))
