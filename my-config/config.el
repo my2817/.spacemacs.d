@@ -10,7 +10,7 @@
 (add-to-list 'auto-mode-alist '("\\.log\\'" . compilation-mode))
 (global-set-key (kbd "C-<SPC>") 'avy-goto-char)
 (add-hook 'graphviz-dot-mode-hook 'smartparens-mode)
-
+(blink-cursor-mode)
 (mapc #'wttr/prepend-to-exec-path
       (reverse
        '("D:/Perl/bin"

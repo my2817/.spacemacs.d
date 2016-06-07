@@ -32,6 +32,7 @@
 (defconst my-config-packages
   '(
     graphviz-dot-mode
+    blink-cursor-mode
     (my-verilog :location local)
     ;;(mmm-mode :location local)
     (mmm-mode :location local)
