@@ -34,7 +34,7 @@
     graphviz-dot-mode
     (my-verilog :location local)
     ;;(mmm-mode :location local)
-    mmm-mode
+    (mmm-mode :location local)
     (highlight-symbol :location local)
     (tcl-dc-mode :location local)
     (htmlize :location local)
