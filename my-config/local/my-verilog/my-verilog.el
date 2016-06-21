@@ -378,27 +378,31 @@
 
 (setq verilog-date-scientific-format 1)
 ;;; compilation-error-regexp-alist
-(defvar my-verilog-compilation-error-regexp-alist
+(setq my-verilog-compilation-error-regexp-alist
    '(
   ;;   ;;(name "regexp" file line column type[nil/2:error 1:warning 0:info   ])
-  ;;   (verilog-IES-error
-  ;;    ".*\\*[E],[0-9A-Z]+\\(\[[0-9A-Z_,]+\]\\)? (\\([^ \t,]+\\),\\([0-9]+\\)|\\([0-9]+\\)" 2 3 4 2)
-     (verilog-IES-warn
-      ".*\\*[WE],[0-9A-Z]+\\(\[[0-9A-Z_,]+\]\\)? (\\([^ \t,]+\\),\\([0-9]+\\)|\\([0-9]+\\)" 2 3 4 1)
+     (verilog-IES-error
+      ".*\\*[E],[0-9A-Z]+\\(\[[0-9A-Z_,]+\]\\)? (\\([^ \t,]+\\),\\([0-9]+\\)|\\([0-9]+\\)" 2 3 4 2)
+  ;;   (verilog-IES-warn
+  ;;   ".*\\*[WE],[0-9A-Z]+\\(\[[0-9A-Z_,]+\]\\)? (\\([^ \t,]+\\),\\([0-9]+\\)|\\([0-9]+\\)" 2 3 4 1)
   ;;   (verilog-ncvlog-warn
   ;;    ".*\\*[W],[0-9A-Z]+ (\\([^ \t,]+\\),\\([0-9]+\\)|\\([0-9]+\\)" 1 2 3 1)
-  ;;   (verilog-IES-assert
-  ;;    ".*\\*[E],[0-9A-Z]+ (\\([^ ,]+\\),\\([0-9]+\\)):" 1 2 nil 2)
+     (verilog-IES-assert
+      "ncsim: *\\*[EW],[0-9A-Z]+ (\\([^ ,]+\\),\\([0-9]+\\)):" 1 2 nil 2)
   ;;   (verilog-violation
   ;;    "File: \\(.*\\), line = \\([0-9]+\\)" 1 2 nil 1)
      (verilog-line-of-file
       "line \\([0-9]+\\) of \\([^ \t\n,]+.[a-zA-Z0-9]\\)" 2 1)
-     (verilog-ncsim
-      "\\*[EW],[A-Za-z]+ (\\([^ \t\n,]+\\),\\([0-9]+\\))" 1 2)
-     (verilog-ncvlog
-      "\\*[EW],[A-Za-z]+ (\\([^ \t\n,]+\\),\\([0-9]+\\)\\([0-9]+\\))" 1 2 3)
+  ;;   (verilog-ncsim
+  ;;    "\\*[EW],[A-Za-z]+ (\\([^ \t\n,]+\\),\\([0-9]+\\))" 1 2)
      (uvm_info
-      "UVM_INFO \\([^ \t\n]+\\)(\\([0-9]+\\))" 1 2)
+      "UVM_INFO \\([^ \t\n]+\\)(\\([0-9]+\\))" 1 2 nil 0)
+     (uvm_fatal
+      "UVM_FATAL \\([^ \t\n]+\\)(\\([0-9]+\\))" 1 2 nil 2)
+     (uvm_warn
+      "UVM_WARNING \\([^ \t\n]+\\)(\\([0-9]+\\))" 1 2 nil 1)
+     (uvm_error
+      "UVM_ERROR \\([^ \t\n]+\\)(\\([0-9]+\\))" 1 2 nil 2)
      (verilog-nc-file
       "[Ff]ile: \\([^ \t\n,]+\\)" 1 nil nil 0)
      (verilog-nc-file-line
@@ -407,9 +411,9 @@
       "ncelab: (\\([^ \t\n,]+\\),\\([0-9]+\\)):" 1 2 nil 0)
      (verilog-ncsim-file
       "\\([^ \t\n,]+\\):\\([0-7]+\\)" 1 2 nil 0)
-     )
-  "List of regexps for Verilog compilers.
-See `compilation-error-regexp-alist' for the formatting.  For Emacs 22+.")
+    ) )
+;;  "List of regexps for Verilog compilers.
+;;See `compilation-error-regexp-alist' for the formatting.  For Emacs 22+.")
 
 ;; Following code only gets called from compilation-mode-hook on Emacs to add error handling.
 (defun my-verilog-error-regexp-add-emacs ()
@@ -450,15 +454,34 @@ find the errors."
   > _ \n
   > (- verilog-indent-level-behavioral) "endmodule" (progn (electric-verilog-terminate-line) nil))
 
+(defun fill-column-with-x(max-column x)
+  (interactive)
+  (verilog-indent-line-relative)
+  (end-of-line)
+  (while (< (current-column) max-column)
+    (insert x)))
 
-(define-skeleton verilog-sk-comment
+(defun verilog-sk-comment()
   "Inserts three comment lines, making a display comment."
-  ()
-  > "/****************************************************************************\n"
-  > "* \n"
-  > "* " _ \n
-  > "* \n"
-  > "***************************************************************************/")
+  (interactive)
+  (insert "/*")(verilog-indent-line-relative)
+  (fill-column-with-x 80 "*")(newline-and-indent)
+  (insert "*")  (newline-and-indent)
+  (insert "*") (setq char-pos(point)) (newline-and-indent)
+  (insert "*")  (newline-and-indent)
+  (fill-column-with-x 79 "*") (insert "/")
+  (goto-char (- char-pos 1))
+  (end-of-line)
+  )
+
+;; (define-skeleton verilog-sk-comment
+;;   "Inserts three comment lines, making a display comment."
+;;   ()
+;;   > "/****************************************************************************\n"
+;;   > "*\n"
+;;   > "* " _ \n
+;;   > "*\n"
+;;   > "***************************************************************************/")
 
 (define-skeleton verilog-sk-nonblock-assign
   "insert \"<= #1\""

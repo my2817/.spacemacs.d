@@ -33,12 +33,13 @@
   '(
     graphviz-dot-mode
     blink-cursor-mode
+    psvn
     (my-verilog :location local)
     ;;(mmm-mode :location local)
     (mmm-mode :location local)
     (highlight-symbol :location local)
     (tcl-dc-mode :location local)
-    (htmlize :location local)
+    htmlize
     )
 
   "The list of Lisp packages required by the my-config layer.
@@ -76,7 +77,18 @@ Each entry is either:
     (progn
       (setq graphviz-dot-preview-extension "jpg")
       )))
+(defun my-config/init-psvn ()
+  "Initialize psvn"
+  (use-package psvn
+    :defer t
+    :init
+    ))
 
+(defun my-config/init-htmlize ()
+  "Initialize htmlize"
+  (use-package htmlize
+    :defer t
+    ))
 (defun my-config/init-my-verilog ()
   "Initialize my package"
   (use-package my-verilog
@@ -94,6 +106,7 @@ Each entry is either:
     :init
     (progn
       (require 'mmm-mode)
+      ;;(autoload 'mmm-mode "mmm-mode" "MMM mode" t)
       (setq mmm-global-mode 'maybe)
       (mmm-add-mode-ext-class 'verilog-mode nil 'verilog-org )
       (mmm-add-classes
@@ -132,6 +145,7 @@ Each entry is either:
     :init
     (progn
       (require 'highlight-symbol)
+      ;;(autoload 'highlight-symbol "highlight-symbol" "Highlight-Func Mode" t)
       (global-set-key [(control f3)] 'highlight-symbol-at-point)
       )
     ))
