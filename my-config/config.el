@@ -11,6 +11,7 @@
 (global-set-key (kbd "C-<SPC>") 'avy-goto-char)
 (add-hook 'graphviz-dot-mode-hook 'smartparens-mode)
 (blink-cursor-mode)
+(spacemacs/set-leader-keys "hh" 'highlight-symbol-at-point)
 (mapc #'wttr/prepend-to-exec-path
       (reverse
        '("D:/Perl/bin"
