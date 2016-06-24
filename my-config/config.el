@@ -10,6 +10,7 @@
 (add-to-list 'auto-mode-alist '("\\.log\\'" . compilation-mode))
 (add-hook 'graphviz-dot-mode-hook 'smartparens-mode)
 (blink-cursor-mode)
+(spacemacs/set-leader-keys "hh" 'highlight-symbol-at-point)
 (mapc #'wttr/prepend-to-exec-path
       (reverse
        '("D:/Perl/bin"
