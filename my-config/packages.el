@@ -146,7 +146,6 @@ Each entry is either:
     (progn
       (require 'highlight-symbol)
       ;;(autoload 'highlight-symbol "highlight-symbol" "Highlight-Func Mode" t)
-      (global-set-key [(control f3)] 'highlight-symbol-at-point)
       )
     ))
 
