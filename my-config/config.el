@@ -32,7 +32,7 @@
 (add-hook 'c++-mode-hook 'electric-spacing-mode)
 (add-hook 'perl-mode-hook 'electric-spacing-mode)
 (add-hook 'verilog-mode-hook 'electric-spacing-mode)
-(add-hook 'c-mode-hook 'electric-spacing-mode2)
+(add-hook 'c-mode-hook 'electric-spacing-mode)
 
 (mapc #'wttr/prepend-to-exec-path
       (reverse
@@ -42,5 +42,3 @@
          "D:/EDA/modeltech64_10.2c/win64"
          "D:/EDA/Git-2.6.0-32-bit/PortableGit/bin"
          )))
-
-
