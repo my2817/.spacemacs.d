@@ -40,7 +40,8 @@
     (highlight-symbol :location local)
     (tcl-dc-mode :location local)
     htmlize
-    )
+    electric-spacing
+	)
 
   "The list of Lisp packages required by the my-config layer.
 
@@ -52,7 +53,7 @@ Each entry is either:
     name of the package to be installed or loaded, and KEYS are
     any number of keyword-value-pairs.
 
-    The following keys are accepted: 
+    The following keys are accepted:
 
     - :excluded (t or nil): Prevent the package from being loaded
       if value is non-nil
@@ -160,6 +161,11 @@ Each entry is either:
       (add-to-list 'auto-mode-alist '("\\.sdc\\'" . tcl-dc-mode))
       )
     ))
-
+(defun my-config/init-electric-spacing()
+  "Initialize my package"
+  (use-package electric-spacing
+    :defer t
+    :init
+    ))
 
 ;;; packages.el ends here

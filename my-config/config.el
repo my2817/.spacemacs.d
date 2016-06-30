@@ -10,6 +10,10 @@
   "Hook run after graphviz-dot-mode is loaded"
   :type 'hook
   :group 'graphviz-dot-mode)
+(with-eval-after-load 'auto-complete
+  (progn
+    (add-to-list 'ac-sources 'ac-source-filename)
+    (setq-default ac-disable-faces nil)))
 
 ;;;
 ;;; mode on/off
@@ -33,6 +37,7 @@
 (add-hook 'perl-mode-hook 'electric-spacing-mode)
 (add-hook 'verilog-mode-hook 'electric-spacing-mode)
 (add-hook 'c-mode-hook 'electric-spacing-mode)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 (mapc #'wttr/prepend-to-exec-path
       (reverse
