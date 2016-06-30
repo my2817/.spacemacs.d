@@ -15,6 +15,37 @@
     (add-to-list 'ac-sources 'ac-source-filename)
     (setq-default ac-disable-faces nil)))
 
+(with-eval-after-load 'mmm-mode
+  (progn
+    (setq mmm-global-mode 'maybe)
+    (mmm-add-mode-ext-class 'verilog-mode nil 'verilog-org )
+    (mmm-add-classes
+     '((verilog-org
+        :submode org-mode
+        :front "\\/\\*-- \\(org\\)"
+        :back "\\(!org\\) --\\*\\/")))
+
+
+    (mmm-add-mode-ext-class 'verilog-mode nil 'verilog-lisp )
+    (mmm-add-classes
+     '((verilog-lisp
+        :submode lisp-interaction-mode
+        :front "\\/\\*-- \\(lisp\\)"
+        :back "\\(!lisp\\) --\\*\\/")))
+
+    (mmm-add-mode-ext-class 'verilog-mode nil 'verilog-dot )
+    (mmm-add-classes
+     '((verilog-dot
+        :submode graphviz-dot-mode
+        :front "\\/\\*-- \\(dot\\)"
+        :back "\\(!dot\\) --\\*\\/")))
+    (mmm-add-mode-ext-class 'html-mode nil 'html-java)
+    (mmm-add-classes
+     '((html-java
+        :submode javascript-mode
+        :front "<script type=\"text/javascript\">"
+        :back "</script>")))))
+
 ;;;
 ;;; mode on/off
 ;;;
@@ -31,11 +62,12 @@
 ;;; Hooks
 ;;;
 (add-hook 'verilog-mode-hook 'global-auto-complete-mode)
+(add-hook 'verilog-mode-hook 'mmm-mode)
+(add-hook 'verilog-mode-hook 'electric-spacing-mode)
 (add-hook 'graphviz-dot-mode-hook 'smartparens-mode)
 (add-hook 'graphviz-dot-mode-hook 'smartparens-mode)
 (add-hook 'c++-mode-hook 'electric-spacing-mode)
 (add-hook 'perl-mode-hook 'electric-spacing-mode)
-(add-hook 'verilog-mode-hook 'electric-spacing-mode)
 (add-hook 'c-mode-hook 'electric-spacing-mode)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 

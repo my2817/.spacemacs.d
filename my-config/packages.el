@@ -104,39 +104,6 @@ Each entry is either:
   "Initialize my package"
   (use-package mmm-mode
     :defer t
-    :init
-    (progn
-      (require 'mmm-mode)
-      ;;(autoload 'mmm-mode "mmm-mode" "MMM mode" t)
-      (setq mmm-global-mode 'maybe)
-      (mmm-add-mode-ext-class 'verilog-mode nil 'verilog-org )
-      (mmm-add-classes
-       '((verilog-org
-          :submode org-mode
-          :front "\\/\\*-- \\(org\\)"
-          :back "\\(!org\\) --\\*\\/")))
-
-
-      (mmm-add-mode-ext-class 'verilog-mode nil 'verilog-lisp )
-      (mmm-add-classes
-       '((verilog-lisp
-          :submode lisp-interaction-mode
-          :front "\\/\\*-- \\(lisp\\)"
-          :back "\\(!lisp\\) --\\*\\/")))
-
-      (mmm-add-mode-ext-class 'verilog-mode nil 'verilog-dot )
-      (mmm-add-classes
-       '((verilog-dot
-          :submode graphviz-dot-mode
-          :front "\\/\\*-- \\(dot\\)"
-          :back "\\(!dot\\) --\\*\\/")))
-      (mmm-add-mode-ext-class 'html-mode nil 'html-java)
-      (mmm-add-classes
-       '((html-java
-          :submode javascript-mode
-          :front "<script type=\"text/javascript\">"
-          :back "</script>")))
-      )
     ))
 
 (defun my-config/init-highlight-symbol ()
