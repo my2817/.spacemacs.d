@@ -781,5 +781,6 @@ be decleared as wire.
 
 ;(my-verilog-insert-reg-bank '30 8 8 '() "4" "6")
 
-
+;;; keybings
+(define-key verilog-template-map (kbd ",") 'verilog-sk-nonblock-assign)
 (provide 'my-verilog)
