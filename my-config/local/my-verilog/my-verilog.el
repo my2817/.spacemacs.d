@@ -3,13 +3,13 @@
 
 ;;; Enhancements to verilog-mode
 
+(require 'verilog-mode)
 (unless (fboundp 'hs-special-modes-alist)
   (defvar hs-special-modes-alist nil))
 (add-hook 'verilog-mode-hook 'hs-minor-mode)
 (add-to-list 'hs-special-modes-alist '(verilog-mode  "\\<begin\\>\\|\\<task\\>\\|\\<function\\>\\|\\<class\\>\\|\\<interface\\>\\|\\<fork\\>\\|("
                                                      "\\<end\\>\\|\\<endtask\\>\\|\\<endfunction\\>\\|\\<endclass\\>\\|\\<endinterface\\>\\|\\<join\\>\\|)"
                                                      nil  verilog-forward-sexp-function))
-(require 'verilog-mode)
 
 ;;; Port copy/paste
 

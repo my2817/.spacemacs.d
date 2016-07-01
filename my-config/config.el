@@ -10,14 +10,10 @@
   "Hook run after graphviz-dot-mode is loaded"
   :type 'hook
   :group 'graphviz-dot-mode)
-(with-eval-after-load 'auto-complete
-  (progn
-    (add-to-list 'ac-sources 'ac-source-filename)
-    (setq-default ac-disable-faces nil)))
 
 (with-eval-after-load 'mmm-mode
   (progn
-    (setq mmm-global-mode 'maybe)
+
     (mmm-add-mode-ext-class 'verilog-mode nil 'verilog-org )
     (mmm-add-classes
      '((verilog-org
@@ -62,7 +58,7 @@
 ;;; Hooks
 ;;;
 (add-hook 'verilog-mode-hook 'global-auto-complete-mode)
-(add-hook 'verilog-mode-hook 'mmm-mode)
+;;(add-hook 'verilog-mode-hook 'mmm-mode)
 (add-hook 'verilog-mode-hook 'electric-spacing-mode)
 (add-hook 'graphviz-dot-mode-hook 'smartparens-mode)
 (add-hook 'graphviz-dot-mode-hook 'smartparens-mode)

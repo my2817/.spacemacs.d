@@ -31,6 +31,7 @@
 
 (defconst my-config-packages
   '(
+    auto-complete
     graphviz-dot-mode
     blink-cursor-mode
     psvn
@@ -70,6 +71,18 @@ Each entry is either:
       - A list beginning with the symbol `recipe' is a melpa
         recipe.  See: https://github.com/milkypostman/melpa#recipe-format")
 
+(defun my-config/post-init-auto-complete()
+  "initial my-config/auto-complete"
+  (use-package auto-complete
+    :defer t
+    :config
+    (progn
+      (global-auto-complete-mode 1)
+      (add-to-list 'ac-sources 'ac-source-filename)
+      (add-to-list 'ac-sources 'ac-source-abbrev)
+      ;;(add-to-list 'ac-dictionary-directories (expand-file-name "local/ac-dict/" user-emacs-directory))
+      (setq-default ac-disable-faces nil))))
+
 (defun my-config/init-graphviz-dot-mode ()
   "Initialize my package"
   (use-package graphviz-dot-mode
@@ -100,10 +113,15 @@ Each entry is either:
     )
     ))
 
-(defun my-config/init-mmm-mode ()
+(defun my-config/post-init-mmm-mode ()
   "Initialize my package"
   (use-package mmm-mode
     :defer t
+    :config
+    (progn
+      ;;(autoload 'mmm-mode "mmm-mode" "Multiple Major Modes" t)
+      ;;(autoload 'mmm-parse-buffer "mmm-mode" "Automatic MMM-ification" t)
+      (setq mmm-global-mode 'maybe))
     ))
 
 (defun my-config/init-highlight-symbol ()
