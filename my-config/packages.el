@@ -78,6 +78,10 @@ Each entry is either:
     :config
     (progn
       (global-auto-complete-mode 1)
+      (add-to-list 'ac-modes 'graphviz-dot-mode)
+      (add-to-list 'ac-dictionary-directories (concat
+                                               (or (file-name-directory #$) (car load-path))
+                                               "local/ac-dict/"))
       (add-to-list 'ac-sources 'ac-source-filename)
       (add-to-list 'ac-sources 'ac-source-abbrev)
       ;;(add-to-list 'ac-dictionary-directories (expand-file-name "local/ac-dict/" user-emacs-directory))
