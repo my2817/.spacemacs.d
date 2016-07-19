@@ -79,6 +79,7 @@ Each entry is either:
     (progn
       (global-auto-complete-mode 1)
       (add-to-list 'ac-modes 'graphviz-dot-mode)
+      (add-to-list 'ac-modes 'makefile-gmake-mode)
       (add-to-list 'ac-dictionary-directories (concat
                                                (or (file-name-directory #$) (car load-path))
                                                "local/ac-dict/"))

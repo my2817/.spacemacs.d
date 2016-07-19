@@ -388,11 +388,11 @@
   ;;   (verilog-ncvlog-warn
   ;;    ".*\\*[W],[0-9A-Z]+ (\\([^ \t,]+\\),\\([0-9]+\\)|\\([0-9]+\\)" 1 2 3 1)
      (verilog-IES-assert
-      "ncsim: *\\*[EW],[0-9A-Z]+ (\\([^ ,]+\\),\\([0-9]+\\)):" 1 2 nil 2)
+      ".*\\*[EW],[0-9A-Z]+ (\\([^ ,]+\\),\\([0-9]+\\)|?\\([0-9]+\\)?):" 1 2 3 2)
   ;;   (verilog-violation
   ;;    "File: \\(.*\\), line = \\([0-9]+\\)" 1 2 nil 1)
      (verilog-line-of-file
-      "line \\([0-9]+\\) of \\([^ \t\n,]+.[a-zA-Z0-9]\\)" 2 1)
+      "line \\([0-9]+\\) of \\([^ \t\n,]+.[a-zA-Z0-9]\\)" 2 1 nil 0)
   ;;   (verilog-ncsim
   ;;    "\\*[EW],[A-Za-z]+ (\\([^ \t\n,]+\\),\\([0-9]+\\))" 1 2)
      (uvm_info
@@ -409,6 +409,8 @@
       "[Ff]ile: \\([^ \t\n,]+\\) line \\([0-9]+\\)" 1 2 nil 0)
      (verilog-ncelab-infor
       "ncelab: (\\([^ \t\n,]+\\),\\([0-9]+\\)):" 1 2 nil 0)
+     (ncelab-sdf-warn
+      "ncelab.*<\\([^ \t\n,]+\\), line \\([0-9]+\\)>" 1 2 nil 1)
      (verilog-ncsim-file
       "\\([^ \t\n,]+\\):\\([0-7]+\\)" 1 2 nil 0)
     ) )
@@ -565,6 +567,18 @@ See also `verilog-sk-header' for an alternative format."
     )))
 (ad-activate 'verilog-header)
 
+(defadvice verilog-star-comment(around my-verilog-star-comment)
+  (interactive)
+  (verilog-indent-line)
+  (insert "/*")
+  (save-excursion
+    (newline)
+    (verilog-indent-line)
+    (insert "*/"))
+  (newline)
+  (verilog-indent-line)
+  (insert "* "))
+(ad-activate 'verilog-star-comment)
 
 (defun verilog-insert-time ()
   "Insert date from the system."
@@ -783,4 +797,32 @@ be decleared as wire.
 
 ;;; keybings
 (define-key verilog-template-map (kbd ",") 'verilog-sk-nonblock-assign)
+(setq verilog-mode-abbrev-table nil)
+(define-abbrev-table 'verilog-mode-abbrev-table ())
+(verilog-define-abbrev verilog-mode-abbrev-table "class"     "" 'verilog-sk-uvm-component)
+(verilog-define-abbrev verilog-mode-abbrev-table "always"    "" 'verilog-sk-always)
+(verilog-define-abbrev verilog-mode-abbrev-table "begin"     nil `verilog-sk-begin)
+(verilog-define-abbrev verilog-mode-abbrev-table "case"      "" `verilog-sk-case)
+(verilog-define-abbrev verilog-mode-abbrev-table "for"       "" `verilog-sk-for)
+(verilog-define-abbrev verilog-mode-abbrev-table "generate"  "" `verilog-sk-generate)
+(verilog-define-abbrev verilog-mode-abbrev-table "initial"   "" `verilog-sk-initial)
+(verilog-define-abbrev verilog-mode-abbrev-table "fork"      "" `verilog-sk-fork)
+(verilog-define-abbrev verilog-mode-abbrev-table "module"    "" `verilog-sk-module)
+(verilog-define-abbrev verilog-mode-abbrev-table "primitive" "" `verilog-sk-primitive)
+(verilog-define-abbrev verilog-mode-abbrev-table "repeat"    "" `verilog-sk-repeat)
+(verilog-define-abbrev verilog-mode-abbrev-table "specify"   "" `verilog-sk-specify)
+(verilog-define-abbrev verilog-mode-abbrev-table "task"      "" `verilog-sk-task)
+(verilog-define-abbrev verilog-mode-abbrev-table "while"     "" `verilog-sk-while)
+(verilog-define-abbrev verilog-mode-abbrev-table "casex"     "" `verilog-sk-casex)
+(verilog-define-abbrev verilog-mode-abbrev-table "casez"     "" `verilog-sk-casez)
+(verilog-define-abbrev verilog-mode-abbrev-table "if"        "" `verilog-sk-if)
+(verilog-define-abbrev verilog-mode-abbrev-table "else if"   "" `verilog-sk-else-if)
+(verilog-define-abbrev verilog-mode-abbrev-table "assign"    "" `verilog-sk-assign)
+(verilog-define-abbrev verilog-mode-abbrev-table "function"  "" `verilog-sk-function)
+(verilog-define-abbrev verilog-mode-abbrev-table "input"     "" `verilog-sk-input)
+(verilog-define-abbrev verilog-mode-abbrev-table "output"    "" `verilog-sk-output)
+(verilog-define-abbrev verilog-mode-abbrev-table "inout"     "" `verilog-sk-inout)
+(verilog-define-abbrev verilog-mode-abbrev-table "wire"      "" `verilog-sk-wire)
+(verilog-define-abbrev verilog-mode-abbrev-table "reg"       "" `verilog-sk-reg)
+
 (provide 'my-verilog)
