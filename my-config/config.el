@@ -66,6 +66,10 @@
 (add-hook 'perl-mode-hook 'electric-spacing-mode)
 (add-hook 'c-mode-hook 'electric-spacing-mode)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+(add-hook 'before-save-hook (lambda ()
+                              (interactive)
+                              (untabify (point-min)
+                                        (point-max))))
 
 (mapc #'wttr/prepend-to-exec-path
       (reverse
