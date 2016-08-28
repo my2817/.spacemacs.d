@@ -70,6 +70,7 @@
                               (interactive)
                               (untabify (point-min)
                                         (point-max))))
+(add-hook 'verilog-mode-hook 'turn-on-ctags-auto-update-mode)
 
 (mapc #'wttr/prepend-to-exec-path
       (reverse

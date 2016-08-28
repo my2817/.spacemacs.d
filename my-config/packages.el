@@ -42,7 +42,9 @@
     (tcl-dc-mode :location local)
     htmlize
     electric-spacing
-	)
+    (ctags :location local)
+    (ctags-update :location local)
+  )
 
   "The list of Lisp packages required by the my-config layer.
 
@@ -157,5 +159,17 @@ Each entry is either:
     :defer t
     :init
     ))
+(defun my-config/init-ctags()
+  (use-package ctags
+    :defer t
+    :init ))
 
+(defun my-config/init-ctags-update()
+  (use-package ctags-update
+    :defer t
+    :config
+    (progn
+      (autoload 'turn-on-ctags-auto-update-mode "ctags-update" "turn on `ctags-auto-update-mode'." t)
+      )
+    :init ))
 ;;; packages.el ends here
