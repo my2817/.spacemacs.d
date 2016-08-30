@@ -42,8 +42,8 @@
     (tcl-dc-mode :location local)
     htmlize
     electric-spacing
-    (ctags :location local)
-    (ctags-update :location local)
+    ctags
+    ctags-update
   )
 
   "The list of Lisp packages required by the my-config layer.
