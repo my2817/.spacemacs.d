@@ -157,8 +157,16 @@
       type-alist)))
 
 (defun verilog-imenu-create-parse-entity ()
-  (when (re-search-forward "^\\s-*\\(module\\|interface\\|package\\)[ \t\n]+\\([a-zA-Z0-9_]+\\)" nil t)
-    (let ((entity-type (verilog-match-string 1)) (entity-name (verilog-match-string 2))
+  (when (re-search-forward "^\\s-*\\(module\\|interface\\|package\\|class\\|function\\|task\\)[ \t\n]+\\([a-zA-Z0-9_:]+\\)" nil t)
+    (let ((entity-type (verilog-match-string 1)) (entity-name
+                                                  (if (string= (verilog-match-string 1) "function")
+                                                      (progn
+                                                        (save-excursion
+                                                          (beginning-of-line)
+                                                          (re-search-forward "^\\s-*function[ \t]+\\([a-z]+\\s-+\\)?\\([a-zA-Z0-9_:]+\\)\\s-*[(;]" nil t)
+                                                          (setq entity-name (verilog-match-string 2))
+                                                          ))
+                                                    (verilog-match-string 2)))
           (entity-start (match-beginning 0)) (entity-end) (end 0) (final-alist '())
           (nested-entity) (found-routine) (routine-type)
           (instance-alist '()) (modport-alist '()) (module-alist '()) (interface-alist '()) (package-alist '())
@@ -173,7 +181,7 @@
                    (setq depth (1- depth)))
                  (> depth 0))))
       (setq entity-end (point-at-eol))
-
+      ;;(setq entity-end (point-max))
       ;; Work through entity
       (goto-char entity-start)
       (end-of-line)
@@ -181,13 +189,13 @@
 
         ;; Look for a nested entity or routine
         (save-excursion
-          (if (re-search-forward "^\\s-*\\(module\\|interface\\|package\\|function\\|task\\)[ \t\n]+\\([a-zA-Z0-9_]+\\)" entity-end t)
+          (if (re-search-forward "^\\s-*\\(module\\|interface\\|package\\|class\\|function\\|task\\)[ \t\n]+\\([a-zA-Z0-9_:]+\\)" entity-end t)
               (let ((found-item (verilog-match-string 1)))
                 (setq end (point-at-bol))
                 (if (or (string= found-item "function") (string= found-item "task"))
                     (progn
                       (beginning-of-line)
-                      (re-search-forward "^\\s-*\\(function\\|task\\).*?\\([a-zA-Z0-9_]+\\)\\s-*[(;]" nil t)
+                      (re-search-forward "^\\s-*\\(function\\|task\\)\\s-+\\(?:[a-z]+\\s-+\\)?\\([a-zA-Z0-9_:]+\\)\\s-*[(;]" nil t)
                       (if (string= found-item "function")
                           (push (cons (verilog-match-string 2) (point-at-bol)) function-alist)
                         (push (cons (verilog-match-string 2) (point-at-bol)) task-alist))
@@ -358,18 +366,19 @@
       "Verilog port helper functions")
 
 (defun verilog-extras-hook ()
-  (define-key verilog-mode-map "\M-*" nil)
-  (define-key verilog-mode-map ":" nil)
+  ;;(define-key verilog-mode-map "\M-*" nil)
+  ;;(define-key verilog-mode-map ":" nil)
   (modify-syntax-entry ?` ".")
   (if (string-match "XEmacs" emacs-version)
       (add-submenu nil verilog-port-menu)
     (easy-menu-add-item verilog-mode-map '("menu-bar") verilog-port-menu))
   (setq imenu-generic-expression nil)
   (setq imenu-create-index-function 'verilog-imenu-create-index-function)
-  (setq align-mode-rules-list align-verilog-rules-list)
-  (setq align-exclude-rules-list align-exclude-verilog-rules-list))
+  ;;(setq align-mode-rules-list align-verilog-rules-list)
+  ;;(setq align-exclude-rules-list align-exclude-verilog-rules-list)
+  )
 
-;;(add-hook 'verilog-mode-hook 'verilog-extras-hook t)
+(add-hook 'verilog-mode-hook 'verilog-extras-hook t)
 
 
 ;;----------------------------------------------------------------------------
