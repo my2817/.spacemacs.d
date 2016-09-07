@@ -48,7 +48,7 @@
 (global-hl-line-mode -1)
 (blink-cursor-mode 1)
 (electric-pair-mode 1)
-
+;;(spacemacs/toggle-golden-ratio-on)
 ;;;
 ;;; file extensions
 ;;;
@@ -70,7 +70,7 @@
                               (interactive)
                               (untabify (point-min)
                                         (point-max))))
-(add-hook 'verilog-mode-hook 'turn-on-ctags-auto-update-mode)
+;;(add-hook 'verilog-mode-hook 'turn-on-ctags-auto-update-mode)
 
 (mapc #'wttr/prepend-to-exec-path
       (reverse
