@@ -369,6 +369,7 @@
   ;;(define-key verilog-mode-map "\M-*" nil)
   ;;(define-key verilog-mode-map ":" nil)
   (modify-syntax-entry ?` ".")
+  (local-set-key (kbd "C-=") 'verilog-sk-nonblock-assign)
   (if (string-match "XEmacs" emacs-version)
       (add-submenu nil verilog-port-menu)
     (easy-menu-add-item verilog-mode-map '("menu-bar") verilog-port-menu))
@@ -526,26 +527,10 @@ See also `verilog-sk-header' for an alternative format."
 // and proprietary property of <company>. and the possession or use
 // of this file requires a written license from <company>.
 ////////////////////////////////////////////////////////////////////////////////
-
-/*-- org -----------------------------------------------------------------------
-* Reuse Issues
-+TBLNAME: Reuse issues
-| ISSUES        | DESCRIPTION |
-|---------------+-------------|
-| Require       |             |
-| Required by   |             |
-| Clock Domains |             |
-
-
-* Modification History
-+TBLNAME: Modification history
-| DAT | BY | VERSION | CHANGE DESCRIPTION |
-|-----+----+---------+--------------------|
-|     |    |         |                    |
-
-  -------------------------------------------------------------------- !org --*/
-
-
+//
+// Version:
+//  <lastdate>: Created.
+//
 
 ")
     (goto-char start)
@@ -571,7 +556,9 @@ See also `verilog-sk-header' for an alternative format."
       (search-forward "<author>") (replace-match "" t t)
       (insert (user-full-name))
       (insert "<" (user-login-name) "@" (system-name) ">")
-      (search-forward "<comments>") (replace-match "" t t)
+      (search-forward "<lastdate>") (replace-match "" t t)
+      (insert (format-time-string "%Y-%m-%d"))
+      (search-backward "<comments>") (replace-match "" t t)
 
     )))
 (ad-activate 'verilog-header)
@@ -593,7 +580,8 @@ See also `verilog-sk-header' for an alternative format."
   "Insert date from the system."
   (interactive)
   (if verilog-date-scientific-format
-      (insert (format-time-string "%Y/%m/%d-%H:%M:%S"))
+      ;;(insert (format-time-string "%Y/%m/%d-%H:%M:%S"))
+      (insert (format-time-string "%Y-%m-%d %H:%M:%S"))
     (insert (format-time-string "%d.%m.%Y-%H:%M:%S"))))
 
 (defadvice verilog-inject-auto (before verilog-last-update
@@ -805,7 +793,7 @@ be decleared as wire.
 ;(my-verilog-insert-reg-bank '30 8 8 '() "4" "6")
 
 ;;; keybings
-(define-key verilog-template-map (kbd ",") 'verilog-sk-nonblock-assign)
+;;(define-key verilog-template-map (kbd ",") 'verilog-sk-nonblock-assign)
 (setq verilog-mode-abbrev-table nil)
 (define-abbrev-table 'verilog-mode-abbrev-table ())
 (verilog-define-abbrev verilog-mode-abbrev-table "class"     "" 'verilog-sk-uvm-component)
