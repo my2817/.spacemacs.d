@@ -365,6 +365,7 @@ $set_coverage_db_name
 $setup
 $setuphold
 $sformat
+$sformatf
 $shortrealtobits
 $showscopes
 $showvariables
@@ -420,7 +421,7 @@ $writeh
 $writememb
 $writememh
 $writeo
-<=#1
+
 accelerate
 autoexepand_vectornets
 begin_keywords
@@ -462,4 +463,4 @@ timescale
 unconnected_drive
 undef
 uselib
-
+<= #1
