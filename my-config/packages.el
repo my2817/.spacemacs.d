@@ -38,12 +38,14 @@
     (my-verilog :location local)
     ;;(mmm-mode :location local)
     mmm-mode
-    (highlight-symbol :location local)
+    highlight-symbol
     (tcl-dc-mode :location local)
     htmlize
     electric-spacing
     ctags
     ctags-update
+    auctex
+    auto-complete-auctex
   )
 
   "The list of Lisp packages required by the my-config layer.
@@ -82,6 +84,7 @@ Each entry is either:
       (global-auto-complete-mode 1)
       (add-to-list 'ac-modes 'graphviz-dot-mode)
       (add-to-list 'ac-modes 'makefile-gmake-mode)
+      (add-to-list 'ac-modes 'TeX-latex-mode)
       (add-to-list 'ac-dictionary-directories (concat
                                                (or (file-name-directory #$) (car load-path))
                                                "local/ac-dict/"))
@@ -137,7 +140,7 @@ Each entry is either:
     :defer t
     :init
     (progn
-      (require 'highlight-symbol)
+      ;;(require 'highlight-symbol)
       ;;(autoload 'highlight-symbol "highlight-symbol" "Highlight-Func Mode" t)
       )
     ))
@@ -172,4 +175,12 @@ Each entry is either:
       (autoload 'turn-on-ctags-auto-update-mode "ctags-update" "turn on `ctags-auto-update-mode'." t)
       )
     :init ))
+
+(defun my-config/init-auctex()
+  (use-package auctex
+    :defer t
+    ))
+(defun my-config/init-auto-complete-auctex()
+  (use-package auto-complete-auctex
+    :defer t))
 ;;; packages.el ends here
