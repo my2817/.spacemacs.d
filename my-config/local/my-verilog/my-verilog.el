@@ -349,11 +349,11 @@
   :type align-exclude-rules-list-type
   :group 'align)
 
-(put 'align-verilog-rules-list 'risky-local-variable t)
-(put 'align-exclude-verilog-rules-list 'risky-local-variable t)
+;;(put 'align-verilog-rules-list 'risky-local-variable t)
+;;(put 'align-exclude-verilog-rules-list 'risky-local-variable t)
 
-(add-to-list 'align-dq-string-modes 'verilog-mode)
-(add-to-list 'align-open-comment-modes 'verilog-mode)
+;;(add-to-list 'align-dq-string-modes 'verilog-mode)
+;;(add-to-list 'align-open-comment-modes 'verilog-mode)
 
 ;;; Hook
 
@@ -368,7 +368,7 @@
 (defun verilog-extras-hook ()
   ;;(define-key verilog-mode-map "\M-*" nil)
   ;;(define-key verilog-mode-map ":" nil)
-  (modify-syntax-entry ?` ".")
+  ;;(modify-syntax-entry ?` ".")
   (local-set-key (kbd "C-=") 'verilog-sk-nonblock-assign)
   (if (string-match "XEmacs" emacs-version)
       (add-submenu nil verilog-port-menu)
