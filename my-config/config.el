@@ -68,8 +68,9 @@
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (add-hook 'before-save-hook (lambda ()
                               (interactive)
-                              (untabify (point-min)
-                                        (point-max))))
+                              (if (string= mode-name "verilog-mode")
+                                  (untabify (point-min)
+                                            (point-max)))))
 ;;(add-hook 'verilog-mode-hook 'turn-on-ctags-auto-update-mode)
 
 (mapc #'wttr/prepend-to-exec-path

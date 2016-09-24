@@ -179,6 +179,14 @@ Each entry is either:
 (defun my-config/init-auctex()
   (use-package auctex
     :defer t
+    :init (progn
+              (load "auctex.el")
+              (add-hook 'LaTeX-mode-hook (lambda()
+                                                (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t))
+                                                (setq TeX-command-default "XeLaTeX")
+                                                (setq TeX-save-query  nil )
+                                                (setq TeX-show-compilation t)
+                                                )))
     ))
 (defun my-config/init-auto-complete-auctex()
   (use-package auto-complete-auctex
