@@ -4,6 +4,7 @@
 ;;; Enhancements to verilog-mode
 
 (require 'verilog-mode)
+(setq verilog-auto-lineup 'all)
 (unless (fboundp 'hs-special-modes-alist)
   (defvar hs-special-modes-alist nil))
 (add-hook 'verilog-mode-hook 'hs-minor-mode)
