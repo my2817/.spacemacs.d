@@ -516,7 +516,7 @@ See also `verilog-sk-header' for an alternative format."
   (let ((start (point)))
     (insert "////////////////////////////////////////////////////////////////////////////////
 //   __  ______
-//  |  ||____  \\     Company     : <company>
+//  |  ||____  \\     Company     : CHENGDU IMAGE DESIGN
 //  |  |     \\  \\    Last Update : <lastdate>
 //  |  |     |  |    Module Name : <module>
 //  |  | ____/  /    Project Name: <project>
@@ -524,9 +524,9 @@ See also `verilog-sk-header' for an alternative format."
 //
 // Additional Comments: <comments>
 //
-// Copyright (c) <year> by <company>. This model is the confidential
-// and proprietary property of <company>. and the possession or use
-// of this file requires a written license from <company>.
+// Copyright (c) <year> by <company>. This model is the confidential and
+// proprietary property of <company>. and the possession or use of this
+// file requires a written license from <company>.
 ////////////////////////////////////////////////////////////////////////////////
 //
 // Version:
@@ -536,9 +536,9 @@ See also `verilog-sk-header' for an alternative format."
 ")
     (goto-char start)
     (let (string)
-      (setq string (read-string "Company: "   "CHENGDU IMAGE DESIGN"))
+      (setq string (read-string "Company: "   "ImageDesign"))
       (setq verilog-company string)
-      (search-forward "<company>") (replace-match string t t)
+      ;;(search-forward "<company>") (replace-match string t t)
       (search-forward "<company>") (replace-match string t t)
       (search-forward "<company>") (replace-match string t t)
       (search-forward "<company>") (replace-match string t t)
@@ -551,7 +551,7 @@ See also `verilog-sk-header' for an alternative format."
       (goto-char start)
       (setq string (read-string "module: " (file-name-base)))
       (search-forward "<module>") (replace-match string t t)
-      (setq string (read-string "project: " verilog-project))
+      (setq string (read-string "project: " (projectile-project-name)))
       (setq verilog-project string)
       (search-forward "<project>") (replace-match string t t)
       (search-forward "<author>") (replace-match "" t t)
