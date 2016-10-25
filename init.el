@@ -68,7 +68,7 @@ values."
    ;; `used-but-keep-unused' installs only the used packages but won't uninstall
    ;; them if they become unused. `all' installs *all* packages supported by
    ;; Spacemacs and never uninstall them. (default is `used-only')
-   dotspacemacs-install-packages 'used-only))
+   dotspacemacs-install-packages 'used-but-keep-unused))
 
 (defun dotspacemacs/init ()
   "Initialization function.
@@ -294,9 +294,9 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-(add-to-list 'package-archives
-             '("popkit" . "http://elpa.popkit.org/packages/"))
-(package-initialize)
+  (add-to-list 'package-archives
+               '("popkit" . "http://elpa.popkit.org/packages/"))
+  (package-initialize)
   )
 
 (defun dotspacemacs/user-config ()
@@ -306,6 +306,9 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  (spacemacs/toggle-golden-ratio-on)
+  (spacemacs/toggle-maximize-frame-on)
+  (spaceline-spacemacs-theme 'projectile-root)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
