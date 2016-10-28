@@ -36,7 +36,7 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ivy
+     ;;ivy
      auto-completion
      ;; better-defaults
      emacs-lisp
@@ -296,6 +296,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   (add-to-list 'package-archives
                '("popkit" . "http://elpa.popkit.org/packages/"))
+   ;(setq package-archives  
+   ;    '(("melpa-cn" . "http://elpa.zilongshanren.com/melpa/")
+   ;   ("org-cn"   . "http://elpa.zilongshanren.com/org/")
+   ;   ("gnu-cn"   . "http://elpa.zilongshanren.com/gnu/"))) 
   (package-initialize)
   )
 
