@@ -33,14 +33,14 @@
   '(
     auto-complete
     graphviz-dot-mode
-    blink-cursor-mode
+    ;blink-cursor-mode
     psvn
     (my-verilog :location local)
     ;;(mmm-mode :location local)
     mmm-mode
     highlight-symbol
     (tcl-dc-mode :location local)
-    htmlize
+    ;htmlize
     electric-spacing
     ctags
     ctags-update
