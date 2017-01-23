@@ -647,10 +647,10 @@ See also `verilog-sk-header' for an alternative format."
   (search-forward "<last-edit>") (replace-match "" t t)
 ;;  (verilog-indent-buffer)
   )
-(defun my-verilog-insert-tb ()
+(defun my-verilog-insert-tb (mod_name)
   (interactive)
+  (insert (format  "module %s %s" (format "%s_tb" mod_name) " (/*AUTOARG*/);"))
   (insert "
-module tb (/*AUTOARG*/);
 
    /*AUTOREGINPUT*/
    /*AUTOWIRE*/
@@ -661,8 +661,9 @@ module tb (/*AUTOARG*/);
       /*$sdf_annotate ( <\"sdf_file\">, <module_instance>?,
       <\"config_file\">?, <\"log_file\">?, <\"mtm_spec\">?,
       <\"scale_factors\">?, <\"scale_type\">? );*/
-      $shm_open(\"tb_wave\");
-      $shm_probe(tb,\"ASC\");
+      $shm_open(\"wave\");\n")
+  (insert    "      $shm_probe(" my-verilog-inst-name  "_tb" ",\"ASC\");\n");
+  (insert "
       <stimulus>
    end
 
@@ -679,9 +680,9 @@ endmodule // tb
   (interactive)
   (setq my-verilog-inst-name (my-verilog-get-module-name))
   (setq my-verilog-inst-ports (verilog-read-decls))
-  (switch-to-buffer "tb.v")
+  (switch-to-buffer (format "%s_tb.v" my-verilog-inst-name))
   (verilog-mode)
-  (my-verilog-insert-tb)
+  (my-verilog-insert-tb my-verilog-inst-name)
   (goto-line 1)
   (search-forward "<REFERENCE>") (replace-match my-verilog-inst-name t t);
 
