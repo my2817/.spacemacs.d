@@ -119,7 +119,9 @@ Each entry is either:
     :defer t
     :init
     (progn
-      (require 'my-verilog)
+      ;; (require 'my-verilog)
+      (autoload 'my-verilog "my-verilog" "my configuration of verilog-mode " t)
+      (add-hook 'verilog-mode-hook 'my-verilog)
     )
     ))
 
@@ -176,19 +178,19 @@ Each entry is either:
       )
     :init ))
 
-(defun my-config/init-auctex()
-  (use-package auctex
-    :defer t
-    :init (progn
-            (load "auctex.el")
-            (add-hook 'LaTeX-mode-hook (lambda()
-                                         (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t))
-                                         (setq TeX-command-default "XeLaTeX")
-                                         (setq TeX-save-query  nil )
-                                         (setq TeX-show-compilation t)
-                                         )))
-    ))
-(defun my-config/init-auto-complete-auctex()
-  (use-package auto-complete-auctex
-    :defer t))
+;; (defun my-config/init-auctex()
+;;   (use-package auctex
+;;     :defer t
+;;     :init (progn
+;;             (load "auctex.el")
+;;             (add-hook 'LaTeX-mode-hook (lambda()
+;;                                          (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t))
+;;                                          (setq TeX-command-default "XeLaTeX")
+;;                                          (setq TeX-save-query  nil )
+;;                                          (setq TeX-show-compilation t)
+;;                                          )))
+;;     ))
+;; (defun my-config/init-auto-complete-auctex()
+;;   (use-package auto-complete-auctex
+;;     :defer t))
 ;;; packages.el ends here

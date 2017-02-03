@@ -824,4 +824,5 @@ be decleared as wire.
 (verilog-define-abbrev verilog-mode-abbrev-table "wire"      "" `verilog-sk-wire)
 (verilog-define-abbrev verilog-mode-abbrev-table "reg"       "" `verilog-sk-reg)
 
+(defalias 'my-verilog 'ignore)
 (provide 'my-verilog)
