@@ -80,4 +80,32 @@
          "D:/cygwin/bin"
          "D:/EDA/modeltech64_10.2c/win64"
          "D:/EDA/Git-2.6.0-32-bit/PortableGit/bin"
+         "D:/EDA/libxml2/iconv-1.9.2.win32/bin"
+         "D:/EDA/libxml2/iconv-1.9.2.win32/lib"
+         "D:/EDA/libxml2/libxml2-2.7.8.win32/bin"
+         "D:/EDA/libxml2/libxml2-2.7.8.win32/lib"
+         "D:/EDA/libxml2/zlib-1.2.5/bin"
+         "D:/EDA/libxml2/zlib-1.2.5/lib"
+         "C:/ProgramData/Oracle/Java/javapath"
          )))
+
+(eval-after-load 'org-mode
+  (progn
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '((ditaa . t) ; this line activates ditaa
+       (plantuml . t) ; this line activates plantuml
+       (python . t)
+       (perl . t)
+       (ruby . t)
+       (R . t)
+       (sh . t)
+       (gnuplot . t)
+       (org . t)
+       (latex . t)
+       (java . t)
+       (emacs-lisp . t)
+       (calc . t)
+       (sql . t)
+       (dot . t) ; this line activates graphviz(dot)
+       ))))

@@ -46,6 +46,7 @@
     ctags-update
     auctex
     auto-complete-auctex
+    plantuml-mode
   )
 
   "The list of Lisp packages required by the my-config layer.
@@ -177,6 +178,14 @@ Each entry is either:
       (autoload 'turn-on-ctags-auto-update-mode "ctags-update" "turn on `ctags-auto-update-mode'." t)
       )
     :init ))
+(defun my-config/init-plantuml-mode()
+  (use-package plantuml-mode
+    :defer t
+    :config
+    (progn
+      (setq org-plantuml-jar-path "~/plantuml.jar")
+      )
+    ))
 
 ;; (defun my-config/init-auctex()
 ;;   (use-package auctex
