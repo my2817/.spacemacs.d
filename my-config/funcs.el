@@ -34,3 +34,10 @@
          (insert " ")))
   )
 (ad-activate 'electric-spacing-.)
+
+(defun find-file-in-path-list (file path-list )
+  "find FILE in path-list, then return the absolute file path"
+  (when path-list
+    (if (file-exists-p (format "%s/%s" (car path-list) file))
+        (format "%s/%s" (car path-list) file)
+      (find-file-in-path-list file (cdr path-list)))))

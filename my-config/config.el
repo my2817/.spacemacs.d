@@ -110,3 +110,5 @@
        (sql . t)
        (dot . t) ; this line activates graphviz(dot)
        ))))
+(if (string-equal system-type "windows-nt")
+    (setenv "GRAPHVIZ_DOT" (find-file-in-path-list 'dot.exe exec-path)))
