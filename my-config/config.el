@@ -91,6 +91,7 @@
 
 (eval-after-load 'org-mode
   (progn
+    (setq org-confirm-babel-evaluate nil)
     (org-babel-do-load-languages
      'org-babel-load-languages
      '((ditaa . t) ; this line activates ditaa
