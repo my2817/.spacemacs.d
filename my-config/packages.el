@@ -101,6 +101,8 @@ Each entry is either:
     :init
     (progn
       (setq graphviz-dot-preview-extension "jpg")
+      (if (string-equal system-type "windows-nt")
+          (setenv "GRAPHVIZ_DOT" "D:\\graphviz-2.38\\release\\bin\\dot.exe"))
       )))
 (defun my-config/init-psvn ()
   "Initialize psvn"
