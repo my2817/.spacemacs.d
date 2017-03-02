@@ -32,7 +32,7 @@
 (defconst my-config-packages
   '(
     auto-complete
-    graphviz-dot-mode
+    ;; graphviz-dot-mode ;; it has been configured by graphviz layer
     ;blink-cursor-mode
     psvn
     (my-verilog :location local)
@@ -94,14 +94,14 @@ Each entry is either:
       ;;(add-to-list 'ac-dictionary-directories (expand-file-name "local/ac-dict/" user-emacs-directory))
       (setq-default ac-disable-faces nil))))
 
-(defun my-config/init-graphviz-dot-mode ()
-  "Initialize my package"
-  (use-package graphviz-dot-mode
-    :defer t
-    :init
-    (progn
-      (setq graphviz-dot-preview-extension "jpg")
-      )))
+;; (defun my-config/init-graphviz-dot-mode ()
+;;   "Initialize my package"
+;;   (use-package graphviz-dot-mode
+;;     :defer t
+;;     :init
+;;     (progn
+;;       (setq graphviz-dot-preview-extension "jpg")
+;;       )))
 (defun my-config/init-psvn ()
   "Initialize psvn"
   (use-package psvn

@@ -89,7 +89,7 @@
          "C:/ProgramData/Oracle/Java/javapath"
          )))
 
-(with-eval-after-load 'org-mode
+(with-eval-after-load 'org
   (progn
     (setq org-confirm-babel-evaluate nil)
     (org-babel-do-load-languages
