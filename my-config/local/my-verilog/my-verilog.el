@@ -436,8 +436,11 @@ find the errors."
    (interactive)
    (mapcar
     (lambda (item)
-      (push (car item) compilation-error-regexp-alist)
-      (push item compilation-error-regexp-alist-alist)
+      (if (not (memq (car item) compilation-error-regexp-alist))
+          (progn
+            (push (car item) compilation-error-regexp-alist)
+            (push item compilation-error-regexp-alist-alist))
+        )
       )
     my-verilog-compilation-error-regexp-alist))
 
