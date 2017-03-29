@@ -4,8 +4,6 @@
 ;;; Enhancements to verilog-mode
 
 (require 'verilog-mode)
-(setq verilog-auto-lineup 'all)
-(setq indent-line-function 'electric-verilog-tab)
 (unless (fboundp 'hs-special-modes-alist)
   (defvar hs-special-modes-alist nil))
 (add-hook 'verilog-mode-hook 'hs-minor-mode)
@@ -828,5 +826,17 @@ be decleared as wire.
 (verilog-define-abbrev verilog-mode-abbrev-table "wire"      "" `verilog-sk-wire)
 (verilog-define-abbrev verilog-mode-abbrev-table "reg"       "" `verilog-sk-reg)
 
-(defalias 'my-verilog 'ignore)
-(provide 'my-verilog)
+;; (defalias 'my-verilog 'ignore)
+;; (provide 'my-verilog)
+
+(define-minor-mode my-verilog
+  "It is my configuration of verilog-mode"
+  :group prog-mode
+  :init-value nil
+  :lighter "my-verilog"
+  :global nil
+  :after-hook verilog-mode-hook
+ (setq verilog-auto-lineup 'all)
+ (set (make-local-variable 'indent-line-function)
+  #'electric-verilog-tab)
+ )
