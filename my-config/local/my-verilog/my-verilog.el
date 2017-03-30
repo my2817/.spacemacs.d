@@ -369,7 +369,7 @@
   ;;(define-key verilog-mode-map "\M-*" nil)
   ;;(define-key verilog-mode-map ":" nil)
   ;;(modify-syntax-entry ?` ".")
-  (local-set-key (kbd "C-=") 'verilog-sk-nonblock-assign)
+  ;; (local-set-key (kbd "C-=") 'verilog-sk-nonblock-assign)
   (if (string-match "XEmacs" emacs-version)
       (add-submenu nil verilog-port-menu)
     (easy-menu-add-item verilog-mode-map '("menu-bar") verilog-port-menu))
@@ -798,37 +798,15 @@ be decleared as wire.
 
 ;;; keybings
 ;;(define-key verilog-template-map (kbd ",") 'verilog-sk-nonblock-assign)
-(setq verilog-mode-abbrev-table nil)
-(define-abbrev-table 'verilog-mode-abbrev-table ())
-(verilog-define-abbrev verilog-mode-abbrev-table "class"     "" 'verilog-sk-uvm-component)
-(verilog-define-abbrev verilog-mode-abbrev-table "always"    "" 'verilog-sk-always)
-(verilog-define-abbrev verilog-mode-abbrev-table "begin"     nil `verilog-sk-begin)
-(verilog-define-abbrev verilog-mode-abbrev-table "case"      "" `verilog-sk-case)
-(verilog-define-abbrev verilog-mode-abbrev-table "for"       "" `verilog-sk-for)
-(verilog-define-abbrev verilog-mode-abbrev-table "generate"  "" `verilog-sk-generate)
-(verilog-define-abbrev verilog-mode-abbrev-table "initial"   "" `verilog-sk-initial)
-(verilog-define-abbrev verilog-mode-abbrev-table "fork"      "" `verilog-sk-fork)
-(verilog-define-abbrev verilog-mode-abbrev-table "module"    "" `verilog-sk-module)
-(verilog-define-abbrev verilog-mode-abbrev-table "primitive" "" `verilog-sk-primitive)
-(verilog-define-abbrev verilog-mode-abbrev-table "repeat"    "" `verilog-sk-repeat)
-(verilog-define-abbrev verilog-mode-abbrev-table "specify"   "" `verilog-sk-specify)
-(verilog-define-abbrev verilog-mode-abbrev-table "task"      "" `verilog-sk-task)
-(verilog-define-abbrev verilog-mode-abbrev-table "while"     "" `verilog-sk-while)
-(verilog-define-abbrev verilog-mode-abbrev-table "casex"     "" `verilog-sk-casex)
-(verilog-define-abbrev verilog-mode-abbrev-table "casez"     "" `verilog-sk-casez)
-(verilog-define-abbrev verilog-mode-abbrev-table "if"        "" `verilog-sk-if)
-(verilog-define-abbrev verilog-mode-abbrev-table "else if"   "" `verilog-sk-else-if)
-(verilog-define-abbrev verilog-mode-abbrev-table "assign"    "" `verilog-sk-assign)
-(verilog-define-abbrev verilog-mode-abbrev-table "function"  "" `verilog-sk-function)
-(verilog-define-abbrev verilog-mode-abbrev-table "input"     "" `verilog-sk-input)
-(verilog-define-abbrev verilog-mode-abbrev-table "output"    "" `verilog-sk-output)
-(verilog-define-abbrev verilog-mode-abbrev-table "inout"     "" `verilog-sk-inout)
-(verilog-define-abbrev verilog-mode-abbrev-table "wire"      "" `verilog-sk-wire)
-(verilog-define-abbrev verilog-mode-abbrev-table "reg"       "" `verilog-sk-reg)
+;; (setq verilog-mode-abbrev-table nil)
+;; (define-abbrev-table 'verilog-mode-abbrev-table ())
+(verilog-define-abbrev verilog-mode-abbrev-table "class_uvm_compoent"     "" 'verilog-sk-uvm-component)
+(verilog-define-abbrev verilog-mode-abbrev-table "class_uvm_object"     "" 'verilog-sk-uvm-object)
 
 ;; (defalias 'my-verilog 'ignore)
 ;; (provide 'my-verilog)
 
+;;;###autoload
 (define-minor-mode my-verilog
   "It is my configuration of verilog-mode"
   :group prog-mode
@@ -839,4 +817,5 @@ be decleared as wire.
  (setq verilog-auto-lineup 'all)
  (set (make-local-variable 'indent-line-function)
   #'electric-verilog-tab)
+ (local-set-key (kbd "C-=") 'verilog-sk-nonblock-assign)
  )

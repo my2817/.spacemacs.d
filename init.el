@@ -27,7 +27,7 @@ values."
    ;; If non-nil layers with lazy install support are lazy installed.
    ;; List of additional paths where to look for configuration layers.
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
-   ;;dotspacemacs-configuration-layer-path (expand-file-name ".")
+   dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
@@ -297,10 +297,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   (add-to-list 'package-archives
                '("popkit" . "http://elpa.popkit.org/packages/"))
-   ;(setq package-archives  
+   ;(setq package-archives
    ;    '(("melpa-cn" . "http://elpa.zilongshanren.com/melpa/")
    ;   ("org-cn"   . "http://elpa.zilongshanren.com/org/")
-   ;   ("gnu-cn"   . "http://elpa.zilongshanren.com/gnu/"))) 
+   ;   ("gnu-cn"   . "http://elpa.zilongshanren.com/gnu/")))
   (package-initialize)
   )
 
