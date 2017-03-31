@@ -800,8 +800,9 @@ be decleared as wire.
 ;;(define-key verilog-template-map (kbd ",") 'verilog-sk-nonblock-assign)
 ;; (setq verilog-mode-abbrev-table nil)
 ;; (define-abbrev-table 'verilog-mode-abbrev-table ())
-(verilog-define-abbrev verilog-mode-abbrev-table "class_uvm_compoent"     "" 'verilog-sk-uvm-component)
-(verilog-define-abbrev verilog-mode-abbrev-table "class_uvm_object"     "" 'verilog-sk-uvm-object)
+(verilog-define-abbrev verilog-mode-abbrev-table "class_uvm_compoent"  "" 'verilog-sk-uvm-component)
+(verilog-define-abbrev verilog-mode-abbrev-table "class_uvm_object"    "" 'verilog-sk-uvm-object)
+(verilog-define-abbrev verilog-mode-abbrev-table "begin"               "" 'verilog-sk-begin)
 
 ;; (defalias 'my-verilog 'ignore)
 ;; (provide 'my-verilog)
