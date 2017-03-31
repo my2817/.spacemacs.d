@@ -41,3 +41,20 @@
     (if (file-exists-p (format "%s/%s" (car path-list) file))
         (format "%s/%s" (car path-list) file)
       (find-file-in-path-list file (cdr path-list)))))
+
+(defun sos-op-on-current-buffer ()
+  "sos comand"
+  (interactive)
+  (setq cmd "soscmd")
+  (setq file (buffer-file-name))
+  (setq op (read-string "SOS actions: "))
+  (setq soscmd (concat cmd " "
+                       op " "
+                       file))
+  (pcase op
+    ("ci" (shell-command (concat soscmd " "
+                                 "-aLog="
+                                 (read-string "CI Log:"))))
+    (_ (shell-command soscmd)))
+  (revert-buffer)
+  )
