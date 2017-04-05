@@ -379,7 +379,6 @@
   ;;(setq align-exclude-rules-list align-exclude-verilog-rules-list)
   )
 
-(add-hook 'verilog-mode-hook 'verilog-extras-hook t)
 
 
 ;;----------------------------------------------------------------------------
@@ -703,98 +702,7 @@ endmodule // tb
     (insert (concat (car port) " = 'd0;\n"))
     (verilog-indent-line-relative)))
 
-(defun my-verilog-insert-reg-bank(prefix L_addr_total L_addr_output &optional RO_addr RO_st RO_end)
-  "insert reg_bank and output port, the addr larger than L_addr_output will
-be decleared as wire.
-   the subquence arguments are optional:
-   RO_addr is a list of Read only addr.
-   RO_st,RO_end is the boundry of read only addr on base 16
-  "
 
-  (if (string= RO_st nil)
-      (progn
-        (setq ro_start L_addr_total))
-    (setq ro_start (string-to-number RO_st 16)))
-  (if (string= RO_end nil)
-      (setq ro_end (- L_addr_total 1))
-    (setq ro_end (string-to-number RO_end 16)))
-
-  (insert "   input            SCLK,RSTN;
-   input            I_REGCONFIG_WEN,I_REGCONFIG_REN;
-   input [7:0]      I_REGCONFIG_DAT;
-   input [15:0]     I_REGCONFIG_ADR;
-//   input            I_REGCONFIG_GCEN;\n")
-
-  (setq outport (format "O_BANK_%2S" prefix))
-  (insert "   output reg [7:0] "outport";\n\n")
-
-  (setq cnt 0)
-  ;; generate reg bank and outptu port;
-  (setq reg_bank_name (format "reg_bank_%2S" prefix))
-  (insert (format "   reg    [7:0] reg_bank_%S [0:'h%.4X]" prefix (- L_addr_total 1)) ";\n")
-  (while(< cnt L_addr_total)
-    (setq tmp (format "%.2X" cnt))
-    (if(< cnt L_addr_output)
-        (progn
-          (if (or (member tmp RO_addr)
-                  (and (>= cnt ro_start)
-                       (<= cnt ro_end)))
-              (insert (format "   wire   [7:0] CREG_%S%.2X" prefix cnt) ";""\n")
-            (insert (format "   output [7:0] CREG_%S%.2X" prefix cnt) ";""\n")))
-      (insert (format "   wire   [7:0] CREG_%S%.2X" prefix cnt) ";""\n"))
-    (setq cnt (1+ cnt)))
-
-  ;; assign reg bank to output port
-  (setq cnt 0)
-  (while (< cnt L_addr_total)
-    ;;(verilog-indent-line-relative)
-    (insert (format "   assign CREG_%S%.2X = reg_bank_%2S['h%.4X];\n" prefix cnt prefix cnt))
-    (setq cnt (1+ cnt)))
-  ;; generate write block
-  (insert "
-   always @(posedge SCLK or negedge RSTN) begin
-      if(!RSTN)begin
-          <RESET_BLOCK>
-      end
-      else begin
-      //if(I_REGCONFIG_GCEN)begin // block enable
-         if(I_REGCONFIG_WEN) // wrie enable
-            if(I_REGCONFIG_ADR[15:8] == prefix)\n"
-"              "reg_bank_name"[I_REGCONFIG_ADR[7:0]] <= I_REGCONFIG_DAT;
-       //end
-        end
-   end\n<FLAG>")
-
-  ;; generate reset
-
-  (search-backward "<RESET_BLOCK>")
-  (replace-match "" t t)
-  (setq cnt 0)
-  (while(< cnt L_addr_total)
-    ;;(verilog-indent-line-relative)
-    (insert (format "         %s['h00%.2X] <= `ADR_%s%.2X;\n" reg_bank_name cnt prefix cnt))
-    (setq cnt (1+ cnt)))
-  (search-forward "prefix")
-  (replace-match (format "'h%s" prefix))
-  (search-forward "<FLAG>")
-  (replace-match "" t t)
-
-  ;; generate read_block
-  (insert "
-   always @(posedge SCLK or negedge RSTN) begin
-      if(!RSTN)
-           "outport" <= 8'h00;
-      else begin
-      // if(I_REGCONFIG_GCEN)
-      if(I_REGCONFIG_REN)\n"
-"         "outport" <= "reg_bank_name"[I_REGCONFIG_ADR[7:0]];
-      end
-   end\n"
-)
-
-  ) ;; end of function
-
-;(my-verilog-insert-reg-bank '30 8 8 '() "4" "6")
 
 ;;; keybings
 ;;(define-key verilog-template-map (kbd ",") 'verilog-sk-nonblock-assign)
@@ -815,8 +723,9 @@ be decleared as wire.
   :lighter "my-verilog"
   :global nil
   :after-hook verilog-mode-hook
- (setq verilog-auto-lineup 'all)
- (set (make-local-variable 'indent-line-function)
-  #'electric-verilog-tab)
- (local-set-key (kbd "C-=") 'verilog-sk-nonblock-assign)
+  (verilog-extras-hook)
+  (setq verilog-auto-lineup 'all)
+  (set (make-local-variable 'indent-line-function)
+       #'electric-verilog-tab)
+  (local-set-key (kbd "C-=") 'verilog-sk-nonblock-assign)
  )
