@@ -47,6 +47,8 @@
     auctex
     auto-complete-auctex
     plantuml-mode
+    tabbar
+    tabbar-ruler
   )
 
   "The list of Lisp packages required by the my-config layer.
@@ -82,7 +84,7 @@ Each entry is either:
     :defer t
     :config
     (progn
-      (global-auto-complete-mode 1)
+      ;; (global-auto-complete-mode 1)
       (add-to-list 'ac-modes 'graphviz-dot-mode)
       (add-to-list 'ac-modes 'makefile-gmake-mode)
       (add-to-list 'ac-modes 'TeX-latex-mode)
@@ -202,4 +204,22 @@ Each entry is either:
 ;; (defun my-config/init-auto-complete-auctex()
 ;;   (use-package auto-complete-auctex
 ;;     :defer t))
+
+(defun my-config/init-tabbar ()
+  (use-package tabbar
+    :defer t
+    ))
+(defun my-config/init-tabbar-ruler ()
+  (use-package tabbar-ruler
+    :defer t
+    :config
+    (progn
+      (setq tabbar-ruler-global-tabbar t) ; If you want tabbar
+      (setq tabbar-ruler-global-ruler t) ; if you want a global ruler
+      (setq tabbar-ruler-popup-menu t) ; If you want a popup menu.
+      (setq tabbar-ruler-popup-toolbar t) ; If you want a popup toolbar
+      (setq tabbar-ruler-popup-scrollbar t) ; If you want to only show the
+                                        ; scroll bar when your mouse is moving.
+      )
+    ))
 ;;; packages.el ends here
