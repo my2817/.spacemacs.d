@@ -44,8 +44,8 @@
     electric-spacing
     ctags
     ctags-update
-    auctex
-    auto-complete-auctex
+    ;; auctex
+    ;; auto-complete-auctex
     plantuml-mode
     tabbar
     tabbar-ruler
