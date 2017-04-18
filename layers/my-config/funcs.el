@@ -42,15 +42,22 @@
         (format "%s/%s" (car path-list) file)
       (find-file-in-path-list file (cdr path-list)))))
 
-(defun sos-op-on-current-buffer ()
-  "sos comand"
+(defun sos-op-on-file ()
+  "exceute soscmd on current file or the selected files in dired-mode"
   (interactive)
-  (setq cmd "soscmd")
-  (setq file (expand-file-name (buffer-file-name)))
+  (setq soscmd "soscmd")
+  (setq file
+        (if (string-equal major-mode "dired-mode")
+            (dired-get-marked-files)
+          (list (buffer-file-name))))
   (setq op (read-string "SOS actions: "))
-  (setq soscmd (concat cmd " "
-                       op " "
-                       file))
+  (setq soscmd (concat soscmd " "
+                       op ))
+  (mapcar
+   (lambda (item)
+     (setq soscmd (concat soscmd " "
+                          item)))
+   file)
   (pcase op
     ("ci" (progn
             (setq soscmd (concat soscmd " "
