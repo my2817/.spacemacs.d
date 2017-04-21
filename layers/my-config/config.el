@@ -112,3 +112,39 @@
        ))))
 (if (string-equal system-type "windows-nt")
     (setenv "GRAPHVIZ_DOT" (find-file-in-path-list 'dot.exe exec-path)))
+
+(with-eval-after-load 'helm-grep
+  (mapcar
+   (lambda (item)
+     (add-to-list 'helm-grep-ignored-directories item))
+   '(
+     ".SOS"
+     ))
+  (mapcar
+   (lambda (item)
+     (add-to-list 'helm-grep-ignored-files item))
+   '(
+     "*pak"
+     "*.txt"
+     "*.log"
+     "*.dsn"
+     "*.pvl"
+     )))
+(with-eval-after-load 'grep
+  (mapcar
+   (lambda (item)
+     (add-to-list 'grep-find-ignored-directories item))
+   '(
+     ".SOS"
+     "irun*"
+     ))
+  (mapcar
+   (lambda (item)
+     (add-to-list 'grep-find-ignored-files item))
+   '(
+     "*.pak"
+     "*.txt"
+     "*.log"
+     "*.dsn"
+     "*.pvl"
+     )))

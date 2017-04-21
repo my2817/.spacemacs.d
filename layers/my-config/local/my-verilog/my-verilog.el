@@ -578,6 +578,11 @@ See also `verilog-sk-header' for an alternative format."
   (insert "* "))
 (ad-activate 'verilog-star-comment)
 
+(defun  my-verilog-indent-line-relative()
+  (save-excursion
+    (verilog-indent-line-relative)
+   )
+)
 (defun verilog-insert-time ()
   "Insert date from the system."
   (interactive)
@@ -726,6 +731,6 @@ endmodule // tb
   (verilog-extras-hook)
   (setq verilog-auto-lineup 'all)
   (set (make-local-variable 'indent-line-function)
-       #'electric-verilog-tab)
+       #'my-verilog-indent-line-relative)
   (local-set-key (kbd "C-=") 'verilog-sk-nonblock-assign)
  )
