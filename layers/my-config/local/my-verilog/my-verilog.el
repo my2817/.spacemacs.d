@@ -730,7 +730,7 @@ endmodule // tb
   :after-hook verilog-mode-hook
   (verilog-extras-hook)
   (setq verilog-auto-lineup 'all)
-  (set (make-local-variable 'indent-line-function)
-       #'my-verilog-indent-line-relative)
+  ;; (set (make-local-variable 'indent-line-function)
+  ;;      #'my-verilog-indent-line-relative)
   (local-set-key (kbd "C-=") 'verilog-sk-nonblock-assign)
  )

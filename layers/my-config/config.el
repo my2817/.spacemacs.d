@@ -113,38 +113,50 @@
 (if (string-equal system-type "windows-nt")
     (setenv "GRAPHVIZ_DOT" (find-file-in-path-list 'dot.exe exec-path)))
 
+(defvar my-grep-global-ignore-dired
+      '(
+        ".SOS"
+        "irun.*"
+        "INCA.*"
+        ))
+(defvar my-grep-global-ignore-files
+      '(
+        "*.txt"
+        "irun.*"
+        "*.log"
+        "*.dsn"
+        "*.pak"
+        "*.pvl"
+        "*.syn"
+        "*.mr"
+        ))
 (with-eval-after-load 'helm-grep
   (mapcar
    (lambda (item)
      (add-to-list 'helm-grep-ignored-directories item))
-   '(
-     ".SOS"
-     ))
+   my-grep-global-ignore-dired)
   (mapcar
    (lambda (item)
      (add-to-list 'helm-grep-ignored-files item))
-   '(
-     "*pak"
-     "*.txt"
-     "*.log"
-     "*.dsn"
-     "*.pvl"
-     )))
+   my-grep-global-ignore-files))
 (with-eval-after-load 'grep
   (mapcar
    (lambda (item)
      (add-to-list 'grep-find-ignored-directories item))
-   '(
-     ".SOS"
-     "irun*"
-     ))
+   my-grep-global-ignore-dired)
   (mapcar
    (lambda (item)
      (add-to-list 'grep-find-ignored-files item))
-   '(
-     "*.pak"
-     "*.txt"
-     "*.log"
-     "*.dsn"
-     "*.pvl"
-     )))
+   my-grep-global-ignore-files))
+
+(defvar my-project-globally-ignored-files
+  '(
+    "*.pak$"
+    )
+  )
+(with-eval-after-load 'projectile
+  (mapcar
+   (lambda (item)
+     (add-to-list 'projectile-globally-ignored-files item))
+   my-project-globally-ignored-files)
+  )
