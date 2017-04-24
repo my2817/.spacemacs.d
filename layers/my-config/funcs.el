@@ -42,6 +42,59 @@
         (format "%s/%s" (car path-list) file)
       (find-file-in-path-list file (cdr path-list)))))
 
+(setq sos-op '(
+               "addreference"
+               "audit"
+               "ci"
+               "co"
+               "create"
+               "definebranch"
+               "definetag"
+               "delete"
+               "deleterev"
+               "deleteworkarea"
+               "diff"
+               "dirrev"
+               "discardco"
+               "displaytmp"
+               "exitsos"
+               "exportrev"
+               "expand"
+               "gui"
+               "help"
+               "history"
+               "merge"
+               "modattr"
+               "move"
+               "neverpopulate"
+               "newworkarea"
+               "nobjstatus"
+               "nogui"
+               "objstatus"
+               "pack"
+               "populate"
+               "preference"
+               "print"
+               "query"
+               "objrso"
+               "rename"
+               "retirebranch"
+               "retiresnapshot"
+               "retiretag"
+               "revertrev"
+               "select"
+               "shell"
+               "snapshot"
+               "status"
+               "tag"
+               "termbranch"
+               "undelete"
+               "unpopulate"
+               "unselect"
+               "update"
+               "updatesel"
+               "userev"
+               ))
 (defun sos-op-on-file ()
   "exceute soscmd on current file or the selected files in dired-mode"
   (interactive)
@@ -50,7 +103,8 @@
         (if (string-equal major-mode "dired-mode")
             (dired-get-marked-files)
           (list (buffer-file-name))))
-  (setq op (read-string "SOS actions: "))
+  ;; (setq op (read-string "SOS actions: "))
+  (setq op (helm-comp-read "SOS actions: " sos-op))
   (setq soscmd (concat soscmd " "
                        op ))
   (mapcar
