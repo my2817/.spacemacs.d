@@ -37,9 +37,9 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ;;ivy
+     ivy
      auto-completion
-     ;; better-defaults
+     better-defaults
      emacs-lisp
      git
      markdown
@@ -48,7 +48,7 @@ values."
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
      ;; spell-checking
-     ;; syntax-checking
+     syntax-checking
      version-control
      themes-megapack
      my-config
