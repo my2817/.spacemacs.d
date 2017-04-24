@@ -49,6 +49,7 @@
     plantuml-mode
     tabbar
     tabbar-ruler
+    (sos-mode :location local)
   )
 
   "The list of Lisp packages required by the my-config layer.
@@ -222,4 +223,12 @@ Each entry is either:
                                         ; scroll bar when your mouse is moving.
       )
     ))
+(defun my-config/init-sos-mode()
+  (use-package sos-mode
+    :defer t
+    :init
+    (progn
+      (autoload 'sos-mode "sos-mode.el" "some sos command." t)
+      (sos-mode)
+      )))
 ;;; packages.el ends here
