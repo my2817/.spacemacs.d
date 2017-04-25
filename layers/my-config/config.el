@@ -160,3 +160,17 @@
      (add-to-list 'projectile-globally-ignored-files item))
    my-project-globally-ignored-files)
   )
+;; the following var are required by zilongshanren-org/post-init-org
+(defvar org-agenda-dir ""
+  "gtd org files location")
+
+(defvar deft-dir ""
+  "deft org files locaiton")
+
+(defvar blog-admin-dir ""
+  "blog-admin files location")
+
+(setq-default
+ org-agenda-dir "~/org-notes"
+ deft-dir "~/org-notes"
+ blog-admin-dir "~/4gamers.cn")

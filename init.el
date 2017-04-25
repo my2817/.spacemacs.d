@@ -328,7 +328,103 @@ you should place your code here."
   (spacemacs/toggle-golden-ratio-on)
   ;; (spacemacs/toggle-maximize-frame-on)
   (spaceline-spacemacs-theme 'projectile-root)
+
+  ;;解决org表格里面中英文对齐的问题
+  (when (configuration-layer/layer-usedp 'chinese)
+    (when (and (spacemacs/system-is-mac) window-system)
+      (spacemacs//set-monospaced-font "Source Code Pro" "Hiragino Sans GB" 14 16)))
+
+  ;; Setting Chinese Font
+  (when (and (spacemacs/system-is-mswindows) window-system)
+    (setq ispell-program-name "aspell")
+    (setq w32-pass-alt-to-system nil)
+    (setq w32-apps-modifier 'super)
+    (dolist (charset '(kana han symbol cjk-misc bopomofo))
+      (set-fontset-font (frame-parameter nil 'font)
+                        charset
+                        (font-spec :family "Microsoft Yahei" :size 14))))
+
+  (fset 'evil-visual-update-x-selection 'ignore)
+
+  ;; force horizontal split window
+  ;; (setq split-width-threshold 120)
+  ;; (linum-relative-on)
+
+  ;; (spacemacs|add-company-backends :modes text-mode)
+
+  ;; (add-hook 'doc-view-mode-hook 'auto-revert-mode)
+
+  ;; temp fix for ivy-switch-buffer
+  ;; (spacemacs/set-leader-keys "bb" 'helm-mini)
+
+  (global-hungry-delete-mode t)
+  (spacemacs|diminish helm-gtags-mode)
+  (spacemacs|diminish ggtags-mode)
+  (spacemacs|diminish which-key-mode)
+  (spacemacs|diminish spacemacs-whitespace-cleanup-mode)
+  (spacemacs|diminish counsel-mode)
+
+  (evilified-state-evilify-map special-mode-map :mode special-mode)
+
+  (add-to-list 'auto-mode-alist
+               '("Capstanfile\\'" . yaml-mode))
+
+  (defun js-indent-line ()
+    "Indent the current line as JavaScript."
+    (interactive)
+    (let* ((parse-status
+            (save-excursion (syntax-ppss (point-at-bol))))
+           (offset (- (point) (save-excursion (back-to-indentation) (point)))))
+      (if (nth 3 parse-status)
+          'noindent
+        (indent-line-to (js--proper-indentation parse-status))
+        (when (> offset 0) (forward-char offset)))))
+
+  ;; (global-set-key (kbd "<backtab>") 'un-indent-by-removing-4-spaces)
+  (defun un-indent-by-removing-4-spaces ()
+    "remove 4 spaces from beginning of of line"
+    (interactive)
+    (save-excursion
+      (save-match-data
+        (beginning-of-line)
+        ;; get rid of tabs at beginning of line
+        (when (looking-at "^\\s-+")
+          (untabify (match-beginning 0) (match-end 0)))
+        (when (looking-at (concat "^" (make-string tab-width ?\ )))
+          (replace-match "")))))
+
+  (defun zilongshanren/toggle-major-mode ()
+    (interactive)
+    (if (eq major-mode 'fundamental-mode)
+        (set-auto-mode)
+      (fundamental-mode)))
+  ;; (spacemacs/set-leader-keys "otm" 'zilongshanren/toggle-major-mode)
+
+  ;; (add-hook 'text-mode-hook 'spacemacs/toggle-spelling-checking-on)
+
+  ;; https://github.com/syl20bnr/spacemacs/issues/7749
+  (defun spacemacs/ivy-persp-switch-project (arg)
+    (interactive "P")
+    (ivy-read "Switch to Project Perspective: "
+              (if (projectile-project-p)
+                  (cons (abbreviate-file-name (projectile-project-root))
+                        (projectile-relevant-known-projects))
+                projectile-known-projects)
+              :action (lambda (project)
+                        (let ((persp-reset-windows-on-nil-window-conf t))
+                          (persp-switch project)
+                          (let ((projectile-completion-system 'ivy)
+                                (old-default-directory default-directory))
+                            (projectile-switch-project-by-name project)
+                            (setq default-directory old-default-directory))))))
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+)

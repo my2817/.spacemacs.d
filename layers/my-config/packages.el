@@ -184,9 +184,9 @@ Each entry is either:
 (defun my-config/init-plantuml-mode()
   (use-package plantuml-mode
     :defer t
-    :config
+    :init
     (progn
-      (setq org-plantuml-jar-path "~/plantuml.jar")
+      (setq plantuml-jar-path (expand-file-name "~/.spacemacs.d/plantuml.jar"))
       )
     ))
 
