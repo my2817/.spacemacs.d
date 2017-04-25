@@ -97,7 +97,7 @@
   (setq file-list "")
   (mapcar
    (lambda (file)
-     (setq file-list (concat file-list "" file)))
+     (setq file-list (concat file-list " " file)))
    (if (string-equal major-mode "dired-mode")
        (dired-get-marked-files)
      (list (buffer-file-name)))))
