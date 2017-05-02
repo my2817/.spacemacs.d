@@ -45,7 +45,7 @@
 ;;;
 ;;; mode on/off
 ;;;
-(global-hl-line-mode -1)
+(global-hl-line-mode 1)
 (blink-cursor-mode 1)
 (electric-pair-mode 1)
 

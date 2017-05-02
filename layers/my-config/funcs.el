@@ -101,5 +101,6 @@ Version 2015-12-10"
     (message "Mac not supported. File a bug report or pull request."))
    ((string-equal system-type "gnu/linux")
     (let ((process-connection-type nil))
-      (start-process "" nil "x-terminal-emulator"
-                     (concat "--working-directory=" default-directory) )))))
+      (start-process "" nil "gnome-terminal"
+                     (concat "--working-directory=" default-directory)
+                     "--profile=zsh") ))))
