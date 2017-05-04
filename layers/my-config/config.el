@@ -176,3 +176,32 @@
  org-agenda-dir "~/org-notes"
  deft-dir "~/org-notes"
  blog-admin-dir "~/4gamers.cn")
+
+(with-eval-after-load 'auto-complete
+  (add-hook 'minibuffer-setup-hook
+               (lambda ()
+                 (add-to-list 'ac-sources 'ac-source-words-in-all-buffer)))
+  (defcustom ac-in-minibuffer t
+    "Non-nil means expand in minibuffer."
+    :type 'boolean
+    :group 'auto-complete)
+
+  (defun ac-handle-post-command ()
+    (condition-case var
+        (when (and ac-triggered
+                   (not (ido-active)) ;; Disable auto pop-up in ido mode
+                   (or ac-auto-start
+                       ac-completing)
+                   (not isearch-mode))
+          (setq ac-last-point (point))
+          (ac-start :requires (unless ac-completing ac-auto-start))
+          (ac-inline-update))
+      (error (ac-error var))))
+
+  (defun auto-complete-mode-maybe ()
+    "What buffer `auto-complete-mode' prefers."
+    (if (or (and (minibufferp (current-buffer)) ac-in-minibuffer) ;; Changed
+            (memq major-mode ac-modes))
+        (auto-complete-mode 1)))
+
+  )
