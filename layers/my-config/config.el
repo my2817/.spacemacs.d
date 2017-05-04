@@ -46,6 +46,8 @@
 ;;; mode on/off
 ;;;
 (global-hl-line-mode 1)
+(custom-set-faces
+ '(hl-line ((t (:box (:line-width 1 :color "grey75" :style pressed-button))))))
 (blink-cursor-mode 1)
 (electric-pair-mode 1)
 

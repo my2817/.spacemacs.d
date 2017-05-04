@@ -713,6 +713,18 @@ endmodule // tb
 ;;(define-key verilog-template-map (kbd ",") 'verilog-sk-nonblock-assign)
 ;; (setq verilog-mode-abbrev-table nil)
 ;; (define-abbrev-table 'verilog-mode-abbrev-table ())
+(define-skeleton verilog-sk-always
+  "Insert seq block"
+  ()
+  > "always @ ( " (read-string "clock: " "posedge CLK" ) " or " (read-string "reset: " "negedge RSTN")  " ) begin\n"
+  > "if(!RSTN) begin\n"
+  > "/*AUTORESET*/\n"
+  > (- verilog-indent-level-behavioral) "end\n"
+  > '(electric-verilog-tab) "else begin\n"
+  > _ \n
+  > (- verilog-indent-level-behavioral) "end"
+  > (- verilog-indent-level-behavioral) "end" \n>
+  )
 (verilog-define-abbrev verilog-mode-abbrev-table "class_uvm_compoent"  "" 'verilog-sk-uvm-component)
 (verilog-define-abbrev verilog-mode-abbrev-table "class_uvm_object"    "" 'verilog-sk-uvm-object)
 (verilog-define-abbrev verilog-mode-abbrev-table "begin"               "" 'verilog-sk-begin)
