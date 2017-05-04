@@ -73,7 +73,7 @@
 (setq save-abbrevs nil)
 
 ;; turn on abbrev mode globally
-(setq-default abbrev-mode t)
+(setq-default abbrev-mode nil)
 
 (setq url-show-status nil)
 

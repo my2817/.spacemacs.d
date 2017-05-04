@@ -180,8 +180,10 @@
 (with-eval-after-load 'auto-complete
   (add-hook 'minibuffer-setup-hook
                (lambda ()
-                 (add-to-list 'ac-sources 'ac-source-words-in-all-buffer)))
-  (defcustom ac-in-minibuffer t
+                 (if (string= major-mode "verilog-mode")
+                     (add-to-list 'ac-sources 'ac-source-words-in-all-buffer)
+                   (setq ac-sources (remove 'ac-source-words-in-all-buffer ac-sources)))))
+  (defcustom ac-in-minibuffer nil
     "Non-nil means expand in minibuffer."
     :type 'boolean
     :group 'auto-complete)
