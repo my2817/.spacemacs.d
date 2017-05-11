@@ -732,7 +732,7 @@ endmodule // tb
   "It is my configuration of verilog-mode"
   :group prog-mode
   :init-value nil
-  :lighter "my-verilog"
+  ;; :lighter "my-verilog"
   :global nil
   :after-hook verilog-mode-hook
   (verilog-extras-hook)

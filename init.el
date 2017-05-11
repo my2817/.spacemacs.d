@@ -64,7 +64,7 @@ values."
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(spaceline)
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -328,7 +328,8 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (spacemacs/toggle-golden-ratio-on)
   ;; (spacemacs/toggle-maximize-frame-on)
-  (spaceline-spacemacs-theme 'projectile-root)
+  ;; (spaceline-spacemacs-theme 'projectile-root)
+  (setq-default mode-line-misc-info (push '(projectile-mode  (:eval (projectile-project-name) )) mode-line-misc-info ))
 
   ;;解决org表格里面中英文对齐的问题
   (when (configuration-layer/layer-usedp 'chinese)
