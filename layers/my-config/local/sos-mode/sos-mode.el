@@ -138,7 +138,7 @@
   "commands used in the version control system SOS"
   :group 'sos-mode
   :init-value nil
-  :lighter "SOS "
+  ;; :lighter "SOS"
   :global nil
   :after-hook nil
   :global t
