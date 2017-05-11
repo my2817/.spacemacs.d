@@ -164,7 +164,7 @@ Single Capitals as you type."
 
 (setq tags-add-tables nil)
 
-(electric-pair-mode t)
+;; (electric-pair-mode nil)
 ;; https://www.reddit.com/r/emacs/comments/4xhxfw/how_to_tune_the_behavior_of_eletricpairmode/
 (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
 (show-paren-mode t)

@@ -445,18 +445,13 @@ find the errors."
 (remove-hook 'compilation-mode-hook 'verilog-error-regexp-add-emacs)
 (if (featurep 'emacs) (add-hook 'compilation-mode-hook 'my-verilog-error-regexp-add-emacs))
 
-(define-skeleton verilog-sk-begin-bk
-  "Insert begin end block.  Uses the minibuffer to prompt for name."
-  ()
-  " begin" '(verilog-sk-prompt-name) \n
-  > _ \n
-  > (- verilog-indent-level-behavioral) "end"
-  )
-
 (define-skeleton verilog-sk-begin
   "Insert begin end block.  Uses the minibuffer to prompt for name."
   ()
-  " begin"\n
+  ;; '(delete-horizontal-space)
+  '(verilog-indent-line-relative)
+  '(end-of-line)
+  "begin"\n
   > _ \n
   > (- verilog-indent-level-behavioral) "end"
   )
