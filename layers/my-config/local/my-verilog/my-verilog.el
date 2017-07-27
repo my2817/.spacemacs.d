@@ -444,6 +444,19 @@ find the errors."
 
 (remove-hook 'compilation-mode-hook 'verilog-error-regexp-add-emacs)
 (if (featurep 'emacs) (add-hook 'compilation-mode-hook 'my-verilog-error-regexp-add-emacs))
+(define-skeleton verilog-sk-uvm-component
+  "Insert a class definition"
+  ()
+  > "class " (setq name (skeleton-read "Name: ")) " extends " (skeleton-read "Extends: ") ";" \n
+  > _ \n
+  > "`uvm_component_utils_begin(" name ")" \n
+  > (- verilog-indent-level) "`uvm_component_utils_end" \n
+  > _ \n
+  > "function new(string name=\"" name "\", uvm_component parent);" \n
+  > "super.new(name, parent);" \n
+  > (- verilog-indent-level) "endfunction" \n
+  > _ \n
+  > "endclass" (progn (electric-verilog-terminate-line) nil))
 
 (define-skeleton verilog-sk-begin
   "Insert begin end block.  Uses the minibuffer to prompt for name."
