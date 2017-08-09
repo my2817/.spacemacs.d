@@ -3,3 +3,4 @@
 (spacemacs/set-leader-keys "hh" 'highlight-symbol-at-point)
 (spacemacs/set-leader-keys "hH" 'highlight-symbol-remove-all)
 ;; (spacemacs/set-leader-keys "g C-s" 'svn-global-keymap)
+(spacemacs/set-leader-keys "go" 'sos-op-on-file)
