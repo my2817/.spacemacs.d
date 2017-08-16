@@ -40,7 +40,7 @@
   (add-hook 'org-mode-hook (lambda () (spacemacs/toggle-line-numbers-off)) 'append)
   (with-eval-after-load 'org
     (progn
-      
+
       (spacemacs|disable-company org-mode)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode
         "," 'org-priority)
@@ -186,7 +186,7 @@
          (sh . t)
          (dot . t)
          (js . t)
-         (latex .t)
+         (latex . t)
          (python . t)
          (emacs-lisp . t)
          (plantuml . t)

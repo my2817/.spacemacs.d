@@ -89,29 +89,9 @@
          "D:/EDA/libxml2/zlib-1.2.5/bin"
          "D:/EDA/libxml2/zlib-1.2.5/lib"
          "C:/ProgramData/Oracle/Java/javapath"
+         "d:/EDA/Git-2.6.0-32-bit/PortableGit/usr/bin"
          )))
 
-(with-eval-after-load 'org
-  (progn
-    (setq org-confirm-babel-evaluate nil)
-    (org-babel-do-load-languages
-     'org-babel-load-languages
-     '((ditaa . t) ; this line activates ditaa
-       (plantuml . t) ; this line activates plantuml
-       (python . t)
-       (perl . t)
-       (ruby . t)
-       (R . t)
-       (sh . t)
-       (gnuplot . t)
-       (org . t)
-       (latex . t)
-       (java . t)
-       (emacs-lisp . t)
-       (calc . t)
-       (sql . t)
-       (dot . t) ; this line activates graphviz(dot)
-       ))))
 (if (string-equal system-type "windows-nt")
     (setenv "GRAPHVIZ_DOT" (find-file-in-path-list 'dot.exe exec-path)))
 
