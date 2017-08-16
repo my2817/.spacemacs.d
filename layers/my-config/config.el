@@ -42,6 +42,7 @@
         :front "<script type=\"text/javascript\">"
         :back "</script>")))))
 
+(add-to-list 'page-break-lines-modes 'verilog-mode)
 ;;;
 ;;; mode on/off
 ;;;
