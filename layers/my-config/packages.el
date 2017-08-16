@@ -42,7 +42,7 @@
     (tcl-dc-mode :location local)
     ;htmlize
     electric-spacing
-    ctags
+    ;; ctags
     ctags-update
     ;; auctex
     ;; auto-complete-auctex
@@ -50,6 +50,7 @@
     tabbar
     tabbar-ruler
     (sos-mode :location local)
+    (org :location built-in)
   )
 
   "The list of Lisp packages required by the my-config layer.
@@ -231,4 +232,26 @@ Each entry is either:
       (autoload 'sos-mode "sos-mode.el" "some sos command." t)
       (sos-mode)
       )))
+(defun my-config/post-init-org()
+  (with-eval-after-load 'org
+    (progn
+
+      (setq org-plantuml-jar-path
+            (expand-file-name "~/.spacemacs.d/plantuml.jar"))
+      (setq org-ditaa-jar-path "~/.spacemacs.d/ditaa.jar")
+
+      (org-babel-do-load-languages
+       'org-babel-load-languages
+       '((perl . t)
+         (ruby . t)
+         (sh . t)
+         (dot . t)
+         (js . t)
+         (latex .t)
+         (python . t)
+         (emacs-lisp . t)
+         (plantuml . t)
+         (C . t)
+         (ditaa . t)))))
+  )
 ;;; packages.el ends here
