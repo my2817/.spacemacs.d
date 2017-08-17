@@ -43,6 +43,7 @@
         :back "</script>")))))
 
 (add-to-list 'page-break-lines-modes 'verilog-mode)
+(setq evil-want-abbrev-expand-on-insert-exit nil)
 ;;;
 ;;; mode on/off
 ;;;
