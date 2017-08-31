@@ -51,6 +51,7 @@
     tabbar-ruler
     (sos-mode :location local)
     (org :location built-in)
+    (compilation-mode :location built-in)
   )
 
   "The list of Lisp packages required by the my-config layer.
@@ -254,4 +255,20 @@ Each entry is either:
          (C . t)
          (ditaa . t)))))
   )
+(defun my-config/init-compilation-mode()
+  (use-package compilation-mode
+    :defer t
+    :init
+    (progn
+      (setq fm-error-regexp-emacs-alist
+            '(
+              (fm-WARNING
+               "\\([^ \t\n,]+\\):\\([0-9]+\\):.*\[WARNING\]" 1 2 nil 2)
+              (fm-ERROR
+               "\\([^ \t\n,]+\\):\\([0-9]+\\):.*\[ERROR\]" 1 2 nil 2)
+              ))
+      (require 'compile)
+      (my-config-error-regexp-add-emacs fm-error-regexp-emacs-alist))
+      )
+    )
 ;;; packages.el ends here
