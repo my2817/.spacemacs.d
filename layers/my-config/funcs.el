@@ -104,3 +104,17 @@ Version 2015-12-10"
       (start-process "" nil "gnome-terminal"
                      (concat "--working-directory=" default-directory)
                      "--profile=zsh") ))))
+(defun my-config-error-regexp-add-emacs (regexp-alist)
+  " add regexp-alist to `compilation-error-regexp-alist'
+Called by `compilation-mode-hook'.  This allows \\[next-error] to
+find the errors."
+  (interactive)
+  (mapcar
+   (lambda (item)
+     (if (not (memq (car item) compilation-error-regexp-alist))
+         (progn
+           (push (car item) compilation-error-regexp-alist)
+           (push item compilation-error-regexp-alist-alist))
+       )
+     )
+   regexp-alist))

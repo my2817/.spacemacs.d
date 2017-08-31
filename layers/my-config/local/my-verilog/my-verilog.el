@@ -420,30 +420,19 @@
       "ncelab: (\\([^ \t\n,]+\\),\\([0-9]+\\)):" 1 2 nil 0)
      (ncelab-sdf-warn
       "ncelab.*<\\([^ \t\n,]+\\), line \\([0-9]+\\)>" 1 2 nil 1)
-     (verilog-ncsim-file
-      "\\([^ \t\n,]+\\):\\([0-7]+\\)" 1 2 nil 0)
+     ;; (verilog-ncsim-file
+     ;;  "\\([^ \t\n,]+\\):\\([0-9]+\\)" 1 2 nil 0)
     ) )
 ;;  "List of regexps for Verilog compilers.
 ;;See `compilation-error-regexp-alist' for the formatting.  For Emacs 22+.")
 
 ;; Following code only gets called from compilation-mode-hook on Emacs to add error handling.
-(defun my-verilog-error-regexp-add-emacs ()
-   "Tell Emacs compile that we are Verilog.
-Called by `compilation-mode-hook'.  This allows \\[next-error] to
-find the errors."
-   (interactive)
-   (mapcar
-    (lambda (item)
-      (if (not (memq (car item) compilation-error-regexp-alist))
-          (progn
-            (push (car item) compilation-error-regexp-alist)
-            (push item compilation-error-regexp-alist-alist))
-        )
-      )
-    my-verilog-compilation-error-regexp-alist))
 
 (remove-hook 'compilation-mode-hook 'verilog-error-regexp-add-emacs)
-(if (featurep 'emacs) (add-hook 'compilation-mode-hook 'my-verilog-error-regexp-add-emacs))
+(if (featurep 'emacs)
+    (add-hook 'compilation-mode-hook
+              (lambda ()
+                (my-config-error-regexp-add-emacs my-verilog-compilation-error-regexp-alist))))
 (define-skeleton verilog-sk-uvm-component
   "Insert a class definition"
   ()
