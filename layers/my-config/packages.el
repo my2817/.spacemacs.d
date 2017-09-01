@@ -52,6 +52,7 @@
     (sos-mode :location local)
     (org :location built-in)
     (compilation-mode :location built-in)
+    flycheck
   )
 
   "The list of Lisp packages required by the my-config layer.
@@ -271,4 +272,18 @@ Each entry is either:
       (my-config-error-regexp-add-emacs fm-error-regexp-emacs-alist))
       )
     )
+
+(defun my-config/post-init-flycheck ()
+  (dolist (mode '(verilog-mode))
+    (spacemacs/enable-flycheck mode))
+  (flycheck-define-checker verilog-leda
+    "A verilog codeing style check by synopsys LEDA "
+    :command ("leda" "+v2k" "-nobanner" "-nocompilemessage" "-nocode" source)
+    :error-patterns (
+                     ;; (error line-start (file-name) ":" line ":" column ":" (1+ "a-zA-Z_") ":"  (message) line-end))
+                     (error line-start (file-name) ":" line ":" (message) line-end))
+    :modes verilog-mode
+    )
+  (add-to-list 'flycheck-checkers 'verilog-leda)
+  )
 ;;; packages.el ends here
