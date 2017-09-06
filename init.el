@@ -30,7 +30,7 @@ values."
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(perl5
      graphviz
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.

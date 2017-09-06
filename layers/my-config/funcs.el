@@ -118,3 +118,17 @@ find the errors."
        )
      )
    regexp-alist))
+
+(defun flycheck-verilog-run/create-catch-dir ()
+  (if (and (projectile-project-p)
+           (not (file-directory-p (concat (projectile-project-root) ".catch/irun/worklib")))
+           )
+      (progn
+        (dired-create-directory (concat (projectile-project-root) ".catch/irun/worklib"))
+        (message "fycheck-verilog/create-catch-dir : OK!")
+        )
+    (if (not (projectile-project-p))
+        (message "Your don't inside a projecte!")
+      (message "fycheck-verilog/create-catch-dir check: OK!")
+      )
+    ))

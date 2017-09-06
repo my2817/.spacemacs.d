@@ -277,13 +277,28 @@ Each entry is either:
   (dolist (mode '(verilog-mode))
     (spacemacs/enable-flycheck mode))
   (flycheck-define-checker verilog-leda
-    "A verilog codeing style check by synopsys LEDA "
+    "A verilog coding style check by synopsys LEDA "
     :command ("leda" "+v2k" "-nobanner" "-nocompilemessage" "-nocode" source)
     :error-patterns (
                      ;; (error line-start (file-name) ":" line ":" column ":" (1+ "a-zA-Z_") ":"  (message) line-end))
                      (error line-start (file-name) ":" line ":" (message) line-end))
     :modes verilog-mode
     )
+  (flycheck-define-checker my-verilog-verilator
+    "A Verilog syntax checker using the Verilator Verilog HDL simulator.
+
+See URL `https://www.veripool.org/wiki/verilator'.
+The original checker(verilog-verilator) doesn't work because of it chechouted that the verilator should be run by `start-process-shell-command',
+for the reasion described above, use bash to start verilator
+"
+    :command ("sh" "verilator" "--lint-only" source)
+    :error-patterns
+    ((warning line-start "%Warning-" (zero-or-more not-newline) ": "
+              (file-name) ":" line ": " (message) line-end)
+     (error line-start "%Error: " (file-name) ":"
+            line ": " (message) line-end))
+    :modes verilog-mode)
   (add-to-list 'flycheck-checkers 'verilog-leda)
+  (add-to-list 'flycheck-checkers 'my-verilog-verilator)
   )
 ;;; packages.el ends here
