@@ -298,7 +298,21 @@ for the reasion described above, use bash to start verilator
      (error line-start "%Error: " (file-name) ":"
             line ": " (message) line-end))
     :modes verilog-mode)
+  (flycheck-define-checker verilog-iverilog
+    "A verilog syntax checker using icarus-verilog.
+
+See URL `https://github.com/steveicarus/iverilog'"
+    :command ("iverilog" "-tnull" source)
+    :error-patterns
+    (
+     (warning line-start (file-name) ":" line ": " "warning:" (message))
+     (error line-start (file-name) ":" line ": " "error:" (message))
+     (error line-start (file-name) ":" line ":" (message) )
+     )
+    :modes verilog-mode
+    )
   (add-to-list 'flycheck-checkers 'verilog-leda)
   (add-to-list 'flycheck-checkers 'my-verilog-verilator)
+  (add-to-list 'flycheck-checkers 'verilog-iverilog)
   )
 ;;; packages.el ends here
