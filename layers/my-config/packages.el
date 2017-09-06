@@ -291,7 +291,7 @@ See URL `https://www.veripool.org/wiki/verilator'.
 The original checker(verilog-verilator) doesn't work because of it chechouted that the verilator should be run by `start-process-shell-command',
 for the reasion described above, use bash to start verilator
 "
-    :command ("sh" "verilator" "--lint-only" source)
+    :command ("sh" "verilator" "--lint-only" "-Wall" "-Wno-ASSIGNDLY" source)
     :error-patterns
     ((warning line-start "%Warning-" (zero-or-more not-newline) ": "
               (file-name) ":" line ": " (message) line-end)
