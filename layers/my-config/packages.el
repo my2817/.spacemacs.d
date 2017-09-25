@@ -237,7 +237,7 @@ Each entry is either:
 (defun my-config/post-init-org()
   (with-eval-after-load 'org
     (progn
-
+      (setq org-confirm-babel-evaluate nil)
       (setq org-plantuml-jar-path
             (expand-file-name "~/.spacemacs.d/plantuml.jar"))
       (setq org-ditaa-jar-path "~/.spacemacs.d/ditaa.jar")
