@@ -238,6 +238,7 @@ Each entry is either:
   (with-eval-after-load 'org
     (progn
       (setq org-confirm-babel-evaluate nil)
+      ;; if emacs prompt that the launguages can't be evaluate and the setting of following is OK, please do spacemacs/recompile-elpa and try agin
       (setq org-plantuml-jar-path
             (expand-file-name "~/.spacemacs.d/plantuml.jar"))
       (setq org-ditaa-jar-path "~/.spacemacs.d/ditaa.jar")
