@@ -114,6 +114,9 @@
   (setq soscmd (concat soscmd " "
                        file-list))
   (pcase op
+    ("co" (progn
+            (setq soscmd (concat soscmd " -Novr"))
+            (shell-command soscmd)))
     ("ci" (progn
             (setq soscmd (concat soscmd " "
                                  "-aLog=\""
@@ -128,6 +131,11 @@
                                       ))
                  (shell-command soscmd)
                  ))
+    ("diff" (progn
+              (setq soscmd (concat soscmd " -gui"))
+              (shell-command soscmd)
+              )
+     )
     (_ (shell-command soscmd)))
   (message soscmd)
   (revert-buffer)
