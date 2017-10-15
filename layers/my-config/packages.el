@@ -92,12 +92,18 @@ Each entry is either:
       (add-to-list 'ac-modes 'graphviz-dot-mode)
       (add-to-list 'ac-modes 'makefile-gmake-mode)
       (add-to-list 'ac-modes 'TeX-latex-mode)
+      (add-to-list 'ac-modes 'verilog-mode)
       (add-to-list 'ac-dictionary-directories (concat
                                                (or (file-name-directory #$) (car load-path))
                                                "local/ac-dict/"))
       (add-to-list 'ac-sources 'ac-source-filename)
       (add-to-list 'ac-sources 'ac-source-abbrev)
+      (setq ac-source-time
+            '((candidates . (list (format "%s" (format-time-string "%Y-%m-%d-%H:%M:%S"))))
+              (prefix . "@\\(.*\\)")))
+      (add-to-list 'ac-sources 'ac-source-time)
       ;;(add-to-list 'ac-dictionary-directories (expand-file-name "local/ac-dict/" user-emacs-directory))
+      (setq-default ac-sources ac-sources);;make sure the default value is what I seeted previous
       (setq-default ac-disable-faces nil))))
 
 ;; (defun my-config/init-graphviz-dot-mode ()
