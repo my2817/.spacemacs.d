@@ -144,12 +144,12 @@ find the errors."
         (progn
           (find-file fn)
           (insert "
-((verilog-mode . ((eval . (setq verilog-library-flags
-                                (mapcar (lambda (item)
-                                          (setq local-list (format \"%s -v %s \" local-list item)))
-                                        (directory-files-recursively (projectile-project-root) \".[s]?v$\")
-                                        )))
-                  )))
+((verilog-mode . (
+                  (eval .
+                        (setq verilog-library-flags (directory-files-recursively (projectile-project-root) \".[s]?v$\"))
+                        ))
+               )
+ )
 ")
           (save-buffer)
         )
