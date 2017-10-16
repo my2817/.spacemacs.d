@@ -132,3 +132,28 @@ find the errors."
       (message "fycheck-verilog/create-catch-dir check: OK!")
       )
     ))
+
+(defun my-init-project-dir-local ()
+
+  (interactive)
+  (let* (
+         (fn (concat (projectile-project-root) ".dir-locals.el")))
+    (if (and (projectile-project-p)
+             (not (file-exists-p fn))
+             )
+        (progn
+          (find-file fn)
+          (insert "
+((verilog-mode . ((eval . (setq verilog-library-flags
+                                (mapcar (lambda (item)
+                                          (setq local-list (format \"%s -v %s \" local-list item)))
+                                        (directory-files-recursively (projectile-project-root) \".[s]?v$\")
+                                        )))
+                  )))
+")
+          (save-buffer)
+        )
+      (message ".dir-locals exists: %s" fn)
+      )
+    )
+  )
