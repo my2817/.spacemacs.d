@@ -147,8 +147,7 @@
   :group 'sos-mode
   :init-value nil
   ;; :lighter "SOS"
-  :global nil
-  :after-hook nil
   :global t
+  :after-hook nil
 
   )

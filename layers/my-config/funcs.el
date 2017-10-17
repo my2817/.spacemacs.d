@@ -146,9 +146,9 @@ find the errors."
           (insert "
 ((verilog-mode . (
                   (eval .
-                        (setq verilog-library-flags
-                              (format \"%s\" (directory-files-recursively
-                                            (concat (projectile-project-root) \"digital/rtl\") \"\\.[s]?v$\")))
+                        (setq verilog-library-files
+                              (directory-files-recursively
+                                            (concat (projectile-project-root) \"digital/rtl\") \"\\.[s]?v$\"))
                         ))
                )
  )
