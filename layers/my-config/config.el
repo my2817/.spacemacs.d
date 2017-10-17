@@ -133,6 +133,7 @@
      (add-to-list 'grep-find-ignored-files item))
    my-grep-global-ignore-files))
 
+;; projectile
 (defvar my-project-globally-ignored-files
   '(
     "*.pak$"
@@ -144,6 +145,8 @@
      (add-to-list 'projectile-globally-ignored-files item))
    my-project-globally-ignored-files)
   )
+(setq enable-local-variables :all enable-local-eval t)
+
 ;; the following var are required by zilongshanren-org/post-init-org
 (defvar org-agenda-dir ""
   "gtd org files location")

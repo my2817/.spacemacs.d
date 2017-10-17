@@ -133,7 +133,7 @@ find the errors."
       )
     ))
 
-(defun my-init-project-dir-local ()
+(defun my-project-dir-local-init()
 
   (interactive)
   (let* (
@@ -146,12 +146,15 @@ find the errors."
           (insert "
 ((verilog-mode . (
                   (eval .
-                        (setq verilog-library-flags (directory-files-recursively (projectile-project-root) \".[s]?v$\"))
+                        (setq verilog-library-flags
+                              (format \"%s\" (directory-files-recursively
+                                            (concat (projectile-project-root) \"digital/rtl\") \"\\.[s]?v$\")))
                         ))
                )
  )
 ")
           (save-buffer)
+          (kill-buffer)
         )
       (message ".dir-locals exists: %s" fn)
       )
