@@ -138,7 +138,7 @@
      )
     (_ (shell-command soscmd)))
   (message soscmd)
-  (revert-buffer)
+  (revert-buffer t t )
   )
 
 ;;;###autoload
