@@ -31,13 +31,14 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(perl5
+     ;; helm
      graphviz
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ;; ivy
+     ivy
      auto-completion
      better-defaults
      emacs-lisp
@@ -72,7 +73,7 @@ values."
    ;; `used-but-keep-unused' installs only the used packages but won't uninstall
    ;; them if they become unused. `all' installs *all* packages supported by
    ;; Spacemacs and never uninstall them. (default is `used-only')
-   dotspacemacs-install-packages 'used-but-keep-unused))
+   dotspacemacs-install-packages 'used-only))
 
 (defun dotspacemacs/init ()
   "Initialization function.
@@ -289,7 +290,7 @@ values."
    ;; List of search tool executable names. Spacemacs uses the first installed
    ;; tool of the list. Supported tools are `ag', `pt', `ack' and `grep'.
    ;; (default '("ag" "pt" "ack" "grep"))
-   dotspacemacs-search-tools '("ag" "pt" "ack" "grep")
+   dotspacemacs-search-tools '("ag" "pt" "ack" "grep" )
    ;; The default package repository used if no explicit repository has been
    ;; specified with an installed package.
    ;; Not used for now. (default nil)
@@ -317,10 +318,22 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;;  ;   ("org-cn"   . "http://elpa.zilongshanren.com/org/")
   ;;  ;   ("gnu-cn"   . "http://elpa.zilongshanren.com/gnu/")))
   ;; (package-initialize)
-  (setq configuration-layer--elpa-archives
-        '(("melpa-cn" . "http://elpa.emacs-china.org/melpa/")
-          ("org-cn"   . "http://elpa.emacs-china.org/org/")
-          ("gnu-cn"   . "http://elpa.emacs-china.org/gnu/")))
+  (let ((melpa-source "local"))
+    (cond
+     ((string= melpa-source "emacs-china")
+      (setq configuration-layer--elpa-archives
+            '(("melpa-cn" . "http://elpa.emacs-china.org/melpa/")
+              ("org-cn"   . "http://elpa.emacs-china.org/org/")
+              ("gnu-cn"   . "http://elpa.emacs-china.org/gnu/"))))
+     ((string= melpa-source "local")
+      (setq configuration-layer--elpa-archives
+            '(("melpa-cn" . "~/.emacs.d/.cache/elpa.emacs-china.org/melpa/")
+              ("org-cn"   . "~/.emacs.d/.cache/elpa.emacs-china.org/org/")
+              ("gnu-cn"   . "~/.emacs.d/.cache/elpa.emacs-china.org/gnu/")))
+      )
+     )
+    )
+
   )
 
 (defun dotspacemacs/user-config ()
