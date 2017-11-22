@@ -61,7 +61,7 @@
 ;;;
 ;;; Hooks
 ;;;
-(add-hook 'verilog-mode-hook 'global-auto-complete-mode)
+(add-hook 'verilog-mode-hook 'auto-complete-mode)
 ;;(add-hook 'verilog-mode-hook 'mmm-mode)
 (add-hook 'verilog-mode-hook 'electric-spacing-mode)
 (add-hook 'graphviz-dot-mode-hook 'smartparens-mode)
