@@ -162,3 +162,32 @@ find the errors."
       )
     )
   )
+
+(defadvice projectile-regenerate-tags (around my-project-regenerate-tags)
+  "we just generate tags of files which listed by `projectile-current-project-files'"
+    (interactive)
+    (if (and (boundp 'ggtags-mode)
+             (memq projectile-tags-backend '(auto ggtags)))
+        (progn
+          (let* ((ggtags-project-root (projectile-project-root))
+                 (default-directory ggtags-project-root))
+            (ggtags-ensure-project)
+            (ggtags-update-tags t)))
+      (let* ((project-root (projectile-project-root))
+             (tags-exclude (projectile-tags-exclude-patterns))
+             (default-directory project-root)
+             (tags-file (expand-file-name projectile-tags-file-name))
+             (command (format projectile-tags-command tags-file tags-exclude))
+             (current-project-files (mapconcat 'identity (projectile-current-project-files) " "))
+
+             shell-output exit-code)
+        (setq command (format "%s %s" command current-project-files))
+        (with-temp-buffer
+          (setq exit-code
+                (call-process-shell-command command nil (current-buffer))
+                shell-output (projectile-trim-string
+                              (buffer-substring (point-min) (point-max)))))
+        (unless (zerop exit-code)
+          (error shell-output))
+        (visit-tags-table tags-file)
+        (message "Regenerated %s" tags-file))))
