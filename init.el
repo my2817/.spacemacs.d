@@ -327,9 +327,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
               ("gnu-cn"   . "http://elpa.emacs-china.org/gnu/"))))
      ((string= melpa-source "local")
       (setq configuration-layer--elpa-archives
-            '(("melpa-cn" . "~/.emacs.d/.cache/elpa.emacs-china.org/melpa/")
-              ("org-cn"   . "~/.emacs.d/.cache/elpa.emacs-china.org/org/")
-              ("gnu-cn"   . "~/.emacs.d/.cache/elpa.emacs-china.org/gnu/")))
+            '(("melpa-cn-local" . "~/.emacs.d/.cache/elpa.emacs-china.org/melpa/")
+              ("org-cn-local"   . "~/.emacs.d/.cache/elpa.emacs-china.org/org/")
+              ("gnu-cn-local"   . "~/.emacs.d/.cache/elpa.emacs-china.org/gnu/")))
       )
      )
     )
@@ -384,6 +384,7 @@ you should place your code here."
 
   (evilified-state-evilify-map special-mode-map :mode special-mode)
 
+  ;; (setq projectile-enable-caching t)
   (add-to-list 'auto-mode-alist
                '("Capstanfile\\'" . yaml-mode))
 
