@@ -54,6 +54,7 @@
     (compilation-mode :location built-in)
     flycheck
     (company-verilog :location local)
+    header2
   )
 
   "The list of Lisp packages required by the my-config layer.
@@ -333,4 +334,12 @@ See URL `https://github.com/steveicarus/iverilog'"
       (add-hook 'verilog-mode-hook 'company-verilog)
       ))
   )
+
+(defun my-config/init-header2 ()
+  (use-package header2
+    :defer t
+    :init
+    )
+  )
+
 ;;; packages.el ends here
