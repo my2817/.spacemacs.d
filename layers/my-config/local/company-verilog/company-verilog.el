@@ -7,7 +7,7 @@
   "Completion backend for CMake."
   :group 'company)
 
-(defcustom company-verilog-keywords
+(defcustom company-verilog-keywords-ieee
   '("alias" "always" "always_comb" "always_ff" "always_latch" "and" "assert"
   "assign" "assume" "automatic" "before" "begin" "bind" "bins" "binsof" "bit"
   "break" "buf" "bufif0" "bufif1" "byte" "case" "casex" "casez" "cell" "chandle"
@@ -83,7 +83,21 @@
   "A key-words list of verilog-mode "
   :group 'company-verilog
   )
+(defcustom company-verilog-keywords-user
+  '("class_uvm_component" "class_uvm_object")
+  "user define key words"
+  :group 'company-verilog)
+(defcustom company-verilog-keywords nil
+  "keywords for company-verilog "
+  :group 'company-verilog
+ )
 
+(mapcar (lambda (keyword)
+          (add-to-list 'company-verilog-keywords keyword))
+        company-verilog-keywords-ieee)
+(mapcar (lambda (keyword)
+          (add-to-list 'company-verilog-keywords keyword))
+        company-verilog-keywords-user)
 (defun company-verilog-backend (command &optional arg &rest ignored)
   "company backend for veriog"
   (interactive (list 'interactive))
