@@ -722,7 +722,7 @@ endmodule // tb
   > (- verilog-indent-level-behavioral) "end"
   > (- verilog-indent-level-behavioral) "end" \n>
   )
-(verilog-define-abbrev verilog-mode-abbrev-table "class_uvm_compoent"  "" 'verilog-sk-uvm-component)
+(verilog-define-abbrev verilog-mode-abbrev-table "class_uvm_component"  "" 'verilog-sk-uvm-component)
 (verilog-define-abbrev verilog-mode-abbrev-table "class_uvm_object"    "" 'verilog-sk-uvm-object)
 (verilog-define-abbrev verilog-mode-abbrev-table "begin"               "" 'verilog-sk-begin)
 
