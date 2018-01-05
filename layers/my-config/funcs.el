@@ -146,6 +146,9 @@ find the errors."
           (insert "
 ((verilog-mode . (
                   (eval .
+                        (setq verilog-library-directories nil)
+                        )
+                  (eval .
                         (mapcar
                          (lambda (file)
                            (add-to-list 'verilog-library-directories (file-name-directory file)))
