@@ -146,7 +146,7 @@ find the errors."
           (insert "
 ((verilog-mode . (
                   (eval .
-                        (setq verilog-library-directories nil)
+                        (setq verilog-library-directories '(\".\"))
                         )
                   (eval .
                         (mapcar
