@@ -53,6 +53,7 @@
     (org :location built-in)
     (compilation-mode :location built-in)
     flycheck
+    flycheck-plantuml
     (company-verilog :location local)
     header2
   )
@@ -341,5 +342,10 @@ See URL `https://github.com/steveicarus/iverilog'"
     :init
     )
   )
-
+(defun my-config/init-flycheck-plantuml ()
+  (use-package flycheck-plantuml
+    :defer t
+    :init
+    )
+  )
 ;;; packages.el ends here
