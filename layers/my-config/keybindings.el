@@ -6,3 +6,4 @@
 (spacemacs/set-leader-keys "ms" 'sos-op-on-file)
 (spacemacs/set-leader-keys "md" 'ediff-current-file)
 (spacemacs/set-leader-keys "mc" 'smex-major-mode-commands)
+(spacemacs/set-leader-keys "aou" 'org-projectile/update-agenda-files)

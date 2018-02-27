@@ -163,6 +163,16 @@
  deft-dir "~/org-notes"
  blog-admin-dir "~/4gamers.cn")
 
+(with-eval-after-load 'org-agenda
+  (require 'org-projectile)
+  ;; (mapcar (lambda (f)
+  ;;           (if (file-exists-p f)
+  ;;               (add-to-list 'org-agenda-files f)))
+  ;;         (org-projectile-todo-files)
+  ;;         )
+  (org-projectile/update-agenda-files)
+  )
+
 ;; (with-eval-after-load 'auto-complete
 ;;   (add-hook 'minibuffer-setup-hook
 ;;                (lambda ()

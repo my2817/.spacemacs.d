@@ -264,3 +264,16 @@ find the errors."
       (if cur-indent
           (indent-line-to cur-indent)
         (indent-line-to 0)))))
+
+(defun org-projectile/update-agenda-files ()
+  "Update org-agenda-files based on `org-projectile-todo-files'
+
+if agenda file non-existent, DONT add is to org-agenda-files
+"
+  (interactive)
+  (mapcar (lambda (f)
+            (if (file-exists-p f)
+                (add-to-list 'org-agenda-files f)))
+          (org-projectile-todo-files)
+          )
+  )
