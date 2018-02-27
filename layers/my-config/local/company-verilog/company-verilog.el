@@ -107,17 +107,19 @@
     (prefix (and (eq major-mode 'verilog-mode)
                  (company-grab-symbol)))
     (candidates
+     (setq-local key-words company-verilog-keywords )
+     (add-to-list 'key-words (format-time-string "%Y-%m-%d %H:%M:%S"))
      (cl-remove-if-not
       (lambda (c) (string-prefix-p arg c))
-      company-verilog-keywords ))
+      ;; company-verilog-keywords
+      key-words
+      ))
     (post-completion
      (expand-abbrev))))
 
 (add-to-list 'company-keywords-alist (cons 'verilog-mode company-verilog-keywords))
 ;; (make-variable-buffer-local 'company-backends)
-(setq company-backends '( (company-verilog-backend company-dabbrev-code company-gtags company-etags)
-                                  company-files company-abbrev
-                                                         ))
+
 ;; (provide 'company-verilog)
 ;;;###autoload
 (define-minor-mode company-verilog
@@ -127,5 +129,15 @@
   ;; :lighter "CompanyVerilog"
   :global nil
   :after-hook nil
+
+  (if company-verilog
+      (progn
+        (setq company-backends '( (company-verilog-backend company-dabbrev-code company-gtags company-etags)
+                                  company-files company-abbrev
+                                  ))
+        (setq company-dabbrev-code-ignore-case t)
+        )
+    (setq company-dabbrev-code-ignore-case nil)
+      )
 
   )
