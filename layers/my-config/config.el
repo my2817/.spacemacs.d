@@ -225,3 +225,7 @@
                                              )
                  (tramp-default-port         22)))
   )
+
+(with-eval-after-load 'persp-mode
+  (setq persp-auto-save-opt 0)
+  )
