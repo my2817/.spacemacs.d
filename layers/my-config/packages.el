@@ -286,8 +286,14 @@ Each entry is either:
               ))
       (setq org-tag-alist '(
                             (:startgroup . nil)
+                            ("product" . nil)
+                            (:grouptags . nil)
                             ("develop" . ?d)
                             ("debug" . ?D)
+                            (:endgroup . nil)
+
+                            (:startgroup . nil)
+                            ("DFE-members" . nil)
                             (:grouptags . nil)
                             ("heyun" . nil)
                             ("xulinliang" . nil)
