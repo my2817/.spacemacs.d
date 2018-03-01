@@ -279,9 +279,10 @@ Each entry is either:
          (C . t)
          (ditaa . t)))
       (setq org-todo-keywords
-           '((type "WORK(w!)" "STUDY(s!)" "|")
+           '((type "WORK(!)" "STUDY(!)" "|")
+             (type "heyun(!)" "xulinliang(!)" "lina(!)" "chenshuxian(!)" "wangjunjie(!)" "huanqin(!)" "|" "DONE(!)")
              (sequence "TODO(t!)" "|" "DONE(d!)")
-             (sequence "REPORT(r!)" "BUG(b!)" "KNOWNCASUE(k!)" "|" "FIXED(f@/!)")
+             (sequence "REPORT(r@/!)" "BUG(b@/!)" "KNOWNCASUE(k!)" "|" "FIXED(f@/!)")
              (sequence "|" "CANCEL(c@/!)")
               ))
       (setq org-tag-alist '(

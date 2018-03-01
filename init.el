@@ -43,7 +43,7 @@ This function should only modify configuration layer settings."
      emacs-lisp
      git
      markdown
-     org
+     (org :variables org-projectile-file "TODOs.org")
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
@@ -132,8 +132,11 @@ It should only modify the values of Spacemacs settings."
    ;; `recents' `bookmarks' `projects' `agenda' `todos'.
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
-   dotspacemacs-startup-lists '((recents . 5)
-                                (projects . 7))
+   dotspacemacs-startup-lists '(
+                                (todos . nil)
+                                (recents . 5)
+                                (projects . 7)
+                                )
    ;; True if the home buffer should respond to resize events. (default t)
    dotspacemacs-startup-buffer-responsive t
    ;; Default major mode of the scratch buffer (default `text-mode')
@@ -469,20 +472,20 @@ you should place your code here."
   ;; (add-hook 'text-mode-hook 'spacemacs/toggle-spelling-checking-on)
 
   ;; https://github.com/syl20bnr/spacemacs/issues/7749
-  (defun spacemacs/ivy-persp-switch-project (arg)
-    (interactive "P")
-    (ivy-read "Switch to Project Perspective: "
-              (if (projectile-project-p)
-                  (cons (abbreviate-file-name (projectile-project-root))
-                        (projectile-relevant-known-projects))
-                projectile-known-projects)
-              :action (lambda (project)
-                        (let ((persp-reset-windows-on-nil-window-conf t))
-                          (persp-switch project)
-                          (let ((projectile-completion-system 'ivy)
-                                (old-default-directory default-directory))
-                            (projectile-switch-project-by-name project)
-                            (setq default-directory old-default-directory))))))
+  ;; (defun spacemacs/ivy-persp-switch-project (arg)
+  ;;   (interactive "P")
+  ;;   (ivy-read "Switch to Project Perspective: "
+  ;;             (if (projectile-project-p)
+  ;;                 (cons (abbreviate-file-name (projectile-project-root))
+  ;;                       (projectile-relevant-known-projects))
+  ;;               projectile-known-projects)
+  ;;             :action (lambda (project)
+  ;;                       (let ((persp-reset-windows-on-nil-window-conf t))
+  ;;                         (persp-switch project)
+  ;;                         (let ((projectile-completion-system 'ivy)
+  ;;                               (old-default-directory default-directory))
+  ;;                           (projectile-switch-project-by-name project)
+  ;;                           (setq default-directory old-default-directory))))))
 
   )
 
