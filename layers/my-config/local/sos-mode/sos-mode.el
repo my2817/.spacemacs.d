@@ -107,8 +107,14 @@
   (interactive)
   (setq soscmd "soscmd")
   (sos-get-files)
+  (cond
+   (ivy-mode (setq sos-comp-read 'ivy-completing-read))
+   (helm-mode (setq sos-comp-read 'helm-comp-read))
+   (t (error "no ivy or helm cmplete read function is enabled"))
+   )
+
   ;; (setq op (read-string "SOS actions: "))
-  (setq op (helm-comp-read "SOS actions: " sos-cmd))
+  (setq op (funcall sos-comp-read "SOS actions: " sos-cmd))
   (setq soscmd (concat soscmd " "
                        op ))
   (setq soscmd (concat soscmd " "
@@ -126,8 +132,8 @@
     ("modattr" (progn
                  (setq soscmd (concat soscmd " "
                                       "-a"
-                                      (helm-comp-read "Arttribute: " sos-attribute) "="
-                                      (helm-comp-read "Arttribute\'s value: " sos-attribute-value)
+                                      (funcall sos-comp-read "Arttribute: " sos-attribute) "="
+                                      (funcall sos-comp-read "Arttribute\'s value: " sos-attribute-value)
                                       ))
                  (shell-command soscmd)
                  ))
