@@ -96,6 +96,7 @@ Each entry is either:
       (add-to-list 'ac-modes 'makefile-gmake-mode)
       (add-to-list 'ac-modes 'TeX-latex-mode)
       (add-to-list 'ac-modes 'verilog-mode)
+      (add-to-list 'ac-modes 'tcl-dc-mode)
       (add-to-list 'ac-dictionary-directories (concat
                                                (or (file-name-directory #$) (car load-path))
                                                "local/ac-dict/"))
@@ -172,6 +173,9 @@ Each entry is either:
       (autoload 'tcl-dc-mode "tcl-dc-mode" "Tcl DC Mode" t)
       (add-to-list 'auto-mode-alist '("\\.tcl\\'" . tcl-dc-mode))
       (add-to-list 'auto-mode-alist '("\\.sdc\\'" . tcl-dc-mode))
+      (with-eval-after-load 'auto-complete-mode
+        (progn
+          (auto-complete-mode )))
       )
     ))
 (defun my-config/init-electric-spacing()
