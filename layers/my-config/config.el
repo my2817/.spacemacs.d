@@ -18,9 +18,16 @@
     (mmm-add-classes
      '((verilog-org
         :submode org-mode
-        :front "\\/\\*-- \\(org\\)"
-        :back "\\(!org\\) --\\*\\/")))
+        :front "\\/\\*-- \\(org\\).*\n"
+        :back "^.*\\(!org\\) --\\*\\/")))
 
+    ;; in multi-line comment block, we use org-mode as default
+    (mmm-add-mode-ext-class 'verilog-mode nil 'verilog-org-1 )
+    (mmm-add-classes
+     '((verilog-org-1
+        :submode org-mode
+        :front "\\/\\*[\\*-=]*\n"
+        :back "^.*[\\*-=]*\\*\\/")))
 
     (mmm-add-mode-ext-class 'verilog-mode nil 'verilog-lisp )
     (mmm-add-classes
