@@ -198,72 +198,73 @@ find the errors."
 (defun plantuml-indent-line ()
   "Indent current line as plantuml code"
   (interactive)
-  (beginning-of-line)
-  (if (bobp)
-      (indent-line-to 0)
-    (let ((not-indented t) cur-indent var-indent)
-      (if (looking-at plantuml-indent-regexp-end)
-          (progn
-            (save-excursion
+  (save-excursion
+    (beginning-of-line)
+    (if (bobp)
+        (indent-line-to 0)
+      (let ((not-indented t) cur-indent var-indent)
+        (if (looking-at plantuml-indent-regexp-end)
+            (progn
+              (save-excursion
+                (forward-line -1)
+                (if (looking-at plantuml-indent-regexp-start)
+                    (setq cur-indent (current-indentation))
+                  (setq cur-indent(- (current-indentation)
+                                     plantuml-indent-offset))))
+              (if (< cur-indent 0)
+                  (setq cur-indent 0)))
+          (save-excursion
+            (while not-indented
               (forward-line -1)
-              (if (looking-at plantuml-indent-regexp-start)
-                  (setq cur-indent (current-indentation))
-                (setq cur-indent(- (current-indentation)
-                                   plantuml-indent-offset))))
-            (if (< cur-indent 0)
-                (setq cur-indent 0)))
-        (save-excursion
-          (while not-indented
-            (forward-line -1)
               (cond
-                ((looking-at plantuml-indent-regexp-start)
-                    (setq cur-indent (+ (current-indentation)
-                                        plantuml-indent-offset)
-                          not-indented nil))
-                ((looking-at plantuml-indent-regexp-end)
-                    (setq cur-indent (current-indentation)
-                          not-indented nil))
-                ((progn (forward-line 1)
-                        (setq var-indent
-                              (looking-at plantuml-indent-regexp-arrow))
-                        (forward-line -1)
-                        var-indent)
-                 (cond
-                  ((> (setq var-indent
-                            (string-match
-                             (progn (string-match
-                                     plantuml-indent-regexp-arrow-1
-                                     (current-line-string))
-                                    (match-string-no-properties
-                                     0
-                                     (current-line-string)))
-                             (current-line-string))) 0)
-                   (setq cur-indent  var-indent
-                         not-indented nil))))
-                ((progn (forward-line 1)
-                        (setq var-indent
-                              (looking-at plantuml-indent-regexp-arrow-2))
-                        (forward-line -1)
-                        var-indent)
-                 (cond
-                  ('t
-                    (let ((var-count 0) (var-flag t))
-                      (while var-flag
-                        (incf var-count)
-                        (forward-line -1)
-                        (cond ((bobp) (setq flag nil))
-                              ((looking-at plantuml-indent-regexp-arrow) nil)
-                              ((looking-at "^\s+$") nil)
-                              ((looking-at plantuml-indent-regexp-end) nil)
-                              ((looking-at plantuml-indent-regexp-start) nil)
-                              ('t (setq cur-indent (current-indentation)
-                                         not-indented nil
-                                         var-flag nil))))
-                        (forward-line var-count)))))
-                ((bobp) (setq not-indented nil))))))
-      (if cur-indent
-          (indent-line-to cur-indent)
-        (indent-line-to 0)))))
+               ((looking-at plantuml-indent-regexp-start)
+                (setq cur-indent (+ (current-indentation)
+                                    plantuml-indent-offset)
+                      not-indented nil))
+               ((looking-at plantuml-indent-regexp-end)
+                (setq cur-indent (current-indentation)
+                      not-indented nil))
+               ((progn (forward-line 1)
+                       (setq var-indent
+                             (looking-at plantuml-indent-regexp-arrow))
+                       (forward-line -1)
+                       var-indent)
+                (cond
+                 ((> (setq var-indent
+                           (string-match
+                            (progn (string-match
+                                    plantuml-indent-regexp-arrow-1
+                                    (current-line-string))
+                                   (match-string-no-properties
+                                    0
+                                    (current-line-string)))
+                            (current-line-string))) 0)
+                  (setq cur-indent  var-indent
+                        not-indented nil))))
+               ((progn (forward-line 1)
+                       (setq var-indent
+                             (looking-at plantuml-indent-regexp-arrow-2))
+                       (forward-line -1)
+                       var-indent)
+                (cond
+                 ('t
+                  (let ((var-count 0) (var-flag t))
+                    (while var-flag
+                      (incf var-count)
+                      (forward-line -1)
+                      (cond ((bobp) (setq var-flag nil))
+                            ((looking-at plantuml-indent-regexp-arrow) nil)
+                            ((looking-at "^\s+$") nil)
+                            ((looking-at plantuml-indent-regexp-end) nil)
+                            ((looking-at plantuml-indent-regexp-start) nil)
+                            ('t (setq cur-indent (current-indentation)
+                                      not-indented nil
+                                      var-flag nil))))
+                    (forward-line var-count)))))
+               ((bobp) (setq not-indented nil))))))
+        (if cur-indent
+            (indent-line-to cur-indent)
+          (indent-line-to 0))))))
 
 (defun org-projectile/update-agenda-files ()
   "Update org-agenda-files based on `org-projectile-todo-files'
