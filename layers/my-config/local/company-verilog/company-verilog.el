@@ -132,12 +132,16 @@
 
   (if company-verilog
       (progn
-        (setq company-backends '( (company-verilog-backend company-dabbrev-code company-gtags company-etags)
-                                  company-files company-abbrev
-                                  ))
-        (setq company-dabbrev-code-ignore-case t)
+        (make-local-variable 'company-backends)
+        (setq company-backends
+              '( company-files
+                 (company-verilog-backend company-dabbrev-code company-gtags company-etags)
+                 company-abbrev
+                 ))
+         (make-local-variable 'company-dabbrev-code-ignore-case)
+         (setq company-dabbrev-code-ignore-case t)
+         (make-local-variable 'company-dabbrev-code-everywhere)
+         (setq company-dabbrev-code-everywhere t)
         )
     (setq company-dabbrev-code-ignore-case nil)
-      )
-
-  )
+    ))
