@@ -1,5 +1,8 @@
 (defgroup sos-mode nil
   "sos-mode group")
+(defcustom sos-get-log-command 'my-verilog-get-last-history-log
+  "`sos-op-on-file' will call this function to get the initial log for SOS CI command"
+  :group 'sos-mode)
 (defcustom sos-cmd '(
                "addreference"
                "audit"
@@ -126,7 +129,7 @@
     ("ci" (progn
             (setq soscmd (concat soscmd " "
                                  "-aLog=\""
-                                 (read-string "CI Log:")
+                                 (read-string "CI Log:" (funcall sos-get-log-command))
                                  "\""))
             (shell-command soscmd)))
     ("modattr" (progn
