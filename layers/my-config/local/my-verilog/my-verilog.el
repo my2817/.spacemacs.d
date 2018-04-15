@@ -730,7 +730,7 @@ endmodule // tb
 
 ;; (defalias 'my-verilog 'ignore)
 ;; (provide 'my-verilog)
-(defun my-verilog-get-last-hestory ()
+(defun my-verilog-get-last-history-log ()
   "Return the history log of current module"
   (interactive)
   (save-excursion
