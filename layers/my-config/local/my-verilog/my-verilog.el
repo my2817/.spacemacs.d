@@ -547,7 +547,7 @@ See also `verilog-sk-header' for an alternative format."
       (search-forward "<lastdate>") (replace-match "" t t)
       (verilog-insert-time)
       (goto-char start)
-      (setq string (read-string "module: " (file-name-base)))
+      (setq string (read-string "module: " (file-name-base (buffer-name))))
       (search-forward "<module>") (replace-match string t t)
       (setq string (read-string "project: " (projectile-project-name)))
       (setq verilog-project string)
@@ -707,8 +707,6 @@ endmodule // tb
   (dolist (port (verilog-decls-get-inputs my-verilog-inst-ports))
     (insert (concat (car port) " = 'd0;\n"))
     (verilog-indent-line-relative)))
-
-
 
 ;;; keybings
 ;;(define-key verilog-template-map (kbd ",") 'verilog-sk-nonblock-assign)
