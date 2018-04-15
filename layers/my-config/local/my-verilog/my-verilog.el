@@ -730,7 +730,20 @@ endmodule // tb
 
 ;; (defalias 'my-verilog 'ignore)
 ;; (provide 'my-verilog)
-
+(defun my-verilog-get-last-hestory ()
+  "Return the history log of current module"
+  (interactive)
+  (save-excursion
+    (goto-char 0)
+    (search-forward "// Version:" nil nil)
+    (next-line) (beginning-of-line)
+    (search-forward-regexp "[^/0-9-@: ]")
+    (backward-char)
+    (let* ((lin-context (buffer-substring-no-properties (point) (line-end-position))))
+      (message lin-context)
+      )
+    )
+  )
 ;;;###autoload
 (define-minor-mode my-verilog
   "It is my configuration of verilog-mode"
