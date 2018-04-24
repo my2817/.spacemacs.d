@@ -589,16 +589,16 @@ See also `verilog-sk-header' for an alternative format."
     (insert (format-time-string "%d.%m.%Y-%H:%M:%S"))))
 
 (defadvice verilog-auto (after verilog-last-update
-                                       (&optional opt_arg))
+                               (&optional opt_arg))
   "update \"Last Update:\" before 'verilog-inject-auto"
   (save-excursion
     (goto-line 1)
-    (if (search-forward "Last Update : " nil nil)
-        (progn
-          (kill-line)
-          (verilog-insert-time))
-      (message "Can't find the position to update the \"last updated timing\""))
-    ))
+    (if (buffer-modified-p)
+        (if (search-forward "Last Update : " nil nil)
+            (progn
+              (kill-line)
+              (verilog-insert-time))
+          (message "Can't find the position to update the \"last updated timing\"")))))
 (ad-activate 'verilog-auto)
 
 
