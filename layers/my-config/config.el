@@ -80,7 +80,7 @@
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (add-hook 'before-save-hook (lambda ()
                               (interactive)
-                              (if (string= mode-name "verilog-mode")
+                              (if (string= mode-name "Verilog")
                                   (untabify (point-min)
                                             (point-max)))))
 ;;(add-hook 'verilog-mode-hook 'turn-on-ctags-auto-update-mode)
