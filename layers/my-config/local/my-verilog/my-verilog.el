@@ -735,13 +735,14 @@ endmodule // tb
   (interactive)
   (save-excursion
     (goto-char 0)
-    (search-forward "// Version:" nil nil)
-    (next-line) (beginning-of-line)
-    (search-forward-regexp "[^/0-9-@: ]")
-    (backward-char)
-    (let* ((lin-context (buffer-substring-no-properties (point) (line-end-position))))
-      (message lin-context)
-      )
+    (if (search-forward "// Version:" nil t)
+        (progn
+          (next-line) (beginning-of-line)
+          (search-forward-regexp "[^/0-9-@: ]")
+          (backward-char)
+          (let* ((lin-context (buffer-substring-no-properties (point) (line-end-position))))
+            (message lin-context)))
+      (message "NO ci log"))
     )
   )
 ;;;###autoload
