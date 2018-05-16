@@ -264,7 +264,11 @@ find the errors."
                ((bobp) (setq not-indented nil))))))
         (if cur-indent
             (indent-line-to cur-indent)
-          (indent-line-to 0))))))
+          (indent-line-to 0)))))
+  (if (bolp)
+      (end-of-line))
+  )
+
 
 (defun org-projectile/update-agenda-files ()
   "Update org-agenda-files based on `org-projectile-todo-files'
