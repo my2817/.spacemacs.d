@@ -356,7 +356,7 @@ for the reasion described above, use bash to start verilator
     "A verilog syntax checker using icarus-verilog.
 
 See URL `https://github.com/steveicarus/iverilog'"
-    :command ("iverilog" "-tnull" source)
+    :command ("iverilog *.v" "-tnull"  source)
     :error-patterns
     (
      (warning line-start (file-name) ":" line ": " "warning:" (message))
