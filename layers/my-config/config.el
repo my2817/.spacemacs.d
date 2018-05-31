@@ -84,7 +84,11 @@
                                   (untabify (point-min)
                                             (point-max)))))
 ;;(add-hook 'verilog-mode-hook 'turn-on-ctags-auto-update-mode)
-
+(add-hook 'makefile-bsdmake-mode-hook (lambda ()
+                                        (company-mode)
+                                        (setq-local company-backends '(company-files
+                                                                       (company-dabbrev-code company-gtags company-etags company-keywords)
+                                                                       company-oddmuse company-dabbrev))))
 (mapc #'wttr/prepend-to-exec-path
       (reverse
        '("D:/Perl/bin"

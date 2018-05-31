@@ -34,7 +34,7 @@
     auto-complete
     ;; graphviz-dot-mode ;; it has been configured by graphviz layer
     ;blink-cursor-mode
-    psvn
+    ;; psvn
     (my-verilog :location local)
     ;;(mmm-mode :location local)
     mmm-mode
@@ -55,7 +55,8 @@
     flycheck
     flycheck-plantuml
     (company-verilog :location local)
-    header2
+    company
+    ;; header2
   )
 
   "The list of Lisp packages required by the my-config layer.
@@ -118,12 +119,12 @@ Each entry is either:
 ;;     (progn
 ;;       (setq graphviz-dot-preview-extension "jpg")
 ;;       )))
-(defun my-config/init-psvn ()
-  "Initialize psvn"
-  (use-package psvn
-    :defer t
-    :init
-    ))
+;; (defun my-config/init-psvn ()
+;;   "Initialize psvn"
+;;   (use-package psvn
+;;     :defer t
+;;     :init
+;;     ))
 
 (defun my-config/init-htmlize ()
   "Initialize htmlize"
@@ -273,7 +274,7 @@ Each entry is either:
        'org-babel-load-languages
        '((perl . t)
          (ruby . t)
-         (sh . t)
+         (shell . t)
          (dot . t)
          (js . t)
          (latex .t)
