@@ -64,15 +64,16 @@
 ;;; file extensions
 ;;;
 (add-to-list 'auto-mode-alist '("\\.log\\'" . compilation-mode))
+(add-to-list 'auto-mode-alist '("\\.txt\\'" . text-mode))
+(add-to-list 'auto-mode-alist '("\\.list\\'" . text-mode))
 
 ;;;
 ;;; Hooks
 ;;;
-(add-hook 'verilog-mode-hook 'auto-complete-mode)
-;; (add-hook 'verilog-mode-hook 'company-mode)
-;;(add-hook 'verilog-mode-hook 'mmm-mode)
+;; (add-hook 'verilog-mode-hook 'auto-complete-mode)
+(add-hook 'verilog-mode-hook 'company-mode)
+(add-hook 'verilog-mode-hook 'mmm-mode)
 (add-hook 'verilog-mode-hook 'electric-spacing-mode)
-(add-hook 'graphviz-dot-mode-hook 'smartparens-mode)
 (add-hook 'graphviz-dot-mode-hook 'smartparens-mode)
 (add-hook 'c++-mode-hook 'electric-spacing-mode)
 (add-hook 'perl-mode-hook 'electric-spacing-mode)
@@ -89,6 +90,16 @@
                                         (setq-local company-backends '(company-files
                                                                        (company-dabbrev-code company-gtags company-etags company-keywords)
                                                                        company-oddmuse company-dabbrev))))
+(add-hook 'makefile-gmake-mode-hook (lambda ()
+                                        (company-mode)
+                                        (setq-local company-backends '(company-files
+                                                                       (company-dabbrev-code company-gtags company-etags company-keywords)
+                                                                       company-oddmuse company-dabbrev))))
+(add-hook 'text-mode-hook (lambda ()
+                                      (company-mode)
+                                      (setq-local company-backends '(company-files
+                                                                     (company-dabbrev-code company-gtags company-etags company-keywords)
+                                                                     company-oddmuse company-dabbrev))))
 (mapc #'wttr/prepend-to-exec-path
       (reverse
        '("D:/Perl/bin"
