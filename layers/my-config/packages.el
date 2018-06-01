@@ -174,9 +174,17 @@ Each entry is either:
       (autoload 'tcl-dc-mode "tcl-dc-mode" "Tcl DC Mode" t)
       (add-to-list 'auto-mode-alist '("\\.tcl\\'" . tcl-dc-mode))
       (add-to-list 'auto-mode-alist '("\\.sdc\\'" . tcl-dc-mode))
-      (with-eval-after-load 'auto-complete-mode
-        (progn
-          (auto-complete-mode )))
+      )
+    :config
+    (progn
+      (company-mode)
+      (add-hook 'tcl-mode-hook
+                (lambda ()
+                  (company-mode)
+                  (setq-local company-backends '(company-files
+                                                 (company-dabbrev-code company-gtags company-etags company-keywords)
+                                                 company-oddmuse company-dabbrev)))
+                )
       )
     ))
 (defun my-config/init-electric-spacing()
