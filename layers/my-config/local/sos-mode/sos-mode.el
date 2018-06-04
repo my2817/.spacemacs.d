@@ -95,7 +95,7 @@
                  (setq soscmd (concat soscmd " -fs"))
                  (shell-command soscmd)))
     ("userev" (progn
-                (setq soscmd (concat soscmd (funcall sos-comp-read "Revision to:" nil)))
+                (setq soscmd (concat soscmd "/" (funcall sos-comp-read "Revision to:" nil)))
                  (shell-command soscmd)))
     (_ (shell-command soscmd)))
   ;; (message soscmd)
