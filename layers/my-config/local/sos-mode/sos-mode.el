@@ -3,87 +3,30 @@
 (defcustom sos-get-log-command 'my-verilog-get-last-history-log
   "`sos-op-on-file' will call this function to get the initial log for SOS CI command"
   :group 'sos-mode)
-(defcustom sos-cmd '(
-               "addreference"
-               "audit"
-               "ci"
-               "co"
-               "create"
-               "definebranch"
-               "definetag"
-               "delete"
-               "deleterev"
-               "deleteworkarea"
-               "diff"
-               "dirrev"
-               "discardco"
-               "displaytmp"
-               "exitsos"
-               "exportrev"
-               "expand"
-               "gui"
-               "help"
-               "history"
-               "merge"
-               "modattr"
-               "move"
-               "neverpopulate"
-               "newworkarea"
-               "nobjstatus"
-               "nogui"
-               "objstatus"
-               "pack"
-               "populate"
-               "preference"
-               "print"
-               "query"
-               "objrso"
-               "rename"
-               "retirebranch"
-               "retiresnapshot"
-               "retiretag"
-               "revertrev"
-               "select"
-               "shell"
-               "snapshot"
-               "status"
-               "tag"
-               "termbranch"
-               "undelete"
-               "unpopulate"
-               "unselect"
-               "update"
-               "updatesel"
-               "userev"
-               )
+(defcustom sos-cmd '( "addreference" "audit" "ci" "co" "create" "definebranch"
+"definetag" "delete" "deleterev" "deleteworkarea" "diff" "dirrev" "discardco"
+"displaytmp" "exitsos" "exportrev" "expand" "gui" "help" "history" "merge"
+"modattr" "move" "neverpopulate" "newworkarea" "nobjstatus" "nogui" "objstatus"
+"pack" "populate" "preference" "print" "query" "objrso" "rename" "retirebranch"
+"retiresnapshot" "retiretag" "revertrev" "select" "shell" "snapshot" "status"
+"tag" "termbranch" "undelete" "unpopulate" "unselect" "update" "updatesel"
+"userev" )
   "soscmd commands"
   :group 'sos-mode)
+(defcustom sos-select-option '( "-A" "-sfile<file>" "-sco" "-suco" "-scm"
+"-scnm" "-sncm" "-sne" "-slk" "-snt" "-snm" "-snl" "-sr" "-sname<pattern>"
+"-sNr" "-sNh" "-sunm" "-sunmp" "-sunp" "-sp" "-sm" "-sall" "-sfo" "-sdo" "-sw"
+"-sb" "-sxup" "-slbl<label>" "-satr<name>" "-satr<name=value>" "-si" "-sor"
+"-sand" "-sxr" "-sproj<proj name>" "-yscroll")
+  "option of select command"
+  :group 'sos-mode
+  )
 
-(defcustom sos-attribute '(
-                      "CheckInTime"
-                      "CheckInTime"
-                      "CheckOutTime"
-                      "CheckedInBy"
-                      "CheckedOutBy"
-                      "Checksum"
-                      "Description"
-                      "Group"
-                      "Log"
-                      "MatchedLabel"
-                      "Owner"
-                      "PackageList"
-                      "PackageTypeList"
-                      "ReadAccess"
-                      "Reference"
-                      "Revision"
-                      "SOS_RCPgm"
-                      "Trigger"
-                      "Version"
-                      "Writable"
-                      "WriteAccess"
-                      "change_summary"
-                      "chkout_path"
-                      )
+(defcustom sos-attribute '( "CheckInTime" "CheckInTime" "CheckOutTime"
+"CheckedInBy" "CheckedOutBy" "Checksum" "Description" "Group" "Log"
+"MatchedLabel" "Owner" "PackageList" "PackageTypeList" "ReadAccess" "Reference"
+"Revision" "SOS_RCPgm" "Trigger" "Version" "Writable" "WriteAccess"
+"change_summary" "chkout_path" )
   "sos attributs"
   :group 'sos-mode)
 (defcustom sos-attribute-value '(
@@ -140,15 +83,23 @@
                                       ))
                  (shell-command soscmd)
                  ))
+    ("select" (progn
+                (setq soscmd (concat soscmd " "
+                                     (funcall sos-comp-read "Options: " sos-select-option)))
+                (shell-command soscmd)))
     ("diff" (progn
               (setq soscmd (concat soscmd " -gui"))
               (shell-command soscmd)
-              )
-     )
+              ))
+    ("history" (progn
+                 (setq soscmd (concat soscmd " -fs"))
+                 (shell-command soscmd)))
+    ("userev" (progn
+                (setq soscmd (concat soscmd (funcall sos-comp-read "Revision to:" nil)))
+                 (shell-command soscmd)))
     (_ (shell-command soscmd)))
-  (message soscmd)
-  (revert-buffer t t )
-  )
+  ;; (message soscmd)
+  (revert-buffer t t ))
 
 ;;;###autoload
 (define-minor-mode sos-mode
