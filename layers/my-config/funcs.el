@@ -285,3 +285,15 @@ if agenda file non-existent, DONT add is to org-agenda-files
           (org-projectile-todo-files)
           )
   )
+
+(defun my-copy-file-line-to-clipboard()
+  "copy current buffer name and line number to clipboard
+
+and return as PATH-to-FILE::Line-Number."
+  (interactive)
+  (let ((filename (if (equal major-mode 'dired-mode)
+                      default-directory
+                    (buffer-file-name))))
+    (when filename
+      (message "Copied: %s" (concat filename "::" (format "%s" (line-number-at-pos))))
+      (kill-new (concat filename "::" (format "%s" (line-number-at-pos)))))))
