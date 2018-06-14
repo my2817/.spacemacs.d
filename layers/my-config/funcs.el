@@ -61,7 +61,8 @@ Version 2016-10-15"
        ((string-equal system-type "windows-nt")
         (mapc
          (lambda (-fpath)
-           (w32-shell-execute "open" (replace-regexp-in-string "/" "\\" -fpath t t))) -file-list))
+           ;; (w32-shell-execute "open" (replace-regexp-in-string "/" "\\" -fpath t t))) -file-list))
+           (shell-command (concat "start " (replace-regexp-in-string "/" "\\" -fpath t t)))) -file-list))
        ((string-equal system-type "darwin")
         (mapc
          (lambda (-fpath)
@@ -78,7 +79,8 @@ Version 2015-11-30"
   (interactive)
   (cond
    ((string-equal system-type "windows-nt")
-    (w32-shell-execute "explore" (replace-regexp-in-string "/" "\\" default-directory t t)))
+    ;; (w32-shell-execute "explore" (replace-regexp-in-string "/" "\\" default-directory t t)))
+    (shell-command (concat "start " (replace-regexp-in-string "/" "\\" default-directory t t))))
    ((string-equal system-type "darwin") (shell-command "open ."))
    ((string-equal system-type "gnu/linux")
     (let (
@@ -96,7 +98,8 @@ Version 2015-12-10"
   (interactive)
   (cond
    ((string-equal system-type "windows-nt")
-    (message "Microsoft Windows not supported. File a bug report or pull request."))
+    ;; (message "Microsoft Windows not supported. File a bug report or pull request."))
+    (shell-command (concat "start")))
    ((string-equal system-type "darwin")
     (message "Mac not supported. File a bug report or pull request."))
    ((string-equal system-type "gnu/linux")
