@@ -56,6 +56,7 @@
     flycheck-plantuml
     (company-verilog :location local)
     company
+    (company-english-helper :location local)
     ;; header2
   )
 
@@ -339,6 +340,7 @@ Each entry is either:
 (defun my-config/post-init-flycheck ()
   (dolist (mode '(verilog-mode))
     (spacemacs/enable-flycheck mode))
+  (require 'flycheck)
   (flycheck-define-checker verilog-leda
     "A verilog coding style check by synopsys LEDA "
     :command ("leda" "+v2k" "-nobanner" "-nocompilemessage" "-nocode" source)
@@ -401,4 +403,12 @@ See URL `https://github.com/steveicarus/iverilog'"
     :init
     )
   )
+(defun my-config/init-company-english-helper ()
+  (use-package company-english-helper
+    :defer t
+    :init
+    (progn
+      (autoload 'company-english-helper "company-english-helper" "En-helper" t)
+      )
+    ))
 ;;; packages.el ends here
