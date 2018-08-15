@@ -291,6 +291,7 @@ Each entry is either:
          (emacs-lisp . t)
          (plantuml . t)
          (C . t)
+         (awk . t)
          (ditaa . t)))
       (setq org-todo-keywords
            '((type "WORK(!)" "STUDY(!)" "|")
@@ -408,7 +409,8 @@ See URL `https://github.com/steveicarus/iverilog'"
     :defer t
     :init
     (progn
-      (autoload 'company-english-helper "company-english-helper" "En-helper" t)
+      ;; (autoload 'company-english-helper "company-english-helper" "En-helper" t)
+      (require 'company-english-helper)
       )
     ))
 ;;; packages.el ends here
