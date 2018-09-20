@@ -47,8 +47,8 @@
     ;; auctex
     ;; auto-complete-auctex
     plantuml-mode
-    tabbar
-    tabbar-ruler
+    ;; tabbar
+    ;; tabbar-ruler
     (sos-mode :location local)
     (org :location built-in)
     (compilation-mode :location built-in)
@@ -57,6 +57,7 @@
     (company-verilog :location local)
     company
     (company-english-helper :location local)
+    ;; (awesome-tab :location local);;from [https://github.com/manateelazycat/awesome-tab]
     ;; header2
   )
 
@@ -229,21 +230,21 @@ Each entry is either:
       )
     ))
 
-;; (defun my-config/init-auctex()
-;;   (use-package auctex
-;;     :defer t
-;;     :init (progn
-;;             (load "auctex.el")
-;;             (add-hook 'LaTeX-mode-hook (lambda()
-;;                                          (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t))
-;;                                          (setq TeX-command-default "XeLaTeX")
-;;                                          (setq TeX-save-query  nil )
-;;                                          (setq TeX-show-compilation t)
-;;                                          )))
-;;     ))
-;; (defun my-config/init-auto-complete-auctex()
-;;   (use-package auto-complete-auctex
-;;     :defer t))
+(defun my-config/init-auctex()
+  (use-package auctex
+    :defer t
+    :init (progn
+            (load "auctex.el")
+            (add-hook 'LaTeX-mode-hook (lambda()
+                                         (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t))
+                                         (setq TeX-command-default "XeLaTeX")
+                                         (setq TeX-save-query  nil )
+                                         (setq TeX-show-compilation t)
+                                         )))
+    ))
+(defun my-config/init-auto-complete-auctex()
+  (use-package auto-complete-auctex
+    :defer t))
 
 (defun my-config/init-tabbar ()
   (use-package tabbar
@@ -413,4 +414,15 @@ See URL `https://github.com/steveicarus/iverilog'"
       (require 'company-english-helper)
       )
     ))
+
+(defun my-config/init-awesome-tab ()
+  (use-package awesom-tab
+    :defer t
+    :init
+    (progn
+      ;; (autoload 'company-english-helper "company-english-helper" "En-helper" t)
+      (require 'awesome-tab)
+      )
+    ))
+
 ;;; packages.el ends here
