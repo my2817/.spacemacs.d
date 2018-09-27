@@ -297,3 +297,9 @@ and return as PATH-to-FILE::Line-Number."
     (when filename
       (message "Copied: %s" (concat filename "::" (format "%s" (line-number-at-pos))))
       (kill-new (concat filename "::" (format "%s" (line-number-at-pos)))))))
+
+(defadvice counsel-imenu (after my-counsel-imenu)
+  "`evil-scroll-line-to-top' after `counsel-imenu'"
+  (evil-scroll-line-to-top nil)
+  )
+(ad-activate 'counsel-imenu)
