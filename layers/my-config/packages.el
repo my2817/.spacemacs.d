@@ -369,18 +369,31 @@ for the reasion described above, use bash to start verilator
     "A verilog syntax checker using icarus-verilog.
 
 See URL `https://github.com/steveicarus/iverilog'"
-    :command ("iverilog *.v" "-tnull"  source)
+    :command ("iverilog" "-tnull"  source)
     :error-patterns
     (
      (warning line-start (file-name) ":" line ": " "warning:" (message))
      (error line-start (file-name) ":" line ": " "error:" (message))
-     (error line-start (file-name) ":" line ":" (message) )
+     )
+    :modes verilog-mode
+    )
+  (flycheck-define-checker verilog-irun
+    "A verilog syntax checker using irun
+
+See URL `irun -helpall'"
+    :command ("irun" "-nocopy" "-nclibdirname" temporary-directory  "-nolog" "-nohistory" "-compile"  source)
+    :error-patterns
+    (
+     ;; (error line-start "ncvlog: *E," (id (1+ "A-Z")) "(" (file-name) "," line "|" column "):" (message))
+     ;; ncvlog: *E,EXPLPA (SYN_CODE_GEN_tb.sv,25|14): expecting a left parenthesis ('(') [12.1.2][7.1(IEEE)]
+     (error line-start "ncvlog: *E,"  (id (* (char "A-Z"))) " " "(" (file-name) "," line "|" (* (char "0-9")) ")" ":" (message))
      )
     :modes verilog-mode
     )
   (add-to-list 'flycheck-checkers 'verilog-leda)
   (add-to-list 'flycheck-checkers 'my-verilog-verilator)
   (add-to-list 'flycheck-checkers 'verilog-iverilog)
+  (add-to-list 'flycheck-checkers 'verilog-irun)
   )
 
 (defun my-config/init-company-verilog ()
