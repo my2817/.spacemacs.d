@@ -345,7 +345,7 @@ Each entry is either:
   (require 'flycheck)
   (flycheck-define-checker verilog-leda
     "A verilog coding style check by synopsys LEDA "
-    :command ("leda" "+v2k" "-nobanner" "-nocompilemessage" "-nocode" source)
+    :command ("leda" "+v2k" "-nobanner" "-nocompilemessage" "-nocode" "-work" temporary-file-name  "-log_dir" temporary-directory source)
     :error-patterns (
                      ;; (error line-start (file-name) ":" line ":" column ":" (1+ "a-zA-Z_") ":"  (message) line-end))
                      (error line-start (file-name) ":" line ":" (message) line-end))
