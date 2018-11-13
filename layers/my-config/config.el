@@ -104,70 +104,63 @@
       (reverse
        '("D:/Perl/bin"
          "D:/EDA/graphviz-2.38/bin"
-         "D:/cygwin/bin"
+         "D:/cygwin64/bin"
          "D:/EDA/modeltech64_10.2c/win64"
-         "D:/EDA/Git-2.6.0-32-bit/PortableGit/bin"
-         "D:/EDA/libxml2/iconv-1.9.2.win32/bin"
-         "D:/EDA/libxml2/iconv-1.9.2.win32/lib"
-         "D:/EDA/libxml2/libxml2-2.7.8.win32/bin"
-         "D:/EDA/libxml2/libxml2-2.7.8.win32/lib"
-         "D:/EDA/libxml2/zlib-1.2.5/bin"
-         "D:/EDA/libxml2/zlib-1.2.5/lib"
-         "C:/ProgramData/Oracle/Java/javapath"
          "d:/EDA/Git-2.6.0-32-bit/PortableGit/usr/bin"
+         "C:/Program\ Files\ (x86)/Java/jre1.8.0_171/bin"
          )))
 
 (if (string-equal system-type "windows-nt")
     (setenv "GRAPHVIZ_DOT" (find-file-in-path-list 'dot.exe exec-path)))
 
-(defvar my-grep-global-ignore-dired
-      '(
-        ".SOS"
-        "irun.*"
-        "INCA.*"
-        ))
-(defvar my-grep-global-ignore-files
-      '(
-        "*.txt"
-        "irun.*"
-        "*.log"
-        "*.dsn"
-        "*.pak"
-        "*.pvl"
-        "*.syn"
-        "*.mr"
-        ))
-(with-eval-after-load 'helm-grep
-  (mapcar
-   (lambda (item)
-     (add-to-list 'helm-grep-ignored-directories item))
-   my-grep-global-ignore-dired)
-  (mapcar
-   (lambda (item)
-     (add-to-list 'helm-grep-ignored-files item))
-   my-grep-global-ignore-files))
-(with-eval-after-load 'grep
-  (mapcar
-   (lambda (item)
-     (add-to-list 'grep-find-ignored-directories item))
-   my-grep-global-ignore-dired)
-  (mapcar
-   (lambda (item)
-     (add-to-list 'grep-find-ignored-files item))
-   my-grep-global-ignore-files))
+;; (defvar my-grep-global-ignore-dired
+;;       '(
+;;         ".SOS"
+;;         "irun.*"
+;;         "INCA.*"
+;;         ))
+;; (defvar my-grep-global-ignore-files
+;;       '(
+;;         "*.txt"
+;;         "irun.*"
+;;         "*.log"
+;;         "*.dsn"
+;;         "*.pak"
+;;         "*.pvl"
+;;         "*.syn"
+;;         "*.mr"
+;;         ))
+;; (with-eval-after-load 'helm-grep
+;;   (mapcar
+;;    (lambda (item)
+;;      (add-to-list 'helm-grep-ignored-directories item))
+;;    my-grep-global-ignore-dired)
+;;   (mapcar
+;;    (lambda (item)
+;;      (add-to-list 'helm-grep-ignored-files item))
+;;    my-grep-global-ignore-files))
+;; (with-eval-after-load 'grep
+;;   (mapcar
+;;    (lambda (item)
+;;      (add-to-list 'grep-find-ignored-directories item))
+;;    my-grep-global-ignore-dired)
+;;   (mapcar
+;;    (lambda (item)
+;;      (add-to-list 'grep-find-ignored-files item))
+;;    my-grep-global-ignore-files))
 
 ;; projectile
-(defvar my-project-globally-ignored-files
-  '(
-    "*.pak$"
-    )
-  )
-(with-eval-after-load 'projectile
-  (mapcar
-   (lambda (item)
-     (add-to-list 'projectile-globally-ignored-files item))
-   my-project-globally-ignored-files)
-  )
+;; (defvar my-project-globally-ignored-files
+;;   '(
+;;     "*.pak$"
+;;     )
+;;   )
+;; (with-eval-after-load 'projectile
+;;   (mapcar
+;;    (lambda (item)
+;;      (add-to-list 'projectile-globally-ignored-files item))
+;;    my-project-globally-ignored-files)
+;;   )
 (setq enable-local-variables :all enable-local-eval t)
 
 ;; the following var are required by zilongshanren-org/post-init-org
@@ -185,15 +178,15 @@
  deft-dir "~/org-notes"
  blog-admin-dir "~/4gamers.cn")
 
-(with-eval-after-load 'org-agenda
-  (require 'org-projectile)
-  ;; (mapcar (lambda (f)
-  ;;           (if (file-exists-p f)
-  ;;               (add-to-list 'org-agenda-files f)))
-  ;;         (org-projectile-todo-files)
-  ;;         )
-  (org-projectile/update-agenda-files)
-  )
+;; (with-eval-after-load 'org-agenda
+;;   (require 'org-projectile)
+;;   ;; (mapcar (lambda (f)
+;;   ;;           (if (file-exists-p f)
+;;   ;;               (add-to-list 'org-agenda-files f)))
+;;   ;;         (org-projectile-todo-files)
+;;   ;;         )
+;;   (org-projectile/update-agenda-files)
+;;   )
 
 ;; (with-eval-after-load 'auto-complete
 ;;   (add-hook 'minibuffer-setup-hook
