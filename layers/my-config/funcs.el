@@ -34,6 +34,26 @@
          (insert " ")))
   )
 (ad-activate 'electric-spacing-.)
+(defadvice electric-spacing-insert-1 (around my-electric-spacing-insert-1)
+  "save-excursion before do 'indent-according-to-mode"
+  (pcase only-where
+    (`before (insert " " op))
+    (`middle (insert op))
+    (`after (insert op " "))
+    (_
+     (let ((begin? (bolp)))
+       (unless (or (looking-back (regexp-opt
+                                  (mapcar 'char-to-string
+                                          (mapcar 'car electric-spacing-rules)))
+                                 (line-beginning-position))
+                   begin?)
+         (insert " "))
+       (insert op " ")
+       (when begin?
+         (save-excursion
+           (indent-according-to-mode))))))
+  )
+(ad-activate 'electric-spacing-insert-1)
 
 (defun find-file-in-path-list (file path-list )
   "find FILE in path-list, then return the absolute file path"
