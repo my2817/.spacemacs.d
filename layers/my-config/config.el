@@ -100,6 +100,8 @@
                                       (setq-local company-backends '(company-files
                                                                      (company-dabbrev-code company-gtags company-etags company-keywords)
                                                                      company-oddmuse company-dabbrev))))
+(add-hook 'conf-mode-hook (lambda ()
+                            (spacemacs/toggle-relative-line-numbers-on)))
 (mapc #'wttr/prepend-to-exec-path
       (reverse
        '("D:/Perl/bin"
@@ -108,6 +110,16 @@
          "D:/EDA/modeltech64_10.2c/win64"
          "d:/EDA/Git-2.6.0-32-bit/PortableGit/usr/bin"
          "C:/Program\ Files\ (x86)/Java/jre1.8.0_171/bin"
+         "D:/EDA/Git-2.6.0-32-bit/PortableGit/bin"
+         "D:/EDA/libxml2/iconv-1.9.2.win32/bin"
+         "D:/EDA/libxml2/iconv-1.9.2.win32/lib"
+         "D:/EDA/libxml2/libxml2-2.7.8.win32/bin"
+         "D:/EDA/libxml2/libxml2-2.7.8.win32/lib"
+         "D:/EDA/libxml2/zlib-1.2.5/bin"
+         "D:/EDA/libxml2/zlib-1.2.5/lib"
+         "C:/ProgramData/Oracle/Java/javapath"
+         "e:/Git-2.6.0-32-bit/PortableGit/usr/bin"
+         "e:/Git-2.6.0-32-bit/PortableGit/bin"
          )))
 
 (if (string-equal system-type "windows-nt")
