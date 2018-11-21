@@ -218,7 +218,8 @@ find the errors."
         (visit-tags-table tags-file)
         (message "Regenerated %s" tags-file))))
 
-(defun plantuml-indent-line ()
+(defadvice plantuml-indent-line (around my-plantuml-indent-line)
+;; (defun plantuml-indent-line ()
   "Indent current line as plantuml code"
   (interactive)
   (save-excursion
@@ -291,6 +292,7 @@ find the errors."
   (if (bolp)
       (end-of-line))
   )
+(ad-activate 'plantuml-indent-line)
 
 
 (defun org-projectile/update-agenda-files ()
