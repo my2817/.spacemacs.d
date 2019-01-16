@@ -325,3 +325,28 @@ and return as PATH-to-FILE::Line-Number."
   (evil-scroll-line-to-top nil)
   )
 (ad-activate 'counsel-imenu)
+
+
+(defun my-bin2dec()
+  (interactive)
+  (let ((local-word (replace-regexp-in-string "[bB]" "" (thing-at-point 'word 'no-properties))))
+    (message (format "bin2dex: %s -> %d" local-word (string-to-number  local-word 2))) )
+  )
+
+(defun my-bin2hex()
+  (interactive)
+  (let ((local-word (replace-regexp-in-string "[bB]" "" (thing-at-point 'word 'no-properties))))
+    (message (format "bin2hex: %s -> %x" local-word (string-to-number  local-word 2))) )
+  )
+
+(defun my-dec2hex()
+  (interactive)
+  (let ((local-word (replace-regexp-in-string "[dD]" "" (thing-at-point 'word 'no-properties))))
+    (message (format "dex2hex : %s -> %x" local-word (string-to-number  local-word 10))) )
+  )
+
+(defun my-hex2dec()
+  (interactive)
+  (let ((local-word (replace-regexp-in-string "[xXhH]" "" (thing-at-point 'word 'no-properties))))
+    (message (format "dex2hex : %s -> %d" local-word (string-to-number  local-word 16))) )
+  )
