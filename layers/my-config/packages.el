@@ -227,6 +227,18 @@ Each entry is either:
       (add-hook 'plantuml-mode-hook (lambda ()
                                       (set (make-local-variable 'indent-line-function)
                                            #'plantuml-indent-line)))
+      (add-hook 'plantuml-mode-hook 'company-mode)
+      (make-local-variable 'company-backends)
+      (setq company-backends
+            '( company-files
+               (company-dabbrev-code company-gtags company-etags)
+               company-abbrev
+               ))
+      (make-local-variable 'company-dabbrev-code-ignore-case)
+      (setq company-dabbrev-code-ignore-case t)
+      (make-local-variable 'company-dabbrev-code-everywhere)
+      (setq company-dabbrev-code-everywhere t)
+
       )
     ))
 
