@@ -61,7 +61,7 @@
     ;; header2
     (awesome-pair :location (recipe
                              :fetcher github
-                             :repo "manateelazycat/awesome-pair"))
+                             :repo manateelazycat/awesome-pair))
   )
 
   "The list of Lisp packages required by the my-config layer.
@@ -489,16 +489,17 @@ See URL `irun -helpall'"
                              ))
                 (add-hook hook '(lambda () (awesome-pair-mode 1)))
 
-                (define-key awesome-pair-mode-map (kbd "(") 'awesome-pair-open-round)
-                (define-key awesome-pair-mode-map (kbd "[") 'awesome-pair-open-bracket)
-                (define-key awesome-pair-mode-map (kbd "{") 'awesome-pair-open-curly)
-                (define-key awesome-pair-mode-map (kbd ")") 'awesome-pair-close-round)
-                (define-key awesome-pair-mode-map (kbd "]") 'awesome-pair-close-bracket)
-                (define-key awesome-pair-mode-map (kbd "}") 'awesome-pair-close-curly)
-                (define-key awesome-pair-mode-map (kbd "=") 'awesome-pair-equal)
+                ;; the following keybindings is conflict with `electric-spacing-mode
+                ;; (define-key awesome-pair-mode-map (kbd "(") 'awesome-pair-open-round)
+                ;; (define-key awesome-pair-mode-map (kbd "[") 'awesome-pair-open-bracket)
+                ;; (define-key awesome-pair-mode-map (kbd "{") 'awesome-pair-open-curly)
+                ;; (define-key awesome-pair-mode-map (kbd ")") 'awesome-pair-close-round)
+                ;; (define-key awesome-pair-mode-map (kbd "]") 'awesome-pair-close-bracket)
+                ;; (define-key awesome-pair-mode-map (kbd "}") 'awesome-pair-close-curly)
+                ;; (define-key awesome-pair-mode-map (kbd "=") 'awesome-pair-equal)
 
-                (define-key awesome-pair-mode-map (kbd "%") 'awesome-pair-match-paren)
-                (define-key awesome-pair-mode-map (kbd "\"") 'awesome-pair-double-quote)
+                ;; (define-key awesome-pair-mode-map (kbd "%") 'awesome-pair-match-paren)
+                ;; (define-key awesome-pair-mode-map (kbd "\"") 'awesome-pair-double-quote)
 
                 (define-key awesome-pair-mode-map (kbd "M-o") 'awesome-pair-backward-delete)
                 (define-key awesome-pair-mode-map (kbd "C-d") 'awesome-pair-forward-delete)
