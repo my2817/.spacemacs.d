@@ -48,9 +48,9 @@
        (dired-get-marked-files)
      (list (buffer-file-name)))))
 
-(defun sos-op-on-file ()
+(defun sos-op-on-file (&optional arg)
   "exceute soscmd on current file or the selected files in dired-mode"
-  (interactive)
+  (interactive "P")
   (setq soscmd "soscmd")
   (sos-get-files)
   (cond
@@ -68,36 +68,47 @@
   (pcase op
     ("co" (progn
             (setq soscmd (concat soscmd " -Novr"))
-            (shell-command soscmd)))
+            ;; (shell-command soscmd)
+            ))
     ("ci" (progn
             (setq soscmd (concat soscmd " "
                                  "-aLog=\""
                                  (read-string "CI Log:" (funcall sos-get-log-command))
                                  "\""))
-            (shell-command soscmd)))
+            ;; (shell-command soscmd)
+            ))
     ("modattr" (progn
                  (setq soscmd (concat soscmd " "
                                       "-a"
                                       (funcall sos-comp-read "Arttribute: " sos-attribute) "="
                                       (funcall sos-comp-read "Arttribute\'s value: " sos-attribute-value)
                                       ))
-                 (shell-command soscmd)
+                 ;; (shell-command soscmd)
                  ))
     ("select" (progn
                 (setq soscmd (concat soscmd " "
                                      (funcall sos-comp-read "Options: " sos-select-option)))
-                (shell-command soscmd)))
+                ;; (shell-command soscmd)
+                ))
     ("diff" (progn
               (setq soscmd (concat soscmd " -gui"))
-              (shell-command soscmd)
+              ;; (shell-command soscmd)
               ))
     ("history" (progn
                  (setq soscmd (concat soscmd " -fs"))
-                 (shell-command soscmd)))
+                 ;; (shell-command soscmd)
+                 ))
     ("userev" (progn
                 (setq soscmd (concat soscmd "/" (funcall sos-comp-read "Revision to:" nil)))
-                 (shell-command soscmd)))
-    (_ (shell-command soscmd)))
+                 ;; (shell-command soscmd)
+                 ))
+    ;; (_ (shell-command soscmd))
+    )
+  (if arg
+      (cond ((zerop (prefix-numeric-value arg))
+             (setq soscmd (concat soscmd " " (funcall sos-comp-read "Others Options: " nil))))))
+
+  (shell-command soscmd)
   ;; (message soscmd)
   (revert-buffer t t ))
 
