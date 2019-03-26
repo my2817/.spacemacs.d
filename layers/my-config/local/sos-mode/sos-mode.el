@@ -41,15 +41,17 @@
   :group 'sos-mode)
 (defun sos-get-files ()
   (setq file-list "")
-  (mapcar
-   (lambda (file)
-     (setq file-list (concat file-list " " file)))
-   (if (string-equal major-mode "dired-mode")
-       (dired-get-marked-files)
-     (list (buffer-file-name)))))
+  (if (string-equal major-mode "dired-mode")
+      (mapcar
+       (lambda (file)
+         (setq file-list (concat file-list " " file)))
+       (dired-get-marked-files))
+    (setq file-list (buffer-file-name))))
 
 (defun sos-op-on-file (&optional arg)
-  "exceute soscmd on current file or the selected files in dired-mode"
+  "exceute soscmd on current file or the selected files in dired-mode
+where ARG is gived by c-0
+"
   (interactive "P")
   (setq soscmd "soscmd")
   (sos-get-files)
@@ -92,7 +94,9 @@
                 ))
     ("diff" (progn
               (setq soscmd (concat soscmd " -gui"))
-              ;; (shell-command soscmd)
+              (if arg
+                  (cond ((zerop (prefix-numeric-value arg))
+                         (setq soscmd (concat soscmd " " file-list "/" (funcall sos-comp-read "diff VS (REVISION/Branch): " nil))))))
               ))
     ("history" (progn
                  (setq soscmd (concat soscmd " -fs"))
@@ -111,10 +115,10 @@
   (shell-command soscmd)
   ;; need to revert buffer?
   (pcase op
-    ( (or "co" "discardco" "ci") (progn
+    ( (or "co" "discardco" "ci" "userev") (progn
                               (revert-buffer t t )
                               )))
-  ;; (message soscmd)
+  (message soscmd)
   )
 
 ;;;###autoload
