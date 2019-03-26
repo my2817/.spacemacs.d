@@ -109,8 +109,13 @@
              (setq soscmd (concat soscmd " " (funcall sos-comp-read "Others Options: " nil))))))
 
   (shell-command soscmd)
+  ;; need to revert buffer?
+  (pcase op
+    ( (or "co" "discardco") (progn
+                              (revert-buffer t t )
+                              )))
   ;; (message soscmd)
-  (revert-buffer t t ))
+  )
 
 ;;;###autoload
 (define-minor-mode sos-mode
