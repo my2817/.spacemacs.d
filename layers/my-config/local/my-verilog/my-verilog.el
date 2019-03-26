@@ -616,7 +616,9 @@ See also `verilog-sk-header' for an alternative format."
             (progn
               (kill-line)
               (verilog-insert-time))
-          (message "Can't find the position to update the \"last updated timing\"")))))
+          (message "Can't find the position to update the \"last updated timing\""))))
+  (imenu-list-rescan-imenu)
+  )
 (ad-activate 'verilog-auto)
 
 
