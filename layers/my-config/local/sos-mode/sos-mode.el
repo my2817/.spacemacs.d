@@ -111,7 +111,7 @@
   (shell-command soscmd)
   ;; need to revert buffer?
   (pcase op
-    ( (or "co" "discardco") (progn
+    ( (or "co" "discardco" "ci") (progn
                               (revert-buffer t t )
                               )))
   ;; (message soscmd)
