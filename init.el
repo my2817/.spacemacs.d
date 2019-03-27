@@ -580,6 +580,17 @@ Put your configuration code here, except for variables that  should be set befor
   ;;                           (setq default-directory old-default-directory))))))
 
   (setq projectile-switch-project-action 'projectile-dired)
+  (setq ivy-initial-inputs-alist
+        '((org-refile . "^")
+          (org-agenda-refile . "^")
+          (org-capture-refile . "^")
+          (counsel-M-x . "")
+          (counsel-describe-function . "")
+          (counsel-describe-variable . "")
+          (counsel-org-capture . "^")
+          (Man-completion-table . "^")
+          (woman . "^"))
+        )
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
