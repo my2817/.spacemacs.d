@@ -366,14 +366,14 @@ Each entry is either:
                      (error line-start (file-name) ":" line ":" (message) line-end))
     :modes verilog-mode
     )
-  (flycheck-define-checker my-verilog-verilator
+  (flycheck-define-checker verilog-verilator
     "A Verilog syntax checker using the Verilator Verilog HDL simulator.
 
 See URL `https://www.veripool.org/wiki/verilator'.
 The original checker(verilog-verilator) doesn't work because of it chechouted that the verilator should be run by `start-process-shell-command',
 for the reasion described above, use bash to start verilator
 "
-    :command ("sh" "verilator" "--lint-only" "-Wall" "-Wno-ASSIGNDLY" source)
+    :command ("verilator_bin" "--lint-only" "-Wall" "-Wno-ASSIGNDLY" source)
     :error-patterns
     ((warning line-start "%Warning-" (zero-or-more not-newline) ": "
               (file-name) ":" line ": " (message) line-end)
