@@ -62,6 +62,9 @@
     (awesome-pair :location (recipe
                              :fetcher github
                              :repo manateelazycat/awesome-pair))
+    pyim-wbdict
+    pyim
+    posframe
   )
 
   "The list of Lisp packages required by the my-config layer.
@@ -516,4 +519,56 @@ See URL `irun -helpall'"
                 ;; (define-key awesome-pair-mode-map (kbd "M-:") 'awesome-pair-jump-out-pair-and-newline)
                 )
               )))
+
+(defun my-config/init-pyim ()
+  (use-package pyim
+    :defer nil
+    :demand t
+    :init
+    (progn
+      (require 'pyim)
+      (setq default-input-method "pyim")
+      ;; 设置 pyim 探针设置，这是 pyim 高级功能设置，可以实现 *无痛* 中英文切换 :-)
+      ;; 我自己使用的中英文动态切换规则是：
+      ;; 1. 光标只有在注释里面时，才可以输入中文。
+      ;; 2. 光标前是汉字字符时，才能输入中文。
+      ;; 3. 使用 M-j 快捷键，强制将光标前的拼音字符串转换为中文。
+      ;; (setq-default pyim-english-input-switch-functions
+      ;;               '(pyim-probe-dynamic-english
+      ;;                 pyim-probe-isearch-mode
+      ;;                 pyim-probe-program-mode
+      ;;                 pyim-probe-org-structure-template))
+
+      ;; (setq-default pyim-punctuation-half-width-functions
+      ;;               '(pyim-probe-punctuation-line-beginning
+      ;;                 pyim-probe-punctuation-after-punctuation))
+      ;; 使用 pupup-el 来绘制选词框, 如果用 emacs26, 建议设置
+      ;; 为 'posframe, 速度很快并且菜单不会变形，不过需要用户
+      ;; 手动安装 posframe 包。
+      ;; (setq pyim-page-tooltip 'popup)
+      (setq pyim-page-tooltip 'posframe)
+      ;; 选词框显示5个候选词
+      (setq pyim-page-length 5)
+      ;; :bind
+      ;; (("M-j" . pyim-convert-string-at-point) ;与 pyim-probe-dynamic-english 配合
+      ;;
+      (setq pyim-default-scheme 'wubi)
+    )
+    ))
+
+(defun my-config/init-pyim-wbdict ()
+  (use-package pyim-wbdict
+    :defer t
+    :init
+    (pyim-wbdict-v98-enable)
+    )
+  )
+
+(defun my-config/init-posframe ()
+  (use-package posframe
+    :defer t
+    :init
+    )
+  )
+
 ;;; packages.el ends here
