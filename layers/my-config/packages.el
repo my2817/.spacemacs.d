@@ -65,6 +65,7 @@
     pyim-wbdict
     pyim
     posframe
+    company-posframe
   )
 
   "The list of Lisp packages required by the my-config layer.
@@ -559,6 +560,7 @@ See URL `irun -helpall'"
 (defun my-config/init-pyim-wbdict ()
   (use-package pyim-wbdict
     :defer t
+    :after pyim
     :init
     (pyim-wbdict-v98-enable)
     )
@@ -568,6 +570,15 @@ See URL `irun -helpall'"
   (use-package posframe
     :defer t
     :init
+    )
+  )
+(defun my-config/init-company-posframe ()
+  (use-package company-posframe
+    :if (display-graphic-p)
+    :after company
+    :defer t
+    :init
+    :config
     )
   )
 

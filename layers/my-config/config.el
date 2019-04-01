@@ -102,6 +102,8 @@
                                                                      company-oddmuse company-dabbrev))))
 (add-hook 'conf-mode-hook (lambda ()
                             (spacemacs/toggle-relative-line-numbers-on)))
+(add-hook 'company-mode-hook 'company-posframe-mode)
+
 (mapc #'wttr/prepend-to-exec-path
       (reverse
        '("D:/Perl/bin"
