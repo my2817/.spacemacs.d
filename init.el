@@ -518,11 +518,13 @@ Put your configuration code here, except for variables that  should be set befor
   ;; (spacemacs/set-leader-keys "bb" 'helm-mini)
 
   (global-hungry-delete-mode t)
+  ;; 通过以下函数，将过长的lighter变短，甚至隐藏
   ;; (spacemacs|diminish helm-gtags-mode)
   ;; (spacemacs|diminish ggtags-mode)
   ;; (spacemacs|diminish which-key-mode)
   ;; (spacemacs|diminish spacemacs-whitespace-cleanup-mode)
   ;; (spacemacs|diminish counsel-mode)
+  (spacemacs|diminish company-posframe-mode)
 
   ;; (evilified-state-evilify-map special-mode-map :mode special-mode)
 
