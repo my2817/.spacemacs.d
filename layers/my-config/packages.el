@@ -66,6 +66,7 @@
     pyim
     posframe
     company-posframe
+    cnfonts
   )
 
   "The list of Lisp packages required by the my-config layer.
@@ -582,4 +583,12 @@ See URL `irun -helpall'"
     )
   )
 
+(defun my-config/init-cnfonts ()
+  (use-package cnfonts
+    :defer t
+    :init
+    (progn
+      (cnfonts-enable)
+      (cnfonts-set-spacemacs-fallback-fonts))
+    ))
 ;;; packages.el ends here
