@@ -2,7 +2,6 @@
 # key: module
 # group: verilog
 # --
-module ${1:module_name} (/*port details*/);
+module ${1:module_name} (/*AUTOARG*/);
    $0
 endmodule: $1
-

@@ -2,10 +2,11 @@
 # key: always
 # group: verilog
 # --
-always @(posedge ${1:CLOCK} or negedge ${2:RESETn}) begin
+always @ (posedge ${1:CLK} or negedge ${2:RSTN}) begin
    if (~$2) begin
+      /*AUTORESET*/
+   end
+   else begin
       $0
-   end else begin
-  
    end
 end

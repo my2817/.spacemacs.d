@@ -2,12 +2,18 @@
 # key: case
 # group: verilog
 # --
-case (${1:Expression}) 
-   ${2:Condition}: 
-      begin
-         $0
-      end
-   default:
-      begin
-      end 
+case (${1:Expression})
+   ${2:Condition}: begin
+      $0
+   end
+   ${3:Condition}: begin
+   end
+   ${4:Condition}: begin
+   end
+   ${5:Condition}: begin
+   end
+   ${6:Condition}: begin
+   end
+   default: begin
+   end
 endcase
