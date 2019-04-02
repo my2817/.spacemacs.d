@@ -55,7 +55,6 @@
     flycheck
     flycheck-plantuml
     (company-verilog :location local)
-    company
     (company-english-helper :location local)
     ;; (awesome-tab :location local);;from [https://github.com/manateelazycat/awesome-tab]
     ;; header2
