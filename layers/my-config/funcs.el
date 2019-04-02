@@ -322,7 +322,7 @@ and return as PATH-to-FILE::Line-Number."
 
 (defadvice counsel-imenu (after my-counsel-imenu)
   "`evil-scroll-line-to-top' after `counsel-imenu'"
-  (evil-scroll-line-to-top nil)
+  (evil-scroll-line-to-center nil)
   )
 (ad-activate 'counsel-imenu)
 
