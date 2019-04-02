@@ -525,6 +525,7 @@ Put your configuration code here, except for variables that  should be set befor
   ;; (spacemacs|diminish spacemacs-whitespace-cleanup-mode)
   ;; (spacemacs|diminish counsel-mode)
   (spacemacs|diminish company-posframe-mode)
+  (spacemacs|diminish mmm-mode)
 
   ;; (evilified-state-evilify-map special-mode-map :mode special-mode)
 
