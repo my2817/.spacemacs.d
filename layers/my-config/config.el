@@ -258,3 +258,8 @@
 (with-eval-after-load 'persp-mode
   (setq persp-auto-save-opt 0)
   )
+
+(with-eval-after-load 'yasnippet-snippets
+  (add-to-list 'yas-snippet-dirs "~/.spacemacs.d/layers/my-config/local/my-verilog/snippets")
+  (yas-load-directory "~/.spacemacs.d/layers/my-config/local/my-verilog/snippets" t)
+  )
