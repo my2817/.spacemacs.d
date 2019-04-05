@@ -26,6 +26,16 @@
     cd ~/.emacs.d
     git checkout -b develop origin/develop; #默认的master分支更新较慢
   #+end_src
+
+  码云家对它进行了镜像加速『鼓掌』, 上面的地址可能有点慢了，用下面的
+  #+begin_src sh
+    git clocn https://gitee.com/mirrors/spacemacs ~/.emacs.d
+    cd ~/.emacs.d
+    git checkout -b develop origin/develop; #默认的master分支更新较慢
+  #+end_src
+
+  #+RESULTS:
+
 ** 下载我的配置
    #+begin_src sh
      git clone https://git.oschina.net/my2817/spacemacs-d ~/.spacemacs.d
