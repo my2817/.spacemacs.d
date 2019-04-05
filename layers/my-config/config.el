@@ -22,7 +22,7 @@
         :back "^.*\\(!org\\) --\\*\\/")))
 
     ;; in multi-line comment block, we use org-mode as default
-    (mmm-add-mode-ext-class 'verilog-mode nil 'verilog-org-1 )
+    ;; (mmm-add-mode-ext-class 'verilog-mode nil 'verilog-org-1 )
     (mmm-add-classes
      '((verilog-org-1
         :submode org-mode
