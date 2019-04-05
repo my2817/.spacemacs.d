@@ -37,10 +37,7 @@
   #+RESULTS:
 
 ** 下载我的配置
-   #+begin_src sh
-     git clone https://git.oschina.net/my2817/spacemacs-d ~/.spacemacs.d
-   #+end_src
-   由于众所周知的原因，国内访问github有时会 ...... 所以在码云上也放了一个
+   由于众所周知的原因，国内访问github有时会 ...... 所以给个码云的地址
    #+begin_src sh
      git clone https://gitee.com/my2817/spacemacs-d ~/.spacemacs.d
    #+end_src
