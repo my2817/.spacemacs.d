@@ -1,0 +1,236 @@
+
+* 目录                                                    :TOC_4_gh:noexport:
+- [[#安装][安装]]
+  - [[#下载spacemacs][下载spacemacs]]
+  - [[#下载我的配置][下载我的配置]]
+  - [[#配置][配置]]
+- [[#按键说明-keyboard][按键说明 keyboard]]
+- [[#帮助文档][帮助文档]]
+- [[#projectile][projectile]]
+- [[#regexp-正则表达式][regexp 正则表达式]]
+- [[#org][org]]
+- [[#函数][函数]]
+- [[#dired-mode][Dired Mode]]
+- [[#性能][性能]]
+  - [[#使用-profiler-start-和-profiler-report-来测试-emacs-性能][使用 profiler-start 和 profiler-report 来测试 Emacs 性能]]
+- [[#verilog-mode][verilog-mode]]
+  - [[#verilog-auto][verilog-auto]]
+  - [[#imenu][imenu]]
+- [[#diff][diff]]
+
+* 安装
+** 下载spacemacs
+   目前的配置基于[[https://github.com/syl20bnr/spacemacs][spacemacs]],
+  #+begin_src sh
+    git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+    cd ~/.emacs.d
+    git checkout -b develop origin/develop; #默认的master分支更新较慢
+  #+end_src
+** 下载我的配置
+   #+begin_src sh
+     git clone https://git.oschina.net/my2817/spacemacs-d ~/.spacemacs.d
+   #+end_src
+   由于众所周知的原因，国内访问github有时会 ...... 所以在码云上也放了一个
+   #+begin_src sh
+     git clone https://gitee.com/my2817/spacemacs-d ~/.spacemacs.d
+   #+end_src
+** 配置
+   spacemacs本身依赖很多插件，安装这些插件时，还是因为众所周知的原因..... 不过已经有人做了比较好用的镜像，需要在 ~/.spacemacs.d/init.el中进行相应设置，找到如下代码，将local更新为emacs-china
+   #+begin_src lisp
+  (let ((melpa-source "local"))
+    (cond
+     ((string= melpa-source "emacs-china")
+      (setq configuration-layer--elpa-archives
+            '(("melpa-cn" . "http://elpa.emacs-china.org/melpa/")
+              ("org-cn"   . "http://elpa.emacs-china.org/org/")
+              ("gnu-cn"   . "http://elpa.emacs-china.org/gnu/"))))
+     ((string= melpa-source "local")
+      (setq configuration-layer-elpa-archives
+            '(("melpa-cn-local" . "~/.emacs.d/.cache/elpa.emacs-china.org/melpa/")
+              ("org-cn-local"   . "~/.emacs.d/.cache/elpa.emacs-china.org/org/")
+              ("gnu-cn-local"   . "~/.emacs.d/.cache/elpa.emacs-china.org/gnu/")))
+      )
+     )
+    )
+   #+end_src
+   如果使用local的话，需要事先将源下载到本地，如下
+   #+begin_src sh
+     rsync -avzp rsync:elpa.emacs-china.org/elpa/ ~/.emacs.d/.cache/elpa.emacs-china.org
+   #+end_src
+
+* 按键说明 keyboard
+  |---------+----------------------------------------|
+  | keys    | 说明                                   |
+  |---------+----------------------------------------|
+  | ~c~     | 一般按键序列中的第一个c，代表  ctrl    |
+  |---------+----------------------------------------|
+  | ~m~     | 一般按键序列中的第一个m，代表  alt     |
+  |---------+----------------------------------------|
+  | ~c-K~   | ctrl和按键K同时按下                    |
+  |---------+----------------------------------------|
+  | ~c-K J~ | 先同时按下ctrl和按键K，释放后再按键  J |
+  |---------+----------------------------------------|
+  | ~m-x~   | 执行一个emacs内置命令                  |
+  |---------+----------------------------------------|
+
+* 帮助文档
+  + help 菜单下有详细说明，如果菜单被隐藏，使用 ctrl+鼠标右键呼出
+
+  + 任何时候取消当前操作 ~c-g~ ，同 ~ESC~
+
+  + 进入帮助系统: ~c-h~
+
+  + 查看快捷键key绑定的功能： ~c-h k key~
+
+  + 当前所有mode及按键绑定说明 ~c-h m~
+
+  + 另spacemacs作为一套配置，其说明文档位置 "~/.emacs.d/doc/DOCUMENTATION.org"
+
+* projectile
+
+  + 指定一个 project：在 project 的根目录建立.projectile 文件（或者使用git init进行初始化），或者使用变量 projectile-project-root-files-系列变量，
+
+  + 忽略特定目录、文件：projectile-globally-ignore0*系列变量
+
+  + 指定生成 TAGS 文件的命令：projectile-tags-command
+
+  +  如果当前通过 .git 识别为 project，工作会自动调用 git 的 .gitignore 策略
+
+  + 切换到project的目录，但不打开文件
+#+BEGIN_SRC emacs-lisp
+      (setq projectile-switch-project-action 'projectile-dired)
+#+END_SRC
+
+* regexp 正则表达式
+  [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Regexps.html#Regexps][regexp online doc]]
+
+  语法见相关文档: 菜单 help-> search documentation ->，提示输入关键词，输入 "regexp"
+凡事提示regexp的地方，均可使用regexp,
+
+* org
+  [[https://orgmode.org][Org-mode]]
+
+  [[http://doc.norang.ca/org-mode.html][Orange Your Life In Plain Text!]]
+
++ 在任何 buffer 中使用插入 org 表格，使用 orgtbl-mode
+ + org-babel，可以让许多不同语言的代码块一起工作
+#+BEGIN_SRC lisp
+(org-babel-do-load-languages
+      'org-babel-load-languages
+      '((emacs-lisp . t)
+        (ruby . t)
+        (ditaa . t)
+        (python . t)
+        (sh . t)
+        (latex . t)
+        (plantuml . t)
+        (dot . t)
+        (R . t)))
+#+END_SRC
+
+#+BEGIN_SRC verilog
+  module test;
+    input a;
+    output b;
+
+  endmodule
+#+END_SRC
+
+#+begin_src dot :file filename.jpg :cmdline -Kdot -Tjpg
+digraph G {
+  size="8,6"
+  ratio=expand
+  edge [dir=both]
+  plcnet [shape=box, label="PLC Network"]
+  subgraph cluster_wrapline {
+    label="Wrapline Control System"
+    color=purple
+    subgraph {
+    rank=same
+    exec
+    sharedmem [style=filled, fillcolor=lightgrey, shape=box]
+    }
+    edge[style=dotted, dir=none]
+    exec -> opserver
+    exec -> db
+    plc -> exec
+    edge [style=line, dir=both]
+    exec -> sharedmem
+    sharedmem -> db
+    plc -> sharedmem
+    sharedmem -> opserver
+  }
+  plcnet -> plc [constraint=false]
+  millwide [shape=box, label="Millwide System"]
+  db -> millwide
+
+  subgraph cluster_opclients {
+    color=blue
+    label="Operator Clients"
+    rankdir=LR
+    labelloc=b
+    node[label=client]
+    opserver -> client1
+    opserver -> client2
+    opserver -> client3
+  }
+}
+#+end_src
+
+
+* 函数
+ + flush-lines: 删除匹配的行，空行的正则表达式为"^\s-?+$" （即使有空白符，也算空行）
+
+ + keep-lines: 如名字，功能与上一个命令相反
+
+ + sort-lines: 对选中的行进行排序
+
+ + 使用linux的 sort 命令进行复杂排序，比如第几个字段作为关键词进行排序
+
+ + delete-duplicate-lines:先使用'sort-lines'对当前buffer进行排序，再使用本函数, 本函数一次只能从相邻的两行中删除一行，所以需要多次运行，或者使用以下awk命令（不需要事先排序）,该命令中的 '\$0' 表示行内容完全重复时，进行删除操作，相应替换为$n，则表示当第n个字段相同时，进行删除操作。
+#+BEGIN_SRC awk
+  awk '{!a[$0]{print}}'
+#+END_SRC
+
+* Dired Mode
+  dired-copy-filename-as-kill :: 复制文件名，快捷键 ~w~ ,复制文件绝对路径 ~0 w~
+
+* 性能
+** 使用 profiler-start 和 profiler-report 来测试 Emacs 性能
+   别是你使用 starter-kit 的时候，比如使用 spacemacs，spacemacs 最大的问题可能就是性能了，通过 profiler-start 开启之后，做半个小时的工作，然后调用 profiler-report，看看哪些地方耗时比较多吧。
+我把 pangu-spacing, org-bullets, js2-refactor 全部 exclude 了，现在打开 org 文件和 js 文件提升了不少效率。
+另外之前我的配置编辑 js 文件性能极低，原因竟然是因为我以前不知道从哪里 copy 了一句配置：
+#+BEGIN_SRC emacs-lisp
+  ;; This line has very bad performance lose!!!!!!!!!!!!!!!!!!!
+  (set-default 'imenu-auto-rescan t)
+#+END_SRC
+
+* verilog-mode
+
+  一般遇到的问题、需求，别人已经帮我们解决,见[[https://www.veripool.org/projects/verilog-mode/wiki/Faq][Faq]]
+
+** verilog-auto
+
+  当执行verilog-auto时，可能出现提示 "end xxxxx properties"信息，但verilog-auto并没有执行完成，使用emacs的batch mode解决
+#+BEGIN_SRC sh
+emacs --batch file.v -f verilog-batch-auto
+#+END_SRC
+  另，在我的配置中改写了verilog-mode中的一些函数，执行以上命令可能会出错，请使用以下命令：
+#+BEGIN_SRC shell
+emacs --batch file.v -l path/to/projectile.el -f verilog-batch-auto     #在spacemacs中, projectile.el位置 ~/.emacs.d/elpa路径下，请自查
+#+END_SRC
+
+** imenu
+
+   配置改写了verilog-mode默认产生imenu的方式，verilog代码可使用以下风格，将tag加入到imenu中实现快速跳转到该tag
+   #+BEGIN_SRC verilog
+     // begin: tag1
+     always @ (*) begin : tag2
+
+     end
+   #+END_SRC
+
+* diff
+  参考 ediff-* 系列命令，很好用，该系列工具会出现至少包含一个名为 "*Ediff Control Pannel*" 的窗口，只有选中它时，才能使用其相关命令: ~?~ 查看帮助说明，再次 ~?~ 隐藏帮助说明
+
+  ediff-current-file: 对当前文件更改前后的内容进行比较
