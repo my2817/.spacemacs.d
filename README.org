@@ -14,6 +14,8 @@
 - [[#性能][性能]]
   - [[#使用-profiler-start-和-profiler-report-来测试-emacs-性能][使用 profiler-start 和 profiler-report 来测试 Emacs 性能]]
 - [[#verilog-mode][verilog-mode]]
+  - [[#前言][前言]]
+  - [[#配置-1][配置]]
   - [[#verilog-auto][verilog-auto]]
   - [[#imenu][imenu]]
 - [[#diff][diff]]
@@ -215,6 +217,17 @@ digraph G {
 * verilog-mode
 
   一般遇到的问题、需求，别人已经帮我们解决,见[[https://www.veripool.org/projects/verilog-mode/wiki/Faq][Faq]]
+** 前言
+   写verilog的编辑器，最先接触到的带补全的编辑器是ue（其实就是比较初级字符串补全），用了一段时间感觉好顺畅，但到了需要模块实例化的时候，好多重复性的工作，做几次后就比较烦躁，然后就发现了verilog-mode；当时也有看到vim调用verilog-mode的解决方案，verilog-mode本身是emacs的插件，所以很自然的选择了emacs，然后就是emacs入坑->出坑->入坑，后来又发现spacemacs，这几年就安静下来了，呆在这坑里怕是出不去了。
+
+** 配置
+   verilog相关插件来源有两部分：
+   + [[https:www.veripool.org][verilog-mode]] : 虽然emacs本身已经集成了，但不一定是最新版本（我一般是官网下载后，直接覆盖emac自带的，反正emacs都是自己安装）,另外意外的从官网发现了verilator,verilog-perl，似乎都比较好玩儿
+   + [[file:~/.spacemacs/layers/my-config/local/my-verilog/my-verilog.el][my-verilog.el]] 这个文件的原始版本，是从网上抄过来的，现在似乎找不到出处，如果有人还记得，麻烦提醒一下，谢谢！
+   + verilog-header: verilog-mode.el原始定义在verilog-mode.el中，个人定制后，放在my-verilog.el中，哪天跳槽了记得要改（前面已经说过了怎么查该函数对应的快捷键）
+   + 代码片断、框架补全：输入关键字，按照列表选择吧
+   + my-verilog-create-tb: 功能如名字所示
+
 
 ** verilog-auto
 
