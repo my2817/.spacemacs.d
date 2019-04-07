@@ -16,6 +16,7 @@
 - [[#verilog-mode][verilog-mode]]
   - [[#前言][前言]]
   - [[#配置-1][配置]]
+    - [[#常用的一些功能][常用的一些功能]]
   - [[#verilog-auto][verilog-auto]]
   - [[#imenu][imenu]]
 - [[#diff][diff]]
@@ -68,43 +69,38 @@
    #+end_src
 
 * 按键说明 keyboard
-  |---------+----------------------------------------|
-  | keys    | 说明                                   |
-  |---------+----------------------------------------|
-  | ~c~     | 一般按键序列中的第一个c，代表  ctrl    |
-  |---------+----------------------------------------|
-  | ~m~     | 一般按键序列中的第一个m，代表  alt     |
-  |---------+----------------------------------------|
-  | ~c-K~   | ctrl和按键K同时按下                    |
-  |---------+----------------------------------------|
-  | ~c-K J~ | 先同时按下ctrl和按键K，释放后再按键  J |
-  |---------+----------------------------------------|
-  | ~m-x~   | 执行一个emacs内置命令                  |
-  |---------+----------------------------------------|
+  |----------------+----------------------------------------|
+  | keys           | 说明                                   |
+  |----------------+----------------------------------------|
+  | ~c~            | 一般按键序列中的第一个c，代表  ctrl    |
+  |----------------+----------------------------------------|
+  | ~m~            | 一般按键序列中的第一个m，代表  alt     |
+  |----------------+----------------------------------------|
+  | ~c-K~          | ctrl和按键K同时按下                    |
+  |----------------+----------------------------------------|
+  | ~c-K J~        | 先同时按下ctrl和按键K，释放后再按键  J |
+  |----------------+----------------------------------------|
+  | ~m-x~          | 执行一个emacs内置命令                  |
+  |----------------+----------------------------------------|
+  | ~esc~ or ~c-[~ | 进入normal模式，同vim类似，            |
+  |----------------+----------------------------------------|
+  | ~i~,~a~,~A~    | 进入插入模式                           |
+  |----------------+----------------------------------------|
 
 * 帮助文档
   + help 菜单下有详细说明，如果菜单被隐藏，使用 ctrl+鼠标右键呼出
-
   + 任何时候取消当前操作 ~c-g~ ，同 ~ESC~
-
   + 进入帮助系统: ~c-h~
-
   + 查看快捷键key绑定的功能： ~c-h k key~
-
   + 当前所有mode及按键绑定说明 ~c-h m~
-
   + 另spacemacs作为一套配置，其说明文档位置 "~/.emacs.d/doc/DOCUMENTATION.org"
 
 * projectile
 
-  + 指定一个 project：在 project 的根目录建立.projectile 文件（或者使用git init进行初始化），或者使用变量 projectile-project-root-files-系列变量，
-
+  + 指定一个 project：在 project 的根目录建立.projectile 文件（或者使用git init进行初始化），或者使用变量 projectile-project-root-files-系列变量
   + 忽略特定目录、文件：projectile-globally-ignore0*系列变量
-
   + 指定生成 TAGS 文件的命令：projectile-tags-command
-
-  +  如果当前通过 .git 识别为 project，工作会自动调用 git 的 .gitignore 策略
-
+  + 如果当前通过 .git 识别为 project，工作会自动调用 git 的 .gitignore 策略
   + 切换到project的目录，但不打开文件
 #+BEGIN_SRC emacs-lisp
       (setq projectile-switch-project-action 'projectile-dired)
@@ -218,16 +214,34 @@ digraph G {
 
   一般遇到的问题、需求，别人已经帮我们解决,见[[https://www.veripool.org/projects/verilog-mode/wiki/Faq][Faq]]
 ** 前言
-   写verilog的编辑器，最先接触到的带补全的编辑器是ue（其实就是比较初级字符串补全），用了一段时间感觉好顺畅，但到了需要模块实例化的时候，好多重复性的工作，做几次后就比较烦躁，然后就发现了verilog-mode；当时也有看到vim调用verilog-mode的解决方案，verilog-mode本身是emacs的插件，所以很自然的选择了emacs，然后就是emacs入坑->出坑->入坑，后来又发现spacemacs，这几年就安静下来了，呆在这坑里怕是出不去了。
+   verilog的编辑器，最先接触到的带补全的编辑器是ue（其实就是比较初级字符串补全），刚开始感觉好顺畅，但到了需要模块实例化的时候，好多重复性的工作，做几次后就比较烦躁，然后就发现了verilog-mode；当时也有看到vim调用verilog-mode的解决方案，verilog-mode本身是emacs的插件，所以很自然的选择了emacs，然后就是emacs入坑->出坑->入坑，后来又发现spacemacs，这几年就安静下来了，呆在这坑里怕是出不去了。
 
 ** 配置
-   verilog相关插件来源有两部分：
+   verilog相关插件有两个：
    + [[https:www.veripool.org][verilog-mode]] : 虽然emacs本身已经集成了，但不一定是最新版本（我一般是官网下载后，直接覆盖emac自带的，反正emacs都是自己安装）,另外意外的从官网发现了verilator,verilog-perl，似乎都比较好玩儿
    + [[file:~/.spacemacs/layers/my-config/local/my-verilog/my-verilog.el][my-verilog.el]] 这个文件的原始版本，是从网上抄过来的，现在似乎找不到出处，如果有人还记得，麻烦提醒一下，谢谢！
-   + verilog-header: verilog-mode.el原始定义在verilog-mode.el中，个人定制后，放在my-verilog.el中，哪天跳槽了记得要改（前面已经说过了怎么查该函数对应的快捷键）
-   + 代码片断、框架补全：输入关键字，按照列表选择吧
-   + my-verilog-create-tb: 功能如名字所示
 
+*** 常用的一些功能
+     + verilog-header: verilog-mode.el原始定义在verilog-mode.el中，个人定制后，放在my-verilog.el中，哪天跳槽了记得要改（前面已经说过了怎么查该函数对应的快捷键）
+     + 基于skeleton代码片断、框架补全,输入关键字，按照列表选择，可以不用方向键， ~c-j~ : down; ~c-k~ : up
+       本补全方式中，有时可能需要用户输入相应的信息，此时需要从minibuffer输入，此时不能使用关键字补全功能
+       + [[file:img/company-module.png][company-keyword-module]]
+       + [[file:img/module-expand.png][keyword-expand-module]]
+     + yasnippet 代码片断补全,暂时没有加入到补全后端里，需要快捷键触发: ~M-m i s~ ,always as eg:
+       + [[file:img/yasnippet-always.png][yasnippet-always]]
+       + [[file:img/yasnippet-always-2.png][yasnippet-always2]] : 与skeleton不同，用户输入时不会使用minibuffer,同样可以使用关键字补全功能；使用tab跳转到下一个需要输入的位置
+     + my-verilog-create-tb: 功能如名字所示,其会新建一个buffer，保存 ~c-x c-s~ 后文件后  ~c-c c-a~  执行verilog-auto
+     + verilog-auto时找不到instance? Faq中已经提示过了如何解决，或者参考 【 ~c-h f verilog-library-flags~ 】,麻烦的是每次遇到这问题都得在文件尾添加该语句 ..... 我的解决方案是参考[[https://www.gnu.org/software/emacs/manual/html_node/emacs/Directory-Variables.html#Directory-Variables][49.2.5 Per-Directory Local Variables]]，最后的解决方案就是执行命令 ~my-project-dir-local-init~, 不过事先得先建一个project, 参考 [[#projectile][projecile]],另外，所有的RTL总得有个组织结构吧，比如：
+       #+begin_example
+       project-root
+       +--digital
+           +--rtl
+              +--sub-module-a
+              |  +--sub-module-a.v
+              +--subm-module-b
+                 +--subm-module-b.v
+       #+end_example
+     ~my-project-dir-local-init~ 会在project的根目录下生成一个.dir-locals.el的文件，看见 "digital/rtl"了吧，按实际需求改就成
 
 ** verilog-auto
 
