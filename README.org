@@ -305,6 +305,6 @@ emacs --batch file.v -l path/to/projectile.el -f verilog-batch-auto     #在spac
    #+END_SRC
 
 * diff
-  参考 ediff-* 系列命令，很好用，该系列工具会出现至少包含一个名为 "*Ediff Control Pannel*" 的窗口，只有选中它时，才能使用其相关命令: ~?~ 查看帮助说明，再次 ~?~ 隐藏帮助说明
+  参考 ediff-* 系列命令，很好用，该系列工具会出现至少包含一个名为 "*Ediff Control Pannel*" 的窗口，只有选中它时，才能使用其相关命令: ~?~ 查看帮助说明，再次 ~?~ 隐藏帮助说明, ~# #~:比较时忽略空白符，执行此操作后再进行一次 ~!~ , 就不会受空白符的影响了
 
   ediff-current-file: 对当前文件更改前后的内容进行比较
