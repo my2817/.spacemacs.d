@@ -2,7 +2,7 @@
 * 目录                                                    :TOC_4_gh:noexport:
 - [[#安装][安装]]
   - [[#下载spacemacs][下载spacemacs]]
-  - [[#下载我的配置][下载我的配置]]
+  - [[#我的配置][我的配置]]
   - [[#配置][配置]]
 - [[#按键说明-keyboard][按键说明 keyboard]]
 - [[#帮助文档][帮助文档]]
@@ -14,10 +14,10 @@
 - [[#性能][性能]]
   - [[#使用-profiler-start-和-profiler-report-来测试-emacs-性能][使用 profiler-start 和 profiler-report 来测试 Emacs 性能]]
 - [[#verilog-mode][verilog-mode]]
-  - [[#前言][前言]]
   - [[#配置-1][配置]]
-    - [[#常用的一些功能][常用的一些功能]]
+  - [[#常用的一些功能][常用的一些功能]]
   - [[#verilog-auto][verilog-auto]]
+  - [[#flycheck][flycheck]]
   - [[#imenu][imenu]]
 - [[#diff][diff]]
 
@@ -32,14 +32,14 @@
 
   码云家对它进行了镜像加速『鼓掌』, 上面的地址可能有点慢了，用下面的
   #+begin_src sh
-    git clocn https://gitee.com/mirrors/spacemacs ~/.emacs.d
+    git clone https://gitee.com/mirrors/spacemacs ~/.emacs.d
     cd ~/.emacs.d
     git checkout -b develop origin/develop; #默认的master分支更新较慢
   #+end_src
 
   #+RESULTS:
 
-** 下载我的配置
+** 我的配置
    由于众所周知的原因，国内访问github有时会 ...... 所以给个码云的地址
    #+begin_src sh
      git clone https://gitee.com/my2817/spacemacs-d ~/.spacemacs.d
@@ -47,25 +47,49 @@
 ** 配置
    spacemacs本身依赖很多插件，安装这些插件时，还是因为众所周知的原因..... 不过已经有人做了比较好用的镜像，需要在 ~/.spacemacs.d/init.el中进行相应设置，找到如下代码，将local更新为emacs-china
    #+begin_src lisp
-  (let ((melpa-source "local"))
-    (cond
-     ((string= melpa-source "emacs-china")
-      (setq configuration-layer--elpa-archives
-            '(("melpa-cn" . "http://elpa.emacs-china.org/melpa/")
-              ("org-cn"   . "http://elpa.emacs-china.org/org/")
-              ("gnu-cn"   . "http://elpa.emacs-china.org/gnu/"))))
-     ((string= melpa-source "local")
-      (setq configuration-layer-elpa-archives
-            '(("melpa-cn-local" . "~/.emacs.d/.cache/elpa.emacs-china.org/melpa/")
-              ("org-cn-local"   . "~/.emacs.d/.cache/elpa.emacs-china.org/org/")
-              ("gnu-cn-local"   . "~/.emacs.d/.cache/elpa.emacs-china.org/gnu/")))
-      )
-     )
-    )
+     (let ((melpa-source "local"))
+       (cond
+        ((string= melpa-source "emacs-china")
+         (setq configuration-layer--elpa-archives
+               '(("melpa-cn" . "http://elpa.emacs-china.org/melpa/")
+                 ("org-cn"   . "http://elpa.emacs-china.org/org/")
+                 ("gnu-cn"   . "http://elpa.emacs-china.org/gnu/"))))
+        ((string= melpa-source "local")
+         (setq configuration-layer-elpa-archives
+               '(("melpa-cn-local" . "~/.emacs.d/.cache/elpa.emacs-china.org/melpa/")
+                 ("org-cn-local"   . "~/.emacs.d/.cache/elpa.emacs-china.org/org/")
+                 ("gnu-cn-local"   . "~/.emacs.d/.cache/elpa.emacs-china.org/gnu/")))
+         )
+        )
+       )
+
    #+end_src
    如果使用local的话，需要事先将源下载到本地，如下
    #+begin_src sh
      rsync -avzp rsync:elpa.emacs-china.org/elpa/ ~/.emacs.d/.cache/elpa.emacs-china.org
+   #+end_src
+
+   如果是win平台，在文件 ~/.spacemacs.d/layers/my-config/config.el 中，找到如下代码，修改最后两个路径，为emacs提供linux工具集
+   #+begin_src lisp
+   (mapc #'wttr/prepend-to-exec-path
+      (reverse
+       '("D:/Perl/bin"
+         "D:/EDA/graphviz-2.38/bin"
+         "D:/cygwin64/bin"
+         "D:/EDA/modeltech64_10.2c/win64"
+         "d:/EDA/Git-2.6.0-32-bit/PortableGit/usr/bin"
+         "C:/Program\ Files\ (x86)/Java/jre1.8.0_171/bin"
+         "D:/EDA/Git-2.6.0-32-bit/PortableGit/bin"
+         "D:/EDA/libxml2/iconv-1.9.2.win32/bin"
+         "D:/EDA/libxml2/iconv-1.9.2.win32/lib"
+         "D:/EDA/libxml2/libxml2-2.7.8.win32/bin"
+         "D:/EDA/libxml2/libxml2-2.7.8.win32/lib"
+         "D:/EDA/libxml2/zlib-1.2.5/bin"
+         "D:/EDA/libxml2/zlib-1.2.5/lib"
+         "C:/ProgramData/Oracle/Java/javapath"
+         "e:/Git-2.6.0-32-bit/PortableGit/usr/bin"
+         "e:/Git-2.6.0-32-bit/PortableGit/bin"
+         )))
    #+end_src
 
 * 按键说明 keyboard
@@ -84,7 +108,7 @@
   |----------------+----------------------------------------|
   | ~esc~ or ~c-[~ | 进入normal模式，同vim类似，            |
   |----------------+----------------------------------------|
-  | ~i~,~a~,~A~    | 进入插入模式                           |
+  | ~i~, ~a~ , ~A~ | 进入插入模式                           |
   |----------------+----------------------------------------|
 
 * 帮助文档
@@ -96,7 +120,6 @@
   + 另spacemacs作为一套配置，其说明文档位置 "~/.emacs.d/doc/DOCUMENTATION.org"
 
 * projectile
-
   + 指定一个 project：在 project 的根目录建立.projectile 文件（或者使用git init进行初始化），或者使用变量 projectile-project-root-files-系列变量
   + 忽略特定目录、文件：projectile-globally-ignore0*系列变量
   + 指定生成 TAGS 文件的命令：projectile-tags-command
@@ -117,7 +140,7 @@
 
   [[http://doc.norang.ca/org-mode.html][Orange Your Life In Plain Text!]]
 
-+ 在任何 buffer 中使用插入 org 表格，使用 orgtbl-mode
+ + 在任何 buffer 中使用插入 org 表格，使用 orgtbl-mode
  + org-babel，可以让许多不同语言的代码块一起工作
 #+BEGIN_SRC lisp
 (org-babel-do-load-languages
@@ -182,23 +205,19 @@ digraph G {
 }
 #+end_src
 
-
 * 函数
  + flush-lines: 删除匹配的行，空行的正则表达式为"^\s-?+$" （即使有空白符，也算空行）
-
  + keep-lines: 如名字，功能与上一个命令相反
-
  + sort-lines: 对选中的行进行排序
-
  + 使用linux的 sort 命令进行复杂排序，比如第几个字段作为关键词进行排序
-
- + delete-duplicate-lines:先使用'sort-lines'对当前buffer进行排序，再使用本函数, 本函数一次只能从相邻的两行中删除一行，所以需要多次运行，或者使用以下awk命令（不需要事先排序）,该命令中的 '\$0' 表示行内容完全重复时，进行删除操作，相应替换为$n，则表示当第n个字段相同时，进行删除操作。
+ + delete-duplicate-lines:先使用'sort-lines'对当前buffer进行排序，再使用本函数, 本函数一次只能从相邻的两行中删除一行，所以需要多次运行，或者使用以下awk命令（不需要事先排序）,该命令中的 $0 表示行内容完全重复时，进行删除操作，相应替换为$n，则表示当第n个字段相同时，进行删除操作。
 #+BEGIN_SRC awk
   awk '{!a[$0]{print}}'
 #+END_SRC
 
 * Dired Mode
-  dired-copy-filename-as-kill :: 复制文件名，快捷键 ~w~ ,复制文件绝对路径 ~0 w~
+  - 复制文件名：比如想复制当前正在编辑的文件的文件名， ~spc f j~ ，移动光标到文件上， ~w~ ：复制文件名；或者 ~0 w~ :复制文件路径
+  - 编辑文件名：在本模式下，默认的buffer是只读的， ~spc b w~ :buffer变为可写状态，根据需要个性文件名，再次 ~spc b w~ , 修改生效（修改时使用正则表达式进行复杂替换）
 
 * 性能
 ** 使用 profiler-start 和 profiler-report 来测试 Emacs 性能
@@ -213,35 +232,33 @@ digraph G {
 * verilog-mode
 
   一般遇到的问题、需求，别人已经帮我们解决,见[[https://www.veripool.org/projects/verilog-mode/wiki/Faq][Faq]]
-** 前言
-   verilog的编辑器，最先接触到的带补全的编辑器是ue（其实就是比较初级字符串补全），刚开始感觉好顺畅，但到了需要模块实例化的时候，好多重复性的工作，做几次后就比较烦躁，然后就发现了verilog-mode；当时也有看到vim调用verilog-mode的解决方案，verilog-mode本身是emacs的插件，所以很自然的选择了emacs，然后就是emacs入坑->出坑->入坑，后来又发现spacemacs，这几年就安静下来了，呆在这坑里怕是出不去了。
 
 ** 配置
    verilog相关插件有两个：
    + [[https:www.veripool.org][verilog-mode]] : 虽然emacs本身已经集成了，但不一定是最新版本（我一般是官网下载后，直接覆盖emac自带的，反正emacs都是自己安装）,另外意外的从官网发现了verilator,verilog-perl，似乎都比较好玩儿
-   + [[file:~/.spacemacs/layers/my-config/local/my-verilog/my-verilog.el][my-verilog.el]] 这个文件的原始版本，是从网上抄过来的，现在似乎找不到出处，如果有人还记得，麻烦提醒一下，谢谢！
+   + [[file:~/.spacemacs/layers/my-config/local/my-verilog/my-verilog.el][my-verilog.el]] : 这个文件的原始版本，是从网上抄过来的，现在似乎找不到出处，如果有人还记得，麻烦提醒一下，谢谢！
 
-*** 常用的一些功能
-     + verilog-header: verilog-mode.el原始定义在verilog-mode.el中，个人定制后，放在my-verilog.el中，哪天跳槽了记得要改（前面已经说过了怎么查该函数对应的快捷键）
-     + 基于skeleton代码片断、框架补全,输入关键字，按照列表选择，可以不用方向键， ~c-j~ : down; ~c-k~ : up
-       本补全方式中，有时可能需要用户输入相应的信息，此时需要从minibuffer输入，此时不能使用关键字补全功能
-       + [[file:img/company-module.png][company-keyword-module]]
-       + [[file:img/module-expand.png][keyword-expand-module]]
-     + yasnippet 代码片断补全,暂时没有加入到补全后端里，需要快捷键触发: ~M-m i s~ ,always as eg:
-       + [[file:img/yasnippet-always.png][yasnippet-always]]
-       + [[file:img/yasnippet-always-2.png][yasnippet-always2]] : 与skeleton不同，用户输入时不会使用minibuffer,同样可以使用关键字补全功能；使用tab跳转到下一个需要输入的位置
-     + my-verilog-create-tb: 功能如名字所示,其会新建一个buffer，保存 ~c-x c-s~ 后文件后  ~c-c c-a~  执行verilog-auto
-     + verilog-auto时找不到instance? Faq中已经提示过了如何解决，或者参考 【 ~c-h f verilog-library-flags~ 】,麻烦的是每次遇到这问题都得在文件尾添加该语句 ..... 我的解决方案是参考[[https://www.gnu.org/software/emacs/manual/html_node/emacs/Directory-Variables.html#Directory-Variables][49.2.5 Per-Directory Local Variables]]，最后的解决方案就是执行命令 ~my-project-dir-local-init~, 不过事先得先建一个project, 参考 [[#projectile][projecile]],另外，所有的RTL总得有个组织结构吧，比如：
-       #+begin_example
-       project-root
-       +--digital
-           +--rtl
-              +--sub-module-a
-              |  +--sub-module-a.v
-              +--subm-module-b
-                 +--subm-module-b.v
-       #+end_example
-     ~my-project-dir-local-init~ 会在project的根目录下生成一个.dir-locals.el的文件，看见 "digital/rtl"了吧，按实际需求改就成
+** 常用的一些功能
+    + verilog-header: 原定义在verilog-mode.el中，我做了一定修改，放在my-verilog.el中，哪天跳槽了记得要改（前面已经说过了怎么查该函数对应的快捷键）
+    + 代码补全：基于skeleton代码片断、框架补全,输入关键字，按照列表选择，可以不用方向键， ~c-j~ : down; ~c-k~ : up; ~c-l~ : 相当于回车
+      本补全方式中，有时可能需要用户输入相应的信息，此时需要从minibuffer输入，此时不能使用关键字补全功能
+      + [[file:img/company-module.png][company-keyword-module]]
+      + [[file:img/module-expand.png][keyword-expand-module]]
+    + yasnippet 代码片断补全,暂时没有加入到补全后端里，需要快捷键触发: ~M-m i s~ ,always as eg:
+      + [[file:img/yasnippet-always.png][yasnippet-always]]
+      + [[file:img/yasnippet-always-2.png][yasnippet-always2]] : 与skeleton不同，用户输入时不会使用minibuffer,同样可以使用关键字补全功能；使用tab跳转到下一个需要输入的位置
+    + my-verilog-create-tb: 功能如名字所示,其会新建一个buffer，保存 ~c-x c-s~ ,  ~c-c c-a~  执行verilog-auto
+    + verilog-auto时找不到instance? Faq中已经提示过了如何解决，或者参考 【 ~c-h f verilog-library-flags~ 】,麻烦的是每次遇到这问题都得在文件尾添加该语句 ..... 我的解决方案是利用[[https://www.gnu.org/software/emacs/manual/html_node/emacs/Directory-Variables.html#Directory-Variables][49.2.5 Per-Directory Local Variables]]，最后的解决方案就是执行命令 ~my-project-dir-local-init~ , 不过事先得先建一个project, 参考 projectile,另外，所有的RTL总得有个组织结构吧，比如：
+      #+begin_example
+      project-root
+      +---digital
+          +--rtl
+             +--sub-module-a
+             |  +--sub-module-a.v
+             +--subm-module-b
+                +--subm-module-b.v
+      #+end_example
+    ~my-project-dir-local-init~ 会在project的根目录下生成一个.dir-locals.el的文件，看见 "digital/rtl"了，意思是让只要是 protject-root/digtal/rtl 路径之下的所有 .v 均可被 verilog-auto 找到。
 
 ** verilog-auto
 
@@ -253,6 +270,29 @@ emacs --batch file.v -f verilog-batch-auto
 #+BEGIN_SRC shell
 emacs --batch file.v -l path/to/projectile.el -f verilog-batch-auto     #在spacemacs中, projectile.el位置 ~/.emacs.d/elpa路径下，请自查
 #+END_SRC
+
+** flycheck
+   默认打开此功能，调用EDA工具对代码进行实时编译，简单低级错误可以立即提示，马上改掉 ~spc e v~ 大概得到如下信息，因为在我自己电脑上目前只安装了[[file:img/flycheck2.png][verilator]], 如果有多个EDA工具可用的话，可使用 ~spc e s~ 进行选择，需要定义其它工具的话自行搜索帮助文件，verilog-irun的定义在 "~/.spacemacs.d/layers/my-config/packages.el"
+   #+begin_example
+   Syntax checkers for buffer tb.sv in verilog-mode:
+
+  verilog-irun (disabled)
+    - may enable: Automatically disabled!
+    - executable: Not found
+
+  verilog-iverilog (disabled)
+    - may enable: Automatically disabled!
+    - executable: Not found
+
+  verilog-leda (disabled)
+    - may enable: Automatically disabled!
+    - executable: Not found
+
+  verilog-verilator
+    - may enable: yes
+    - executable: Found at /usr/local/bin/verilator_bin
+
+   #+end_example
 
 ** imenu
 
