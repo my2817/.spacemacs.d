@@ -327,26 +327,32 @@ and return as PATH-to-FILE::Line-Number."
 (ad-activate 'counsel-imenu)
 
 
-(defun my-bin2dec()
-  (interactive)
+(defun my-bin2dec(&optional arg)
+  (interactive "P")
   (let ((local-word (replace-regexp-in-string "[bB]" "" (thing-at-point 'word 'no-properties))))
     (message (format "bin2dex: %s -> %d" local-word (string-to-number  local-word 2))) )
   )
 
-(defun my-bin2hex()
-  (interactive)
+(defun my-bin2hex(&optional arg)
+  (interactive "P")
   (let ((local-word (replace-regexp-in-string "[bB]" "" (thing-at-point 'word 'no-properties))))
     (message (format "bin2hex: %s -> %x" local-word (string-to-number  local-word 2))) )
   )
 
-(defun my-dec2hex()
-  (interactive)
-  (let ((local-word (replace-regexp-in-string "[dD]" "" (thing-at-point 'word 'no-properties))))
+(defun my-dec2hex(&optional arg)
+  "C-0 my-dec2hex to accepts user input"
+  (interactive "P")
+  (let ((local-word (if arg
+                        (ivy-completing-read "input dec: " nil)
+                      (replace-regexp-in-string "[dD]" "" (thing-at-point 'word 'no-properties)))))
     (message (format "dex2hex : %s -> %x" local-word (string-to-number  local-word 10))) )
   )
 
-(defun my-hex2dec()
-  (interactive)
-  (let ((local-word (replace-regexp-in-string "[xXhH]" "" (thing-at-point 'word 'no-properties))))
+(defun my-hex2dec(&optional arg)
+  "C-0 my-hex2dec to accepts user input"
+  (interactive "P")
+  (let ((local-word (if arg
+                        (ivy-completing-read "input hex: " nil)
+                      (replace-regexp-in-string "[xXhH]" "" (thing-at-point 'word 'no-properties)))))
     (message (format "dex2hex : %s -> %d" local-word (string-to-number  local-word 16))) )
   )
