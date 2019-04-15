@@ -15,4 +15,5 @@
                                       ;; zilongshanren-ui
                                       ;; zilongshanren-org
                                       ;; zilongshanren-better-defaults
-                                      ))
+                                      exwm
+				      ))
