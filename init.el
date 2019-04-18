@@ -51,7 +51,7 @@ This function should only modify configuration layer settings."
      ;; spell-checking
      syntax-checking
      version-control
-     themes-megapack
+     ;themes-megapack
      my-config
      games
      latex
@@ -457,10 +457,10 @@ before packages are loaded. If you are unsure,  try  setting them in
   ;;  ;   ("org-cn"   . "http://elpa.zilongshanren.com/org/")
   ;;  ;   ("gnu-cn"   . "http://elpa.zilongshanren.com/gnu/")))
   ;; (package-initialize)
-  (let ((melpa-source "local"))
+  (let ((melpa-source "emacs-china"))
     (cond
      ((string= melpa-source "emacs-china")
-      (setq configuration-layer--elpa-archives
+      (setq configuration-layer-elpa-archives
             '(("melpa-cn" . "http://elpa.emacs-china.org/melpa/")
               ("org-cn"   . "http://elpa.emacs-china.org/org/")
               ("gnu-cn"   . "http://elpa.emacs-china.org/gnu/"))))
