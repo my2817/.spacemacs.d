@@ -534,15 +534,15 @@ See URL `irun -helpall'"
       ;; 1. 光标只有在注释里面时，才可以输入中文。
       ;; 2. 光标前是汉字字符时，才能输入中文。
       ;; 3. 使用 M-j 快捷键，强制将光标前的拼音字符串转换为中文。
-      ;; (setq-default pyim-english-input-switch-functions
-      ;;               '(pyim-probe-dynamic-english
-      ;;                 pyim-probe-isearch-mode
-      ;;                 pyim-probe-program-mode
-      ;;                 pyim-probe-org-structure-template))
+      (setq-default pyim-english-input-switch-functions
+                    '(pyim-probe-dynamic-english
+                      pyim-probe-isearch-mode
+                      pyim-probe-program-mode
+                      pyim-probe-org-structure-template))
 
-      ;; (setq-default pyim-punctuation-half-width-functions
-      ;;               '(pyim-probe-punctuation-line-beginning
-      ;;                 pyim-probe-punctuation-after-punctuation))
+      (setq-default pyim-punctuation-half-width-functions
+                    '(pyim-probe-punctuation-line-beginning
+                      pyim-probe-punctuation-after-punctuation))
       ;; 使用 pupup-el 来绘制选词框, 如果用 emacs26, 建议设置
       ;; 为 'posframe, 速度很快并且菜单不会变形，不过需要用户
       ;; 手动安装 posframe 包。
@@ -563,10 +563,17 @@ See URL `irun -helpall'"
     :after pyim
     :init
     (pyim-wbdict-v98-enable)
+    :config
+    ;; (if (featurep 'pyim)
+    ;;     (pyim-extra-dicts-add-dict
+    ;;      `(:name "electric-wbdict" :file  "~/.spacemacs.d/layers/my-config/local/pyim-dict/electric-wbdict.pyim" :elpa t))
+    ;;   (message "electric-wbdict 没有安装，pyim-wbdict 启用失败。"))
+
     )
   )
 
 (defun my-config/init-posframe ()
+
   (use-package posframe
     :defer t
     :init
