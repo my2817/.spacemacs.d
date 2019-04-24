@@ -564,11 +564,18 @@ See URL `irun -helpall'"
     :init
     (pyim-wbdict-v98-enable)
     :config
-    ;; (if (featurep 'pyim)
-    ;;     (pyim-extra-dicts-add-dict
-    ;;      `(:name "electric-wbdict" :file  "~/.spacemacs.d/layers/my-config/local/pyim-dict/electric-wbdict.pyim" :elpa t))
-    ;;   (message "electric-wbdict 没有安装，pyim-wbdict 启用失败。"))
+    (progn
+      (setq pyim-assistant-scheme-enable t)
+      (if (featurep 'pyim)
+          (pyim-extra-dicts-add-dict
+           `(:name "electric-wbdict" :file  "~/.spacemacs.d/layers/my-config/local/pyim-dict/electric-wbdict.pyim" :elpa t))
+        (message "electric-wbdict 没有安装，pyim-wbdict 启用失败。"))
 
+      (if (featurep 'pyim)
+          (pyim-extra-dicts-add-dict
+           `(:name "wbdict-use" :file ,"~/.spacemacs.d/layers/my-config/local/pyim-dict/pyim-wbdict-user.pyim" :elpa t))
+        (message "wbdict-user 没有安装，pyim-wbdict 启用失败。"))
+      )
     )
   )
 
