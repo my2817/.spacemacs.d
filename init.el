@@ -594,6 +594,9 @@ Put your configuration code here, except for variables that  should be set befor
           (Man-completion-table . "^")
           (woman . "^"))
         )
+  (spacemacs/set-leader-keys "ss" 'spacemacs/swiper-region-or-symbol)
+  (spacemacs/set-leader-keys "sS" 'swiper)
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
