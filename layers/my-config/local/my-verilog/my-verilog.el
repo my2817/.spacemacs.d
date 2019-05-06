@@ -178,7 +178,7 @@
   (save-excursion
     (let ((instance-alist '()))
       (while (verilog-re-search-forward
-              "\\s-*\\([a-zA-Z0-9_]+\\)\\s-*:\\s-*\\(coverpoint\\)\\s-*"
+              "\\s-*\\([a-zA-Z0-9_]+\\)\\s-*:\\s-*\\(coverpoint\\|cross\\)\\s-*"
               end t)
         (condition-case nil
             (let ((instance-type (verilog-match-string 2)) (instance-name (verilog-match-string 1))
