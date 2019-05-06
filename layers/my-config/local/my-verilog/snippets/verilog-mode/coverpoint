@@ -1,0 +1,7 @@
+# name: coverpoint
+# key: coverpoint
+# group: verilog
+# --
+${1:coverpoint_identifier} : coverpoint ${2:expression} ${3:iff (expression [C-d to skip this field])}{
+      $0
+}
