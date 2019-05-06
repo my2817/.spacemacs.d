@@ -157,6 +157,40 @@
           (error nil)))
       instance-alist)))
 
+(defun verilog-imenu-create-find-covergroup (end)
+  (save-excursion
+    (let ((instance-alist '()))
+      (while (verilog-re-search-forward
+              "\\s-*\\(covergroup\\)\\s-+\\([a-zA-Z0-9_]+\\)\\s-*"
+              end t)
+        (condition-case nil
+            (let ((instance-type (verilog-match-string 1)) (instance-name (verilog-match-string 2))
+                  (instance-pos (match-beginning 0)))
+              (backward-char)
+              (forward-sexp)
+              (if verilog-imenu-show-instance-type
+                  (push (cons (concat instance-name " <" instance-type ">") instance-pos) instance-alist)
+                (push (cons instance-name instance-pos) instance-alist)))
+          (error nil)))
+      instance-alist)))
+
+(defun verilog-imenu-create-find-coverpoint (end)
+  (save-excursion
+    (let ((instance-alist '()))
+      (while (verilog-re-search-forward
+              "\\s-*\\([a-zA-Z0-9_]+\\)\\s-*:\\s-*\\(coverpoint\\)\\s-*"
+              end t)
+        (condition-case nil
+            (let ((instance-type (verilog-match-string 2)) (instance-name (verilog-match-string 1))
+                  (instance-pos (match-beginning 0)))
+              (backward-char)
+              (forward-sexp)
+              (if verilog-imenu-show-instance-type
+                  (push (cons (concat instance-name " <" instance-type ">") instance-pos) instance-alist)
+                (push (cons instance-name instance-pos) instance-alist)))
+          (error nil)))
+      instance-alist)))
+
 (defun verilog-imenu-create-find-data-types (data-type end)
   (save-excursion
     (let ((type-alist '()))
@@ -230,6 +264,8 @@
             (setq modport-alist (append modport-alist (verilog-imenu-create-find-instances-or-modports end)))
           (setq instance-alist (append instance-alist (verilog-imenu-create-find-instances-or-modports end))))
         (setq instance-alist (append instance-alist (verilog-imenu-create-find-begin-process end)))
+        (setq instance-alist (append instance-alist (verilog-imenu-create-find-covergroup end)))
+        (setq instance-alist (append instance-alist (verilog-imenu-create-find-coverpoint end)))
 
         ;; Find enums, structs, and unions
         (setq enum-alist (append enum-alist (verilog-imenu-create-find-data-types "enum" end)))
