@@ -118,7 +118,7 @@ where ARG is gived by c-0
     ( (or "co" "discardco" "ci" "userev") (progn
                               (revert-buffer t t )
                               )))
-  (message soscmd)
+  ;; (message soscmd)
   )
 
 ;;;###autoload
