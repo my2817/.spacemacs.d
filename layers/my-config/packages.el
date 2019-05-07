@@ -66,6 +66,7 @@
     posframe
     company-posframe
     cnfonts
+    beacon
   )
 
   "The list of Lisp packages required by the my-config layer.
@@ -603,5 +604,12 @@ See URL `irun -helpall'"
     (progn
       (cnfonts-enable)
       (cnfonts-set-spacemacs-fallback-fonts))
+    ))
+(defun my-config/init-beacon ()
+  (use-package beacon
+    :defer t
+    :init
+    (progn
+      (beacon-mode)
     ))
 ;;; packages.el ends here
