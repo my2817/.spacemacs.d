@@ -611,5 +611,5 @@ See URL `irun -helpall'"
     :init
     (progn
       (beacon-mode)
-    ))
+    )))
 ;;; packages.el ends here
