@@ -82,8 +82,11 @@
 (add-hook 'before-save-hook (lambda ()
                               (interactive)
                               (if (string= mode-name "Verilog")
-                                  (untabify (point-min)
-                                            (point-max)))))
+                                  (progn
+                                    (untabify (point-min)
+                                              (point-max))
+                                    (imenu-list-rescan-imenu)
+                                    ))))
 ;;(add-hook 'verilog-mode-hook 'turn-on-ctags-auto-update-mode)
 (add-hook 'makefile-bsdmake-mode-hook (lambda ()
                                         (company-mode)
