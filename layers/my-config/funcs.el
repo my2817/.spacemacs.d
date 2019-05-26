@@ -127,6 +127,7 @@ Version 2015-12-10"
       (start-process "" nil "gnome-terminal"
                      (concat "--working-directory=" default-directory)
                      "--profile=zsh") ))))
+
 (defun my-config-error-regexp-add-emacs (regexp-alist)
   " add regexp-alist to `compilation-error-regexp-alist'
 Called by `compilation-mode-hook'.  This allows \\[next-error] to
@@ -370,3 +371,13 @@ and return as PATH-to-FILE::Line-Number."
     (shell-command (concat powershell " -command \"(Get-Clipboard -Format Image).Save(\\\"C:/Users/Public/" file-name "\\\")\""))
     (rename-file (concat "/mnt/c/Users/Public/" file-name) file-path-wsl)
     ))
+
+(defun xah-open-in-desktop-from-wsl()
+  "open desktop by send command from wsl into powershell"
+  (interactive)
+  (let* ((powershell "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe")
+         (directory (replace-regexp-in-string "/mnt/\\([a-zA-Z]\\)" "\\1:" default-directory))
+         )
+    (shell-command (concat powershell " -command \"start " directory "\""))
+    )
+  )
