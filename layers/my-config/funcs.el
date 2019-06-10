@@ -381,3 +381,17 @@ and return as PATH-to-FILE::Line-Number."
     (shell-command (concat powershell " -command \"start " directory "\""))
     )
   )
+
+(defun xah-open-in-xternal-app-from-wsl()
+  "open desktop by send command from wsl into powershell"
+  (interactive)
+  (let* ((powershell "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe")
+         (directory (replace-regexp-in-string "/mnt/\\([a-zA-Z]\\)" "\\1:" default-directory))
+         (-file-list
+          (if (string-equal major-mode "dired-mode")
+              (dired-get-marked-files)
+            (list (buffer-file-name))))
+         )
+    (shell-command (concat powershell " -command \"start " (replace-regexp-in-string "/mnt/\\([a-zA-Z]\\)" "\\1:" (nth 0 -file-list)) "\""))
+    )
+  )
