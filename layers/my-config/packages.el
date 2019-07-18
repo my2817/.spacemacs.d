@@ -67,6 +67,7 @@
     company-posframe
     cnfonts
     beacon
+    company-tabnine
   )
 
   "The list of Lisp packages required by the my-config layer.
@@ -612,4 +613,12 @@ See URL `irun -helpall'"
     (progn
       (beacon-mode)
     )))
+
+(defun my-config/init-company-tabnine ()
+  (use-package company-tabnine
+    :defer t
+    :init
+    (progn
+      (require 'company-tabnine)
+      )))
 ;;; packages.el ends here
