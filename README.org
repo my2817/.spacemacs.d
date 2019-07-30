@@ -21,6 +21,7 @@
   - [[#imenu][imenu]]
   - [[#代码折叠][代码折叠]]
 - [[#diff][diff]]
+- [[#多位置编辑替换][多位置编辑替换]]
 
 * 安装
 ** 下载spacemacs
@@ -314,3 +315,14 @@ emacs --batch file.v -l path/to/projectile.el -f verilog-batch-auto     #在spac
   参考 ediff-* 系列命令，很好用，该系列工具会出现至少包含一个名为 "*Ediff Control Pannel*" 的窗口，只有选中它时，才能使用其相关命令: ~?~ 查看帮助说明，再次 ~?~ 隐藏帮助说明, ~# #~:比较时忽略空白符，执行此操作后再进行一次 ~!~ , 就不会受空白符的影响了
 
   ediff-current-file: 对当前文件更改前后的内容进行比较
+
+* 多位置编辑替换
+  原理，对搜索列的的候选项进行编辑
+  - ~spc s p~ 搜索当前基础上，或者 ~spc s d~搜索当前目录
+  - 列出候选项后 ~C-c C-e~，会给出新的buffer，进入多处替换模式
+  - 在该buffer中对候选项进行编辑
+  - 按~,~ ，根据提示
+    - wgrep-abort-changes:放弃修改
+    - wgrep-finish-edit:完成修改
+      - wgrep-save-all-buffers:将所有修改保存到文件
+    - ~q~ 退出该模式
