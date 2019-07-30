@@ -175,12 +175,11 @@ It should only modify the values of Spacemacs settings."
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
    dotspacemacs-startup-lists '(
-                                (todos . nil)
                                 (recents . 5)
                                 (projects . 7)
                                 )
    ;; True if the home buffer should respond to resize events. (default t)
-   dotspacemacs-startup-buffer-responsive t
+   dotspacemacs-startup-buffer-responsive nil
 
    ;; Default major mode of the scratch buffer (default `text-mode')
    dotspacemacs-scratch-mode 'org-mode
