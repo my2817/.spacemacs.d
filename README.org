@@ -116,7 +116,7 @@
 
 * 拼音输入法
   - 内置[[https://github.com/tumashu/pyim#orgb7116f0][pyim]]输入法,通过 ~C-\~ 在pyim和英文之间进行切换
-  - 默认输入法被设置为五笔,[[~/.spacemacs.d/layers/my-config/packages.el::565][点我打开配置文件]],根据需要使用下面任意一行配置
+  - 默认输入法被设置为五笔,[[./layers/my-config/packages.el::565][点我打开配置文件]],根据需要使用下面任意一行配置
    #+BEGIN_SRC lisp
       (setq pyim-default-scheme 'wubi)
       (setq pyim-default-scheme 'quanpin)
