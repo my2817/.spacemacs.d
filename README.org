@@ -5,6 +5,7 @@
   - [[#我的配置][我的配置]]
   - [[#配置][配置]]
 - [[#按键说明-keyboard][按键说明 keyboard]]
+- [[#拼音输入法][拼音输入法]]
 - [[#帮助文档][帮助文档]]
 - [[#projectile][projectile]]
 - [[#regexp-正则表达式][regexp 正则表达式]]
@@ -112,6 +113,15 @@
   |----------------+----------------------------------------|
   | ~i~, ~a~ , ~A~ | 进入插入模式                           |
   |----------------+----------------------------------------|
+
+* 拼音输入法
+  - 内置[[https://github.com/tumashu/pyim#orgb7116f0][pyim]]输入法,通过 ~C-\~ 在pyim和英文之间进行切换
+  - 默认输入法被设置为五笔,[[~/.spacemacs.d/layers/my-config/packages.el::565][点我打开配置文件]],根据需要使用下面任意一行配置
+   #+BEGIN_SRC lisp
+      (setq pyim-default-scheme 'wubi)
+      (setq pyim-default-scheme 'quanpin)
+      (setq pyim-default-scheme 'xiaohe-shuangpin)
+   #+END_SRC
 
 * 帮助文档
   + help 菜单下有详细说明，如果菜单被隐藏，使用 ctrl+鼠标右键呼出

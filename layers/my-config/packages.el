@@ -563,8 +563,13 @@ See URL `irun -helpall'"
       ;; (("M-j" . pyim-convert-string-at-point) ;与 pyim-probe-dynamic-english 配合
       ;;
       (setq pyim-default-scheme 'wubi)
-    )
-    ))
+      )
+    :config
+    (progn
+      (if (featurep 'pyim)
+          (pyim-extra-dicts-add-dict
+           `(:name "pyim-bigdict" :file  "~/.spacemacs.d/layers/my-config/local/pyim-dict/pyim-bigdict.pyim" :elpa t )))
+      )))
 
 (defun my-config/init-pyim-wbdict ()
   (use-package pyim-wbdict
