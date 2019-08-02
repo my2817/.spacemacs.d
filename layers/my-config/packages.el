@@ -319,7 +319,8 @@ Each entry is either:
            '((type "WORK(!)" "STUDY(!)" "|")
              (type "heyun(!)" "xulinliang(!)" "lina(!)" "chenshuxian(!)" "wangjunjie(!)" "huanqin(!)" "|" "DONE(!)")
              (sequence "TODO(t!)" "|" "DONE(d!)")
-             (sequence "REPORT(r@/!)" "DEBUG(b@/!)" "KNOWNCAUSE(k@/!)" "|" "FIXED(f@/!)")
+             ;; debug sequence
+             (sequence "REPORT(r@/!)" "DEBUG(b@/!)" "KNOWNCAUSE(k@/!)" "|" "FIXED(f@/!)" "NOT_FIX(@/!)")
              (sequence "|" "CANCEL(c@/!)")
               ))
       (setq org-tag-alist '(
