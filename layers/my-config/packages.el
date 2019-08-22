@@ -68,6 +68,7 @@
     cnfonts
     beacon
     company-tabnine
+    (thing-edit :location local)
   )
 
   "The list of Lisp packages required by the my-config layer.
@@ -630,7 +631,7 @@ See URL `irun -helpall'"
     :defer t
     :init
     (progn
-      (beacon-mode)
+      ;; (beacon-mode)
     )))
 
 (defun my-config/init-company-tabnine ()
@@ -639,5 +640,13 @@ See URL `irun -helpall'"
     :init
     (progn
       (require 'company-tabnine)
+      )))
+
+(defun my-config/init-thing-edit ()
+  (use-package thing-edit
+    :defer t
+    :init
+    (progn
+      (require 'thing-edit)
       )))
 ;;; packages.el ends here
