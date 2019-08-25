@@ -223,6 +223,7 @@ digraph G {
  + sort-lines: 对选中的行进行排序
  + 使用linux的 sort 命令进行复杂排序，比如第几个字段作为关键词进行排序
  + delete-duplicate-lines:先使用'sort-lines'对当前buffer进行排序，再使用本函数, 本函数一次只能从相邻的两行中删除一行，所以需要多次运行，或者使用以下awk命令（不需要事先排序）,该命令中的 $0 表示行内容完全重复时，进行删除操作，相应替换为$n，则表示当第n个字段相同时，进行删除操作。
+ + ivy-push-view:将当前的窗口即对应的buffer信息保存起来，通过 ivy-switch-view可重新恢复该视图
 #+BEGIN_SRC awk
   awk '{!a[$0]{print}}'
 #+END_SRC
@@ -327,11 +328,11 @@ emacs --batch file.v -l path/to/projectile.el -f verilog-batch-auto     #在spac
   ediff-current-file: 对当前文件更改前后的内容进行比较
 
 * 多位置编辑替换
-  原理，对搜索列的的候选项进行编辑
+  原理，对搜索列出的候选项进行编辑
   - ~spc s p~ 搜索当前基础上，或者 ~spc s d~搜索当前目录
   - 列出候选项后 ~C-c C-e~，会给出新的buffer，进入多处替换模式
   - 在该buffer中对候选项进行编辑
-  - 按~,~ ，根据提示
+  - 编辑完成后，进入普通模式，按~,~ ，根据提示
     - wgrep-abort-changes:放弃修改
     - wgrep-finish-edit:完成修改
       - wgrep-save-all-buffers:将所有修改保存到文件
