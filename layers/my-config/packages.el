@@ -570,7 +570,8 @@ See URL `irun -helpall'"
       ;; :bind
       ;; (("M-j" . pyim-convert-string-at-point) ;与 pyim-probe-dynamic-english 配合
       ;;
-      (setq pyim-default-scheme 'wubi)
+      ;; (setq pyim-default-scheme 'wubi)
+      (setq pyim-default-scheme 'xiaohe-shuangpin)
       )
     :config
     (progn
