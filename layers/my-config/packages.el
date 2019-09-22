@@ -639,9 +639,17 @@ See URL `irun -helpall'"
   (use-package company-tabnine
     :defer t
     :init
-    (progn
-      (require 'company-tabnine)
-      )))
+    ;; (progn
+    ;;   (require 'company-tabnine))
+    )
+  )
+;;; 配置company-tabnine作为company的后端
+(defun tabnine/post-init-company-tabnine()
+  (with-eval-after-load 'company
+    (add-to-list 'company-backends #'company-tabnine)
+    )
+  )
+
 
 (defun my-config/init-thing-edit ()
   (use-package thing-edit
