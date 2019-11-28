@@ -68,7 +68,9 @@
     cnfonts
     beacon
     company-tabnine
-    (thing-edit :location local)
+    (thing-edit :location (recipe
+                           :fetcher github
+                           :repo manateelazycat/thing-edit))
   )
 
   "The list of Lisp packages required by the my-config layer.
