@@ -191,6 +191,23 @@
           (error nil)))
       instance-alist)))
 
+(defun verilog-imenu-create-find-ifdef (end)
+  (save-excursion
+    (let ((instance-alist '()))
+      (while (verilog-re-search-forward
+              "\\(`ifdef\\|`ifndef\\|`elseif\\)\\s-*\\([a-zA-Z0-9_]+\\)\\s-*"
+              end t)
+        (condition-case nil
+            (let ((instance-type (verilog-match-string 1)) (instance-name (verilog-match-string 2))
+                  (instance-pos (match-beginning 0)))
+              (backward-char)
+              (forward-sexp)
+              (if verilog-imenu-show-instance-type
+                  (push (cons (concat instance-name " <" instance-type ">") instance-pos) instance-alist)
+                (push (cons instance-name instance-pos) instance-alist)))
+          (error nil)))
+      instance-alist)))
+
 (defun verilog-imenu-create-find-data-types (data-type end)
   (save-excursion
     (let ((type-alist '()))
@@ -208,16 +225,18 @@
       type-alist)))
 
 (defun verilog-imenu-create-parse-entity ()
-  (when (re-search-forward "^\\s-*\\(module\\|interface\\|package\\|class\\|function\\|task\\)[ \t\n]+\\([a-zA-Z0-9_:]+\\)" nil t)
-    (let ((entity-type (verilog-match-string 1)) (entity-name
-                                                  (if (string= (verilog-match-string 1) "function")
-                                                      (progn
-                                                        (save-excursion
-                                                          (beginning-of-line)
-                                                          (re-search-forward "^\\s-*function[ \t]+\\([a-z]+\\s-+\\)?\\([a-zA-Z0-9_:]+\\)\\s-*[(;]" nil t)
-                                                          (setq entity-name (verilog-match-string 2))
-                                                          ))
-                                                    (verilog-match-string 2)))
+  (when (re-search-forward "^\\s-*\\(module\\|interface\\|package\\|class\\|function\\|task\\|`ifdef\\|`ifndef\\||`elseif\\)[ \t\n]+\\([a-zA-Z0-9_:]+\\)" nil t)
+    (let ((entity-type (if (string= (verilog-match-string 1) "`ifdef")
+                           (format "%s" "if")));; then the entity end would be ~endif~
+          (entity-name
+           (if (string= (verilog-match-string 1) "function")
+               (progn
+                 (save-excursion
+                   (beginning-of-line)
+                   (re-search-forward "^\\s-*function[ \t]+\\([a-z]+\\s-+\\)?\\([a-zA-Z0-9_:]+\\)\\s-*[(;]" nil t)
+                   (setq entity-name (verilog-match-string 2))
+                   ))
+             (verilog-match-string 2)))
           (entity-start (match-beginning 0)) (entity-end) (end 0) (final-alist '())
           (nested-entity) (found-routine) (routine-type)
           (instance-alist '()) (modport-alist '()) (module-alist '()) (interface-alist '()) (package-alist '())
@@ -226,7 +245,7 @@
       ;; Find entity end
       (let ((depth 1))
         (while (progn
-                 (re-search-forward (concat "^\\s-*\\(end" entity-type "\\|" entity-type "\\)") nil t)
+                 (re-search-forward (concat "^\\s-*\\(end" entity-type "\\|" "`endif" "\\|" entity-type "\\)") nil t)
                  (if (string= (verilog-match-string 1) entity-type)
                      (setq depth (1+ depth))
                    (setq depth (1- depth)))
@@ -240,7 +259,7 @@
 
         ;; Look for a nested entity or routine
         (save-excursion
-          (if (re-search-forward "^\\s-*\\(module\\|interface\\|package\\|class\\|function\\|task\\)[ \t\n]+\\([a-zA-Z0-9_:]+\\)" entity-end t)
+          (if (re-search-forward "^\\s-*\\(module\\|interface\\|package\\|class\\|function\\|task\\|`ifdef\\)[ \t\n]+\\([a-zA-Z0-9_:]+\\)" entity-end t)
               (let ((found-item (verilog-match-string 1)))
                 (setq end (point-at-bol))
                 (if (or (string= found-item "function") (string= found-item "task"))
@@ -266,6 +285,7 @@
         (setq instance-alist (append instance-alist (verilog-imenu-create-find-begin-process end)))
         (setq instance-alist (append instance-alist (verilog-imenu-create-find-covergroup end)))
         (setq instance-alist (append instance-alist (verilog-imenu-create-find-coverpoint end)))
+        (setq instance-alist (append instance-alist (verilog-imenu-create-find-ifdef end)))
 
         ;; Find enums, structs, and unions
         (setq enum-alist (append enum-alist (verilog-imenu-create-find-data-types "enum" end)))
