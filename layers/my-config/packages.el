@@ -71,6 +71,12 @@
     (thing-edit :location (recipe
                            :fetcher github
                            :repo manateelazycat/thing-edit))
+    ;; (thing-edit :location local)
+    ;; (aweshell :location (recipe
+    ;;                      :fetcher github
+    ;;                      :repo manateelazycat/aweshell))
+    magit-todos
+
   )
 
   "The list of Lisp packages required by the my-config layer.
@@ -659,5 +665,22 @@ See URL `irun -helpall'"
     :init
     (progn
       (require 'thing-edit)
+      )))
+
+(defun my-config/init-aweshell ()
+  (use-package aweshell
+    :defer t
+    :init
+    (progn
+      (require 'aweshell)
+      )))
+
+(defun my-config/init-magit-todos ()
+  (use-package magit-todos
+    :defer t
+    :init
+    (progn
+      (setq magit-todos-nice (if (executable-find "nice") t nil))
+      (magit-todos-mode 1)
       )))
 ;;; packages.el ends here
