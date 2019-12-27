@@ -195,7 +195,7 @@
   (save-excursion
     (let ((instance-alist '()))
       (while (verilog-re-search-forward
-              "\\(`ifdef\\|`ifndef\\|`elseif\\)\\s-*\\([a-zA-Z0-9_]+\\)\\s-*"
+              "\\(`ifdef\\|`ifndef\\|`elsif\\)\\s-*\\([a-zA-Z0-9_]+\\)\\s-*"
               end t)
         (condition-case nil
             (let ((instance-type (verilog-match-string 1)) (instance-name (verilog-match-string 2))
@@ -225,9 +225,8 @@
       type-alist)))
 
 (defun verilog-imenu-create-parse-entity ()
-  (when (re-search-forward "^\\s-*\\(module\\|interface\\|package\\|class\\|function\\|task\\|`ifdef\\|`ifndef\\||`elseif\\)[ \t\n]+\\([a-zA-Z0-9_:]+\\)" nil t)
-    (let ((entity-type (if (string= (verilog-match-string 1) "`ifdef")
-                           (format "%s" "if")));; then the entity end would be ~endif~
+  (when (re-search-forward "^\\s-*\\(module\\|interface\\|package\\|class\\|function\\|task\\|`ifdef\\|`ifndef\\||`elsif\\)[ \t\n]+\\([a-zA-Z0-9_:]+\\)" nil t)
+    (let ((entity-type  (verilog-match-string 1))
           (entity-name
            (if (string= (verilog-match-string 1) "function")
                (progn
@@ -245,7 +244,10 @@
       ;; Find entity end
       (let ((depth 1))
         (while (progn
-                 (re-search-forward (concat "^\\s-*\\(end" entity-type "\\|" "`endif" "\\|" entity-type "\\)") nil t)
+                 (if (or (string= entity-type "`ifdef")
+                         (string= entity-type "`ifndef"))
+                     (re-search-forward (concat "^\\s-*\\("  "`endif" "\\)") nil t)
+                   (re-search-forward (concat "^\\s-*\\(end" entity-type "\\|" entity-type "\\)") nil t))
                  (if (string= (verilog-match-string 1) entity-type)
                      (setq depth (1+ depth))
                    (setq depth (1- depth)))
@@ -259,7 +261,7 @@
 
         ;; Look for a nested entity or routine
         (save-excursion
-          (if (re-search-forward "^\\s-*\\(module\\|interface\\|package\\|class\\|function\\|task\\|`ifdef\\)[ \t\n]+\\([a-zA-Z0-9_:]+\\)" entity-end t)
+          (if (re-search-forward "^\\s-*\\(module\\|interface\\|package\\|class\\|function\\|task\\)[ \t\n]+\\([a-zA-Z0-9_:]+\\)" entity-end t)
               (let ((found-item (verilog-match-string 1)))
                 (setq end (point-at-bol))
                 (if (or (string= found-item "function") (string= found-item "task"))
