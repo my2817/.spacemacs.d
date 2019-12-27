@@ -98,7 +98,7 @@
     (fset 'verilog-match-string 'match-string)
   (fset 'verilog-match-string 'match-string-no-properties))
 
-(defvar verilog-imenu-flatten t
+(defvar verilog-imenu-flatten nil
   "*Non-nil means flatten the heirarchical imenu output.")
 
 (defvar verilog-imenu-show-instance-type t
@@ -239,7 +239,8 @@
           (entity-start (match-beginning 0)) (entity-end) (end 0) (final-alist '())
           (nested-entity) (found-routine) (routine-type)
           (instance-alist '()) (modport-alist '()) (module-alist '()) (interface-alist '()) (package-alist '())
-          (enum-alist '()) (struct-alist '()) (union-alist '()) (function-alist '()) (task-alist '()))
+          (enum-alist '()) (struct-alist '()) (union-alist '()) (function-alist '()) (task-alist '())
+          (begin-alist '()) (covergroup-alist '()) (coverpoint-alist '()) (compile-directive-alist '()))
 
       ;; Find entity end
       (let ((depth 1))
@@ -257,6 +258,8 @@
       ;; Work through entity
       (goto-char entity-start)
       (end-of-line)
+      ;; befor jump over routine,parse begin-process
+      (setq begin-alist (append begin-alist (verilog-imenu-create-find-begin-process entity-end)))
       (while (< end entity-end)
 
         ;; Look for a nested entity or routine
@@ -284,10 +287,10 @@
         (if (string= entity-type "interface")
             (setq modport-alist (append modport-alist (verilog-imenu-create-find-instances-or-modports end)))
           (setq instance-alist (append instance-alist (verilog-imenu-create-find-instances-or-modports end))))
-        (setq instance-alist (append instance-alist (verilog-imenu-create-find-begin-process end)))
-        (setq instance-alist (append instance-alist (verilog-imenu-create-find-covergroup end)))
-        (setq instance-alist (append instance-alist (verilog-imenu-create-find-coverpoint end)))
-        (setq instance-alist (append instance-alist (verilog-imenu-create-find-ifdef end)))
+        ;; (setq begin-alist (append begin-alist (verilog-imenu-create-find-begin-process end)))
+        (setq covergroup-alist (append covergroup-alist (verilog-imenu-create-find-covergroup end)))
+        (setq coverpoint-alist (append coverpoint-alist (verilog-imenu-create-find-coverpoint end)))
+        (setq compile-directive-alist (append compile-directive-alist (verilog-imenu-create-find-ifdef end)))
 
         ;; Find enums, structs, and unions
         (setq enum-alist (append enum-alist (verilog-imenu-create-find-data-types "enum" end)))
@@ -329,6 +332,10 @@
             (setq final-alist (verilog-imenu-add-flattened entity-name package-alist final-alist))
             (setq final-alist (verilog-imenu-add-flattened entity-name interface-alist final-alist))
             (setq final-alist (verilog-imenu-add-flattened entity-name module-alist final-alist))
+            (setq final-alist (verilog-imenu-add-flattened entity-name begin-alist final-alist))
+            (setq final-alist (verilog-imenu-add-flattened entity-name covergroup-alist final-alist))
+            (setq final-alist (verilog-imenu-add-flattened entity-name coverpoint-alist final-alist))
+            (setq final-alist (verilog-imenu-add-flattened entity-name compile-directive-alist final-alist))
             (goto-char entity-end)
             final-alist)
         (push (cons "*Definition*" entity-start) final-alist)
@@ -342,6 +349,10 @@
         (setq final-alist (verilog-imenu-create-add-item-alist "Packages" package-alist final-alist))
         (setq final-alist (verilog-imenu-create-add-item-alist "Interfaces" interface-alist final-alist))
         (setq final-alist (verilog-imenu-create-add-item-alist "Modules" module-alist final-alist))
+        (setq final-alist (verilog-imenu-create-add-item-alist "Process" begin-alist final-alist))
+        (setq final-alist (verilog-imenu-create-add-item-alist "CoverGroup" covergroup-alist final-alist))
+        (setq final-alist (verilog-imenu-create-add-item-alist "CoverPoint" coverpoint-alist final-alist))
+        (setq final-alist (verilog-imenu-create-add-item-alist "CompileDirec" compile-directive-alist final-alist))
         (goto-char entity-end)
         (cons entity-type (cons entity-name final-alist))))))
 
