@@ -367,7 +367,7 @@
 (defun verilog-imenu-create-index-function ()
   "Create Verilog imenu index."
   (goto-char (point-min))
-  (let ((final-alist '()) (module-alist '()) (interface-alist '()) (package-alist '())
+  (let ((final-alist '()) (module-alist '()) (interface-alist '()) (package-alist '()) (anonymous-alist '()) (class-alist '())
         (entity))
     (while (progn
              (setq entity (verilog-imenu-create-parse-entity))
@@ -380,12 +380,19 @@
                          ((string= entity-type "interface")
                           (push entity-info interface-alist))
                          ((string= entity-type "package")
-                          (push entity-info package-alist))))))))
+                          (push entity-info package-alist))
+                         ((string= entity-type "class")
+                          (push entity-info class-alist))
+                         (t
+                          (push entity-info anonymous-alist))))))))
     (if verilog-imenu-flatten
         (setq final-alist (verilog-sort-alist-by-car-string final-alist))
       (setq final-alist (verilog-imenu-create-add-item-alist "Packages" package-alist final-alist))
       (setq final-alist (verilog-imenu-create-add-item-alist "Interfaces" interface-alist final-alist))
-      (setq final-alist (verilog-imenu-create-add-item-alist "Modules" module-alist final-alist)))
+      (setq final-alist (verilog-imenu-create-add-item-alist "Modules" module-alist final-alist))
+      (setq final-alist (verilog-imenu-create-add-item-alist "Classes" class-alist final-alist))
+      (setq final-alist (verilog-imenu-create-add-item-alist "Anon" anonymous-alist final-alist))
+      )
     final-alist))
 
 ;;; Align
