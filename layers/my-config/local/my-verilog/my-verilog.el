@@ -334,7 +334,7 @@
             (setq final-alist (verilog-imenu-add-flattened entity-name module-alist final-alist))
             (setq final-alist (verilog-imenu-add-flattened entity-name begin-alist final-alist))
             (setq final-alist (verilog-imenu-add-flattened entity-name covergroup-alist final-alist))
-            (setq final-alist (verilog-imenu-add-flattened entity-name coverpoint-alist final-alist))
+
             (setq final-alist (verilog-imenu-add-flattened entity-name compile-directive-alist final-alist))
             (goto-char entity-end)
             final-alist)
@@ -367,7 +367,9 @@
 (defun verilog-imenu-create-index-function ()
   "Create Verilog imenu index."
   (goto-char (point-min))
-  (let ((final-alist '()) (module-alist '()) (interface-alist '()) (package-alist '()) (anonymous-alist '()) (class-alist '())
+  (let ((final-alist '()) (module-alist '()) (interface-alist '()) (package-alist '())
+        (anonymous-alist '()) (class-alist '()) (function-alist '()) (task-alist '())
+        (direc-alist '())
         (entity))
     (while (progn
              (setq entity (verilog-imenu-create-parse-entity))
@@ -383,6 +385,12 @@
                           (push entity-info package-alist))
                          ((string= entity-type "class")
                           (push entity-info class-alist))
+                         ((string= entity-type "function")
+                          (push entity-info function-alist))
+                         ((string= entity-type "task")
+                          (push entity-info task-alist))
+                         ((string= entity-type "`ifdef")
+                          (push entity-info direc-alist))
                          (t
                           (push entity-info anonymous-alist))))))))
     (if verilog-imenu-flatten
@@ -391,6 +399,9 @@
       (setq final-alist (verilog-imenu-create-add-item-alist "Interfaces" interface-alist final-alist))
       (setq final-alist (verilog-imenu-create-add-item-alist "Modules" module-alist final-alist))
       (setq final-alist (verilog-imenu-create-add-item-alist "Classes" class-alist final-alist))
+      (setq final-alist (verilog-imenu-create-add-item-alist "Functions" function-alist final-alist))
+      (setq final-alist (verilog-imenu-create-add-item-alist "Tasks" task-alist final-alist))
+      (setq final-alist (verilog-imenu-create-add-item-alist "CompileDirec" direc-alist final-alist))
       (setq final-alist (verilog-imenu-create-add-item-alist "Anon" anonymous-alist final-alist))
       )
     final-alist))
