@@ -334,7 +334,7 @@
             (setq final-alist (verilog-imenu-add-flattened entity-name module-alist final-alist))
             (setq final-alist (verilog-imenu-add-flattened entity-name begin-alist final-alist))
             (setq final-alist (verilog-imenu-add-flattened entity-name covergroup-alist final-alist))
-
+            (setq final-alist (verilog-imenu-add-flattened entity-name coverpoint-alist final-alist))
             (setq final-alist (verilog-imenu-add-flattened entity-name compile-directive-alist final-alist))
             (goto-char entity-end)
             final-alist)
