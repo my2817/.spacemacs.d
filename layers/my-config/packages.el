@@ -72,9 +72,9 @@
                            :fetcher github
                            :repo manateelazycat/thing-edit))
     ;; (thing-edit :location local)
-    ;; (aweshell :location (recipe
-    ;;                      :fetcher github
-    ;;                      :repo manateelazycat/aweshell))
+    (aweshell :location (recipe
+                         :fetcher github
+                         :repo manateelazycat/aweshell))
     magit-todos
 
   )
