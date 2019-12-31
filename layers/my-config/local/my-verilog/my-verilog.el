@@ -705,7 +705,7 @@ See also `verilog-sk-header' for an alternative format."
               (verilog-insert-time))
           (message "Can't find the position to update the \"last updated timing\""))))
   (imenu-list-rescan-imenu)
-  )
+  (my-verilog-align-indent-inst-signal))
 (ad-activate 'verilog-auto)
 
 
@@ -1092,6 +1092,7 @@ imp step:
                 (backward-char)
                 (my-verilog-indent-inst-signal-with-offset-by-search-parent port-length left-pair right-pair)
                 )))))))
+
 
 (defun my-verilog-search-pair-end-position (left-pair right-pair)
     "Return the position of matched right-pair"
