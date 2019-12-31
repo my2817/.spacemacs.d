@@ -1027,6 +1027,41 @@ rease to 2, \")\": depth decrease to 1
                 (> depth 0)))
       column )))
 
+(defun my-verilog-port-max-length-by-search-parent (left-parent right-parent)
+  "Return max length of ports' name inside LEFT-PARENT and RIGHT-PARENT
+
+before call `my-verilog-port-end-max-length-by-search-parent', the cursor should at left side of LEFT-PARENT
+
+;;    inst (          ;; \"(\": inital depth to  1, after \"(\" should be 1
+;;    .a (sa),        ;; \"s\": depth inc
+rease to 2, \")\": depth decrease to 1
+;;    .b (sb[(1+2):0]);; \"s\": depth increase to 2, 2nd \"(\": depth incre to 3; 1st \")\", decrease to 2; 3rd \")\": decrease to 1
+;;    )               ;; \")\": decrease to 0
+"
+  (interactive)
+  (save-excursion
+    (let ((length 0) (depth 1)
+          (current-length)(port-st) (port-end))
+      (verilog-re-search-forward "(" nil t)
+      (while  (progn
+                (verilog-re-search-forward (concat "\\([" left-parent "\\|" right-parent "]\\)") nil t)
+                (if (string= (verilog-match-string 1) left-parent)
+                    (setq depth (1+ depth))
+                  (setq depth (1- depth)))
+
+                (if (and (string= (verilog-match-string 1) left-parent)
+                         (= depth 2))
+                    (progn
+                      (backward-char)
+                      (skip-chars-backward " \t")
+                      (setq current-length (* -1 (skip-chars-backward "[a-zA-Z0-9_]")));; skip back, give a negative number
+                      (if (< length current-length)
+                          (setq length current-length))
+                      ;; goto inside of parent: .port(port-signal)
+                      (verilog-re-search-forward left-parent nil t)))
+                (> depth 0)))
+      length )))
+
 (defun my-verilog-indent-to-column (column regexp-end-pattern)
   "indent all left-parent of signals to COLUMN, stop when get to the position of END-PATTEN"
   (save-excursion
@@ -1047,8 +1082,8 @@ rease to 2, \")\": depth decrease to 1
           (next-line))
         ))))
 
-(defun my-verilog-indent-to-column-by-search-parent (column left-parent right-parent)
-  "indent all left-parent of signals to COLUMN, search boundry like `my-verilog-port-end-max-pos-by-search-parent'"
+(defun my-verilog-indent-inst-port-to-column-by-search-parent (column left-parent right-parent)
+  "indent all left-parent of signals to COLUMN, search boundry like `my-verilog-port-end-max-column-by-search-parent'"
   (save-excursion
     (let ((depth 1))
       (verilog-re-search-forward "(" nil t)
