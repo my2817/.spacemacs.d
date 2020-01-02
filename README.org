@@ -393,7 +393,6 @@ digraph G {
         a = b                           a[  7] = b
         a = b                           a[  8] = b
       #+end_src
-
     + verilog-generate-numbers：类似verilog-insert-indices
       #+begin_example
         buf buf|                             buf buf000
@@ -406,6 +405,7 @@ digraph G {
         buf buf                             buf buf007
         buf buf                             buf buf008"
       #+end_example
+
 ** verilog-auto
 
   当执行verilog-auto时，可能出现提示 "end xxxxx properties"信息，但verilog-auto并没有执行完成，使用emacs的batch mode解决
