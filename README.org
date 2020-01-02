@@ -442,14 +442,54 @@ emacs --batch file.v -l path/to/projectile.el -f verilog-batch-auto     #在spac
 
 ** imenu
 
-   配置改写了verilog-mode默认产生imenu的方式，verilog代码可使用以下风格，将tag加入到imenu中实现快速跳转到该tag
+   配置改写了verilog-mode默认产生imenu的方式，verilog代码可使用以下风格，将tag加入到imenu中实现快速跳转到该tag，
+
    #+BEGIN_SRC verilog
-     // begin: tag1
-     always @ (*) begin : tag2
+     module sub3 #(parameter
+                   PAR_A = 10,
+                   PAR_BBBBBB = 20,
+                   PAR_ccc = 30
+                   )
+        (/*autoarg*/
+         // Outputs
+         dd,
+         // Inputs
+         aaxx, bbxx, cc
+         );
+        input aaxx, bbxx, cc;
+        output dd;
 
-     end
+        localparam // begin:localparam
+          par_af = 10,
+          par_ad = 20;
+
+        always @ ( /*AUTOSENSE*/ ) begin
+           if (xx) begin:reset
+           end
+           else begin: proce
+
+           end
+
+        end
+
+        task func_a;
+
+           begin
+
+           end
+        endtask // func_a
+
+        function func_a;
+
+           begin
+
+           end
+        endfunction // func_a
+
+     endmodule // sub3
    #+END_SRC
-
+   ~M-m s j~ 或者 ~SPC s j~ 提示如：
+   [[file:./images/verilog-tag.png]]
 ** 代码折叠
    eamcs里代码太长的时候，可以使用下面的函数对begin-end代码进行折叠
    - hs-hide-block，折叠前，光标要在begin的下一行
