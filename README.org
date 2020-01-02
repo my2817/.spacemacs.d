@@ -271,8 +271,141 @@ digraph G {
              +--subm-module-b
                 +--subm-module-b.v
       #+end_example
-    ~my-project-dir-local-init~ 会在project的根目录下生成一个.dir-locals.el的文件，看见 "digital/rtl"了，意思是让只要是 protject-root/digtal/rtl 路径之下的所有 .v 均可被 verilog-auto 找到。
+      ~my-project-dir-local-init~ 会在project的根目录下生成一个.dir-locals.el的文件，看见 "digital/rtl"了，意思是让只要是 protject-root/digtal/rtl 路径之下的所有 .v 均可被 verilog-auto 找到。
+    + my-verilog-align-indent-inst-signal: 初始化代码如以下格式，其中 my-verilog-min-spc-for-align 用于控制端口和信号名之间最小的空格数量，默认值为1
+      #+begin_src verilog
+        module top(/*autoarg*/);
 
+           sub1_x u_sub1     (/*autoinst*/);
+           sub2_xxxxx u_sub2 (/*autoinst*/);
+           sub3 #(/*autoinstparam*/)
+           u_sub3(/*autoinst*/);
+
+        endmodule // top
+
+
+        module sub1_x(/*autoarg*/);
+           input aa, bb, cc;
+           output dd;
+        endmodule // sub1
+
+        module sub2_xxxxx(/*autoarg*/);
+           input aa, bb, cc;
+           output dd;
+        endmodule // sub2
+
+        module sub3 #(parameter
+                      PAR_A = 10,
+                      PAR_BB = 20,
+                      PAR_ccc = 30
+                      )
+          (/*autoarg*/);
+           input aaxx, bbxx, cc;
+           output dd;
+        endmodule // sub3
+
+        // Local Variables:
+        //  my-verilog-min-spc-for-align: 20
+        // End:
+      #+end_src
+      默认会在"verilog-auto"后自动执行本命令（如果模块实例已经例化完成<--各端口信号独占一行，也可手动执行"my-verilog-align-indent-inst-signal"）。结果如下，所有实例的左括号对齐，所有端口信号对齐
+      #+begin_src verilog
+        module top(/*autoarg*/);
+
+           sub1_x u_sub1     (/*autoinst*/
+                              // Outputs
+                              .dd                         (dd),
+                              // Inputs
+                              .aa                         (aa),
+                              .bb                         (bb),
+                              .cc                         (cc));
+           sub2_xxxxx u_sub2 (/*autoinst*/
+                              // Outputs
+                              .dd                         (dd),
+                              // Inputs
+                              .aa                         (aa),
+                              .bb                         (bb),
+                              .cc                         (cc));
+           sub3             #(/*autoinstparam*/
+                              // Parameters
+                              .PAR_A                      (PAR_A),
+                              .PAR_BB                     (PAR_BB),
+                              .PAR_ccc                    (PAR_ccc))
+           u_sub3            (/*autoinst*/
+                              // Outputs
+                              .dd                         (dd),
+                              // Inputs
+                              .aaxx                       (aaxx),
+                              .bbxx                       (bbxx),
+                              .cc                         (cc));
+
+        endmodule // top
+
+
+        module sub1_x(/*autoarg*/
+           // Outputs
+           dd,
+           // Inputs
+           aa, bb, cc
+           );
+           input aa, bb, cc;
+           output dd;
+        endmodule // sub1
+
+        module sub2_xxxxx(/*autoarg*/
+           // Outputs
+           dd,
+           // Inputs
+           aa, bb, cc
+           );
+           input aa, bb, cc;
+           output dd;
+        endmodule // sub2
+
+        module sub3 #(parameter
+                      PAR_A = 10,
+                      PAR_BB = 20,
+                      PAR_ccc = 30
+                      )
+          (/*autoarg*/
+           // Outputs
+           dd,
+           // Inputs
+           aaxx, bbxx, cc
+           );
+           input aaxx, bbxx, cc;
+           output dd;
+        endmodule // sub3
+
+        // Local Variables:
+        //  my-verilog-min-spc-for-align: 20
+        // End:
+      #+end_src
+    + verilog-insert-indices：从“0”开始在当前列插入编号；如下代码，光标移动到第一行代码的“a”后面执行本命令，按提示输入编号的最大值
+      #+begin_src  verilog
+        a| = b                           a[  0] = b
+        a = b                           a[  1] = b
+        a = b                           a[  2] = b
+        a = b                           a[  3] = b
+        a = b   ==> insert-indices ==>  a[  4] = b
+        a = b                           a[  5] = b
+        a = b                           a[  6] = b
+        a = b                           a[  7] = b
+        a = b                           a[  8] = b
+      #+end_src
+
+    + verilog-generate-numbers：类似verilog-insert-indices
+      #+begin_example
+        buf buf|                             buf buf000
+        buf buf                             buf buf001
+        buf buf                             buf buf002
+        buf buf                             buf buf003
+        buf buf   ==> generate-numbers ==>  buf buf004
+        buf buf                             buf buf005
+        buf buf                             buf buf006
+        buf buf                             buf buf007
+        buf buf                             buf buf008"
+      #+end_example
 ** verilog-auto
 
   当执行verilog-auto时，可能出现提示 "end xxxxx properties"信息，但verilog-auto并没有执行完成，使用emacs的batch mode解决
