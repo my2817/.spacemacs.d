@@ -421,3 +421,15 @@ otherwise you will this function don't work and don't know how
                (stringp (funcall company-message-func)))
       (unless (string-match "The free version of TabNine only indexes up to" (funcall company-message-func))
         ad-do-it))))
+
+(defun my-ediff-dired-marked-files ()
+  "call `ediff-files' with args return by `dired-get-marked-files'"
+  (interactive)
+  (let* ((files (dired-get-marked-files))
+         (fileA (nth 0 files))
+         (fileB (nth 1 files))
+         (fileC (if (>= (length files) 3)
+                    (nth 2 files))))
+    (if (= (length files) 2)
+        (ediff-files fileA fileB)
+      (ediff-files3 fileA fileB fileC))))
