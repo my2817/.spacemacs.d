@@ -76,6 +76,7 @@
                          :fetcher github
                          :repo manateelazycat/aweshell))
     magit-todos
+    magit-gerrit
 
   )
 
@@ -683,4 +684,9 @@ See URL `irun -helpall'"
       (setq magit-todos-nice (if (executable-find "nice") t nil))
       (magit-todos-mode 1)
       )))
+(defun my-config/init-magit-gerrit ()
+  (use-package magit-gerrit
+   :init
+   (progn
+     (setq-default magit-gerrit-ssh-creds "myid@gerrithost.org"))))
 ;;; packages.el ends here
