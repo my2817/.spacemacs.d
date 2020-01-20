@@ -249,7 +249,7 @@ digraph G {
 ** 配置
    verilog相关插件有两个：
    + [[https:www.veripool.org][verilog-mode]] : 虽然emacs本身已经集成了，但不一定是最新版本（我一般是官网下载后，直接覆盖emac自带的，反正emacs都是自己安装）,另外意外的从官网发现了verilator,verilog-perl，似乎都比较好玩儿
-   + [[file:~/.spacemacs/layers/my-config/local/my-verilog/my-verilog.el][my-verilog.el]] : 这个文件的原始版本，是从网上抄过来的，现在似乎找不到出处，如果有人还记得，麻烦提醒一下，谢谢！
+   + [[file:layers/my-config/local/my-verilog/my-verilog.el][my-verilog.el]] : 这个文件的原始版本，是从网上抄过来的，现在似乎找不到出处，如果有人还记得，麻烦提醒一下，谢谢！
 
 ** 常用的一些功能
     + verilog-header: 原定义在verilog-mode.el中，我做了一定修改，放在my-verilog.el中，哪天跳槽了记得要改（前面已经说过了怎么查该函数对应的快捷键）
