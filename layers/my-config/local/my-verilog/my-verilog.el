@@ -123,14 +123,17 @@
 (defun verilog-imenu-create-find-instances-or-modports (end)
   (save-excursion
     (let ((instance-alist '()))
-      (while (re-search-forward
+      (while (verilog-re-search-forward
               "^\\s-*\\([a-zA-Z0-9_]+\\)\\([ \t\n]+#([-+/a-zA-Z0-9._*,'() \t\n]*)\\)?[ \t\n]+\\([a-zA-Z0-9_]+\\)[ \t\n]*("
               end t)
         (condition-case nil
             (let ((instance-type (verilog-match-string 1)) (instance-name (verilog-match-string 3))
                   (instance-pos (match-beginning 0)))
               (backward-char)
-              (forward-sexp)
+              ;; goto end of instance entity
+              (goto-char (my-verilog-search-pair-end-position "(" ")"))
+              (verilog-re-search-forward "[ \t\n]*;" (point-at-eol) t)
+              (backward-char)
               (when (looking-at "[ \t\n]*;")
                 (if (string= instance-type "modport")
                     (push (cons instance-name instance-pos) instance-alist)
