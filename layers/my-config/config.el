@@ -267,3 +267,4 @@
   )
 
 (setq epa-pinentry-mode 'loopback)
+(setq epa-file-cache-passphrase-for-symmetric-encryption t)
