@@ -714,7 +714,57 @@ See URL `irun -helpall'"
     (progn
       (require 'comment-edit)
       (define-key prog-mode-map (kbd "C-c '") #'comment-edit)
-      (setq comment-edit-default-mode 'org-mode))))
+      (setq comment-edit-default-mode 'org-mode))
+    :config
+    (progn
+      ;; add verilog-mode into comment-edit
+      (setq comment-edit-code-lang-modes
+            '(("C" . c-mode)
+              ("C++" . c++-mode)
+              ("asymptote" . asy-mode)
+              ("bash" . sh-mode)
+              ("calc" . fundamental-mode)
+              ("cpp" . c++-mode)
+              ("ditaa" . artist-mode)
+              ("dot" . fundamental-mode)
+              ("elisp" emacs-lisp-mode lisp-interaction-mode)
+              ("ocaml" . tuareg-mode)
+              ("screen" . shell-script-mode)
+              ("shell" . sh-mode)
+              ("sqlite" . sql-mode)
+              ("verilog" . verilog-mode)))
+
+      (setq comment-edit-comment-delimiter-alist
+            '((("//+" "\\*+")
+               c-mode c++-mode csharp-mode css-mode go-mode java-mode js-mode objc-mode php-mode swift-mode verilog-mode)
+              (("//+!" "//+" "\\*+")
+               . rust-mode)
+              (("--")
+               applescript-mode haskell-mode lua-mode)
+              (("//+")
+               pascal-mode fsharp-mode)
+              ((";+")
+               emacs-lisp-mode lisp-interaction-mode common-lisp racket-mode scheme-mode)
+              (("#+")
+               python-mode ruby-mode)))
+      (setq comment-edit-comment-encloser-alist
+            '((("/\\*+" "\\*/")
+               c-mode c++-mode csharp-mode css-mode go-mode java-mode js-mode objc-mode php-mode rust-mode swift-mode verilog-mode)
+              (("{-" "-}")
+               . haskell-mode)
+              (("{" "}")
+               . pascal-mode)
+              (("(\\*" "\\*)")
+               applescript-mode fsharp-mode ocaml-mode)
+              (("#|" "#|")
+               common-lisp racket-mode scheme-mode)
+              (("<!--" "-->")
+               html-mode xml-mode)
+              (("--\\[[" "--\\]\\]")
+               . lua-mode)
+              (("=begin" "=end")
+               . ruby-mode)))
+      )))
 
 (defun my-config/init-snails ()
   (use-package snails
