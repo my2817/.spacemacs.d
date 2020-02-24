@@ -80,9 +80,9 @@
     (comment-edit :location (recipe
                          :fetcher github
                          :repo twlz0ne/comment-edit.el))
-    (snails :location (recipe
-                         :fetcher github
-                         :repo manateelazycat/snails))
+;;    (snails :location (recipe
+;;                         :fetcher github
+;;                         :repo manateelazycat/snails))
 
   )
 
