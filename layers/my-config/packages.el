@@ -77,6 +77,12 @@
                          :repo manateelazycat/aweshell))
     magit-todos
     magit-gerrit
+    (comment-edit :location (recipe
+                         :fetcher github
+                         :repo twlz0ne/comment-edit.el))
+    (snails :location (recipe
+                         :fetcher github
+                         :repo manateelazycat/snails))
 
   )
 
@@ -701,4 +707,20 @@ See URL `irun -helpall'"
    :init
    (progn
      (setq-default magit-gerrit-ssh-creds "myid@gerrithost.org"))))
+
+(defun my-config/init-comment-edit ()
+  (use-package comment-edit
+    :init
+    (progn
+      (require 'comment-edit)
+      (define-key prog-mode-map (kbd "C-c '") #'comment-edit)
+      (setq comment-edit-default-mode 'org-mode))))
+
+(defun my-config/init-snails ()
+  (use-package snails
+    :defer t
+    :init
+    (progn
+      (require 'snails)
+      )))
 ;;; packages.el ends here

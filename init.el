@@ -624,4 +624,64 @@ Put your configuration code here, except for variables that  should be set befor
 This is an auto-generated function, do not modify its content directly, use
 Emacs customize menu instead.
 This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(comment-edit-code-lang-modes
+   (quote
+    (("C" . c-mode)
+     ("C++" . c++-mode)
+     ("asymptote" . asy-mode)
+     ("bash" . sh-mode)
+     ("calc" . fundamental-mode)
+     ("cpp" . c++-mode)
+     ("ditaa" . artist-mode)
+     ("dot" . fundamental-mode)
+     ("elisp" emacs-lisp-mode lisp-interaction-mode)
+     ("ocaml" . tuareg-mode)
+     ("screen" . shell-script-mode)
+     ("shell" . sh-mode)
+     ("sqlite" . sql-mode)
+     ("verilog" . verilog-mode))))
+ '(comment-edit-comment-delimiter-alist
+   (quote
+    ((("//+" "\\*+")
+      c-mode c++-mode csharp-mode css-mode go-mode java-mode js-mode objc-mode php-mode swift-mode verilog-mode)
+     (("//+!" "//+" "\\*+")
+      . rust-mode)
+     (("--")
+      applescript-mode haskell-mode lua-mode)
+     (("//+")
+      pascal-mode fsharp-mode)
+     ((";+")
+      emacs-lisp-mode lisp-interaction-mode common-lisp racket-mode scheme-mode)
+     (("#+")
+      python-mode ruby-mode))))
+ '(comment-edit-comment-encloser-alist
+   (quote
+    ((("/\\*+" "\\*/")
+      c-mode c++-mode csharp-mode css-mode go-mode java-mode js-mode objc-mode php-mode rust-mode swift-mode verilog-mode)
+     (("{-" "-}")
+      . haskell-mode)
+     (("{" "}")
+      . pascal-mode)
+     (("(\\*" "\\*)")
+      applescript-mode fsharp-mode ocaml-mode)
+     (("#|" "#|")
+      common-lisp racket-mode scheme-mode)
+     (("<!--" "-->")
+      html-mode xml-mode)
+     (("--\\[[" "--\\]\\]")
+      . lua-mode)
+     (("=begin" "=end")
+      . ruby-mode))))
+ )
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
 )
