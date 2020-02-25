@@ -3,6 +3,9 @@
 ;;;
 (setq frame-title-format
       '("GNU/Emacs - [ "
+        (or (file-remote-p default-directory 'user)
+            user-real-login-name)
+        "@" system-name ":"
         (buffer-file-name "%f \]"
                           (dired-directory dired-directory "%b \]"))))
 
