@@ -253,6 +253,7 @@ Each entry is either:
                                       (set (make-local-variable 'indent-line-function)
                                            #'plantuml-indent-line)))
       (add-hook 'plantuml-mode-hook 'company-mode)
+      (add-hook 'plantuml-mode-hook 'electric-spacing-mode)
       (make-local-variable 'company-backends)
       (setq company-backends
             '( company-files
