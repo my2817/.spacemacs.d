@@ -129,17 +129,19 @@
         (condition-case nil
             (let ((instance-type (verilog-match-string 1)) (instance-name (verilog-match-string 3))
                   (instance-pos (match-beginning 0)))
-              (backward-char)
-              ;; goto end of instance entity
-              (goto-char (my-verilog-search-pair-end-position "(" ")"))
-              (verilog-re-search-forward "[ \t\n]*;" (point-at-eol) t)
-              (backward-char)
-              (when (looking-at "[ \t\n]*;")
-                (if (string= instance-type "modport")
-                    (push (cons instance-name instance-pos) instance-alist)
-                  (if verilog-imenu-show-instance-type
-                      (push (cons (concat instance-name " <" instance-type ">") instance-pos) instance-alist)
-                    (push (cons instance-name instance-pos) instance-alist)))))
+              (if (not (string= instance-type "else"))
+                  (progn
+                    (backward-char)
+                    ;; goto end of instance entity
+                    (goto-char (my-verilog-search-pair-end-position "(" ")"))
+                    (verilog-re-search-forward "[ \t\n]*;" (point-at-eol) t)
+                    (backward-char)
+                    (when (looking-at "[ \t\n]*;")
+                      (if (string= instance-type "modport")
+                          (push (cons instance-name instance-pos) instance-alist)
+                        (if verilog-imenu-show-instance-type
+                            (push (cons (concat instance-name " <" instance-type ">") instance-pos) instance-alist)
+                          (push (cons instance-name instance-pos) instance-alist)))))))
           (error nil)))
       instance-alist)))
 
@@ -1104,7 +1106,7 @@ imp step:
     (verilog-re-search-forward left-pair nil t)
     (let ((depth 1))
       (while (progn
-               (verilog-re-search-forward (concat "\\([" left-pair "\\|" right-pair "]\\)") nil t)
+               (verilog-re-search-forward (concat "\\([" left-pair right-pair "]\\)") nil t)
                (if (string= (verilog-match-string 1) left-pair)
                    (setq depth (1+ depth))
                  (setq depth (1- depth)))
@@ -1119,7 +1121,7 @@ imp step:
     (verilog-re-search-forward left-pair nil t)
     (let ((depth 1))
       (while (progn
-               (while (not (verilog-re-search-forward (concat "\\([" left-pair "\\|" right-pair "]\\)") (point-at-eol) t))
+               (while (not (verilog-re-search-forward (concat "\\([" left-pair right-pair "]\\)") (point-at-eol) t))
                  (next-line)
                  (goto-char (point-at-bol))
                  (electric-verilog-tab)
@@ -1166,7 +1168,7 @@ rease to 2, \")\": depth decrease to 1
     (let ((column 0) (depth 1))
       (verilog-re-search-forward "(" nil t)
       (while  (progn
-                (verilog-re-search-forward (concat "\\([" left-pair "\\|" right-pair "]\\)") nil t)
+                (verilog-re-search-forward (concat "\\([" left-pair  right-pair "]\\)") nil t)
                 (if (string= (verilog-match-string 1) left-pair)
                     (setq depth (1+ depth))
                   (setq depth (1- depth)))
@@ -1200,7 +1202,7 @@ rease to 2, \")\": depth decrease to 1
           (current-length)(port-st) (port-end))
       (verilog-re-search-forward "(" nil t)
       (while  (progn
-                (verilog-re-search-forward (concat "\\([" left-pair "\\|" right-pair "]\\)") nil t)
+                (verilog-re-search-forward (concat "\\([" left-pair  right-pair "]\\)") nil t)
                 (if (string= (verilog-match-string 1) left-pair)
                     (setq depth (1+ depth))
                   (setq depth (1- depth)))
@@ -1245,7 +1247,7 @@ indent all left-pair of signals to COLUMN, stop when get to the position of END-
     (let ((depth 1))
       (verilog-re-search-forward "(" nil t)
       (while  (progn
-                (verilog-re-search-forward (concat "\\([" left-pair "\\|" right-pair "]\\)") nil t)
+                (verilog-re-search-forward (concat "\\([" left-pair right-pair "]\\)") nil t)
                 (if (string= (verilog-match-string 1) left-pair)
                     (setq depth (1+ depth))
                   (setq depth (1- depth)))
@@ -1273,7 +1275,7 @@ indent all left-pair of signals to COLUMN, stop when get to the position of END-
     (let ((depth 1))
       (verilog-re-search-forward left-pair nil t)
       (while  (progn
-                (verilog-re-search-forward (concat "\\([" left-pair "\\|" right-pair "]\\)") nil t)
+                (verilog-re-search-forward (concat "\\([" left-pair  right-pair "]\\)") nil t)
                 (if (string= (verilog-match-string 1) left-pair)
                     (setq depth (1+ depth))
                   (setq depth (1- depth)))
