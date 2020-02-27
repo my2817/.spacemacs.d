@@ -265,6 +265,8 @@ Each entry is either:
       (make-local-variable 'company-dabbrev-code-everywhere)
       (setq company-dabbrev-code-everywhere t)
 
+      (setq plantuml-default-exec-mode 'jar)
+
       )
     ))
 
