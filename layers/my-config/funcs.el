@@ -55,6 +55,13 @@
   )
 (ad-activate 'electric-spacing-insert-1)
 
+(defun electric-spacing-verilog-mode-\( ()
+  (delete-horizontal-space)
+  (if (looking-back (regexp-opt (mapcar 'char-to-string
+                                        "([{}])")))
+      (electric-spacing-insert-1 "(" 'middle)
+    (electric-spacing-insert-1 "(" 'before)))
+
 (defun find-file-in-path-list (file path-list )
   "find FILE in path-list, then return the absolute file path"
   (when path-list
