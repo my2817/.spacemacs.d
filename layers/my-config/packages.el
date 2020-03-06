@@ -572,20 +572,27 @@ See URL `irun -helpall'"
   (use-package pyim
     :defer nil
     :demand t
+    :ensure nil
     :init
     (progn
       (require 'pyim)
+            )
+    :bind
+    (("C-c M-j" . pyim-convert-string-at-point) ;与 pyim-probe-dynamic-english 配合
+     )
+    :config
+    (progn
       (setq default-input-method "pyim")
       ;; 设置 pyim 探针设置，这是 pyim 高级功能设置，可以实现 *无痛* 中英文切换 :-)
       ;; 我自己使用的中英文动态切换规则是：
       ;; 1. 光标只有在注释里面时，才可以输入中文。
       ;; 2. 光标前是汉字字符时，才能输入中文。
       ;; 3. 使用 M-j 快捷键，强制将光标前的拼音字符串转换为中文。
-      ;; (setq-default pyim-english-input-switch-functions
-      ;;               '(pyim-probe-dynamic-english
-      ;;                 pyim-probe-isearch-mode
-      ;;                 pyim-probe-program-mode
-      ;;                 pyim-probe-org-structure-template))
+      (setq-default pyim-english-input-switch-functions
+                    '(pyim-probe-dynamic-english
+                      pyim-probe-isearch-mode
+                      pyim-probe-program-mode
+                      pyim-probe-org-structure-template))
 
       ;; (setq-default pyim-punctuation-half-width-functions
       ;;               '(pyim-probe-punctuation-line-beginning
@@ -597,14 +604,9 @@ See URL `irun -helpall'"
       (setq pyim-page-tooltip 'posframe)
       ;; 选词框显示5个候选词
       (setq pyim-page-length 5)
-      ;; :bind
-      ;; (("M-j" . pyim-convert-string-at-point) ;与 pyim-probe-dynamic-english 配合
-      ;;
+
       ;; (setq pyim-default-scheme 'wubi)
       (setq pyim-default-scheme 'xiaohe-shuangpin)
-      )
-    :config
-    (progn
       (if (featurep 'pyim)
           (pyim-extra-dicts-add-dict
            `(:name "pyim-bigdict" :file  "~/.spacemacs.d/layers/my-config/local/pyim-dict/pyim-bigdict.pyim" :elpa t )))
