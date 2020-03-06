@@ -710,7 +710,8 @@ See also `verilog-sk-header' for an alternative format."
               (verilog-insert-time))
           (message "Can't find the position to update the \"last updated timing\""))))
   (imenu-list-rescan-imenu)
-  (my-verilog-align-indent-inst-signal))
+  ;;(my-verilog-align-indent-inst-signal)
+  )
 (ad-activate 'verilog-auto)
 
 
@@ -984,9 +985,11 @@ imp step:
     (goto-char (point-min))
     (let ((inst-alist '()) (final-alist '())
           (pos-inst-start '0) (port-length '0) (pos-port-right-paren '0) (length-current '0) (pos-parent-end '0)
-          (left-pair "(") (right-pair ")"))
+          (left-pair "(") (right-pair ")")
+          (inst-count 0) (inst-index 0))
       ;; remove module entity from inst-alist
       (setq inst-alist (verilog-imenu-create-find-instances-or-modports (point-max)))
+      (message "calculation column position for: %d" (setq inst-count (length inst-alist)))
       (dolist (entity inst-alist) ;; get maxmum column of insts and ports
         (let ((param-entiy)
               (inst-name (car (split-string (car entity))))
@@ -1031,6 +1034,7 @@ imp step:
       ;; inst-alist keeps the inst position before align inst, but when this function is ongoing,
       ;; all the position shuold be update real time
       ;; so scan all inst entity again
+      (setq inst-index 1)
       (dolist (entity inst-alist) ;; indent to position
         (let ((param-entiy)
               (end-pattern)
@@ -1039,6 +1043,9 @@ imp step:
               (updated-alist '())
               (inst-pos))
           ;; (debug)
+          (message "indent port entity (%2d/%2d) : %s %s" inst-index inst-count inst-type inst-name)
+          (setq inst-index (+ 1 inst-index))
+
           (save-excursion
             (goto-char (point-min))
             (setq updated-alist (verilog-imenu-create-find-instances-or-modports (point-max))))
@@ -1068,6 +1075,8 @@ imp step:
                 (my-verilog-indent-in-pair left-pair right-pair)
                 ))))
       ;; align port signals and parameter symbol
+
+      (setq inst-index 1)
       (dolist (entity inst-alist) ;; indent to position
         (let ((param-entiy)
               (end-pattern)
@@ -1076,6 +1085,8 @@ imp step:
               (updated-alist '())
               (inst-pos))
 
+          (message "indent ports list: (%2d/%2d) %s %s" inst-index inst-count inst-type inst-name)
+          (setq inst-index (+ 1 inst-index))
           (save-excursion
             (goto-char (point-min))
             (setq updated-alist (verilog-imenu-create-find-instances-or-modports (point-max))))
