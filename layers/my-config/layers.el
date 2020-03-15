@@ -16,4 +16,5 @@
                                       ;; zilongshanren-org
                                       ;; zilongshanren-better-defaults
                                       exwm
+                                      mermaid
 				      ))

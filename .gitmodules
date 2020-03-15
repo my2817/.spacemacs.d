@@ -1,0 +1,3 @@
+[submodule "mermaid"]
+	path = layers/mermaid
+	url = https://github.com/arnm/mermaid-layer
