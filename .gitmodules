@@ -1,3 +1,7 @@
 [submodule "mermaid"]
 	path = layers/mermaid
 	url = https://github.com/arnm/mermaid-layer
+
+[submodule "layers/my-config/local/C4-Plantuml"]
+	path = layers/my-config/local/C4-Plantuml
+	url = https://github.com/RicardoNiepel/C4-PlantUML
