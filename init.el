@@ -475,19 +475,24 @@ before packages are loaded. If you are unsure,  try  setting them in
   ;;  ;   ("org-cn"   . "http://elpa.zilongshanren.com/org/")
   ;;  ;   ("gnu-cn"   . "http://elpa.zilongshanren.com/gnu/")))
   ;; (package-initialize)
-  (let ((melpa-source "emacs-china"))
+  (let ((melpa-source "tuna"))
     (cond
      ((string= melpa-source "emacs-china")
       (setq configuration-layer-elpa-archives
             '(("melpa-cn" . "http://elpa.emacs-china.org/melpa/")
               ("org-cn"   . "http://elpa.emacs-china.org/org/")
               ("gnu-cn"   . "http://elpa.emacs-china.org/gnu/"))))
+     ((string= melpa-source "tuna")
+      (setq configuration-layer-elpa-archives
+            '(("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+              ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+              ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/"))))
+
      ((string= melpa-source "local")
       (setq configuration-layer-elpa-archives
             '(("melpa-cn-local" . "~/.emacs.d/.cache/elpa.emacs-china.org/melpa/")
               ("org-cn-local"   . "~/.emacs.d/.cache/elpa.emacs-china.org/org/")
-              ("gnu-cn-local"   . "~/.emacs.d/.cache/elpa.emacs-china.org/gnu/")))
-      )
+              ("gnu-cn-local"   . "~/.emacs.d/.cache/elpa.emacs-china.org/gnu/"))))
      )
     ))
 
