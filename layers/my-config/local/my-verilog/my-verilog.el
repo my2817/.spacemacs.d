@@ -1059,10 +1059,9 @@ imp step:
                     (progn
                       (replace-match "#(" t t)
                       (backward-char)(backward-char) ;; indent "#(" to `pos-inst-start'
-                      (while (< (current-column) (- pos-inst-start 1))
-                        (insert " "))
+                      (insert (make-string (- (- pos-inst-start 1) (current-column)) ? ))
                       ;; (next-line)
-                      (my-verilog-indent-in-pair left-pair right-pair)
+                      ;; (my-verilog-indent-in-pair left-pair right-pair)
                       ;; goto end of parameter list
                       (goto-char (my-verilog-search-pair-end-position left-pair right-pair))
                       (verilog-re-search-forward "(" nil t)))
@@ -1070,9 +1069,8 @@ imp step:
                 (verilog-re-search-forward "\\s-?+(" (point-at-eol) t)
                 (replace-match "(" t t)
                 (backward-char)
-                (while (< (current-column)  pos-inst-start )
-                  (insert " "))
-                (my-verilog-indent-in-pair left-pair right-pair)
+                (insert (make-string (- pos-inst-start (current-column)) ? ))
+                ;; (my-verilog-indent-in-pair left-pair right-pair)
                 ))))
       ;; align port signals and parameter symbol
 
@@ -1107,7 +1105,9 @@ imp step:
                 (verilog-re-search-forward "\\s-?+(" (point-at-eol) t)
                 (backward-char)
                 (my-verilog-indent-inst-signal-with-offset-by-search-parent port-length left-pair right-pair)
-                )))))))
+                ))))
+      (indent-region (point-min) (point-max))
+      )))
 
 
 (defun my-verilog-search-pair-end-position (left-pair right-pair)
