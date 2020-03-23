@@ -83,7 +83,9 @@
 ;;    (snails :location (recipe
 ;;                         :fetcher github
 ;;                         :repo manateelazycat/snails))
-
+    (rime :location (recipe
+                     :fetcher github
+                     :repo DogLooksGood/emacs-rime))
   )
 
   "The list of Lisp packages required by the my-config layer.
@@ -779,5 +781,25 @@ See URL `irun -helpall'"
     :init
     (progn
       (require 'snails)
+      )))
+
+(defun my-config/init-rime ()
+  (use-package rime
+    :defer t
+    :init
+    (require 'rime)
+    :config
+    (progn
+      (setq rime-user-data-dir "~/.config/fcitx/rime")
+      (setq rime--module-path "~/.emacs.d/.cache/quelpa/build/rime/librime-emacs.so")
+
+      (setq rime-posframe-properties
+            (list :background-color "#333333"
+                  :foreground-color "#dcdccc"
+                  :font "WenQuanYi Micro Hei Mono-14"
+                  :internal-border-width 10))
+
+      (setq default-input-method "rime"
+            rime-show-candidate 'posframe)
       )))
 ;;; packages.el ends here
