@@ -801,5 +801,11 @@ See URL `irun -helpall'"
 
       (setq default-input-method "rime"
             rime-show-candidate 'posframe)
+
+      (setq rime-disable-predicates
+            '(rime-predicate-evil-mode-p
+              rime-predicate-after-alphabet-char-p
+              rime-predicate-prog-in-code-p
+              rime-predicate-auto-english-p))
       )))
 ;;; packages.el ends here
