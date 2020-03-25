@@ -14,6 +14,7 @@
 - [[#dired-mode][Dired Mode]]
 - [[#性能][性能]]
   - [[#使用-profiler-start-和-profiler-report-来测试-emacs-性能][使用 profiler-start 和 profiler-report 来测试 Emacs 性能]]
+  - [[#安装-rgripgrep-后在-project-内搜索文件时似乎要快很多][安装 rg[ripgrep] 后，在 project 内搜索文件时似乎要快很多]]
 - [[#verilog-mode][verilog-mode]]
   - [[#配置-1][配置]]
   - [[#常用的一些功能][常用的一些功能]]
@@ -233,6 +234,7 @@ digraph G {
   - 编辑文件名：在本模式下，默认的buffer是只读的， ~spc b w~ :buffer变为可写状态，根据需要个性文件名，再次 ~spc b w~ , 修改生效（修改时使用正则表达式进行复杂替换）
 
 * 性能
+
 ** 使用 profiler-start 和 profiler-report 来测试 Emacs 性能
    别是你使用 starter-kit 的时候，比如使用 spacemacs，spacemacs 最大的问题可能就是性能了，通过 profiler-start 开启之后，做半个小时的工作，然后调用 profiler-report，看看哪些地方耗时比较多吧。
 我把 pangu-spacing, org-bullets, js2-refactor 全部 exclude 了，现在打开 org 文件和 js 文件提升了不少效率。
@@ -241,6 +243,9 @@ digraph G {
   ;; This line has very bad performance lose!!!!!!!!!!!!!!!!!!!
   (set-default 'imenu-auto-rescan t)
 #+END_SRC
+
+** 安装 rg[ripgrep] 后，在 project 内搜索文件时似乎要快很多
+   https://github.com/BurntSushi/ripgrep/releases
 
 * verilog-mode
 
