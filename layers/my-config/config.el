@@ -86,6 +86,7 @@
                               (interactive)
                               (if (string= mode-name "Verilog")
                                   (progn
+                                    (my-update-last-update-stamp)
                                     (untabify (point-min)
                                               (point-max))
                                     ))))

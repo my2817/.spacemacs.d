@@ -1321,6 +1321,17 @@ indent all left-pair of signals to COLUMN, stop when get to the position of END-
           (inst-left-parent-pos) (inst-right-parent-pos))
       )))
 
+(defun my-update-last-update-stamp ()
+  "update \"Last Update:\""
+  (save-excursion
+    (goto-line 1)
+    (if (buffer-modified-p)
+        (if (search-forward "Last Update : " nil nil)
+            (progn
+              (kill-line)
+              (verilog-insert-time))
+          (message "Can't find the position to update the \"last updated timing\""))))
+  )
 ;;;###autoload
 (define-minor-mode my-verilog
   "It is my configuration of verilog-mode"
