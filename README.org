@@ -136,6 +136,15 @@
   + 指定一个 project：在 project 的根目录建立.projectile 文件（或者使用git init进行初始化），或者使用变量 projectile-project-root-files-系列变量
   + 忽略特定目录、文件：projectile-globally-ignore0*系列变量
   + 指定生成 TAGS 文件的命令：projectile-tags-command
+    projectile+universal-ctags 设置要忽略生成 tag 的文件不在 project 根目录下时，ctags 的 --exclude=<path_pattern> 选项中，path_pattern 需要包含通配符“*”，更新 projectile 的一个 function
+    #+begin_src emacs-lisp
+      (defun projectile-tags-exclude-patterns ()
+        "Return a string with exclude patterns for ctags."
+        (mapconcat (lambda (pattern) (format "--exclude=\"*%s\""
+                                             (directory-file-name pattern)))
+                   (projectile-ignored-directories-rel) " "))
+    #+end_src
+
   + 如果当前通过 .git 识别为 project，工作会自动调用 git 的 .gitignore 策略
   + 切换到project的目录，但不打开文件
 #+BEGIN_SRC emacs-lisp
