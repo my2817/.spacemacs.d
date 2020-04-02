@@ -77,9 +77,9 @@
                          :repo manateelazycat/aweshell))
     magit-todos
     magit-gerrit
-    (comment-edit :location (recipe
+    (separedit :location (recipe
                          :fetcher github
-                         :repo twlz0ne/comment-edit.el))
+                         :repo twlz0ne/separedit.el))
 ;;    (snails :location (recipe
 ;;                         :fetcher github
 ;;                         :repo manateelazycat/snails))
@@ -717,17 +717,17 @@ See URL `irun -helpall'"
    (progn
      (setq-default magit-gerrit-ssh-creds "myid@gerrithost.org"))))
 
-(defun my-config/init-comment-edit ()
-  (use-package comment-edit
+(defun my-config/init-separedit ()
+  (use-package separedit
     :init
     (progn
-      (require 'comment-edit)
-      (define-key prog-mode-map (kbd "C-c '") #'comment-edit)
-      (setq comment-edit-default-mode 'org-mode))
+      (require 'separedit)
+      (define-key prog-mode-map (kbd "C-c '") #'separedit)
+      (setq separedit-default-mode 'org-mode))
     :config
     (progn
-      ;; add verilog-mode into comment-edit
-      (setq comment-edit-code-lang-modes
+      ;; add verilog-mode into separedit
+      (setq separedit-code-lang-modes
             '(("C" . c-mode)
               ("C++" . c++-mode)
               ("asymptote" . asy-mode)
@@ -743,7 +743,7 @@ See URL `irun -helpall'"
               ("sqlite" . sql-mode)
               ("verilog" . verilog-mode)))
 
-      (setq comment-edit-comment-delimiter-alist
+      (setq separedit-comment-delimiter-alist
             '((("//+" "\\*+")
                c-mode c++-mode csharp-mode css-mode go-mode java-mode js-mode objc-mode php-mode swift-mode verilog-mode)
               (("//+!" "//+" "\\*+")
@@ -756,7 +756,7 @@ See URL `irun -helpall'"
                emacs-lisp-mode lisp-interaction-mode common-lisp racket-mode scheme-mode)
               (("#+")
                python-mode ruby-mode)))
-      (setq comment-edit-comment-encloser-alist
+      (setq separedit-comment-encloser-alist
             '((("/\\*+" "\\*/")
                c-mode c++-mode csharp-mode css-mode go-mode java-mode js-mode objc-mode php-mode rust-mode swift-mode verilog-mode)
               (("{-" "-}")
