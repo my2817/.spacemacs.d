@@ -1326,7 +1326,7 @@ indent all left-pair of signals to COLUMN, stop when get to the position of END-
   (save-excursion
     (goto-line 1)
     (if (buffer-modified-p)
-        (if (search-forward "Last Update : " nil nil)
+        (if (search-forward "Last Update : " nil t)
             (progn
               (kill-line)
               (verilog-insert-time))
