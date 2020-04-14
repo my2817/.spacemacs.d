@@ -501,8 +501,7 @@ See URL `irun -helpall'"
     ))
 
 (defun my-config/init-awesome-tab ()
-  (use-package awesom-tab
-    :defer t
+  (use-package awesome-tab
     :init
     (progn
       ;; (autoload 'company-english-helper "company-english-helper" "En-helper" t)
@@ -510,6 +509,8 @@ See URL `irun -helpall'"
       (require 'awesome-tab)
       (awesome-tab-mode)
       )
+    :config
+      (custom-set-variables '(awesome-tab-height 120))
     ))
 
 (defun my-config/init-awesome-pair()
