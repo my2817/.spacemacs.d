@@ -56,7 +56,9 @@
     flycheck-plantuml
     (company-verilog :location local)
     (company-english-helper :location local)
-    ;; (awesome-tab :location local);;from [https://github.com/manateelazycat/awesome-tab]
+    (awesome-tab :location (recipe
+                            :fetcher github
+                            :repo manateelazycat/awesome-tab));;from [https://github.com/manateelazycat/awesome-tab]
     ;; header2
     (awesome-pair :location (recipe
                              :fetcher github
@@ -504,7 +506,9 @@ See URL `irun -helpall'"
     :init
     (progn
       ;; (autoload 'company-english-helper "company-english-helper" "En-helper" t)
+      ;; need all-the-icon fonts: https://github.com/domtronn/all-the-icons.el/tree/master/fonts
       (require 'awesome-tab)
+      (awesome-tab-mode)
       )
     ))
 
