@@ -273,3 +273,6 @@
 (setq epa-pinentry-mode 'loopback)
 (setq epa-file-cache-passphrase-for-symmetric-encryption t)
 (setq ob-mermaid-cli-path "~/node_modules/.bin/mmdc")
+
+(with-eval-after-load 'magit-status
+  (delq 'magit-insert-untracked-files magit-status-sections-hook))
