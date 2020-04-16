@@ -489,7 +489,12 @@
   ;;(setq align-exclude-rules-list align-exclude-verilog-rules-list)
   )
 
-
+(setq my-verilog-menu
+  '("My-verilog"
+    ["Create Testbench" my-verilog-create-tb t]
+    ["Align Inst" my-verilog-align-indent-inst-signal t]
+    ))
+(easy-menu-add-item verilog-mode-map '("menu-bar") my-verilog-menu)
 
 ;;----------------------------------------------------------------------------
 ;;   reconfig verilog-mode
