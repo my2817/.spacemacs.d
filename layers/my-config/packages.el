@@ -88,6 +88,10 @@
     (rime :location (recipe
                      :fetcher github
                      :repo DogLooksGood/emacs-rime))
+
+    (vc-msg :location (recipe
+                       :fetcher github
+                       :repo redguardtoo/vc-msg))
   )
 
   "The list of Lisp packages required by the my-config layer.
@@ -813,4 +817,9 @@ See URL `irun -helpall'"
               rime-predicate-prog-in-code-p
               rime-predicate-auto-english-p))
       )))
+
+(defun my-config/init-vc-msg ()
+  (use-package vc-msg
+    :defer t
+    ))
 ;;; packages.el ends here
