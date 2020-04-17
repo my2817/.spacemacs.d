@@ -440,3 +440,25 @@ otherwise you will this function don't work and don't know how
     (if (= (length files) 2)
         (ediff-files fileA fileB)
       (ediff-files3 fileA fileB fileC))))
+
+(defun my-highlight-symbol-in-frame ()
+  "highlight symbol in current frame
+
+`window-list'
+`select-window'
+"
+  (interactive)
+  (let* ((symbol (highlight-symbol-get-symbol))
+         (window-list (window-list))
+         (window-cur (nth 0 window-list))
+         )
+    (save-excursion
+      (dolist (window window-list)
+        (select-window window)
+        (if (highlight-symbol-symbol-highlighted-p symbol )
+            (highlight-symbol-remove-symbol symbol)
+          (highlight-symbol-add-symbol symbol "yellow")
+          (when (member 'explicit highlight-symbol-occurrence-message)
+            (highlight-symbol-count symbol t)))
+        )
+      (select-window window-cur))))
