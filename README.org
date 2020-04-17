@@ -245,6 +245,7 @@ digraph G {
  + 使用linux的 sort 命令进行复杂排序，比如第几个字段作为关键词进行排序
  + delete-duplicate-lines:先使用'sort-lines'对当前buffer进行排序，再使用本函数, 本函数一次只能从相邻的两行中删除一行，所以需要多次运行，或者使用以下awk命令（不需要事先排序）,该命令中的 $0 表示行内容完全重复时，进行删除操作，相应替换为$n，则表示当第n个字段相同时，进行删除操作。
  + ivy-push-view:将当前的窗口即对应的buffer信息保存起来，通过 ivy-switch-view可重新恢复该视图
+ + my-highlight-symbol-in-frame: 通过多个 window 打开多个不同的文件），高亮显示光标下的 symbol （在所有的文件中）
 #+BEGIN_SRC awk
   awk '{!a[$0]{print}}'
 #+END_SRC
