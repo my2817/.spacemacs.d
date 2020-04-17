@@ -489,11 +489,14 @@
   ;;(setq align-exclude-rules-list align-exclude-verilog-rules-list)
   )
 
-(setq my-verilog-menu
-  '("My-verilog"
+(defvar my-verilog-menu
+  '("My-config"
     ["Create Testbench" my-verilog-create-tb t]
     ["Align Inst" my-verilog-align-indent-inst-signal t]
-    ))
+    ["cnfonts size" cnfonts-edit-profile t]
+    ["Init .dir-local" my-project-dir-local-init t]
+    )
+  "misc function list")
 (easy-menu-add-item verilog-mode-map '("menu-bar") my-verilog-menu)
 
 ;;----------------------------------------------------------------------------
