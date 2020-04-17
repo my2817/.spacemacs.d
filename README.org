@@ -5,7 +5,8 @@
   - [[#我的配置][我的配置]]
   - [[#配置][配置]]
 - [[#按键说明-keyboard][按键说明 keyboard]]
-- [[#拼音输入法][拼音输入法]]
+- [[#中文拼音输入法][中文拼音输入法]]
+- [[#中文字体][中文字体]]
 - [[#帮助文档][帮助文档]]
 - [[#projectile][projectile]]
 - [[#regexp-正则表达式][regexp 正则表达式]]
@@ -115,7 +116,7 @@
   | ~i~, ~a~ , ~A~ | 进入插入模式                           |
   |----------------+----------------------------------------|
 
-* 拼音输入法
+* 中文拼音输入法
   - 内置[[https://github.com/tumashu/pyim#orgb7116f0][pyim]]输入法,通过 ~C-\~ 在pyim和英文之间进行切换
   - 默认输入法被设置为五笔,[[./layers/my-config/packages.el::565][点我打开配置文件]],根据需要使用下面任意一行配置
    #+BEGIN_SRC lisp
@@ -123,6 +124,16 @@
       (setq pyim-default-scheme 'quanpin)
       (setq pyim-default-scheme 'xiaohe-shuangpin)
    #+END_SRC
+  - 新的输入法rime,和 pyim 类似（但需要外部工具支持），可通过一下命令在两个输入法上切换
+    #+begin_src elisp
+      (setq default-input-method 'pyim)
+      ;; or
+      (setq default-input-method 'rime) ; default
+    #+end_src
+    将上面任意一行配置加入到 [[file:init.el][init.el 的函数 dotspacemacs/user-config]] 中修改启动后的默认配置
+
+* 中文字体
+  通过运行命令 cnfonts-edit-profile 配置好字体后，将标签栏“其它”下面的代码复制到  [[file:init.el][init.el 的函数 dotspacemacs/user-config]] 中
 
 * 帮助文档
   + help 菜单下有详细说明，如果菜单被隐藏，使用 ctrl+鼠标右键呼出
@@ -259,6 +270,7 @@ digraph G {
 * verilog-mode
 
   一般遇到的问题、需求，别人已经帮我们解决,见[[https://www.veripool.org/projects/verilog-mode/wiki/Faq][Faq]]
+  在 verilog 模式下通过 ctrl + 鼠标右键呼出菜单，有3个 verilog 相关的菜单可关注一下
 
 ** 配置
    verilog相关插件有两个：
