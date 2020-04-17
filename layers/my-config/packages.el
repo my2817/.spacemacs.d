@@ -511,7 +511,7 @@ See URL `irun -helpall'"
       ;; (autoload 'company-english-helper "company-english-helper" "En-helper" t)
       ;; need all-the-icon fonts: https://github.com/domtronn/all-the-icons.el/tree/master/fonts
       (require 'awesome-tab)
-      (awesome-tab-mode)
+      ;; (awesome-tab-mode)
       )
     :config
       (custom-set-variables '(awesome-tab-height 120))
