@@ -78,7 +78,10 @@
                          :fetcher github
                          :repo manateelazycat/aweshell))
     magit-todos
-    magit-gerrit
+    (magit-gerrit :location (recipe
+                             :fetcher github
+                             :repo zeph1e/magit-gerrit))
+
     (separedit :location (recipe
                          :fetcher github
                          :repo twlz0ne/separedit.el))
