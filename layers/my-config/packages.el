@@ -80,7 +80,7 @@
     magit-todos
     (magit-gerrit :location (recipe
                              :fetcher github
-                             :repo zeph1e/magit-gerrit))
+                             :repo zeph1e/magit-gerrit));; https://github.com/terranpro/magit-gerrit/pull/56
 
     (separedit :location (recipe
                          :fetcher github
@@ -725,9 +725,13 @@ See URL `irun -helpall'"
       )))
 (defun my-config/init-magit-gerrit ()
   (use-package magit-gerrit
-   :init
-   (progn
-     (setq-default magit-gerrit-ssh-creds "myid@gerrithost.org"))))
+    :defer t
+    :init
+    (progn
+      ;; (setq-default magit-gerrit-ssh-creds "myid@gerrithost.org")
+      ;; DONT compile magit-gerrit.el into elc file(remove it if)
+      (require 'magit-gerrit)
+      )))
 
 (defun my-config/init-separedit ()
   (use-package separedit
