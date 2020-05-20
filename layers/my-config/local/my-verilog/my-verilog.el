@@ -1015,7 +1015,7 @@ imp step:
                     (progn
                       (setq param-entiy t)
                       (verilog-re-search-backward "[a-zA-Z0-9_]" (point-at-bol) t)
-                      (if (< pos-inst-start (current-column))
+                      (if (< pos-inst-start (+ 3 (current-column)))
                           (setq pos-inst-start (+ (current-column) 3)));; "#(" has two chars
                       ;; get max-column of parameter list
                       (setq pos-parent-end (my-verilog-search-pair-end-position left-pair right-pair))
@@ -1029,7 +1029,7 @@ imp step:
                 ;; get max-column of signal port list
                 (verilog-re-search-forward "(" nil t)
                 (verilog-re-search-backward "[a-zA-Z0-9_]" (point-at-bol) t)
-                (if (< pos-inst-start (current-column))
+                (if (< pos-inst-start (+ 2 (current-column)))
                     (setq pos-inst-start (+ 2 (current-column))))
                 ;; (setq pos-parent-end (my-verilog-search-pair-end-position left-pair right-pair))
                 (setq length-current (my-verilog-port-max-length-by-search-parent left-pair right-pair))
