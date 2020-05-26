@@ -20,6 +20,7 @@
   - [[#配置-1][配置]]
   - [[#常用的一些功能][常用的一些功能]]
   - [[#verilog-auto][verilog-auto]]
+  - [[#autooutput][AUTOOUTPUT]]
   - [[#flycheck][flycheck]]
   - [[#imenu][imenu]]
   - [[#代码折叠][代码折叠]]
@@ -443,6 +444,27 @@ emacs --batch file.v -f verilog-batch-auto
 #+BEGIN_SRC shell
 emacs --batch file.v -l path/to/projectile.el -f verilog-batch-auto     #在spacemacs中, projectile.el位置 ~/.emacs.d/elpa路径下，请自查
 #+END_SRC
+
+** AUTOOUTPUT
+   使用以下变量可将不希望出现再端口列表中的信号排除
+   #+begin_src verilog
+     //
+     // Local Variables:
+     // verilog-auto-output-ignore-regexp:"\\(RSTN_EXT\\)"
+     // verilog-auto-input-ignore-regexp:"\\(CREG_SPD_COMB_EN\\)"
+     // End:
+     //
+   #+end_src
+   如果一个信号通过 autoinst 已经自动连接完成，需要强制加入到端口列表中，可以通过在适当的位置焦加入 output/input 关键字解决。
+   另一种情景是一个信号 A 如果已经通过 autooutput 呈现再端口列表中，端口列表的实顺序已经固定下来。此时如果将信号 A 接入到其他模块B中。信号 A 将不会自动出现再端口中，通过上面的方法的话可能改变端口顺序。此时可在例化模块 B 时，控制信号 A 的位置实现，如下代码所示，信号 A 前面没有类似 Inputs/Outputs 的关键字
+#+begin_src verilog
+  sub_B u_B (
+             .A (A),
+             // Inputs
+             .CC (CC),
+             /*AUTOINST*/);
+
+#+end_src
 
 ** flycheck
    默认打开此功能，调用EDA工具对代码进行实时编译，简单低级错误可以立即提示，马上改掉 ~spc e v~ 大概得到如下信息，因为在我自己电脑上目前只安装了[[file:img/flycheck2.png][verilator]], 如果有多个EDA工具可用的话，可使用 ~spc e s~ 进行选择，需要定义其它工具的话自行搜索帮助文件，verilog-irun的定义在 "~/.spacemacs.d/layers/my-config/packages.el"
