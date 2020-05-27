@@ -448,6 +448,40 @@ otherwise you will this function don't work and don't know how
         (ediff-files fileA fileB)
       (ediff-files3 fileA fileB fileC))))
 
+(defun ora-ediff-files ()
+  "
+    In case no files are marked, the file at point is used as the first file, and read-file-name is used for the second file. Since I have the magic (setq dired-dwim-target t) in my config, in case a second dired buffer is open, dired-dwim-target-directory will offer it as the starting directory during completion. Very useful to compare two files in two different directories.
+
+    Depending on the order of the arguments to ediff-files, the changes will appear either as added or removed; file-newer-than-file-p tries to put the arguments in a logical order by looking at the files' last change times.
+
+    ediff-after-quit-hook-internal is used to restore the previous window configuration after I quit ediff with q.
+"
+  (interactive)
+  (let ((files (dired-get-marked-files))
+        (wnd (current-window-configuration)))
+    (if (<= (length files) 2)
+        (let ((file1 (car files))
+              (file2 (if (cdr files)
+                         (cadr files)
+                       (read-file-name
+                        "file: "
+                        (dired-dwim-target-directory)))))
+          (if (file-newer-than-file-p file1 file2)
+              (ediff-files file2 file1)
+            (ediff-files file1 file2))
+          (add-hook 'ediff-after-quit-hook-internal
+                    (lambda ()
+                      (setq ediff-after-quit-hook-internal nil)
+                      (set-window-configuration wnd))))
+      (let* ((file1 (nth 0 files))
+             (file2 (nth 1 files))
+             (file3 (nth 2 files)))
+        (ediff-files3 file1 file2 file3)
+        (add-hook 'ediff-after-quit-hook-internal
+                  (lambda ()
+                    (setq ediff-after-quit-hook-internal nil)
+                    (set-window-configuration wnd)))))))
+
 (defun my-highlight-symbol-in-frame ()
   "highlight symbol in current frame
 

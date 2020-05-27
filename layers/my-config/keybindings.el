@@ -9,5 +9,5 @@
 (spacemacs/set-leader-keys "mul" 'my-copy-file-line-to-clipboard)
 (spacemacs/set-leader-keys "mue" 'toggle-company-english-helper)
 (spacemacs/set-leader-keys "aou" 'org-projectile/update-agenda-files)
-(spacemacs/set-leader-keys "Dfm" 'my-ediff-dired-marked-files)
+(spacemacs/set-leader-keys "Dfm" 'ora-ediff-files)
 (spacemacs/set-leader-keys "gg" 'magit-gerrit-popup)
