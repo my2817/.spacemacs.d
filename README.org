@@ -157,7 +157,13 @@
                    (projectile-ignored-directories-rel) " "))
     #+end_src
 
-  + 如果当前通过 .git 识别为 project，工作会自动调用 git 的 .gitignore 策略
+  + 使用 [spc p G]:[projectile-regenerate-tags] 生成 TAGS 时，其只会识别 .projectile 中配置的要忽略的文件，不会调用 .gitignore, 内容如下
+    #+begin_example
+      -/digital/to_FPGA
+      -/digital/sch
+      -/digital/netlist
+    #+end_example
+  + [spc p f]: 如果当前通过 .git 识别为 project，工作会自动调用 git 的 .gitignore 策略
   + 切换到project的目录，但不打开文件
 #+BEGIN_SRC emacs-lisp
       (setq projectile-switch-project-action 'projectile-dired)
