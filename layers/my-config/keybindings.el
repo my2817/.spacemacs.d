@@ -11,3 +11,7 @@
 (spacemacs/set-leader-keys "aou" 'org-projectile/update-agenda-files)
 (spacemacs/set-leader-keys "Dfm" 'ora-ediff-files)
 (spacemacs/set-leader-keys "gg" 'magit-gerrit-popup)
+(spacemacs/set-leader-keys "m[" 'awesome-pair-wrap-bracket )
+(spacemacs/set-leader-keys "m(" 'awesome-pair-wrap-round )
+(spacemacs/set-leader-keys "m{" 'awesome-pair-wrap-curly )
+(spacemacs/set-leader-keys "m\"" 'awesome-pair-wrap-double-quote)
