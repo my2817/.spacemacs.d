@@ -16,3 +16,5 @@
 (spacemacs/set-leader-keys "m{" 'awesome-pair-wrap-curly )
 (spacemacs/set-leader-keys "m\"" 'awesome-pair-wrap-double-quote)
 (spacemacs/set-leader-keys "mU" 'awesome-pair-unwrap)
+(spacemacs/set-leader-keys "m<" 'awesome-pair-jump-left)
+(spacemacs/set-leader-keys "m>" 'awesome-pair-jump-right)
