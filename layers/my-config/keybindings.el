@@ -8,6 +8,9 @@
 (spacemacs/set-leader-keys "mc" 'smex-major-mode-commands)
 (spacemacs/set-leader-keys "mul" 'my-copy-file-line-to-clipboard)
 (spacemacs/set-leader-keys "mue" 'toggle-company-english-helper)
+(spacemacs/set-leader-keys "muh" 'my-hex2dec)
+(spacemacs/set-leader-keys "mud" 'my-dec2hex)
+
 (spacemacs/set-leader-keys "aou" 'org-projectile/update-agenda-files)
 (spacemacs/set-leader-keys "Dfm" 'ora-ediff-files)
 (spacemacs/set-leader-keys "gg" 'magit-gerrit-popup)
