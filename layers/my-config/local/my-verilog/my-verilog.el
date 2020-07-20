@@ -708,7 +708,11 @@ See also `verilog-sk-header' for an alternative format."
 
 (defadvice verilog-auto (after verilog-last-update
                                (&optional opt_arg))
-  "update \"Last Update:\" before 'verilog-inject-auto"
+  "update \"Last Update:\" before 'verilog-inject-auto.
+see also:
+`my-verilog-auto-align'
+`my-verilog-align-indent-inst-signal'
+"
   (save-excursion
     (goto-line 1)
     (if (buffer-modified-p)
@@ -718,7 +722,8 @@ See also `verilog-sk-header' for an alternative format."
               (verilog-insert-time))
           (message "Can't find the position to update the \"last updated timing\""))))
   (imenu-list-rescan-imenu)
-  ;;(my-verilog-align-indent-inst-signal)
+  (if my-verilog-auto-align
+      (my-verilog-align-indent-inst-signal))
   )
 (ad-activate 'verilog-auto)
 
@@ -980,8 +985,31 @@ Useage: 1) Format inst's port list(include parameter list) to single line(one po
                .PORT1 <-min-spc-> (signal1),
                .PORT2 <-min-spc-> (signal2))"
   :group 'verilog-mode-indent)
+(defcustom my-verilog-auto-align t
+  "true to excute `my-verilog-align-indent-inst-signal' after `verilog-auto'"
+  :group 'verilog-mode-indent)
 (defun my-verilog-align-indent-inst-signal ()
   "align all inst entity's left-pair(parameter entity included) and all inst's port list
+Please make sure all inst's port is format with style of one port one line. Eg.:
+-----------------------------------
+subA u_subA(
+           .a(a_wire),
+           .bb(bb_wire),
+           .ccc(ccc_wire)
+           );
+-----------------------------------
+and the result of this function should be:
+-----------------------------------
+subA u_subA(
+           .a   (a_wire),
+           .bb  (bb_wire),
+           .ccc (ccc_wire)
+           );
+-----------------------------------
+
+use `my-verilog-min-spc-for-align' to control the minimum space between port and signal name.
+see also:
+`my-verilog-auto-align'
 
 imp step:
 1. get entity of all inst, and the max length of all ports(parameter symbols included)
