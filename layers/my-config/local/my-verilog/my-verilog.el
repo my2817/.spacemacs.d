@@ -986,7 +986,12 @@ Useage: 1) Format inst's port list(include parameter list) to single line(one po
                .PORT2 <-min-spc-> (signal2))"
   :group 'verilog-mode-indent)
 (defcustom my-verilog-auto-align t
-  "true to excute `my-verilog-align-indent-inst-signal' after `verilog-auto'"
+  "true to excute `my-verilog-align-indent-inst-signal' after `verilog-auto'
+add the following lines into the verilog file's end to disable it:
+// Local Variables:
+// my-verilog-auto-align:nil
+// End:
+"
   :group 'verilog-mode-indent)
 (defun my-verilog-align-indent-inst-signal ()
   "align all inst entity's left-pair(parameter entity included) and all inst's port list
