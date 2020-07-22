@@ -503,3 +503,90 @@ otherwise you will this function don't work and don't know how
             (highlight-symbol-count symbol t)))
         )
       (select-window window-cur))))
+
+;; bsub as proxy of git to rd3
+(defun my-git-fetch-through-by-bsub ()
+  "send \"git fetch --all\" to bsub "
+  (interactive)
+  (shell-command (concat "bsub -R type=any -Is \'git fetch --all\'"))
+  (magit-refresh)
+  )
+
+;; (spacemacs|add-toggle git-on-bsub
+;;   :status (not (string= magit-git-executable "git"))
+;;   :on (custom-set-variables '(magit-git-executable "bsub -m rd3 git") )
+;;   :off (custom-set-variables '(magit-git-executable "git") )
+;;   :documentation "Toggle use bsub as proxy for git or not"
+;;   ;;:evil-leader "tD"
+;; )
+
+(with-eval-after-load 'magit-fetch
+  (define-transient-command magit-fetch ()
+    "Fetch from another repository."
+    :man-page "git-fetch"
+    ["Arguments"
+     ("-p" "Prune deleted branches" ("-p" "--prune"))
+     ("-t" "Fetch all tags" ("-t" "--tags"))]
+    ["Fetch from"
+     ("p" magit-fetch-from-pushremote)
+     ("u" magit-fetch-from-upstream)
+     ("e" "elsewhere"        magit-fetch-other)
+     ("a" "all remotes"      magit-fetch-all)
+     ("b" "all remotes through bsub"       my-git-fetch-through-by-bsub)]
+    ["Fetch"
+     ("o" "another branch"   magit-fetch-branch)
+     ("r" "explicit refspec" magit-fetch-refspec)
+     ("m" "submodules"       magit-fetch-modules)
+     ]
+    ["Configure"
+     ("C" "variables..." magit-branch-configure)])
+  )
+
+(with-eval-after-load 'magit-push
+  (define-suffix-command bsub-magit-push-current-to-pushremote (args)
+    "Push the current branch to its push-remote.
+
+When the push-remote is not configured, then read the push-remote
+from the user, set it, and then push to it.  With a prefix
+argument the push-remote can be changed before pushed to it."
+    :if 'magit-get-current-branch
+    :description 'magit-push--pushbranch-description
+    (interactive (list (magit-push-arguments)))
+    (pcase-let ((`(,branch ,remote)
+                 (magit--select-push-remote "push there")))
+      (run-hooks 'magit-credential-hook)
+      (shell-command (concat "bsub -R type=any -Is \'git " "push " "-v " args " " remote " "
+                             (format "refs/heads/%s:refs/heads/%s\'"
+                                     branch branch)))
+      (magit-refresh)
+      ))
+
+  (define-transient-command magit-push ()
+    "Push to another repository."
+    :man-page "git-push"
+    ["Arguments"
+     ("-f" "Force with lease" (nil "--force-with-lease"))
+     ("-F" "Force"            ("-f" "--force"))
+     ("-h" "Disable hooks"    "--no-verify")
+     ("-n" "Dry run"          ("-n" "--dry-run"))
+     (5 "-u" "Set upstream"   "--set-upstream")
+     (7 "-t" "Follow tags"    "--follow-tags")]
+    [:if magit-get-current-branch
+         :description (lambda ()
+                        (format (propertize "Push %s to" 'face 'transient-heading)
+                                (propertize (magit-get-current-branch)
+                                            'face 'magit-branch-local)))
+         ("p" magit-push-current-to-pushremote)
+         ("u" magit-push-current-to-upstream)
+         ("e" "elsewhere" magit-push-current)
+         ("b" "bsub push" bsub-magit-push-current-to-pushremote)
+         ]
+    ["Push"
+     [("o" "another branch"    magit-push-other)
+      ("r" "explicit refspecs" magit-push-refspecs)
+      ("m" "matching branches" magit-push-matching)]
+     [("T" "a tag"             magit-push-tag)
+      ("t" "all tags"          magit-push-tags)]]
+    ["Configure"
+     ("C" "Set variables..."  magit-branch-configure)])
+  )
