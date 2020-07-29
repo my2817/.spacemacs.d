@@ -1367,12 +1367,29 @@ indent all left-pair of signals to COLUMN, stop when get to the position of END-
   (save-excursion
     (goto-line 1)
     (if (buffer-modified-p)
-        (if (search-forward "Last Update : " nil t)
-            (progn
-              (kill-line)
-              (verilog-insert-time))
-          (message "Can't find the position to update the \"last updated timing\""))))
-  )
+        (progn
+          (if (search-forward "Last Update : " nil t)
+              (progn
+                (kill-line)
+                (verilog-insert-time))
+            (message "Can't find the position to update \"Last Updated timing\""))
+          (if (search-forward "Module Name : " nil t)
+              (progn
+                (kill-line)
+                (insert (file-name-base (buffer-name))))
+            (message "Can't find the position to update \"Module Name\""))
+          (if (search-forward "Project Name: " nil t)
+              (progn
+                (kill-line)
+                (insert (upcase (projectile-project-name))))
+            (message "Can't find the position to update \"Project Name\""))
+          (if (search-forward "Engineer    : " nil t)
+              (progn
+                (kill-line)
+                (insert "<" (user-login-name) "@" (system-name) ">"))
+                (message "Can't find the position to update \"Engineer\""))
+          ))))
+
 ;;;###autoload
 (define-minor-mode my-verilog
   "It is my configuration of verilog-mode"
