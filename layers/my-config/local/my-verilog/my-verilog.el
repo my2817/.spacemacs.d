@@ -1381,7 +1381,7 @@ indent all left-pair of signals to COLUMN, stop when get to the position of END-
           (if (search-forward "Project Name: " nil t)
               (progn
                 (kill-line)
-                (insert (upcase (projectile-project-name))))
+                (insert  (projectile-project-name)))
             (message "Can't find the position to update \"Project Name\""))
           (if (search-forward "Engineer    : " nil t)
               (progn
