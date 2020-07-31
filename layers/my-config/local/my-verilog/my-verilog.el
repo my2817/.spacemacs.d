@@ -1404,4 +1404,7 @@ indent all left-pair of signals to COLUMN, stop when get to the position of END-
   ;; (set (make-local-variable 'indent-line-function)
   ;;      #'my-verilog-indent-line-relative)
   (local-set-key (kbd "C-=") 'verilog-sk-nonblock-assign)
- )
+  (if (= (point-max) 1)
+      (if (yes-or-no-p "Buffer is empty, let's insert verilog-header?")
+          (verilog-header)))
+  )
