@@ -7,10 +7,11 @@
   - [[#安装][安装]]
   - [[#初识][初识]]
     - [[#file-文件操作][File: 文件操作]]
-    - [[#buffer-缓冲操作][Buffer: 缓冲操作]]
+    - [[#buffer-操作][Buffer: 操作]]
     - [[#project][Project:]]
     - [[#windows-1][Windows]]
     - [[#layouts][Layouts]]
+    - [[#编辑][编辑]]
     - [[#帮助系统][帮助系统]]
 - [[#verilog-mode][Verilog-mode]]
   - [[#配置][配置]]
@@ -49,8 +50,8 @@
   + 不太记得前面的步骤是否会把用户登录的默认 shell 更新到 zsh, 没有的话就通过命令 chsh 自己动手改一下
 
 * 编辑器之 emacs
-  非引战： [[https://github.com/syl20bnr/spacemacs][The best editor is neither Emacs nor Vim, it's Emacs *and* Vim! ]]
-  个人在寻找写 verilog 代码的解决方案时接触到 [[https://www.veripool.org/wiki/verilog-mode][verilog-mode]], 然后才是 emacs, 接着便是 [[https://github.com/syl20bnr/spacemacs][spacemacs]], 最后才形成了我的 [[https://gitee.com/my2817/spacemacs-d][spacemacs.d]]
+   [[https://github.com/syl20bnr/spacemacs][The best editor is neither Emacs nor Vim, it's Emacs *and* Vim! ]]
+  在寻找写 verilog 代码的解决方案时接触到 [[https://www.veripool.org/wiki/verilog-mode][verilog-mode]], 然后才是 emacs, 接着便是 [[https://github.com/syl20bnr/spacemacs][spacemacs]], 最后才形成了我的 [[https://gitee.com/my2817/spacemacs-d][spacemacs.d]]
 
 ** 安装
    + emacs:https://ftp.gnu.org/gnu/emacs/emacs-26.3.tar.gz
@@ -79,7 +80,8 @@
      + 或者，在有网环境上先安装好，再把 "~/.emacs.d" "~/.spacemacs.d" 打包到无网络环境中……
 
 ** 初识
-   emacs 中所有的操作都对应一个定义好的 function, 为了方便，已经将部分 function 绑定到特定的按键上，如后文介绍到的快捷键；一些知道名字，不知快捷键的 function 可以通过 ~Alt-x~ （同时按下 ALT 和 x 两个键），然后输入对应的 function 名字进行执行
+   emacs 中所有的操作都对应一个定义好的 function, 为了方便，已经将部分 function 绑定到特定的按键上，如后文介绍到的快捷键；一些知道名字，不知快捷键的 function 可以通过 ~Alt-x~ （同时按下 ALT 和 x 两个键），然后输入对应的 function 名字进行执行。
+   spacemacs 中默认安装了 evil 插件，就我的使用经历，其模拟了 vi 所有的操作方式。
 *** File: 文件操作
     + ~spc~: 指代空格键，spacemacs 中将其设置为 leader key, 敲一下它，会给出一个引导菜单，每个字母对应一个操作
     + ~spc f~: 两个按键用空格分隔，表示按键序列，先敲一下 ~spc~ 后敲 ~f~，文件操作相关，下面还有二级菜单，可以都看看，都是字面意思，就不详细介绍
@@ -92,12 +94,17 @@
       + ~C-h~: 到上一级目录
       + ~C-l~: 同回车
 
-*** Buffer: 缓冲操作
+*** Buffer: 操作
     + ~spc b~: 文件打开读入内存后就不叫文件了，叫 "buffer", 相关操作集中定义在此
       + ~spc b r~: 还是最近打开过的文件
-    + 在 normal 模式下移动方式和 vi/vim 一致：~hjkl~
-    + insert 模式下：~spc~ 不能直接呼出引导菜单了，可以用 ~M-m~ 代替
+    + 在 normal 模式下移动方式和 vi/vim 一致，
+      + 上下左右：~hjkl~,
+      + 上下滚动：~C-e~, ~C-y~
+      + 居中：~z z~,
+      + 翻页： ~C-f~ ~C-b~
+    + insert 模式下：~spc~ 不能作为 leader key 直接呼出引导菜单了，可以用 ~M-m~ 代替
       + ~Esc~: 返回 normal 模式
+      + ~C-l~: 光标所在行居中
       + ~C-[~: 仍然返回 normal 模式
 
 *** Project:
@@ -142,6 +149,11 @@
       + 选择 "[>DONE<]" 并回车
       + 选择保存 layout 文件的位置并输入文件名，我习惯放在 "~/.emacs.d/.cache/layouts" 目录下
     + ~spc l L~: 打开保存好的 layout, 对于我来说是 Project
+
+*** 编辑
+    + ~spc x a~: align, 快捷键用于代码格式化，对齐
+    + ~spc j w C~: 在当前可视范围内，快速跳转到任何以字符 ~C~ 开始的 symbol 处，如果有多处，根据提示继续输入提示的按键序列
+    + ~spc j j C~: 同上，但不要求输入的 ~C~ 是 symbol 的开始字符
 
 *** 帮助系统
     + ~C-h m~: 列出当前打开的所有插件，以及对应的按键绑定
