@@ -1,0 +1,1481 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-08-17 一 16:17 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="DESKTOP-FF9JGDI" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org0aacd99">1. 系统环境</a>
+<ul>
+<li><a href="#org2a58e35">1.1. windows</a></li>
+<li><a href="#org4bd2451">1.2. linux</a></li>
+</ul>
+</li>
+<li><a href="#org18bcfa2">2. terminal 之 zsh</a></li>
+<li><a href="#org4742e17">3. 编辑器之 emacs</a>
+<ul>
+<li><a href="#org654b805">3.1. 安装</a></li>
+<li><a href="#orgb2cdddd">3.2. 初识</a>
+<ul>
+<li><a href="#orgb2dadfc">3.2.1. 启动</a></li>
+<li><a href="#org5ed55c5">3.2.2. File: 文件操作</a></li>
+<li><a href="#org1d1c9fb">3.2.3. Buffer: 操作</a></li>
+<li><a href="#org4a3bf7a">3.2.4. Project:</a></li>
+<li><a href="#org4db317d">3.2.5. Windows</a></li>
+<li><a href="#orgbfaafb6">3.2.6. Layouts</a></li>
+<li><a href="#orga8e1315">3.2.7. 编辑</a></li>
+<li><a href="#org1877529">3.2.8. 帮助系统</a></li>
+</ul>
+</li>
+<li><a href="#org9efaff2">3.3. 一些函数</a></li>
+<li><a href="#org0f9c1a9">3.4. regexp 正则表达式</a></li>
+</ul>
+</li>
+<li><a href="#orgc3ff16b">4. 中文</a>
+<ul>
+<li><a href="#org854729e">4.1. 字体</a></li>
+<li><a href="#orgc38d9d9">4.2. 输入法</a></li>
+</ul>
+</li>
+<li><a href="#org40279bb">5. Verilog-mode</a>
+<ul>
+<li><a href="#org2458375">5.1. 配置</a></li>
+<li><a href="#orgd56053a">5.2. 常用的一些功能</a></li>
+<li><a href="#orga731529">5.3. verilog-auto</a></li>
+<li><a href="#org8e3e0aa">5.4. AUTOOUTPUT</a></li>
+<li><a href="#orgea841eb">5.5. flycheck</a></li>
+<li><a href="#org587d7d2">5.6. 跳转</a></li>
+<li><a href="#org8382d7e">5.7. 代码折叠</a></li>
+</ul>
+</li>
+<li><a href="#org231ac38">6. Org-mode</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org0aacd99" class="outline-2">
+<h2 id="org0aacd99"><span class="section-number-2">1</span> 系统环境</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+tips: 以下系统环境安装过程中，如果下载包比较慢，可以试试搜索一下其对应的国内源，说不一定可以加速
+</p>
+</div>
+<div id="outline-container-org2a58e35" class="outline-3">
+<h3 id="org2a58e35"><span class="section-number-3">1.1</span> windows</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li>cygwin</li>
+<li>mysys2</li>
+<li>wsl: 这货要求系统是win10</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org4bd2451" class="outline-3">
+<h3 id="org4bd2451"><span class="section-number-3">1.2</span> linux</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+既然都选择了 linux, 您随意就好
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org18bcfa2" class="outline-2">
+<h2 id="org18bcfa2"><span class="section-number-2">2</span> terminal 之 zsh</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+一般终端下默认的 shell 为 bash, 不妨（ <code>强烈推荐</code> ）换一个试试，比如此处提到的 zsh 。
+</p>
+<ul class="org-ul">
+<li>各系统环境下都有自己的安装方法，都不用搜索老大哥出马，百度都能解决，再此我就给一下源码文件地址： <a href="https://sourceforge.net/projects/zsh/files/">https://sourceforge.net/projects/zsh/files/</a></li>
+<li>只安装 zsh 的话也不堪重用，接下来给它安装插件 oh-my-zh: <a href="https://ohmyz.sh/">https://ohmyz.sh/</a>
+<ul class="org-ul">
+<li>跟着其提示安装就好，其默认会把文件安装在 ~/.oh-my-zsh 下。对默认配置不满意的话可以更新 ~/.zshrc</li>
+<li><p>
+默认打开的插件只有 git, 见 ~/.zshrc 里的变量 plugins 的值，实际上我的插件设置如下
+</p>
+<pre class="example">
+plugins=(git zsh-syntax-highlighting zsh-autosuggestions fzf z)
+</pre>
+<p>
+其中三个插件还需要额外安装一下，工具如何使用还请看其相关文档……
+</p>
+<ul class="org-ul">
+<li><a href="https://github.com/zsh-users/zsh-syntax-highlighting.git">https://github.com/zsh-users/zsh-syntax-highlighting.git</a></li>
+<li><a href="https://github.com/zsh-users/zsh-autosuggestions">https://github.com/zsh-users/zsh-autosuggestions</a></li>
+<li><a href="https://github.com/junegunn/fzf">https://github.com/junegunn/fzf</a></li>
+</ul></li>
+<li>上一步给出的地址涉及到了 github, 这里又牵扯到版本管理工具 <a href="https://git-scm.com">git</a>, 类似于 svn, 各系统环境下请自行查找安装方法</li>
+</ul></li>
+
+<li>不太记得前面的步骤是否会把用户登录的默认 shell 更新到 zsh, 没有的话就通过命令 chsh 自己动手改一下</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org4742e17" class="outline-2">
+<h2 id="org4742e17"><span class="section-number-2">3</span> 编辑器之 emacs</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<a href="https://github.com/syl20bnr/spacemacs">The best editor is neither Emacs nor Vim, it's Emacs <b>and</b> Vim! </a>
+</p>
+
+<p>
+在寻找写 verilog 代码的解决方案时接触到 <a href="https://www.veripool.org/wiki/verilog-mode">verilog-mode</a>, 然后才是 emacs, 接着便是 <a href="https://github.com/syl20bnr/spacemacs">spacemacs</a>, 最后才形成了我的 <a href="https://gitee.com/my2817/spacemacs-d">spacemacs.d</a>
+</p>
+</div>
+
+<div id="outline-container-org654b805" class="outline-3">
+<h3 id="org654b805"><span class="section-number-3">3.1</span> 安装</h3>
+<div class="outline-text-3" id="text-3-1">
+<ul class="org-ul">
+<li>emacs:<a href="https://ftp.gnu.org/gnu/emacs/emacs-26.3.tar.gz">https://ftp.gnu.org/gnu/emacs/emacs-26.3.tar.gz</a>
+<ul class="org-ul">
+<li>以上是源码文件，安装过程中的问题都可通过搜索解决，就不啰嗦废话</li>
+<li>也可通过各系统集成的包管理器安装，只是默认安装的版本可能不一样</li>
+</ul></li>
+<li>spacemacs: 给 emacs 套壳子</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-sh">git clone https://gitee.com/mirrors/spacemacs ~/.emacs.d
+<span style="color: #e5786d;">cd</span> ~/.emacs.d
+git checkout -b develop origin/develop; <span style="color: #99968b;">#</span><span style="color: #99968b;">&#40664;&#35748;&#30340;master&#20998;&#25903;&#26356;&#26032;&#36739;&#24930;</span>
+</pre>
+</div>
+<ul class="org-ul">
+<li>~/spacemacs.d: 针对 verilog 和个人习惯做了一些配置</li>
+</ul>
+<p>
+走到这一步，如果前面猴急，已经启动过 emacs, 请先将 "~/.emacs" 文件删除
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">git clone https://gitee.com/my2817/spacemacs-d ~/.spacemacs.d
+</pre>
+</div>
+<ul class="org-ul">
+<li>启动 emacs 完成所有依赖的插件安装
+<ul class="org-ul">
+<li>终端中输入 "emacs" 启动并开始一大堆未知插件安装……
+<ul class="org-ul">
+<li>输入命令后 emacs 变为绿色，说明 oh-my-zsh 的 zsh-syntax-highlighting 插件开始工作了</li>
+</ul></li>
+<li>过程中可能需要多次重启
+<ul class="org-ul">
+<li>注意观察终端，刚键入 "e" 时，其自动在后面补全了 "macs", 但光标位置不在词尾，说明 oh-my-zsh 的 zsh-autosuggestions 插件开始工作了
+<ul class="org-ul">
+<li>此时可以选择手动将后面的 "macs" 输全，再回车</li>
+<li>或则按方向键 <code>→</code> 回车</li>
+<li>本人更习惯快捷键 <code>CTRL-e 回车</code></li>
+</ul></li>
+</ul></li>
+<li>此步骤需要联网，如果是在无网络环境上，劝退吧……</li>
+<li>或者，在有网环境上先安装好，再把 "~/.emacs.d" "~/.spacemacs.d" 打包到无网络环境中……</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgb2cdddd" class="outline-3">
+<h3 id="orgb2cdddd"><span class="section-number-3">3.2</span> 初识</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+emacs 中所有的操作都对应一个定义好的 function, 为了方便，已经将部分 function 绑定到特定的按键上，如后文介绍到的快捷键；一些知道名字，不知快捷键的 function 可以通过 <code>Alt-x</code> （同时按下 ALT 和 x 两个键），然后输入对应的 function 名字进行执行。
+spacemacs 中默认安装了 evil 插件，就我的使用经历，其模拟了 vi 所有的操作方式。
+</p>
+</div>
+<div id="outline-container-orgb2dadfc" class="outline-4">
+<h4 id="orgb2dadfc"><span class="section-number-4">3.2.1</span> 启动</h4>
+<div class="outline-text-4" id="text-3-2-1">
+<ul class="org-ul">
+<li><code>emacs</code> ：如果直接使用本命令启动，每次都会打开一个全新进程，速度较慢，且各进程间的操作是独立的</li>
+<li><code>emacscline -c -a “”</code> ： <code>推荐使用本命令启动</code>
+<ul class="org-ul">
+<li>第一次会启动后台守护进程，较慢</li>
+<li>注意：不能关闭运行本命令的终端，个人习惯将其挪到不常用的 workspace 中</li>
+<li>即使关闭当前的 frame （通过 gui 右上角的关闭按钮），也不会结束该进程，再次通过本命令（不一定在第一次启动终端里）可快速连接到守护进程，状态不会丢失</li>
+</ul></li>
+<li>完全关闭：<code>spc q q</code>, 或者执行命令：kill-emacs</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org5ed55c5" class="outline-4">
+<h4 id="org5ed55c5"><span class="section-number-4">3.2.2</span> File: 文件操作</h4>
+<div class="outline-text-4" id="text-3-2-2">
+<ul class="org-ul">
+<li><code>spc</code>: 指代空格键，spacemacs 中将其设置为 leader key, 敲一下它，会给出一个引导菜单，每个字母对应一个操作</li>
+<li><code>spc f</code>: 两个按键用空格分隔，表示按键序列，先敲一下 <code>spc</code> 后敲 <code>f</code>，文件操作相关，下面还有二级菜单，可以都看看，都是字面意思，就不详细介绍
+<ul class="org-ul">
+<li><code>spc f r</code>: 打开最近打开过的文件，通过访问历史，速度更快，似乎是我用的较多的操作</li>
+</ul></li>
+<li><code>ctrl-g</code>: 两个键中间有连字符，表示两个键同时按下；操作过程中的后悔药，中断当前操作的意思</li>
+<li><code>ctrl</code>: 这个键在 emacs 里用的比较多，同样的还有 <code>alt</code> ，为了偷懒，书写时：<code>ctrl</code> <code>= ~C~; ~alt~ =</code> <code>M</code>.</li>
+<li><code>spc f f</code>: 过程中，浏览文件路径时，不论当前路径有多深，键入两个 <code>/</code>, 会直接跳到文件系统的根目录，键入 <code>~</code>, 则会跳转到用户的 HOME 目录下
+<ul class="org-ul">
+<li><code>C-j</code>: 同向下方向键，同 <code>C-n</code></li>
+<li><code>C-k</code>: 同向上方向键，同 <code>C-p</code></li>
+<li><code>C-h</code>: 到上一级目录</li>
+<li><code>C-l</code>: 同回车</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org1d1c9fb" class="outline-4">
+<h4 id="org1d1c9fb"><span class="section-number-4">3.2.3</span> Buffer: 操作</h4>
+<div class="outline-text-4" id="text-3-2-3">
+<ul class="org-ul">
+<li><code>spc b</code>: 文件打开读入内存后就不叫文件了，叫 "buffer", 相关操作集中定义在此
+<ul class="org-ul">
+<li><code>spc b r</code>: 还是最近打开过的文件</li>
+</ul></li>
+<li>在 normal 模式下移动方式和 vi/vim 一致，
+<ul class="org-ul">
+<li>上下左右：<code>hjkl</code>,</li>
+<li>上下滚动：<code>C-e</code>, <code>C-y</code></li>
+<li>居中：<code>z z</code>,</li>
+<li>翻页： <code>C-f</code> <code>C-b</code></li>
+</ul></li>
+<li>insert 模式下：<code>spc</code> 不能作为 leader key 直接呼出引导菜单了，可以用 <code>M-m</code> 代替
+<ul class="org-ul">
+<li><code>Esc</code>: 返回 normal 模式</li>
+<li><code>C-l</code>: 光标所在行居中</li>
+<li><code>C-[</code>: 仍然返回 normal 模式</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org4a3bf7a" class="outline-4">
+<h4 id="org4a3bf7a"><span class="section-number-4">3.2.4</span> Project:</h4>
+<div class="outline-text-4" id="text-3-2-4">
+<p>
+依赖插件：projectile. 一切皆文本，所谓 Project, 都是人为定义，这里的说一下定义 Project 的方式。
+</p>
+<ul class="org-ul">
+<li>插件会自动识别版本管理系统，设置其根目录为 Project 的根目录，比如 git 的标志目录为 .git, SVN 的标志目录为最顶层的 .SVN
+<ul class="org-ul">
+<li>个人习惯，任何项目根目录，先"git init" 初始化为 git 仓库</li>
+</ul></li>
+<li>手动指定，在 Project 的根目录下生成文件 ".projectile", 插件识别文件后将其所在目录设置为 Project 的根目录
+<ul class="org-ul">
+<li>这个文件在生成 Project 的 TAG 文件时还有用，后面再说</li>
+</ul></li>
+
+<li><code>spc p</code>: Project 相关操作集中定义，前提是当前打开的文件已经在一个 Project 内部</li>
+<li><code>spc p f</code>: 打开 Project 内的文件
+<ul class="org-ul">
+<li>文件太多影响查找速度，如果是通过 git 识别 Project, 通过 .gitignore 文件内容忽略不需要查找的文件</li>
+</ul></li>
+<li><code>spc p b</code>: Project 内的 buffer 切换，限定在 Project 内部，再也不怕同时打开多个同名文件</li>
+<li><code>spc p r</code>: 打开 Project 内最近打开过的文件</li>
+<li><code>spc p G</code>: 根据语法，生成 Project 内所有源码文件的 TAGS 文件，放在 Project 的根目录下
+<ul class="org-ul">
+<li>需要外部工具 ctags 的支持，建议安装的版本是 <a href="https://github.com/universal-ctags/ctags">universal-ctags</a></li>
+<li><p>
+TAGS 文件太大，影响查找速度，可以在 .projectile 里增加以下内容将用不上的目录排除，如下：
+</p>
+<pre class="example">
+-/digital/to_FPGA
+-/digital/sch
+-/digital/netlist
+</pre></li>
+<li><code>C-]</code>: 在 TAGS 中搜索光标所在位置的 symbol, 如果只有一个则直接跳转到其定义处；如果多个，则给出候选列表</li>
+<li><code>C-o</code>: 反向跳转</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org4db317d" class="outline-4">
+<h4 id="org4db317d"><span class="section-number-4">3.2.5</span> Windows</h4>
+<div class="outline-text-4" id="text-3-2-5">
+<p>
+如下所示，最大那个框叫 frame, 一个 frame 可以分割为多个 window, 每个 wdinow 里可以打开一个独立的 buffer ( 也可以是相同的，按使用需求选用吧 ),
+</p>
+<div class="org-src-container">
+<pre class="src src-artist">+------------------------+--------------------------+
+|                        |                          |
+|                        |                          |
+|                        |                          |
+|     window 1           |   window 2               |
+|                        |                          |
+|                        |                          |
+|                        |                          |
++------mode line---------+--------mode line---------+
+|               minibuffer                          |
++---------------------------------------------------+
+
+</pre>
+</div>
+<ul class="org-ul">
+<li><code>spc w /</code> 左右分割 window</li>
+<li><code>spc w -</code> 上下分割 window</li>
+<li><code>spc w d</code> 关闭当前 window</li>
+<li><code>spc w Num</code> 跳转到对应编号的 window, 编号在 window 左下角，</li>
+<li><code>spc w w</code> 在 window 间循环跳转，只有两个 window 时习惯用这个，无脑切换</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgbfaafb6" class="outline-4">
+<h4 id="orgbfaafb6"><span class="section-number-4">3.2.6</span> Layouts</h4>
+<div class="outline-text-4" id="text-3-2-6">
+<p>
+本意是说多窗口布局吧，, 可以保存起来，多个 layout 可以比较方便的切换，而我个人习惯是将每个 Project 保存一个 layout, 方便不同 Project 间的切换，操作流程如下：
+</p>
+<ul class="org-ul">
+<li><code>spc l</code>:</li>
+<li><code>spc l ?</code>: 查看按键绑定提示，此步随意</li>
+<li><code>spc l 0</code>: 新建一个 layout, 按提示输入一个名字，按我的用法就是输入 Project 名字</li>
+<li><code>spc f f</code>: 打开 Project 的根目录</li>
+<li><code>spc l S</code>: 保存当前的 layout 到一个文件
+<ul class="org-ul">
+<li>选择前面输入的 Project 名字并回车确认</li>
+<li>选择 "[&gt;DONE&lt;]" 并回车</li>
+<li>选择保存 layout 文件的位置并输入文件名，我习惯放在 "~/.emacs.d/.cache/layouts" 目录下</li>
+</ul></li>
+<li><code>spc l L</code>: 打开保存好的 layout, 对于我来说是 Project</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orga8e1315" class="outline-4">
+<h4 id="orga8e1315"><span class="section-number-4">3.2.7</span> 编辑</h4>
+<div class="outline-text-4" id="text-3-2-7">
+<ul class="org-ul">
+<li><code>sp c x a</code>: align, 快捷键用于代码格式化，对齐</li>
+<li><code>spc j w C</code>: 在当前可视范围内，快速跳转到任何以字符 <code>C</code> 开始的 symbol 处，如果有多处，根据提示继续输入提示的按键序列</li>
+<li><code>spc j j C</code>: 同上，但不要求输入的 <code>C</code> 是 symbol 的开始字符</li>
+<li>多位置编辑替换，对搜索列出的候选项进行编辑
+<ul class="org-ul">
+<li><code>spc s p</code> 搜索当前 Project，或者 <code>spc s d</code>搜索当前目录</li>
+<li>列出候选项后 <code>C-c C-e</code>，会给出新的buffer，进入多处替换模式</li>
+<li>在该buffer中对候选项进行编辑</li>
+<li>编辑完成后，进入普通模式，按<code>,</code> ，根据提示
+<ul class="org-ul">
+<li>wgrep-abort-changes:放弃修改</li>
+<li>wgrep-finish-edit:完成修改
+<ul class="org-ul">
+<li>wgrep-save-all-buffers:将所有修改保存到文件</li>
+</ul></li>
+<li><code>q</code> 退出该模式</li>
+</ul></li>
+</ul></li>
+<li><p>
+diff
+</p>
+
+<p>
+参考 ediff-* 系列命令，很好用，该系列工具会出现至少包含一个名为 "<b>Ediff Control Pannel</b>" 的窗口，只有选中它时，才能使用其相关命令: <code>?</code> 查看帮助说明，再次 <code>?</code> 隐藏帮助说明, <code># #</code>:比较时忽略空白符，执行此操作后再进行一次 <code>!</code> , 就不会受空白符的影响了
+ediff-current-file: 对当前文件更改前后的内容进行比较
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">比较项目</td>
+<td class="org-left">说明</td>
+</tr>
+
+<tr>
+<td class="org-left">ediff-regions-linewise, ediff-regions-</td>
+<td class="org-left">询问两个缓冲区的名字，然后比较相应的区域。不过你只能在每一个缓冲区中选定一个区域，而不能比较一个文件缓冲区的两个区域。</td>
+</tr>
+
+<tr>
+<td class="org-left">ediff-buffers</td>
+<td class="org-left">询问两个缓冲区的名字，然后比较</td>
+</tr>
+
+<tr>
+<td class="org-left">ediff-files</td>
+<td class="org-left">询问两个文件的名字，加载之，然后比较</td>
+</tr>
+
+<tr>
+<td class="org-left">ediff-windows-linewise, ediff-windows-wordwise</td>
+<td class="org-left">让你选两个窗口，然后比较窗口的内容。 -linewise- 函数比 -wordwise- 函数要快，</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">但另一方面， -wordwise- 工作方式更好，尤其是小区域作业时。 -linewise- 一行一行地比较， -wordwise- 一个单词一个单词地比较</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">快捷键</th>
+<th scope="col" class="org-left">命令</th>
+<th scope="col" class="org-left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">q</td>
+<td class="org-left">ediff-quit</td>
+<td class="org-left">关闭 ediff control buffer， 并退出 ediff</td>
+</tr>
+
+<tr>
+<td class="org-left">Space 或 n</td>
+<td class="org-left">ediff-next-difference</td>
+<td class="org-left">下一个差异处</td>
+</tr>
+
+<tr>
+<td class="org-left">Del 或 p</td>
+<td class="org-left">ediff-previous-difference</td>
+<td class="org-left">上一个差异处</td>
+</tr>
+
+<tr>
+<td class="org-left">[n]j</td>
+<td class="org-left">ediff-jump-to-difference</td>
+<td class="org-left">有数字前缀 [n] 修饰，第n个差异处,n可为负数</td>
+</tr>
+
+<tr>
+<td class="org-left">v 或 C-v</td>
+<td class="org-left">ediff-scroll-vertically</td>
+<td class="org-left">所有缓冲区同步向下滚动</td>
+</tr>
+
+<tr>
+<td class="org-left">V 或 M-v</td>
+<td class="org-left">ediff-scroll-vertically</td>
+<td class="org-left">所有缓冲区同步向上滚动</td>
+</tr>
+
+<tr>
+<td class="org-left">&lt;</td>
+<td class="org-left">ediff-scroll-horizontally</td>
+<td class="org-left">所有缓冲区同步向左滚动</td>
+</tr>
+
+<tr>
+<td class="org-left">&gt;</td>
+<td class="org-left">ediff-scroll-horizontally</td>
+<td class="org-left">所有缓冲区同步向右滚动</td>
+</tr>
+
+<tr>
+<td class="org-left">(vertical bar)</td>
+<td class="org-left">ediff-toggle-split</td>
+<td class="org-left">切换缓冲区布局方式, 水平和竖直</td>
+</tr>
+
+<tr>
+<td class="org-left">m</td>
+<td class="org-left">ediff-toggle-wide-display</td>
+<td class="org-left">在正常 frame 大小和最大化之间切换</td>
+</tr>
+
+<tr>
+<td class="org-left">a</td>
+<td class="org-left">ediff-copy-A-to-B</td>
+<td class="org-left">把Buffer-A的内容复制到Buffer-B</td>
+</tr>
+
+<tr>
+<td class="org-left">b</td>
+<td class="org-left">ediff-copy-B-to-A</td>
+<td class="org-left">把Buffer-B的内容复制到Buffer-A</td>
+</tr>
+
+<tr>
+<td class="org-left">r a 或 r b</td>
+<td class="org-left">ediff-restore-diff</td>
+<td class="org-left">恢复 Buffer-A 或 Buffer-B 差异区域中的被修改的内容</td>
+</tr>
+
+<tr>
+<td class="org-left">A 或 B</td>
+<td class="org-left">ediff-toggle-read-only</td>
+<td class="org-left">切换 Buffer-A 或 Buffer-B 的只读状态</td>
+</tr>
+
+<tr>
+<td class="org-left">g a 或 g b</td>
+<td class="org-left">ediff-jump-to-difference-at-point</td>
+<td class="org-left">根据光标在缓冲区中的位置，设置一个离它们最近的差异区域为当前活动区域</td>
+</tr>
+
+<tr>
+<td class="org-left">C-l</td>
+<td class="org-left">ediff-recenter</td>
+<td class="org-left">恢复先前的所有缓冲区比较的高亮差异区。</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>!</code></td>
+<td class="org-left">ediff-update-diffs</td>
+<td class="org-left">重新比较并高亮差异区域</td>
+</tr>
+
+<tr>
+<td class="org-left">w a 或 w b</td>
+<td class="org-left">ediff-save-buffer</td>
+<td class="org-left">保存 Buffer-A 或 Buffer-B 到磁盘</td>
+</tr>
+
+<tr>
+<td class="org-left">E</td>
+<td class="org-left">ediff-documentation</td>
+<td class="org-left">打开 Ediff 文档</td>
+</tr>
+
+<tr>
+<td class="org-left">z</td>
+<td class="org-left">ediff-suspend</td>
+<td class="org-left">关闭 ediff control buffer, 只是挂起，可在以后恢复 ediff 状态</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+</div>
+</div>
+
+
+
+<div id="outline-container-org1877529" class="outline-4">
+<h4 id="org1877529"><span class="section-number-4">3.2.8</span> 帮助系统</h4>
+<div class="outline-text-4" id="text-3-2-8">
+<ul class="org-ul">
+<li><code>C-h m</code>: 列出当前打开的所有插件，以及对应的按键绑定</li>
+<li><code>C-Mouse_Right</code>: ctrl+鼠标右键呼出菜单</li>
+<li>spacemacs document: ~/.emacs.d/doc/DOCUMENTATION.org</li>
+<li><code>C-h f</code>: <code>spc h d f</code>, 查看 function 的说明文档</li>
+<li><code>C-h v</code>: <code>spc h d v</code>, 查看 variable 的说明文档</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9efaff2" class="outline-3">
+<h3 id="org9efaff2"><span class="section-number-3">3.3</span> 一些函数</h3>
+<div class="outline-text-3" id="text-3-3">
+<ul class="org-ul">
+<li>flush-lines: 删除匹配的行，空行的正则表达式为"^\s-?+$" （即使有空白符，也算空行）</li>
+<li>keep-lines: 如名字，功能与上一个命令相反</li>
+<li>sort-lines: 对选中的行进行排序</li>
+<li>使用linux的 sort 命令进行复杂排序，比如第几个字段作为关键词进行排序</li>
+<li><p>
+delete-duplicate-lines:
+</p>
+
+<p>
+先使用'sort-lines'对当前buffer进行排序，再使用本函数, 本函数一次只能从相邻的两行中删除一行，所以需要多次运行，或者使用以下awk命令（不需要事先排序）,该命令中的 $0 表示行内容完全重复时，进行删除操作，相应替换为$n，则表示当第n个字段相同时，进行删除操作。
+</p>
+<div class="org-src-container">
+<pre class="src src-awk">awk '<span style="color: #8c8c8c;">{</span>!a<span style="color: #93a8c6;">[</span>$0<span style="color: #93a8c6;">]{</span><span style="color: #e5786d;">print</span><span style="color: #93a8c6;">}</span><span style="color: #8c8c8c;">}</span>'
+</pre>
+</div></li>
+<li>ivy-push-view:将当前的窗口即对应的buffer信息保存起来，通过 ivy-switch-view可重新恢复该视图</li>
+<li>my-highlight-symbol-in-frame: 通过多个 window 打开多个不同的文件），高亮显示光标下的 symbol （在所有的文件中）</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org0f9c1a9" class="outline-3">
+<h3 id="org0f9c1a9"><span class="section-number-3">3.4</span> regexp 正则表达式</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+<a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Regexps.html#Regexps">regexp online doc</a>
+</p>
+
+<p>
+  语法见相关文档: 菜单 help-&gt; search documentation -&gt;，提示输入关键词，输入 "regexp"
+凡事提示regexp的地方，均可使用regexp,
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc3ff16b" class="outline-2">
+<h2 id="orgc3ff16b"><span class="section-number-2">4</span> 中文</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-org854729e" class="outline-3">
+<h3 id="org854729e"><span class="section-number-3">4.1</span> 字体</h3>
+<div class="outline-text-3" id="text-4-1">
+<ul class="org-ul">
+<li>默认的字体配置在 "~/.spacemacs.d/init.el" 中，见变量 "dotspacemacs-default-font"</li>
+<li>本配置中，为了达到 org-mode 中的表格对齐效果，使用了 <a href="https://github.com/tumashu/cnfonts">cnfonts</a> 插件，如果不需要，在文件 "~/.spacemacs.d/init.el" 中，注释掉变量 my-config-packages 内的 cnfonts 即可</li>
+<li>字体安装
+<ul class="org-ul">
+<li><p>
+下载字体文件到 "~/.fonts" 目录（仅对当前用户生效，对系统安装的话大概是 "/usr/share/fonts" 目录），并在该目录下执行以下命令：
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">mkfontscale
+mkfontdir
+fc-cache
+</pre>
+</div></li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgc38d9d9" class="outline-3">
+<h3 id="orgc38d9d9"><span class="section-number-3">4.2</span> 输入法</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+本配置中有两个输入方案可供使用：
+</p>
+<ul class="org-ul">
+<li><a href="https://github.com/tumashu/pyim">pyim</a>
+<ul class="org-ul">
+<li>本方案不需要其他工具配合使用</li>
+<li><p>
+<a href="file:///home/heyun/.spacemacs.d/layers/my-config/packages.el">配置</a>文件中找到以下的代码通过使用分号注释保留自己使用的输入法即可
+</p>
+<div class="org-src-container">
+<pre class="src src-lisp"><span style="color: #8c8c8c;">(</span>setq pyim-default-scheme 'wubi<span style="color: #8c8c8c;">)</span>
+<span style="color: #8c8c8c;">(</span>setq pyim-default-scheme 'quanpin<span style="color: #8c8c8c;">)</span>
+<span style="color: #8c8c8c;">(</span>setq pyim-default-scheme 'xiaohe-shuangpin<span style="color: #8c8c8c;">)</span>
+</pre>
+</div></li>
+</ul></li>
+<li><a href="https://github.com/DogLooksGood/emacs-rime.git">emacs-rime</a>
+<ul class="org-ul">
+<li>如文档所述，其需要外部输入工具 rime 的支持，其如何配置请自行查询</li>
+<li>在目前的配置中，会把 emacs-rime 的代码下载到 "~/.emacs.d/.cache/quelpa/build/rime" 目录下，且需要手动编译（编译时还有错，安提示修改）</li>
+<li><a href="file:///home/heyun/.spacemacs.d/layers/my-config/packages.el">配置</a>, 文件中需要设置 rime&#x2013;module-path 变量到编译好的 librime-emacs.so 文件</li>
+</ul></li>
+<li><p>
+在 emacs 中通过以下变量配置选择输入方案，在我的<a href="file:///home/heyun/.spacemacs.d/layers/my-config/packages.el">配置</a>中有两个地方设置了该变量，最后生效的是 emac-rime, 请根据需要选择注释其中一处
+</p>
+<div class="org-src-container">
+<pre class="src src-lisp"><span style="color: #8c8c8c;">(</span>setq default-input-method <span style="color: #95e454;">"pyim"</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org40279bb" class="outline-2">
+<h2 id="org40279bb"><span class="section-number-2">5</span> Verilog-mode</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+一般遇到的问题、需求，别人已经帮我们解决,见<a href="https://www.veripool.org/projects/verilog-mode/wiki/Faq">Faq</a>
+在 verilog 模式下通过 ctrl + 鼠标右键呼出菜单，有3个 verilog 相关的菜单可关注一下
+</p>
+</div>
+
+<div id="outline-container-org2458375" class="outline-3">
+<h3 id="org2458375"><span class="section-number-3">5.1</span> 配置</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+verilog相关插件有两个：
+</p>
+<ul class="org-ul">
+<li><a href="https:www.veripool.org">verilog-mode</a> : 虽然emacs本身已经集成了，但不一定是最新版本（我一般是官网下载后，直接覆盖emac自带的，反正emacs都是自己安装）,另外意外的从官网发现了verilator,verilog-perl，似乎都比较好玩儿</li>
+<li><a href="layers/my-config/local/my-verilog/my-verilog.el">my-verilog.el</a> : 这个文件的原始版本，是从网上抄过来的，现在似乎找不到出处，如有版权问题，麻烦提醒一下，谢谢！</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgd56053a" class="outline-3">
+<h3 id="orgd56053a"><span class="section-number-3">5.2</span> 常用的一些功能</h3>
+<div class="outline-text-3" id="text-5-2">
+<ul class="org-ul">
+<li>verilog-header: 原定义在verilog-mode.el中，我做了一定修改，放在my-verilog.el中，哪天跳槽了记得要改（前面已经说过了怎么查该函数对应的快捷键）</li>
+<li>代码补全：基于skeleton代码片断、框架补全,输入关键字，按照列表选择，可以不用方向键， <code>c-j</code> : down; <code>c-k</code> : up; <code>c-l</code> : 相当于回车
+本补全方式中，有时可能需要用户输入相应的信息，此时需要从minibuffer输入，此时不能使用关键字补全功能
+<ul class="org-ul">
+<li><a href="img/company-module.png">company-keyword-module</a></li>
+<li><a href="img/module-expand.png">keyword-expand-module</a></li>
+</ul></li>
+<li>yasnippet 代码片断补全,暂时没有加入到补全后端里，需要快捷键触发: <code>M-m i s</code> ,always as eg:
+<ul class="org-ul">
+<li><a href="img/yasnippet-always.png">yasnippet-always</a></li>
+<li><a href="img/yasnippet-always-2.png">yasnippet-always2</a> : 与skeleton不同，用户输入时不会使用minibuffer,同样可以使用关键字补全功能；使用tab跳转到下一个需要输入的位置</li>
+</ul></li>
+<li>my-verilog-create-tb: 功能如名字所示,其会新建一个buffer，保存 <code>c-x c-s</code> ,  <code>c-c c-a</code>  执行verilog-auto</li>
+<li><p>
+verilog-auto时找不到instance? Faq中已经提示过了如何解决，或者参考 【 <code>c-h v verilog-library-flags</code> 】
+</p>
+
+<p>
+麻烦的是每次遇到这问题都得在文件尾添加该语句。 我的解决方案是利用<a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Directory-Variables.html#Directory-Variables">49.2.5 Per-Directory Local Variables</a>, 假设使用以下目录结构：
+</p>
+<pre class="example">
+project-root
++---digital
+    +--rtl
+       +--sub-module-a
+       |  +--sub-module-a.v
+       +--subm-module-b
+          +--subm-module-b.v
+</pre>
+<p>
+命令 <code>my-project-dir-local-init</code> 会在project的根目录下生成一个.dir-locals.el的文件，内容如下，将 {protject-root}/digtal/rtl 路径之下的所有包含 .v 文件的路径都加入到 verilog-auto 的搜索路径 verilog-library-directories 中，路径下的 .v 文件均可被 verilog-auto 找到，可按需修改。
+</p>
+<div class="org-src-container">
+<pre class="src src-lisp"><span style="color: #8c8c8c;">(</span><span style="color: #93a8c6;">(</span>verilog-mode . <span style="color: #b0b1a3;">(</span>
+                  <span style="color: #97b098;">(</span>eval .
+                        <span style="color: #aebed8;">(</span>setq verilog-library-directories '<span style="color: #b0b0b3;">(</span><span style="color: #95e454;">"."</span><span style="color: #b0b0b3;">)</span><span style="color: #aebed8;">)</span>
+                        <span style="color: #97b098;">)</span>
+                  <span style="color: #97b098;">(</span>eval .
+                        <span style="color: #aebed8;">(</span>mapcar
+                         <span style="color: #b0b0b3;">(</span><span style="color: #8ac6f2; font-weight: bold;">lambda</span> <span style="color: #90a890;">(</span>file<span style="color: #90a890;">)</span>
+                           <span style="color: #90a890;">(</span>add-to-list 'verilog-library-directories <span style="color: #a2b6da;">(</span>file-name-directory file<span style="color: #a2b6da;">)</span><span style="color: #90a890;">)</span><span style="color: #b0b0b3;">)</span>
+                         <span style="color: #b0b0b3;">(</span>directory-files-recursively
+                          <span style="color: #90a890;">(</span>concat <span style="color: #a2b6da;">(</span>projectile-project-root<span style="color: #a2b6da;">)</span> <span style="color: #95e454;">"digital/rtl"</span><span style="color: #90a890;">)</span> <span style="color: #95e454;">"\.[s]?v$"</span><span style="color: #b0b0b3;">)</span>
+                         <span style="color: #aebed8;">)</span>
+                        <span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span>
+               <span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div></li>
+<li><p>
+my-verilog-align-indent-inst-signal: 初始化代码如以下格式，其中 my-verilog-min-spc-for-align 用于控制端口和信号名之间最小的空格数量，默认值为1, 如果要关闭其默认执行，参考其帮助文档
+</p>
+<div class="org-src-container">
+<pre class="src src-verilog"><span style="color: #8ac6f2; font-weight: bold;">module</span> <span style="color: #cae682;">top</span><span style="color: #8c8c8c;">(</span><span style="color: #99968b;">/*</span><span style="color: #99968b;">autoarg*/</span><span style="color: #8c8c8c;">)</span>;
+
+   sub1_x <span style="color: #cae682;">u_sub1</span>     <span style="color: #8c8c8c;">(</span><span style="color: #99968b;">/*</span><span style="color: #99968b;">autoinst*/</span><span style="color: #8c8c8c;">)</span>;
+   sub2_xxxxx <span style="color: #cae682;">u_sub2</span> <span style="color: #8c8c8c;">(</span><span style="color: #99968b;">/*</span><span style="color: #99968b;">autoinst*/</span><span style="color: #8c8c8c;">)</span>;
+   sub3<span style="color: #92a65e; font-weight: bold;"> #</span><span style="color: #8c8c8c; font-weight: bold;">(</span><span style="color: #99968b; font-weight: bold;">/*</span><span style="color: #99968b; font-weight: bold;">autoinstparam*/</span><span style="color: #8c8c8c; font-weight: bold;">)</span>
+   <span style="color: #cae682;">u_sub3</span><span style="color: #8c8c8c;">(</span><span style="color: #99968b;">/*</span><span style="color: #99968b;">autoinst*/</span><span style="color: #8c8c8c;">)</span>;
+
+<span style="color: #8ac6f2; font-weight: bold;">endmodule</span> <span style="color: #99968b;">// </span><span style="color: #99968b;">top</span>
+
+
+<span style="color: #8ac6f2; font-weight: bold;">module</span> <span style="color: #cae682;">sub1_x</span><span style="color: #8c8c8c;">(</span><span style="color: #99968b;">/*</span><span style="color: #99968b;">autoarg*/</span><span style="color: #8c8c8c;">)</span>;
+   <span style="color: #92a65e; font-weight: bold;">input</span> aa, bb, cc;
+   <span style="color: #92a65e; font-weight: bold;">output</span> dd;
+<span style="color: #8ac6f2; font-weight: bold;">endmodule</span> <span style="color: #99968b;">// </span><span style="color: #99968b;">sub1</span>
+
+<span style="color: #8ac6f2; font-weight: bold;">module</span> <span style="color: #cae682;">sub2_xxxxx</span><span style="color: #8c8c8c;">(</span><span style="color: #99968b;">/*</span><span style="color: #99968b;">autoarg*/</span><span style="color: #8c8c8c;">)</span>;
+   <span style="color: #92a65e; font-weight: bold;">input</span> aa, bb, cc;
+   <span style="color: #92a65e; font-weight: bold;">output</span> dd;
+<span style="color: #8ac6f2; font-weight: bold;">endmodule</span> <span style="color: #99968b;">// </span><span style="color: #99968b;">sub2</span>
+
+<span style="color: #8ac6f2; font-weight: bold;">module</span> sub3<span style="color: #92a65e; font-weight: bold;"> #</span><span style="color: #8c8c8c; font-weight: bold;">(</span><span style="color: #92a65e; font-weight: bold;">parameter</span>
+<span style="color: #92a65e; font-weight: bold;">              PAR_A = </span><span style="color: #e5786d; font-weight: bold;">10</span><span style="color: #92a65e; font-weight: bold;">,</span>
+<span style="color: #92a65e; font-weight: bold;">              PAR_BB = </span><span style="color: #e5786d; font-weight: bold;">20</span><span style="color: #92a65e; font-weight: bold;">,</span>
+<span style="color: #92a65e; font-weight: bold;">              PAR_ccc = </span><span style="color: #e5786d; font-weight: bold;">30</span>
+<span style="color: #92a65e; font-weight: bold;">              </span><span style="color: #8c8c8c; font-weight: bold;">)</span>
+  <span style="color: #8c8c8c;">(</span><span style="color: #99968b;">/*</span><span style="color: #99968b;">autoarg*/</span><span style="color: #8c8c8c;">)</span>;
+   <span style="color: #92a65e; font-weight: bold;">input</span> aaxx, bbxx, cc;
+   <span style="color: #92a65e; font-weight: bold;">output</span> dd;
+<span style="color: #8ac6f2; font-weight: bold;">endmodule</span> <span style="color: #99968b;">// </span><span style="color: #99968b;">sub3</span>
+
+<span style="color: #99968b;">// </span><span style="color: #99968b;">Local Variables&#58;</span>
+<span style="color: #99968b;">//  </span><span style="color: #99968b;">my-verilog-min-spc-for-align: 20</span>
+<span style="color: #99968b;">// </span><span style="color: #99968b;">End:</span>
+</pre>
+</div>
+<p>
+默认会在"verilog-auto"后自动执行本命令（如果模块实例已经例化完成&lt;&#x2013;各端口信号独占一行，也可手动执行"my-verilog-align-indent-inst-signal"）。结果如下，所有实例的左括号对齐，所有端口信号对齐，注意以下示例代码结束最后几行是在设置本地变量，将 my-veriog-auto-align 的值设置为 nil, 则不会在 verilog-auto 时自动执行对齐函数
+</p>
+<div class="org-src-container">
+<pre class="src src-verilog"><span class="linenr"> 1: </span><span style="color: #8ac6f2; font-weight: bold;">module</span> <span style="color: #cae682;">top</span><span style="color: #8c8c8c;">(</span><span style="color: #99968b;">/*</span><span style="color: #99968b;">autoarg*/</span><span style="color: #8c8c8c;">)</span>;
+<span class="linenr"> 2: </span>
+<span class="linenr"> 3: </span>   sub1_x <span style="color: #cae682;">u_sub1</span>     <span style="color: #8c8c8c;">(</span><span style="color: #99968b;">/*</span><span style="color: #99968b;">autoinst*/</span>
+<span class="linenr"> 4: </span>                      <span style="color: #99968b;">// </span><span style="color: #99968b;">Outputs</span>
+<span class="linenr"> 5: </span>                      .<span style="color: #cae682;">dd</span>      <span style="color: #93a8c6;">(</span>dd<span style="color: #93a8c6;">)</span>,
+<span class="linenr"> 6: </span>                      <span style="color: #99968b;">// </span><span style="color: #99968b;">Inputs</span>
+<span class="linenr"> 7: </span>                      .<span style="color: #cae682;">aa</span>      <span style="color: #93a8c6;">(</span>aa<span style="color: #93a8c6;">)</span>,
+<span class="linenr"> 8: </span>                      .<span style="color: #cae682;">bb</span>      <span style="color: #93a8c6;">(</span>bb<span style="color: #93a8c6;">)</span>,
+<span class="linenr"> 9: </span>                      .<span style="color: #cae682;">cc</span>      <span style="color: #93a8c6;">(</span>cc<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>;
+<span class="linenr">10: </span>   sub2_xxxxx <span style="color: #cae682;">u_sub2</span> <span style="color: #8c8c8c;">(</span><span style="color: #99968b;">/*</span><span style="color: #99968b;">autoinst*/</span>
+<span class="linenr">11: </span>                      <span style="color: #99968b;">// </span><span style="color: #99968b;">Outputs</span>
+<span class="linenr">12: </span>                      .<span style="color: #cae682;">dd</span>      <span style="color: #93a8c6;">(</span>dd<span style="color: #93a8c6;">)</span>,
+<span class="linenr">13: </span>                      <span style="color: #99968b;">// </span><span style="color: #99968b;">Inputs</span>
+<span class="linenr">14: </span>                      .<span style="color: #cae682;">aa</span>      <span style="color: #93a8c6;">(</span>aa<span style="color: #93a8c6;">)</span>,
+<span class="linenr">15: </span>                      .<span style="color: #cae682;">bb</span>      <span style="color: #93a8c6;">(</span>bb<span style="color: #93a8c6;">)</span>,
+<span class="linenr">16: </span>                      .<span style="color: #cae682;">cc</span>      <span style="color: #93a8c6;">(</span>cc<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>;
+<span class="linenr">17: </span>   sub3             #<span style="color: #8c8c8c;">(</span><span style="color: #99968b;">/*</span><span style="color: #99968b;">autoinstparam*/</span>
+<span class="linenr">18: </span>                      <span style="color: #99968b;">// </span><span style="color: #99968b;">Parameters</span>
+<span class="linenr">19: </span>                      .<span style="color: #cae682;">PAR_A</span>   <span style="color: #93a8c6;">(</span>PAR_A<span style="color: #93a8c6;">)</span>,
+<span class="linenr">20: </span>
+<span class="linenr">21: </span>                      .<span style="color: #cae682;">PAR_ccc</span> <span style="color: #93a8c6;">(</span>PAR_ccc<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span class="linenr">22: </span>   <span style="color: #cae682;">u_sub3</span>            <span style="color: #8c8c8c;">(</span><span style="color: #99968b;">/*</span><span style="color: #99968b;">autoinst*/</span>
+<span class="linenr">23: </span>                      <span style="color: #99968b;">// </span><span style="color: #99968b;">Outputs</span>
+<span class="linenr">24: </span>                      .<span style="color: #cae682;">dd</span>      <span style="color: #93a8c6;">(</span>dd<span style="color: #93a8c6;">)</span>,
+<span class="linenr">25: </span>                      <span style="color: #99968b;">// </span><span style="color: #99968b;">Inputs</span>
+<span class="linenr">26: </span>                      .<span style="color: #cae682;">aaxx</span>    <span style="color: #93a8c6;">(</span>aaxx<span style="color: #93a8c6;">)</span>,
+<span class="linenr">27: </span>                      .<span style="color: #cae682;">bbxx</span>    <span style="color: #93a8c6;">(</span>bbxx<span style="color: #93a8c6;">)</span>,
+<span class="linenr">28: </span>                      .<span style="color: #cae682;">cc</span>      <span style="color: #93a8c6;">(</span>cc<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>;
+<span class="linenr">29: </span>
+<span class="linenr">30: </span><span style="color: #8ac6f2; font-weight: bold;">endmodule</span> <span style="color: #99968b;">// </span><span style="color: #99968b;">top</span>
+<span class="linenr">31: </span>
+<span class="linenr">32: </span>
+<span class="linenr">33: </span><span style="color: #8ac6f2; font-weight: bold;">module</span> <span style="color: #cae682;">sub1_x</span><span style="color: #8c8c8c;">(</span><span style="color: #99968b;">/*</span><span style="color: #99968b;">autoarg*/</span>
+<span class="linenr">34: </span>              <span style="color: #99968b;">// </span><span style="color: #99968b;">Outputs</span>
+<span class="linenr">35: </span>              dd,
+<span class="linenr">36: </span>              <span style="color: #99968b;">// </span><span style="color: #99968b;">Inputs</span>
+<span class="linenr">37: </span>              aa, bb, cc
+<span class="linenr">38: </span>              <span style="color: #8c8c8c;">)</span>;
+<span class="linenr">39: </span>   <span style="color: #92a65e; font-weight: bold;">input</span> aa, bb, cc;
+<span class="linenr">40: </span>   <span style="color: #92a65e; font-weight: bold;">output</span> dd;
+<span class="linenr">41: </span><span style="color: #8ac6f2; font-weight: bold;">endmodule</span> <span style="color: #99968b;">// </span><span style="color: #99968b;">sub1</span>
+<span class="linenr">42: </span>
+<span class="linenr">43: </span><span style="color: #8ac6f2; font-weight: bold;">module</span> <span style="color: #cae682;">sub2_xxxxx</span><span style="color: #8c8c8c;">(</span><span style="color: #99968b;">/*</span><span style="color: #99968b;">autoarg*/</span>
+<span class="linenr">44: </span>                  <span style="color: #99968b;">// </span><span style="color: #99968b;">Outputs</span>
+<span class="linenr">45: </span>                  dd,
+<span class="linenr">46: </span>                  <span style="color: #99968b;">// </span><span style="color: #99968b;">Inputs</span>
+<span class="linenr">47: </span>                  aa, bb, cc
+<span class="linenr">48: </span>                  <span style="color: #8c8c8c;">)</span>;
+<span class="linenr">49: </span>   <span style="color: #92a65e; font-weight: bold;">input</span> aa, bb, cc;
+<span class="linenr">50: </span>   <span style="color: #92a65e; font-weight: bold;">output</span> dd;
+<span class="linenr">51: </span><span style="color: #8ac6f2; font-weight: bold;">endmodule</span> <span style="color: #99968b;">// </span><span style="color: #99968b;">sub2</span>
+<span class="linenr">52: </span>
+<span class="linenr">53: </span><span style="color: #8ac6f2; font-weight: bold;">module</span> sub3<span style="color: #92a65e; font-weight: bold;"> #</span><span style="color: #8c8c8c; font-weight: bold;">(</span><span style="color: #92a65e; font-weight: bold;">parameter</span>
+<span class="linenr">54: </span><span style="color: #92a65e; font-weight: bold;">              PAR_A = </span><span style="color: #e5786d; font-weight: bold;">10</span><span style="color: #92a65e; font-weight: bold;">,</span>
+<span class="linenr">55: </span><span style="color: #92a65e; font-weight: bold;">              PAR_BB = </span><span style="color: #e5786d; font-weight: bold;">20</span><span style="color: #92a65e; font-weight: bold;">,</span>
+<span class="linenr">56: </span><span style="color: #92a65e; font-weight: bold;">              PAR_ccc = </span><span style="color: #e5786d; font-weight: bold;">30</span>
+<span class="linenr">57: </span><span style="color: #92a65e; font-weight: bold;">              </span><span style="color: #8c8c8c; font-weight: bold;">)</span>
+<span class="linenr">58: </span>   <span style="color: #8c8c8c;">(</span><span style="color: #99968b;">/*</span><span style="color: #99968b;">autoarg*/</span>
+<span class="linenr">59: </span>    <span style="color: #99968b;">// </span><span style="color: #99968b;">Outputs</span>
+<span class="linenr">60: </span>    dd,
+<span class="linenr">61: </span>    <span style="color: #99968b;">// </span><span style="color: #99968b;">Inputs</span>
+<span class="linenr">62: </span>    aaxx, bbxx, cc
+<span class="linenr">63: </span>    <span style="color: #8c8c8c;">)</span>;
+<span class="linenr">64: </span>   <span style="color: #92a65e; font-weight: bold;">input</span> aaxx, bbxx, cc;
+<span class="linenr">65: </span>   <span style="color: #92a65e; font-weight: bold;">output</span> dd;
+<span class="linenr">66: </span><span style="color: #8ac6f2; font-weight: bold;">endmodule</span> <span style="color: #99968b;">// </span><span style="color: #99968b;">sub3</span>
+<span class="linenr">67: </span>
+<span class="linenr">68: </span><span style="color: #99968b;">// </span><span style="color: #99968b;">Local Variables&#58;</span>
+<span class="linenr">69: </span><span style="color: #99968b;">//  </span><span style="color: #99968b;">my-verilog-min-spc-for-align:1</span>
+<span class="linenr">70: </span><span style="color: #99968b;">//  </span><span style="color: #99968b;">my-verilog-auto-align:t</span>
+<span class="linenr">71: </span><span style="color: #99968b;">// </span><span style="color: #99968b;">End:</span>
+</pre>
+</div></li>
+<li><p>
+verilog-insert-indices：从“0”开始在当前列插入编号；如下代码，光标移动到第一行代码的“a”后面执行本命令，按提示输入编号的最大值
+</p>
+<div class="org-src-container">
+<pre class="src src-verilog">a| = b                          a<span style="color: #8c8c8c;">[</span>  <span style="color: #e5786d;">0</span><span style="color: #8c8c8c;">]</span> = b
+a = b                           a<span style="color: #8c8c8c;">[</span>  <span style="color: #e5786d;">1</span><span style="color: #8c8c8c;">]</span> = b
+a = b                           a<span style="color: #8c8c8c;">[</span>  <span style="color: #e5786d;">2</span><span style="color: #8c8c8c;">]</span> = b
+a = b                           a<span style="color: #8c8c8c;">[</span>  <span style="color: #e5786d;">3</span><span style="color: #8c8c8c;">]</span> = b
+a = b   ==&gt; insert-indices ==&gt;  a<span style="color: #8c8c8c;">[</span>  <span style="color: #e5786d;">4</span><span style="color: #8c8c8c;">]</span> = b
+a = b                           a<span style="color: #8c8c8c;">[</span>  <span style="color: #e5786d;">5</span><span style="color: #8c8c8c;">]</span> = b
+a = b                           a<span style="color: #8c8c8c;">[</span>  <span style="color: #e5786d;">6</span><span style="color: #8c8c8c;">]</span> = b
+a = b                           a<span style="color: #8c8c8c;">[</span>  <span style="color: #e5786d;">7</span><span style="color: #8c8c8c;">]</span> = b
+a = b                           a<span style="color: #8c8c8c;">[</span>  <span style="color: #e5786d;">8</span><span style="color: #8c8c8c;">]</span> = b
+</pre>
+</div></li>
+<li><p>
+verilog-generate-numbers：类似verilog-insert-indices
+</p>
+<pre class="example">
+buf buf|                            buf buf000
+buf buf                             buf buf001
+buf buf                             buf buf002
+buf buf                             buf buf003
+buf buf   ==&gt; generate-numbers ==&gt;  buf buf004
+buf buf                             buf buf005
+buf buf                             buf buf006
+buf buf                             buf buf007
+buf buf                             buf buf008"
+</pre></li>
+<li>嵌入其他格式代码
+<ul class="org-ul">
+<li><p>
+本配置可识别以下格式的多行注释，其内部会被识别为 org-mode, 从而使用 org-mode 的 source code 编辑功能
+</p>
+<div class="org-src-container">
+<pre class="src src-verilog"><span style="color: #99968b;">/*</span><span style="color: #99968b;">-- org</span>
+
+<span style="color: #99968b;"> !org --*/</span>
+</pre>
+</div>
+
+<ul class="org-ul">
+<li><p>
+plantuml 代码
+</p>
+
+<p>
+在以下代码中嵌入了 plantuml 代码，光标在代码区域内时，通过 <code>C-c C-c</code> 会自动生成名为 fsm.png 的状态机转换图
+</p>
+<div class="org-src-container">
+<pre class="src src-verilog"><span style="color: #8ac6f2; font-weight: bold;">module</span> src_test;
+
+   <span style="color: #99968b;">/*</span><span style="color: #99968b;">-- org</span>
+<span style="color: #99968b;">   #+begin_src plantuml :file fsm.png</span>
+<span style="color: #99968b;">     </span><span style="color: #99968b; font-weight: bold;">@</span><span style="color: #99968b;">startuml</span>
+<span style="color: #99968b;">        title Main FSM of dat_pop</span>
+<span style="color: #99968b;">        state idle: default state</span>
+<span style="color: #99968b;">        wait:       a transition state</span>
+<span style="color: #99968b;">        pop:        data output</span>
+<span style="color: #99968b;">        idle --&gt; idle :    reset</span>
+<span style="color: #99968b;">        idle -down-&gt; wait: posedge vsync</span>
+<span style="color: #99968b;">        wait -&gt; pop:       almose full</span>
+<span style="color: #99968b;">        pop  -up-&gt;idle:    error, need to reset</span>
+<span style="color: #99968b;">     </span><span style="color: #99968b; font-weight: bold;">@</span><span style="color: #99968b;">enduml</span>
+<span style="color: #99968b;">     #+end_src</span>
+<span style="color: #99968b;">    !org --*/</span>
+
+<span style="color: #8ac6f2; font-weight: bold;">endmodule</span>
+</pre>
+</div></li>
+</ul></li>
+<li><p>
+字符图
+</p>
+
+<p>
+利用 emacs 自带的 artist-mode, 在一个 buffer 内画好后再复制到代码中；或者在代码中插入以下格式代码，光标移动到 artist 后，按 <code>C-c ‘</code> ，会打开一个以 artist-mode 为 major mode 的 buffer, 画好图后 <code>, c</code> 确认并退出，或者 <code>, k</code> 进行撤销
+</p>
+<div class="org-src-container">
+<pre class="src src-verilog"><span style="color: #99968b;">/*</span><span style="color: #99968b;">-- org</span>
+<span style="color: #99968b;"> #+begin_src artist</span>
+<span style="color: #99968b;"> #+end_src</span>
+<span style="color: #99968b;"> !org --*/</span>
+</pre>
+</div></li>
+<li><a href="https://plantuml.com/">plantuml</a> 需要 jre 支持</li>
+<li><a href="http://ditaa.sourceforge.net/">ditaa</a> 需要 jre 支持</li>
+<li><a href="http://graphviz.org/">graphviz-dot</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orga731529" class="outline-3">
+<h3 id="orga731529"><span class="section-number-3">5.3</span> verilog-auto</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+当执行verilog-auto时，可能出现提示 "end xxxxx properties"信息，但verilog-auto并没有执行完成，使用emacs的batch mode解决
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">emacs --batch file.v -f verilog-batch-auto
+</pre>
+</div>
+<p>
+另，在我的配置中改写了verilog-mode中的一些函数，执行以上命令可能会出错，请使用以下命令：
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">emacs --batch file.v -l path/to/projectile.el -f verilog-batch-auto     <span style="color: #99968b;">#</span><span style="color: #99968b;">&#22312;spacemacs&#20013;, projectile.el&#20301;&#32622; ~/.emacs.d/elpa&#36335;&#24452;&#19979;&#65292;&#35831;&#33258;&#26597;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8e3e0aa" class="outline-3">
+<h3 id="org8e3e0aa"><span class="section-number-3">5.4</span> AUTOOUTPUT</h3>
+<div class="outline-text-3" id="text-5-4">
+<p>
+使用以下变量可将不希望出现再端口列表中的信号排除
+</p>
+<div class="org-src-container">
+<pre class="src src-verilog"><span style="color: #99968b;">//</span>
+<span style="color: #99968b;">// </span><span style="color: #99968b;">Local Variables&#58;</span>
+<span style="color: #99968b;">// </span><span style="color: #99968b;">verilog-auto-output-ignore-regexp:"\\(RSTN_EXT\\)"</span>
+<span style="color: #99968b;">// </span><span style="color: #99968b;">verilog-auto-input-ignore-regexp:"\\(CREG_SPD_COMB_EN\\)"</span>
+<span style="color: #99968b;">// </span><span style="color: #99968b;">End:</span>
+<span style="color: #99968b;">//</span>
+</pre>
+</div>
+<p>
+如果一个信号通过 autoinst 已经自动连接完成，需要强制加入到端口列表中，可以通过在适当的位置焦加入 output/input 关键字解决。
+另一种情景是一个信号 A 如果已经通过 autooutput 呈现再端口列表中，端口列表的实顺序已经固定下来。此时如果将信号 A 接入到其他模块B中。信号 A 将不会自动出现再端口中，通过上面的方法的话可能改变端口顺序。此时可在例化模块 B 时，控制信号 A 的位置实现，如下代码所示，信号 A 前面没有类似 Inputs/Outputs 的关键字
+</p>
+<div class="org-src-container">
+<pre class="src src-verilog">sub_B <span style="color: #cae682;">u_B</span> <span style="color: #8c8c8c;">(</span>
+           .<span style="color: #cae682;">A</span> <span style="color: #93a8c6;">(</span>A<span style="color: #93a8c6;">)</span>,
+           <span style="color: #99968b;">// </span><span style="color: #99968b;">Inputs</span>
+           .<span style="color: #cae682;">CC</span> <span style="color: #93a8c6;">(</span>CC<span style="color: #93a8c6;">)</span>,
+           <span style="color: #99968b;">/*</span><span style="color: #99968b;">AUTOINST*/</span><span style="color: #8c8c8c;">)</span>;
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgea841eb" class="outline-3">
+<h3 id="orgea841eb"><span class="section-number-3">5.5</span> flycheck</h3>
+<div class="outline-text-3" id="text-5-5">
+<ul class="org-ul">
+<li>默认打开此功能，调用EDA工具对代码进行实时编译，简单低级错误可以立即提示，马上改掉。</li>
+<li><p>
+<code>spc e v</code>: 大概得到如下信息，因为在我自己电脑上目前只安装了<a href="img/flycheck2.png">verilator</a>, 如果有多个EDA工具可用的话，可使用 <code>spc e s</code> 进行选择
+</p>
+<pre class="example">
+ Syntax checkers for buffer tb.sv in verilog-mode:
+
+verilog-irun (disabled)
+  - may enable: Automatically disabled!
+  - executable: Not found
+
+verilog-iverilog (disabled)
+  - may enable: Automatically disabled!
+  - executable: Not found
+
+verilog-leda (disabled)
+  - may enable: Automatically disabled!
+  - executable: Not found
+
+verilog-verilator
+  - may enable: yes
+  - executable: Found at /usr/local/bin/verilator_bin
+</pre></li>
+<li><code>spc t s</code> ：语法检查器开关</li>
+<li>自定义：参考 flycheck-define-checker 帮助文档，verilog-irun的定义在 "~/.spacemacs.d/layers/my-config/packages.el"</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org587d7d2" class="outline-3">
+<h3 id="org587d7d2"><span class="section-number-3">5.6</span> 跳转</h3>
+<div class="outline-text-3" id="text-5-6">
+<ul class="org-ul">
+<li>通过 Project 中介绍 ctags，可跳转到 module/task/function/class 等的的定义处</li>
+<li>imenu: Buffer 内部
+<code>M-m s j</code> 或者 <code>SPC s j</code> 提示如：</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="./images/verilog-tag.png" alt="verilog-tag.png" />
+</p>
+</div>
+
+<p>
+通过 imenu 插件，其会搜索文件内的 module/inst/task/function 位置; 同时配置里改写了verilog-mode默认产生imenu的方式，verilog代码中加如类似 "//being: tagName" 的代码，将tagNmae加入到imenu中实现快速跳转到该tag，
+</p>
+
+<div class="org-src-container">
+<pre class="src src-verilog"><span style="color: #8ac6f2; font-weight: bold;">module</span> sub3<span style="color: #92a65e; font-weight: bold;"> #</span><span style="color: #8c8c8c; font-weight: bold;">(</span><span style="color: #92a65e; font-weight: bold;">parameter</span>
+<span style="color: #92a65e; font-weight: bold;">              PAR_A = </span><span style="color: #e5786d; font-weight: bold;">10</span><span style="color: #92a65e; font-weight: bold;">,</span>
+<span style="color: #92a65e; font-weight: bold;">              PAR_BBBBBB = </span><span style="color: #e5786d; font-weight: bold;">20</span><span style="color: #92a65e; font-weight: bold;">,</span>
+<span style="color: #92a65e; font-weight: bold;">              PAR_ccc = </span><span style="color: #e5786d; font-weight: bold;">30</span>
+<span style="color: #92a65e; font-weight: bold;">              </span><span style="color: #8c8c8c; font-weight: bold;">)</span>
+   <span style="color: #8c8c8c;">(</span><span style="color: #99968b;">/*</span><span style="color: #99968b;">autoarg*/</span>
+    <span style="color: #99968b;">// </span><span style="color: #99968b;">Outputs</span>
+    dd,
+    <span style="color: #99968b;">// </span><span style="color: #99968b;">Inputs</span>
+    aaxx, bbxx, cc
+    <span style="color: #8c8c8c;">)</span>;
+   <span style="color: #92a65e; font-weight: bold;">input</span> aaxx, bbxx, cc;
+   <span style="color: #92a65e; font-weight: bold;">output</span> dd;
+
+   <span style="color: #92a65e; font-weight: bold;">localparam</span> <span style="color: #99968b;">// </span><span style="color: #99968b;">begin:localparam</span>
+     par_af = <span style="color: #e5786d;">10</span>,
+     par_ad = <span style="color: #e5786d;">20</span>;
+
+   <span style="color: #8ac6f2; font-weight: bold;">always</span> <span style="color: #92a65e; font-weight: bold;">@</span> <span style="color: #8c8c8c;">(</span> <span style="color: #99968b;">/*</span><span style="color: #99968b;">AUTOSENSE*/</span> <span style="color: #8c8c8c;">)</span> <span style="color: #92a65e; font-weight: bold;">begin</span>
+      <span style="color: #8ac6f2; font-weight: bold;">if</span> <span style="color: #8c8c8c;">(</span>xx<span style="color: #8c8c8c;">)</span> <span style="color: #92a65e; font-weight: bold;">begin</span>:reset
+      <span style="color: #92a65e; font-weight: bold;">end</span>
+      <span style="color: #8ac6f2; font-weight: bold;">else</span> <span style="color: #92a65e; font-weight: bold;">begin</span>: proce
+
+      <span style="color: #92a65e; font-weight: bold;">end</span>
+
+   <span style="color: #92a65e; font-weight: bold;">end</span>
+
+   <span style="color: #8ac6f2; font-weight: bold;">task</span> func_a;
+
+      <span style="color: #92a65e; font-weight: bold;">begin</span>
+
+      <span style="color: #92a65e; font-weight: bold;">end</span>
+   <span style="color: #8ac6f2; font-weight: bold;">endtask</span> <span style="color: #99968b;">// </span><span style="color: #99968b;">func_a</span>
+
+   <span style="color: #8ac6f2; font-weight: bold;">function</span> <span style="color: #e5786d;">func_a</span>;
+
+      <span style="color: #92a65e; font-weight: bold;">begin</span>
+
+      <span style="color: #92a65e; font-weight: bold;">end</span>
+   <span style="color: #8ac6f2; font-weight: bold;">endfunction</span> <span style="color: #99968b;">// </span><span style="color: #99968b;">func_a</span>
+
+<span style="color: #8ac6f2; font-weight: bold;">endmodule</span> <span style="color: #99968b;">// </span><span style="color: #99968b;">sub3</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org8382d7e" class="outline-3">
+<h3 id="org8382d7e"><span class="section-number-3">5.7</span> 代码折叠</h3>
+<div class="outline-text-3" id="text-5-7">
+<p>
+eamcs里代码太长的时候，可以使用下面的函数对begin-end代码进行折叠
+</p>
+<ul class="org-ul">
+<li>hs-hide-block，折叠前，光标要在begin的下一行</li>
+<li>hs-show-block, 展开光标所有行被折叠的代码</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org231ac38" class="outline-2">
+<h2 id="org231ac38"><span class="section-number-2">6</span> Org-mode</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+<a href="https://orgmode.org">Document</a>
+</p>
+
+<p>
+<a href="http://doc.norang.ca/org-mode.html">Orange Your Life In Plain Text!</a>
+</p>
+
+<ul class="org-ul">
+<li>在任何 buffer 中使用插入 org 表格，使用 orgtbl-mode</li>
+<li>org-babel，可以让许多不同语言的代码块一起工作
+<ul class="org-ul">
+<li><p>
+配置
+</p>
+<div class="org-src-container">
+<pre class="src src-lisp"><span style="color: #8c8c8c;">(</span>org-babel-do-load-languages
+ 'org-babel-load-languages
+ '<span style="color: #93a8c6;">(</span><span style="color: #b0b1a3;">(</span>emacs-lisp . t<span style="color: #b0b1a3;">)</span>
+   <span style="color: #b0b1a3;">(</span>ruby . t<span style="color: #b0b1a3;">)</span>
+   <span style="color: #b0b1a3;">(</span>ditaa . t<span style="color: #b0b1a3;">)</span>
+   <span style="color: #b0b1a3;">(</span>python . t<span style="color: #b0b1a3;">)</span>
+   <span style="color: #b0b1a3;">(</span>sh . t<span style="color: #b0b1a3;">)</span>
+   <span style="color: #b0b1a3;">(</span>latex . t<span style="color: #b0b1a3;">)</span>
+   <span style="color: #b0b1a3;">(</span>plantuml . t<span style="color: #b0b1a3;">)</span>
+   <span style="color: #b0b1a3;">(</span>dot . t<span style="color: #b0b1a3;">)</span>
+   <span style="color: #b0b1a3;">(</span>R . t<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div></li>
+<li><p>
+示例
+</p>
+<div class="org-src-container">
+<pre class="src src-verilog"><span style="color: #8ac6f2; font-weight: bold;">module</span> test;
+   <span style="color: #92a65e; font-weight: bold;">input</span> a;
+   <span style="color: #92a65e; font-weight: bold;">output</span> b;
+
+<span style="color: #8ac6f2; font-weight: bold;">endmodule</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-dot"><span style="color: #8ac6f2; font-weight: bold;">digraph</span> <span style="color: #cae682;">G</span> <span style="color: #8c8c8c;">{</span>
+  <span style="color: #cae682;">size=</span><span style="color: #95e454;">"8,6"</span>
+  <span style="color: #cae682;">ratio=</span>expand
+  <span style="color: #8ac6f2; font-weight: bold;">edge</span> <span style="color: #93a8c6;">[</span><span style="color: #cae682;">dir=</span><span style="color: #e5786d;">both</span><span style="color: #93a8c6;">]</span>
+  plcnet <span style="color: #93a8c6;">[</span><span style="color: #cae682;">shape=</span><span style="color: #e5786d;">box</span>, <span style="color: #cae682;">label=</span><span style="color: #95e454;">"PLC Network"</span><span style="color: #93a8c6;">]</span>
+  <span style="color: #8ac6f2; font-weight: bold;">subgraph</span> <span style="color: #cae682;">cluster_wrapline</span> <span style="color: #93a8c6;">{</span>
+    <span style="color: #cae682;">label=</span><span style="color: #95e454;">"Wrapline Control System"</span>
+    <span style="color: #cae682;">color=</span><span style="color: #95e454;">purple</span>
+    <span style="color: #8ac6f2; font-weight: bold;">subgraph</span> <span style="color: #b0b1a3;">{</span>
+      <span style="color: #cae682;">rank=</span><span style="color: #e5786d;">same</span>
+      exec
+      sharedmem <span style="color: #97b098;">[</span><span style="color: #cae682;">style=</span><span style="color: #e5786d;">filled</span>, <span style="color: #cae682;">fillcolor=</span><span style="color: #95e454;">lightgrey</span>, <span style="color: #cae682;">shape=</span><span style="color: #e5786d;">box</span><span style="color: #97b098;">]</span>
+    <span style="color: #b0b1a3;">}</span>
+    <span style="color: #8ac6f2; font-weight: bold;">edge</span><span style="color: #b0b1a3;">[</span><span style="color: #cae682;">style=</span><span style="color: #e5786d;">dotted</span>, <span style="color: #cae682;">dir=</span><span style="color: #e5786d;">none</span><span style="color: #b0b1a3;">]</span>
+    exec -&gt; opserver
+    exec -&gt; db
+    plc -&gt; exec
+    <span style="color: #8ac6f2; font-weight: bold;">edge</span> <span style="color: #b0b1a3;">[</span><span style="color: #cae682;">style=</span>line, <span style="color: #cae682;">dir=</span><span style="color: #e5786d;">both</span><span style="color: #b0b1a3;">]</span>
+    exec -&gt; sharedmem
+    sharedmem -&gt; db
+    plc -&gt; sharedmem
+    sharedmem -&gt; opserver
+  <span style="color: #93a8c6;">}</span>
+  plcnet -&gt; plc <span style="color: #93a8c6;">[</span><span style="color: #cae682;">constraint=</span><span style="color: #e5786d;">false</span><span style="color: #93a8c6;">]</span>
+  millwide <span style="color: #93a8c6;">[</span><span style="color: #cae682;">shape=</span><span style="color: #e5786d;">box</span>, <span style="color: #cae682;">label=</span><span style="color: #95e454;">"Millwide System"</span><span style="color: #93a8c6;">]</span>
+  db -&gt; millwide
+
+  <span style="color: #8ac6f2; font-weight: bold;">subgraph</span> <span style="color: #cae682;">cluster_opclients</span> <span style="color: #93a8c6;">{</span>
+    <span style="color: #cae682;">color=</span><span style="color: #95e454;">blue</span>
+    <span style="color: #cae682;">label=</span><span style="color: #95e454;">"Operator Clients"</span>
+    <span style="color: #cae682;">rankdir=</span><span style="color: #e5786d;">LR</span>
+    <span style="color: #cae682;">labelloc=</span>b
+    <span style="color: #8ac6f2; font-weight: bold;">node</span><span style="color: #b0b1a3;">[</span><span style="color: #cae682;">label=</span>client<span style="color: #b0b1a3;">]</span>
+    opserver -&gt; client1
+    opserver -&gt; client2
+    opserver -&gt; client3
+  <span style="color: #93a8c6;">}</span>
+<span style="color: #8c8c8c;">}</span>
+</pre>
+</div></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: DESKTOP-FF9JGDI</p>
+<p class="date">Created: 2020-08-17 一 16:17</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
