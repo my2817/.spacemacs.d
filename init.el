@@ -617,8 +617,29 @@ Put your configuration code here, except for variables that  should be set befor
           (Man-completion-table . "^")
           (woman . "^"))
         )
+  (delete "dired-mode" golden-ratio-exclude-modes)
   (spacemacs/set-leader-keys "ss" 'spacemacs/swiper-region-or-symbol)
   (spacemacs/set-leader-keys "sS" 'swiper)
+
+  (set-face-attribute
+   'default nil
+   :font (font-spec :name "-APPL-Monaco-normal-normal-normal-*-*-*-*-*-*-0-iso10646-1"
+                    :weight 'normal
+                    :slant 'normal
+                    :size 11.5))
+  (dolist (charset '(kana han symbol cjk-misc bopomofo))
+    (set-fontset-font
+     (frame-parameter nil 'font)
+     charset
+     (font-spec :name "-MS  -微软雅黑-bold-normal-normal-*-*-*-*-*-*-0-iso10646-1"
+                :weight 'normal
+                :slant 'normal
+                :size 13.5)))
+
+  (setq ediff-whitespace " \n\t\f\r\240,")
+  (make-variable-buffer-local 'ediff-whitespace)
+
+
 
   )
 
