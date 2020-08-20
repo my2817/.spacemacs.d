@@ -19,15 +19,17 @@
 - [[#中文][中文]]
   - [[#字体][字体]]
   - [[#输入法][输入法]]
-- [[#verilog-mode][Verilog-mode]]
-  - [[#配置][配置]]
-  - [[#常用的一些功能][常用的一些功能]]
-  - [[#verilog-auto][verilog-auto]]
-  - [[#autooutput][AUTOOUTPUT]]
-  - [[#flycheck][flycheck]]
-  - [[#跳转][跳转]]
-  - [[#代码折叠][代码折叠]]
-- [[#org-mode][Org-mode]]
+- [[#awesome-modes][Awesome Modes]]
+  - [[#verilog-mgde][Verilog-mgde]]
+    - [[#配置][配置]]
+    - [[#verilog-auto][verilog-auto]]
+    - [[#常用的一些功能][常用的一些功能]]
+    - [[#autooutput][AUTOOUTPUT]]
+    - [[#跳转][跳转]]
+    - [[#flycheck][flycheck]]
+    - [[#代码折叠][代码折叠]]
+  - [[#org-mode][Org-mode]]
+  - [[#awesome-pair][awesome-pair]]
 
 * 系统环境
   tips: 以下系统环境安装过程中，如果下载包比较慢，可以试试搜索一下其对应的国内源，说不一定可以加速
@@ -248,7 +250,7 @@
 
      先使用'sort-lines'对当前buffer进行排序，再使用本函数, 本函数一次只能从相邻的两行中删除一行，所以需要多次运行，或者使用以下awk命令（不需要事先排序）。原理为将要匹配的内容作为数组下标，如果该下标对应的值为 0 则打印，否则不打印。该命令中的 $0 表示行内容完全重复时，进行删除操作，相应替换为$n，则表示当第n个字段相同时，进行删除操作。
      #+BEGIN_SRC awk
-       awk '!a[$0]++{{print $0}}'
+       awk '!a[$0]++{print $0}'
      #+END_SRC
    + ivy-push-view:将当前的窗口即对应的buffer信息保存起来，通过 ivy-switch-view可重新恢复该视图
    + my-highlight-symbol-in-frame: 通过多个 window 打开多个不同的文件），高亮显示光标下的 symbol （在所有的文件中）
@@ -289,16 +291,26 @@
      #+begin_src lisp
        (setq default-input-method "pyim")
      #+end_src
-* Verilog-mode
-  一般遇到的问题、需求，别人已经帮我们解决,见[[https://www.veripool.org/projects/verilog-mode/wiki/Faq][Faq]]
-  在 verilog 模式下通过 ctrl + 鼠标右键呼出菜单，有3个 verilog 相关的菜单可关注一下
+* Awesome Modes
+** Verilog-mgde
+   一般遇到的问题、需求，别人已经帮我们解决,见[[https://www.veripool.org/projects/verilog-mode/wiki/Faq][Faq]];在 verilog 模式下通过 ctrl + 鼠标右键呼出菜单，有3个 verilog 相关的菜单可关注一下
+*** 配置
+    verilog相关插件有两个：
+    + [[https:www.veripool.org][verilog-mode]] : 虽然emacs本身已经集成了，但不一定是最新版本（我一般是官网下载后，直接覆盖emac自带的，反正emacs都是自己安装）,另外意外的从官网发现了verilator,verilog-perl，似乎都比较好玩儿
+    + [[file:layers/my-config/local/my-verilog/my-verilog.el][my-verilog.el]] : 这个文件的原始版本，是从网上抄过来的，现在似乎找不到出处，如有版权问题，麻烦提醒一下，谢谢！
 
-** 配置
-   verilog相关插件有两个：
-   + [[https:www.veripool.org][verilog-mode]] : 虽然emacs本身已经集成了，但不一定是最新版本（我一般是官网下载后，直接覆盖emac自带的，反正emacs都是自己安装）,另外意外的从官网发现了verilator,verilog-perl，似乎都比较好玩儿
-   + [[file:layers/my-config/local/my-verilog/my-verilog.el][my-verilog.el]] : 这个文件的原始版本，是从网上抄过来的，现在似乎找不到出处，如有版权问题，麻烦提醒一下，谢谢！
+*** verilog-auto
 
-** 常用的一些功能
+    当执行verilog-auto时，可能出现提示 "end xxxxx properties"信息，但verilog-auto并没有执行完成，使用emacs的batch mode解决
+    #+BEGIN_SRC sh
+      emacs --batch file.v -f verilog-batch-auto
+    #+END_SRC
+    另，在我的配置中改写了verilog-mode中的一些函数，执行以上命令可能会出错，请使用以下命令：
+    #+BEGIN_SRC shell
+      emacs --batch file.v -l path/to/projectile.el -f verilog-batch-auto     #在spacemacs中, projectile.el位置 ~/.emacs.d/elpa路径下，请自查
+    #+END_SRC
+
+*** 常用的一些功能
     + verilog-header: 原定义在verilog-mode.el中，我做了一定修改，放在my-verilog.el中，哪天跳槽了记得要改（前面已经说过了怎么查该函数对应的快捷键）
     + 代码补全：基于skeleton代码片断、框架补全,输入关键字，按照列表选择，可以不用方向键， ~c-j~ : down; ~c-k~ : up; ~c-l~ : 相当于回车
       本补全方式中，有时可能需要用户输入相应的信息，此时需要从minibuffer输入，此时不能使用关键字补全功能
@@ -338,364 +350,360 @@
       #+end_src
     + my-verilog-align-indent-inst-signal: 初始化代码如以下格式，其中 my-verilog-min-spc-for-align 用于控制端口和信号名之间最小的空格数量，默认值为1, 如果要关闭其默认执行，参考其帮助文档
       #+begin_src verilog
-        module top(/*autoarg*/);
+       module top(/*autoarg*/);
 
-           sub1_x u_sub1     (/*autoinst*/);
-           sub2_xxxxx u_sub2 (/*autoinst*/);
-           sub3 #(/*autoinstparam*/)
-           u_sub3(/*autoinst*/);
+          sub1_x u_sub1     (/*autoinst*/);
+          sub2_xxxxx u_sub2 (/*autoinst*/);
+          sub3 #(/*autoinstparam*/)
+          u_sub3(/*autoinst*/);
 
-        endmodule // top
-
-
-        module sub1_x(/*autoarg*/);
-           input aa, bb, cc;
-           output dd;
-        endmodule // sub1
-
-        module sub2_xxxxx(/*autoarg*/);
-           input aa, bb, cc;
-           output dd;
-        endmodule // sub2
-
-        module sub3 #(parameter
-                      PAR_A = 10,
-                      PAR_BB = 20,
-                      PAR_ccc = 30
-                      )
-          (/*autoarg*/);
-           input aaxx, bbxx, cc;
-           output dd;
-        endmodule // sub3
-
-        // Local Variables:
-        //  my-verilog-min-spc-for-align: 20
-        // End:
-      #+end_src
-      默认会在"verilog-auto"后自动执行本命令（如果模块实例已经例化完成<--各端口信号独占一行，也可手动执行"my-verilog-align-indent-inst-signal"）。结果如下，所有实例的左括号对齐，所有端口信号对齐，注意以下示例代码结束最后几行是在设置本地变量，将 my-veriog-auto-align 的值设置为 nil, 则不会在 verilog-auto 时自动执行对齐函数
-      #+begin_src verilog -n
-        module top(/*autoarg*/);
-
-           sub1_x u_sub1     (/*autoinst*/
-                              // Outputs
-                              .dd      (dd),
-                              // Inputs
-                              .aa      (aa),
-                              .bb      (bb),
-                              .cc      (cc));
-           sub2_xxxxx u_sub2 (/*autoinst*/
-                              // Outputs
-                              .dd      (dd),
-                              // Inputs
-                              .aa      (aa),
-                              .bb      (bb),
-                              .cc      (cc));
-           sub3             #(/*autoinstparam*/
-                              // Parameters
-                              .PAR_A   (PAR_A),
-
-                              .PAR_ccc (PAR_ccc))
-           u_sub3            (/*autoinst*/
-                              // Outputs
-                              .dd      (dd),
-                              // Inputs
-                              .aaxx    (aaxx),
-                              .bbxx    (bbxx),
-                              .cc      (cc));
-
-        endmodule // top
+       endmodule // top
 
 
-        module sub1_x(/*autoarg*/
-                      // Outputs
-                      dd,
-                      // Inputs
-                      aa, bb, cc
-                      );
-           input aa, bb, cc;
-           output dd;
-        endmodule // sub1
+       module sub1_x(/*autoarg*/);
+          input aa, bb, cc;
+          output dd;
+       endmodule // sub1
 
-        module sub2_xxxxx(/*autoarg*/
-                          // Outputs
-                          dd,
-                          // Inputs
-                          aa, bb, cc
-                          );
-           input aa, bb, cc;
-           output dd;
-        endmodule // sub2
+       module sub2_xxxxx(/*autoarg*/);
+          input aa, bb, cc;
+          output dd;
+       endmodule // sub2
 
-        module sub3 #(parameter
-                      PAR_A = 10,
-                      PAR_BB = 20,
-                      PAR_ccc = 30
-                      )
-           (/*autoarg*/
-            // Outputs
-            dd,
-            // Inputs
-            aaxx, bbxx, cc
-            );
-           input aaxx, bbxx, cc;
-           output dd;
-        endmodule // sub3
+       module sub3 #(parameter
+                     PAR_A = 10,
+                     PAR_BB = 20,
+                     PAR_ccc = 30
+                     )
+         (/*autoarg*/);
+          input aaxx, bbxx, cc;
+          output dd;
+       endmodule // sub3
 
-        // Local Variables:
-        //  my-verilog-min-spc-for-align:1
-        //  my-verilog-auto-align:t
-        // End:
-      #+end_src
-    + verilog-insert-indices：从“0”开始在当前列插入编号；如下代码，光标移动到第一行代码的“a”后面执行本命令，按提示输入编号的最大值
-      #+begin_src  verilog
-        a| = b                          a[  0] = b
-        a = b                           a[  1] = b
-        a = b                           a[  2] = b
-        a = b                           a[  3] = b
-        a = b   ==> insert-indices ==>  a[  4] = b
-        a = b                           a[  5] = b
-        a = b                           a[  6] = b
-        a = b                           a[  7] = b
-        a = b                           a[  8] = b
-      #+end_src
-    + verilog-generate-numbers：类似verilog-insert-indices
-      #+begin_example
-        buf buf|                            buf buf000
-        buf buf                             buf buf001
-        buf buf                             buf buf002
-        buf buf                             buf buf003
-        buf buf   ==> generate-numbers ==>  buf buf004
-        buf buf                             buf buf005
-        buf buf                             buf buf006
-        buf buf                             buf buf007
-        buf buf                             buf buf008"
-      #+end_example
-    + 嵌入其他格式代码
-      + 本配置可识别以下格式的多行注释，其内部会被识别为 org-mode, 从而使用 org-mode 的 source code 编辑功能
-         #+begin_src verilog
-           /*-- org
+       // Local Variables:
+       //  my-verilog-min-spc-for-align: 20
+       // End:
+     #+end_src
+     默认会在"verilog-auto"后自动执行本命令（如果模块实例已经例化完成<--各端口信号独占一行，也可手动执行"my-verilog-align-indent-inst-signal"）。结果如下，所有实例的左括号对齐，所有端口信号对齐，注意以下示例代码结束最后几行是在设置本地变量，将 my-veriog-auto-align 的值设置为 nil, 则不会在 verilog-auto 时自动执行对齐函数
+     #+begin_src verilog -n
+       module top(/*autoarg*/);
 
-            !org --*/
-         #+end_src
+          sub1_x u_sub1     (/*autoinst*/
+                             // Outputs
+                             .dd      (dd),
+                             // Inputs
+                             .aa      (aa),
+                             .bb      (bb),
+                             .cc      (cc));
+          sub2_xxxxx u_sub2 (/*autoinst*/
+                             // Outputs
+                             .dd      (dd),
+                             // Inputs
+                             .aa      (aa),
+                             .bb      (bb),
+                             .cc      (cc));
+          sub3             #(/*autoinstparam*/
+                             // Parameters
+                             .PAR_A   (PAR_A),
 
-        + plantuml 代码
+                             .PAR_ccc (PAR_ccc))
+          u_sub3            (/*autoinst*/
+                             // Outputs
+                             .dd      (dd),
+                             // Inputs
+                             .aaxx    (aaxx),
+                             .bbxx    (bbxx),
+                             .cc      (cc));
 
-          在以下代码中嵌入了 plantuml 代码，光标在代码区域内时，通过 ~C-c C-c~ 会自动生成名为 fsm.png 的状态机转换图
-          #+begin_src verilog
-            module src_test;
+       endmodule // top
 
-               /*-- org
-               ,#+begin_src plantuml :file fsm.png
-                 @startuml
-                    title Main FSM of dat_pop
-                    state idle: default state
-                    wait:       a transition state
-                    pop:        data output
-                    idle --> idle :    reset
-                    idle -down-> wait: posedge vsync
-                    wait -> pop:       almose full
-                    pop  -up->idle:    error, need to reset
-                 @enduml
-                 ,#+end_src
-                !org --*/
+       module sub1_x(/*autoarg*/
+                     // Outputs
+                     dd,
+                     // Inputs
+                     aa, bb, cc
+                     );
+          input aa, bb, cc;
+          output dd;
+       endmodule // sub1
 
-            endmodule
-          #+end_src
-      + 字符图
+       module sub2_xxxxx(/*autoarg*/
+                         // Outputs
+                         dd,
+                         // Inputs
+                         aa, bb, cc
+                         );
+          input aa, bb, cc;
+          output dd;
+       endmodule // sub2
 
-        利用 emacs 自带的 artist-mode, 在一个 buffer 内画好后再复制到代码中；或者在代码中插入以下格式代码，光标移动到 artist 后，按 ~C-c ‘~ ，会打开一个以 artist-mode 为 major mode 的 buffer, 画好图后 ~, c~ 确认并退出，或者 ~, k~ 进行撤销
+       module sub3 #(parameter
+                     PAR_A = 10,
+                     PAR_BB = 20,
+                     PAR_ccc = 30
+                     )
+          (/*autoarg*/
+           // Outputs
+           dd,
+           // Inputs
+           aaxx, bbxx, cc
+           );
+          input aaxx, bbxx, cc;
+          output dd;
+       endmodule // sub3
+
+       // Local Variables:
+       //  my-verilog-min-spc-for-align:1
+       //  my-verilog-auto-align:t
+       // End:
+     #+end_src
+   + verilog-insert-indices：从“0”开始在当前列插入编号；如下代码，光标移动到第一行代码的“a”后面执行本命令，按提示输入编号的最大值
+     #+begin_src  verilog
+       a| = b                          a[  0] = b
+       a = b                           a[  1] = b
+       a = b                           a[  2] = b
+       a = b                           a[  3] = b
+       a = b   ==> insert-indices ==>  a[  4] = b
+       a = b                           a[  5] = b
+       a = b                           a[  6] = b
+       a = b                           a[  7] = b
+       a = b                           a[  8] = b
+     #+end_src
+   + verilog-generate-numbers：类似verilog-insert-indices
+     #+begin_example
+       buf buf|                            buf buf000
+       buf buf                             buf buf001
+       buf buf                             buf buf002
+       buf buf                             buf buf003
+       buf buf   ==> generate-numbers ==>  buf buf004
+       buf buf                             buf buf005
+       buf buf                             buf buf006
+       buf buf                             buf buf007
+       buf buf                             buf buf008"
+     #+end_example
+   + 嵌入其他格式代码
+     + 本配置可识别以下格式的多行注释，其内部会被识别为 org-mode, 从而使用 org-mode 的 source code 编辑功能
         #+begin_src verilog
           /*-- org
-           ,#+begin_src artist
-           ,#+end_src
+
            !org --*/
         #+end_src
-      + [[https://plantuml.com/][plantuml]] 需要 jre 支持
-      + [[http://ditaa.sourceforge.net/][ditaa]] 需要 jre 支持
-      + [[http://graphviz.org/][graphviz-dot]]
 
-** verilog-auto
+       + plantuml 代码
 
-   当执行verilog-auto时，可能出现提示 "end xxxxx properties"信息，但verilog-auto并没有执行完成，使用emacs的batch mode解决
-   #+BEGIN_SRC sh
-     emacs --batch file.v -f verilog-batch-auto
-   #+END_SRC
-   另，在我的配置中改写了verilog-mode中的一些函数，执行以上命令可能会出错，请使用以下命令：
-   #+BEGIN_SRC shell
-     emacs --batch file.v -l path/to/projectile.el -f verilog-batch-auto     #在spacemacs中, projectile.el位置 ~/.emacs.d/elpa路径下，请自查
-   #+END_SRC
+         在以下代码中嵌入了 plantuml 代码，光标在代码区域内时，通过 ~C-c C-c~ 会自动生成名为 fsm.png 的状态机转换图
+         #+begin_src verilog
+           module src_test;
 
-** AUTOOUTPUT
-   使用以下变量可将不希望出现再端口列表中的信号排除
-   #+begin_src verilog
-     //
-     // Local Variables:
-     // verilog-auto-output-ignore-regexp:"\\(RSTN_EXT\\)"
-     // verilog-auto-input-ignore-regexp:"\\(CREG_SPD_COMB_EN\\)"
-     // End:
-     //
-   #+end_src
-   如果一个信号通过 autoinst 已经自动连接完成，需要强制加入到端口列表中，可以通过在适当的位置焦加入 output/input 关键字解决。
-   另一种情景是一个信号 A 如果已经通过 autooutput 呈现再端口列表中，端口列表的实顺序已经固定下来。此时如果将信号 A 接入到其他模块B中。信号 A 将不会自动出现再端口中，通过上面的方法的话可能改变端口顺序。此时可在例化模块 B 时，控制信号 A 的位置实现，如下代码所示，信号 A 前面没有类似 Inputs/Outputs 的关键字
-   #+begin_src verilog
-     sub_B u_B (
-                .A (A),
-                // Inputs
-                .CC (CC),
-                /*AUTOINST*/);
+              /*-- org
+              ,#+begin_src plantuml :file fsm.png
+                @startuml
+                   title Main FSM of dat_pop
+                   state idle: default state
+                   wait:       a transition state
+                   pop:        data output
+                   idle --> idle :    reset
+                   idle -down-> wait: posedge vsync
+                   wait -> pop:       almose full
+                   pop  -up->idle:    error, need to reset
+                @enduml
+                ,#+end_src
+               !org --*/
 
-   #+end_src
+           endmodule
+         #+end_src
+     + 字符图
 
-** flycheck
-   + 默认打开此功能，调用EDA工具对代码进行实时编译，简单低级错误可以立即提示，马上改掉。
-   + ~spc e v~: 大概得到如下信息，因为在我自己电脑上目前只安装了[[file:img/flycheck2.png][verilator]], 如果有多个EDA工具可用的话，可使用 ~spc e s~ 进行选择
-     #+begin_example
-        Syntax checkers for buffer tb.sv in verilog-mode:
+       利用 emacs 自带的 artist-mode, 在一个 buffer 内画好后再复制到代码中；或者在代码中插入以下格式代码，光标移动到 artist 后，按 ~C-c ‘~ ，会打开一个以 artist-mode 为 major mode 的 buffer, 画好图后 ~, c~ 确认并退出，或者 ~, k~ 进行撤销
+       #+begin_src verilog
+         /*-- org
+          ,#+begin_src artist
+          ,#+end_src
+          !org --*/
+       #+end_src
+     + [[https://plantuml.com/][plantuml]] 需要 jre 支持
+     + [[http://ditaa.sourceforge.net/][ditaa]] 需要 jre 支持
+     + [[http://graphviz.org/][graphviz-dot]]
+*** AUTOOUTPUT
+    使用以下变量可将不希望出现再端口列表中的信号排除
+    #+begin_src verilog
+      //
+      // Local Variables:
+      // verilog-auto-output-ignore-regexp:"\\(RSTN_EXT\\)"
+      // verilog-auto-input-ignore-regexp:"\\(CREG_SPD_COMB_EN\\)"
+      // End:
+      //
+    #+end_src
+    如果一个信号通过 autoinst 已经自动连接完成，需要强制加入到端口列表中，可以通过在适当的位置焦加入 output/input 关键字解决。
+    另一种情景是一个信号 A 如果已经通过 autooutput 呈现再端口列表中，端口列表的实顺序已经固定下来。此时如果将信号 A 接入到其他模块B中。信号 A 将不会自动出现再端口中，通过上面的方法的话可能改变端口顺序。此时可在例化模块 B 时，控制信号 A 的位置实现，如下代码所示，信号 A 前面没有类似 Inputs/Outputs 的关键字
+    #+begin_src verilog
+      sub_B u_B (
+                 .A (A),
+                 // Inputs
+                 .CC (CC),
+                 /*AUTOINST*/);
 
-       verilog-irun (disabled)
-         - may enable: Automatically disabled!
-         - executable: Not found
+    #+end_src
 
-       verilog-iverilog (disabled)
-         - may enable: Automatically disabled!
-         - executable: Not found
+*** 跳转
+    + 通过 Project 中介绍 ctags，可跳转到 module/task/function/class 等的的定义处
+    + imenu: Buffer 内部
+      ~M-m s j~ 或者 ~SPC s j~ 提示如：
 
-       verilog-leda (disabled)
-         - may enable: Automatically disabled!
-         - executable: Not found
+    [[file:./images/verilog-tag.png]]
 
-       verilog-verilator
-         - may enable: yes
-         - executable: Found at /usr/local/bin/verilator_bin
-     #+end_example
-   + ~spc t s~ ：语法检查器开关
-   + 自定义：参考 flycheck-define-checker 帮助文档，verilog-irun的定义在 "~/.spacemacs.d/layers/my-config/packages.el"
+    通过 imenu 插件，其会搜索文件内的 module/inst/task/function 位置; 同时配置里改写了verilog-mode默认产生imenu的方式，verilog代码中加如类似 "//being: tagName" 的代码，将tagNmae加入到imenu中实现快速跳转到该tag，
 
+    #+BEGIN_SRC verilog
+      module sub3 #(parameter
+                    PAR_A = 10,
+                    PAR_BBBBBB = 20,
+                    PAR_ccc = 30
+                    )
+         (/*autoarg*/
+          // Outputs
+          dd,
+          // Inputs
+          aaxx, bbxx, cc
+          );
+         input aaxx, bbxx, cc;
+         output dd;
 
-** 跳转
-   + 通过 Project 中介绍 ctags，可跳转到 module/task/function/class 等的的定义处
-   + imenu: Buffer 内部
-     ~M-m s j~ 或者 ~SPC s j~ 提示如：
+         localparam // begin:localparam
+           par_af = 10,
+           par_ad = 20;
 
-   [[file:./images/verilog-tag.png]]
+         always @ ( /*AUTOSENSE*/ ) begin
+            if (xx) begin:reset
+            end
+            else begin: proce
 
-   通过 imenu 插件，其会搜索文件内的 module/inst/task/function 位置; 同时配置里改写了verilog-mode默认产生imenu的方式，verilog代码中加如类似 "//being: tagName" 的代码，将tagNmae加入到imenu中实现快速跳转到该tag，
+            end
 
-   #+BEGIN_SRC verilog
-     module sub3 #(parameter
-                   PAR_A = 10,
-                   PAR_BBBBBB = 20,
-                   PAR_ccc = 30
-                   )
-        (/*autoarg*/
-         // Outputs
-         dd,
-         // Inputs
-         aaxx, bbxx, cc
-         );
-        input aaxx, bbxx, cc;
-        output dd;
+         end
 
-        localparam // begin:localparam
-          par_af = 10,
-          par_ad = 20;
+         task func_a;
 
-        always @ ( /*AUTOSENSE*/ ) begin
-           if (xx) begin:reset
-           end
-           else begin: proce
+            begin
 
-           end
+            end
+         endtask // func_a
 
-        end
+         function func_a;
 
-        task func_a;
+            begin
 
-           begin
+            end
+         endfunction // func_a
 
-           end
-        endtask // func_a
+      endmodule // sub3
+    #+END_SRC
+*** flycheck
+    + 默认打开此功能，调用EDA工具对代码进行实时编译，简单低级错误可以立即提示，马上改掉。
+    + ~spc e v~: 大概得到如下信息，因为在我自己电脑上目前只安装了[[file:img/flycheck2.png][verilator]], 如果有多个EDA工具可用的话，可使用 ~spc e s~ 进行选择
+      #+begin_example
+         Syntax checkers for buffer tb.sv in verilog-mode:
 
-        function func_a;
+        verilog-irun (disabled)
+          - may enable: Automatically disabled!
+          - executable: Not found
 
-           begin
+        verilog-iverilog (disabled)
+          - may enable: Automatically disabled!
+          - executable: Not found
 
-           end
-        endfunction // func_a
+        verilog-leda (disabled)
+          - may enable: Automatically disabled!
+          - executable: Not found
 
-     endmodule // sub3
-   #+END_SRC
-** 代码折叠
-   eamcs里代码太长的时候，可以使用下面的函数对begin-end代码进行折叠
-   - hs-hide-block，折叠前，光标要在begin的下一行
-   - hs-show-block, 展开光标所有行被折叠的代码
-* Org-mode
-  [[https://orgmode.org][Document]]
+        verilog-verilator
+          - may enable: yes
+          - executable: Found at /usr/local/bin/verilator_bin
+      #+end_example
+    + ~spc t s~ ：语法检查器开关
+    + 自定义：参考 flycheck-define-checker 帮助文档，verilog-irun的定义在 "~/.spacemacs.d/layers/my-config/packages.el"
 
-  [[http://doc.norang.ca/org-mode.html][Orange Your Life In Plain Text!]]
+*** 代码折叠
+    eamcs里代码太长的时候，可以使用下面的函数对begin-end代码进行折叠
+    - hs-hide-block，折叠前，光标要在begin的下一行
+    - hs-show-block, 展开光标所有行被折叠的代码
+** Org-mode
+   [[https://orgmode.org][Document]]
 
- + 在任何 buffer 中使用插入 org 表格，使用 orgtbl-mode
- + org-babel，可以让许多不同语言的代码块一起工作
-   + 配置
-     #+BEGIN_SRC lisp
-       (org-babel-do-load-languages
-        'org-babel-load-languages
-        '((emacs-lisp . t)
-          (ruby . t)
-          (ditaa . t)
-          (python . t)
-          (sh . t)
-          (latex . t)
-          (plantuml . t)
-          (dot . t)
-          (R . t)))
-     #+END_SRC
-   + 示例
-      #+BEGIN_SRC verilog
-        module test;
-           input a;
-           output b;
+   [[http://doc.norang.ca/org-mode.html][Orange Your Life In Plain Text!]]
 
-        endmodule
+  + 在任何 buffer 中使用插入 org 表格，使用 orgtbl-mode
+  + org-babel，可以让许多不同语言的代码块一起工作
+    + 配置
+      #+BEGIN_SRC lisp
+        (org-babel-do-load-languages
+         'org-babel-load-languages
+         '((emacs-lisp . t)
+           (ruby . t)
+           (ditaa . t)
+           (python . t)
+           (sh . t)
+           (latex . t)
+           (plantuml . t)
+           (dot . t)
+           (R . t)))
       #+END_SRC
+    + 示例
+       #+BEGIN_SRC verilog
+         module test;
+            input a;
+            output b;
 
-      #+begin_src dot :file filename.jpg :cmdline -Kdot -Tjpg :exports code
-        digraph G {
-          size="8,6"
-          ratio=expand
-          edge [dir=both]
-          plcnet [shape=box, label="PLC Network"]
-          subgraph cluster_wrapline {
-            label="Wrapline Control System"
-            color=purple
-            subgraph {
-              rank=same
-              exec
-              sharedmem [style=filled, fillcolor=lightgrey, shape=box]
-            }
-            edge[style=dotted, dir=none]
-            exec -> opserver
-            exec -> db
-            plc -> exec
-            edge [style=line, dir=both]
-            exec -> sharedmem
-            sharedmem -> db
-            plc -> sharedmem
-            sharedmem -> opserver
-          }
-          plcnet -> plc [constraint=false]
-          millwide [shape=box, label="Millwide System"]
-          db -> millwide
+         endmodule
+       #+END_SRC
 
-          subgraph cluster_opclients {
-            color=blue
-            label="Operator Clients"
-            rankdir=LR
-            labelloc=b
-            node[label=client]
-            opserver -> client1
-            opserver -> client2
-            opserver -> client3
-          }
-        }
-      #+end_src
+       #+begin_src dot :file filename.jpg :cmdline -Kdot -Tjpg :exports code
+         digraph G {
+           size="8,6"
+           ratio=expand
+           edge [dir=both]
+           plcnet [shape=box, label="PLC Network"]
+           subgraph cluster_wrapline {
+             label="Wrapline Control System"
+             color=purple
+             subgraph {
+               rank=same
+               exec
+               sharedmem [style=filled, fillcolor=lightgrey, shape=box]
+             }
+             edge[style=dotted, dir=none]
+             exec -> opserver
+             exec -> db
+             plc -> exec
+             edge [style=line, dir=both]
+             exec -> sharedmem
+             sharedmem -> db
+             plc -> sharedmem
+             sharedmem -> opserver
+           }
+           plcnet -> plc [constraint=false]
+           millwide [shape=box, label="Millwide System"]
+           db -> millwide
+
+           subgraph cluster_opclients {
+             color=blue
+             label="Operator Clients"
+             rankdir=LR
+             labelloc=b
+             node[label=client]
+             opserver -> client1
+             opserver -> client2
+             opserver -> client3
+           }
+         }
+       #+end_src
+** awesome-pair
+  web:https://github.com/manateelazycat/awesome-pair.git, 其提供的 function 可方便进行成对的括号 ~()[]{}\"\"~ 插入与删除，其包含了一些边界算法。配置中的按键绑定与示例不同，见文件 ~/.spacemacs.d/layers/my-config/keybindings.el
+  #+begin_example
+    '|' 表示光标所在位置
+    before         keys         after
+    ----------- -----------  -----------
+    fo|o bar      spc m (    (foo) bar
+    |(foo bar)|   spc m {    {(foo bar)}
+    (foo |bar)    spc m )    foo bar
+  #+end_example
