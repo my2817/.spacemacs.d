@@ -1,3 +1,7 @@
+#+AUTHOR: 何云
+#+title: spacemacs.d for Verilog
+#+OPTIONS: ^:nil
+
 * 目录                                                    :TOC_4_gh:noexport:
 - [[#系统环境][系统环境]]
   - [[#windows][windows]]
@@ -174,7 +178,7 @@
     + ~spc l~:
     + ~spc l ?~: 查看按键绑定提示，此步随意
     + ~spc l 0~: 新建一个 layout, 按提示输入一个名字，按我的用法就是输入 Project 名字
-    + ~spc f f~: 打开 Project 的根目录
+    + ~spc p d~: 打开 Project 的根目录
     + ~spc l S~: 保存当前的 layout 到一个文件
       + 选择前面输入的 Project 名字并回车确认
       + 选择 "[>DONE<]" 并回车

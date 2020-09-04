@@ -3,12 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-08-20 四 15:50 -->
+<!-- 2020-09-04 五 09:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>&lrm;</title>
+<title>spacemacs.d for Verilog</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="DESKTOP-FF9JGDI" />
+<meta name="author" content="何云" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -264,71 +264,73 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
+<h1 class="title">spacemacs.d for Verilog</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgecf8037">1. 系统环境</a>
+<li><a href="#orgcb1a959">1. 系统环境</a>
 <ul>
-<li><a href="#orgb8a76ff">1.1. windows</a></li>
-<li><a href="#orgb5fd17d">1.2. linux</a></li>
+<li><a href="#orga86aaf4">1.1. windows</a></li>
+<li><a href="#org60b0975">1.2. linux</a></li>
 </ul>
 </li>
-<li><a href="#orgf042254">2. terminal 之 zsh</a></li>
-<li><a href="#orge3c160d">3. 编辑器之 emacs</a>
+<li><a href="#orgfaa1a3e">2. terminal 之 zsh</a></li>
+<li><a href="#orge96e731">3. 编辑器之 emacs</a>
 <ul>
-<li><a href="#orgbbc0f0c">3.1. 安装</a></li>
-<li><a href="#orge472260">3.2. 初识</a>
+<li><a href="#org5a1245e">3.1. 安装</a></li>
+<li><a href="#org794c131">3.2. 初识</a>
 <ul>
-<li><a href="#org4ff13c3">3.2.1. 启动</a></li>
-<li><a href="#org12bdb1e">3.2.2. File: 文件操作</a></li>
-<li><a href="#org00f3824">3.2.3. Buffer: 操作</a></li>
-<li><a href="#org108e4ae">3.2.4. Project:</a></li>
-<li><a href="#org693ac64">3.2.5. Windows</a></li>
-<li><a href="#org65d7531">3.2.6. Layouts</a></li>
-<li><a href="#org79f453f">3.2.7. 编辑</a></li>
-<li><a href="#org44cf63a">3.2.8. 帮助系统</a></li>
+<li><a href="#org04639a6">3.2.1. 启动</a></li>
+<li><a href="#orgf02de6a">3.2.2. File: 文件操作</a></li>
+<li><a href="#org9eadb49">3.2.3. Buffer: 操作</a></li>
+<li><a href="#orgad341b8">3.2.4. Project:</a></li>
+<li><a href="#org8f9adac">3.2.5. Windows</a></li>
+<li><a href="#org998213f">3.2.6. Layouts</a></li>
+<li><a href="#orge4566b2">3.2.7. 编辑</a></li>
+<li><a href="#org4e7941d">3.2.8. 帮助系统</a></li>
 </ul>
 </li>
-<li><a href="#org4230980">3.3. 一些函数</a></li>
-<li><a href="#org98360cf">3.4. regexp 正则表达式</a></li>
+<li><a href="#org5e0f51e">3.3. 一些函数</a></li>
+<li><a href="#org32695a1">3.4. regexp 正则表达式</a></li>
 </ul>
 </li>
-<li><a href="#org4cbb777">4. 中文</a>
+<li><a href="#org0aa8ec8">4. 中文</a>
 <ul>
-<li><a href="#orgd182ccf">4.1. 字体</a></li>
-<li><a href="#org149fc15">4.2. 输入法</a></li>
+<li><a href="#orgc17a401">4.1. 字体</a></li>
+<li><a href="#org8650c94">4.2. 输入法</a></li>
 </ul>
 </li>
-<li><a href="#orgc49ef27">5. Awesome Modes</a>
+<li><a href="#org68eaf03">5. Awesome Modes</a>
 <ul>
-<li><a href="#org5d5e62a">5.1. Verilog-mgde</a>
+<li><a href="#orgd782a14">5.1. Verilog-mgde</a>
 <ul>
-<li><a href="#org321b7ca">5.1.1. 配置</a></li>
-<li><a href="#orgb980743">5.1.2. verilog-auto</a></li>
-<li><a href="#org9bf75bb">5.1.3. 常用的一些功能</a></li>
-<li><a href="#org4c73e37">5.1.4. AUTOOUTPUT</a></li>
-<li><a href="#orgb1e00d5">5.1.5. 跳转</a></li>
-<li><a href="#orgf01c52b">5.1.6. flycheck</a></li>
-<li><a href="#orga2b36c1">5.1.7. 代码折叠</a></li>
+<li><a href="#orgaea7bd1">5.1.1. 配置</a></li>
+<li><a href="#orgb0e1db4">5.1.2. verilog-auto</a></li>
+<li><a href="#org9d5cfb0">5.1.3. 常用的一些功能</a></li>
+<li><a href="#orgaeaf7aa">5.1.4. AUTOOUTPUT</a></li>
+<li><a href="#orge0536fd">5.1.5. 跳转</a></li>
+<li><a href="#org5da4b97">5.1.6. flycheck</a></li>
+<li><a href="#org86c8c5a">5.1.7. 代码折叠</a></li>
 </ul>
 </li>
-<li><a href="#org1bd7697">5.2. Org-mode</a></li>
-<li><a href="#org279ceed">5.3. awesome-pair</a></li>
+<li><a href="#org73604c7">5.2. Org-mode</a></li>
+<li><a href="#orgbd78a38">5.3. awesome-pair</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgecf8037" class="outline-2">
-<h2 id="orgecf8037"><span class="section-number-2">1</span> 系统环境</h2>
+
+<div id="outline-container-orgcb1a959" class="outline-2">
+<h2 id="orgcb1a959"><span class="section-number-2">1</span> 系统环境</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 tips: 以下系统环境安装过程中，如果下载包比较慢，可以试试搜索一下其对应的国内源，说不一定可以加速
 </p>
 </div>
-<div id="outline-container-orgb8a76ff" class="outline-3">
-<h3 id="orgb8a76ff"><span class="section-number-3">1.1</span> windows</h3>
+<div id="outline-container-orga86aaf4" class="outline-3">
+<h3 id="orga86aaf4"><span class="section-number-3">1.1</span> windows</h3>
 <div class="outline-text-3" id="text-1-1">
 <ul class="org-ul">
 <li>cygwin</li>
@@ -338,8 +340,8 @@ tips: 以下系统环境安装过程中，如果下载包比较慢，可以试�
 </div>
 </div>
 
-<div id="outline-container-orgb5fd17d" class="outline-3">
-<h3 id="orgb5fd17d"><span class="section-number-3">1.2</span> linux</h3>
+<div id="outline-container-org60b0975" class="outline-3">
+<h3 id="org60b0975"><span class="section-number-3">1.2</span> linux</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 既然都选择了 linux, 您随意就好
@@ -348,8 +350,8 @@ tips: 以下系统环境安装过程中，如果下载包比较慢，可以试�
 </div>
 </div>
 
-<div id="outline-container-orgf042254" class="outline-2">
-<h2 id="orgf042254"><span class="section-number-2">2</span> terminal 之 zsh</h2>
+<div id="outline-container-orgfaa1a3e" class="outline-2">
+<h2 id="orgfaa1a3e"><span class="section-number-2">2</span> terminal 之 zsh</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 一般终端下默认的 shell 为 bash, 不妨（ <code>强烈推荐</code> ）换一个试试，比如此处提到的 zsh 。
@@ -381,8 +383,8 @@ plugins=(git zsh-syntax-highlighting zsh-autosuggestions fzf z)
 </div>
 </div>
 
-<div id="outline-container-orge3c160d" class="outline-2">
-<h2 id="orge3c160d"><span class="section-number-2">3</span> 编辑器之 emacs</h2>
+<div id="outline-container-orge96e731" class="outline-2">
+<h2 id="orge96e731"><span class="section-number-2">3</span> 编辑器之 emacs</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 <a href="https://github.com/syl20bnr/spacemacs">The best editor is neither Emacs nor Vim, it's Emacs <b>and</b> Vim! </a>
@@ -393,8 +395,8 @@ plugins=(git zsh-syntax-highlighting zsh-autosuggestions fzf z)
 </p>
 </div>
 
-<div id="outline-container-orgbbc0f0c" class="outline-3">
-<h3 id="orgbbc0f0c"><span class="section-number-3">3.1</span> 安装</h3>
+<div id="outline-container-org5a1245e" class="outline-3">
+<h3 id="org5a1245e"><span class="section-number-3">3.1</span> 安装</h3>
 <div class="outline-text-3" id="text-3-1">
 <ul class="org-ul">
 <li>emacs:<a href="https://ftp.gnu.org/gnu/emacs/emacs-26.3.tar.gz">https://ftp.gnu.org/gnu/emacs/emacs-26.3.tar.gz</a>
@@ -443,16 +445,16 @@ git checkout -b develop origin/develop; <span style="color: #99968b;">#</span><s
 </div>
 </div>
 
-<div id="outline-container-orge472260" class="outline-3">
-<h3 id="orge472260"><span class="section-number-3">3.2</span> 初识</h3>
+<div id="outline-container-org794c131" class="outline-3">
+<h3 id="org794c131"><span class="section-number-3">3.2</span> 初识</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 emacs 中所有的操作都对应一个定义好的 function, 为了方便，已经将部分 function 绑定到特定的按键上，如后文介绍到的快捷键；一些知道名字，不知快捷键的 function 可以通过 <code>Alt-x</code> （同时按下 ALT 和 x 两个键），然后输入对应的 function 名字进行执行。
 spacemacs 中默认安装了 evil 插件，就我的使用经历，其模拟了 vi 所有的操作方式。
 </p>
 </div>
-<div id="outline-container-org4ff13c3" class="outline-4">
-<h4 id="org4ff13c3"><span class="section-number-4">3.2.1</span> 启动</h4>
+<div id="outline-container-org04639a6" class="outline-4">
+<h4 id="org04639a6"><span class="section-number-4">3.2.1</span> 启动</h4>
 <div class="outline-text-4" id="text-3-2-1">
 <ul class="org-ul">
 <li><code>emacs</code> ：如果直接使用本命令启动，每次都会打开一个全新进程，速度较慢，且各进程间的操作是独立的</li>
@@ -466,8 +468,8 @@ spacemacs 中默认安装了 evil 插件，就我的使用经历，其模拟了 
 </ul>
 </div>
 </div>
-<div id="outline-container-org12bdb1e" class="outline-4">
-<h4 id="org12bdb1e"><span class="section-number-4">3.2.2</span> File: 文件操作</h4>
+<div id="outline-container-orgf02de6a" class="outline-4">
+<h4 id="orgf02de6a"><span class="section-number-4">3.2.2</span> File: 文件操作</h4>
 <div class="outline-text-4" id="text-3-2-2">
 <ul class="org-ul">
 <li><code>spc</code>: 指代空格键，spacemacs 中将其设置为 leader key, 敲一下它，会给出一个引导菜单，每个字母对应一个操作</li>
@@ -488,8 +490,8 @@ spacemacs 中默认安装了 evil 插件，就我的使用经历，其模拟了 
 </div>
 </div>
 
-<div id="outline-container-org00f3824" class="outline-4">
-<h4 id="org00f3824"><span class="section-number-4">3.2.3</span> Buffer: 操作</h4>
+<div id="outline-container-org9eadb49" class="outline-4">
+<h4 id="org9eadb49"><span class="section-number-4">3.2.3</span> Buffer: 操作</h4>
 <div class="outline-text-4" id="text-3-2-3">
 <ul class="org-ul">
 <li><code>spc b</code>: 文件打开读入内存后就不叫文件了，叫 "buffer", 相关操作集中定义在此
@@ -513,8 +515,8 @@ spacemacs 中默认安装了 evil 插件，就我的使用经历，其模拟了 
 </div>
 </div>
 
-<div id="outline-container-org108e4ae" class="outline-4">
-<h4 id="org108e4ae"><span class="section-number-4">3.2.4</span> Project:</h4>
+<div id="outline-container-orgad341b8" class="outline-4">
+<h4 id="orgad341b8"><span class="section-number-4">3.2.4</span> Project:</h4>
 <div class="outline-text-4" id="text-3-2-4">
 <p>
 依赖插件：projectile. 一切皆文本，所谓 Project, 都是人为定义，这里的说一下定义 Project 的方式。
@@ -554,8 +556,8 @@ TAGS 文件太大，影响查找速度，可以在 .projectile 里增加以下�
 </div>
 </div>
 
-<div id="outline-container-org693ac64" class="outline-4">
-<h4 id="org693ac64"><span class="section-number-4">3.2.5</span> Windows</h4>
+<div id="outline-container-org8f9adac" class="outline-4">
+<h4 id="org8f9adac"><span class="section-number-4">3.2.5</span> Windows</h4>
 <div class="outline-text-4" id="text-3-2-5">
 <p>
 如下所示，最大那个框叫 frame, 一个 frame 可以分割为多个 window, 每个 wdinow 里可以打开一个独立的 buffer ( 也可以是相同的，按使用需求选用吧 ),
@@ -585,8 +587,8 @@ TAGS 文件太大，影响查找速度，可以在 .projectile 里增加以下�
 </div>
 </div>
 
-<div id="outline-container-org65d7531" class="outline-4">
-<h4 id="org65d7531"><span class="section-number-4">3.2.6</span> Layouts</h4>
+<div id="outline-container-org998213f" class="outline-4">
+<h4 id="org998213f"><span class="section-number-4">3.2.6</span> Layouts</h4>
 <div class="outline-text-4" id="text-3-2-6">
 <p>
 本意是说多窗口布局吧，, 可以保存起来，多个 layout 可以比较方便的切换，而我个人习惯是将每个 Project 保存一个 layout, 方便不同 Project 间的切换，操作流程如下：
@@ -595,7 +597,7 @@ TAGS 文件太大，影响查找速度，可以在 .projectile 里增加以下�
 <li><code>spc l</code>:</li>
 <li><code>spc l ?</code>: 查看按键绑定提示，此步随意</li>
 <li><code>spc l 0</code>: 新建一个 layout, 按提示输入一个名字，按我的用法就是输入 Project 名字</li>
-<li><code>spc f f</code>: 打开 Project 的根目录</li>
+<li><code>spc p d</code>: 打开 Project 的根目录</li>
 <li><code>spc l S</code>: 保存当前的 layout 到一个文件
 <ul class="org-ul">
 <li>选择前面输入的 Project 名字并回车确认</li>
@@ -607,8 +609,8 @@ TAGS 文件太大，影响查找速度，可以在 .projectile 里增加以下�
 </div>
 </div>
 
-<div id="outline-container-org79f453f" class="outline-4">
-<h4 id="org79f453f"><span class="section-number-4">3.2.7</span> 编辑</h4>
+<div id="outline-container-orge4566b2" class="outline-4">
+<h4 id="orge4566b2"><span class="section-number-4">3.2.7</span> 编辑</h4>
 <div class="outline-text-4" id="text-3-2-7">
 <ul class="org-ul">
 <li><code>sp c x a</code>: align, 快捷键用于代码格式化，对齐</li>
@@ -823,8 +825,8 @@ ediff-current-file: 对当前文件更改前后的内容进行比较
 
 
 
-<div id="outline-container-org44cf63a" class="outline-4">
-<h4 id="org44cf63a"><span class="section-number-4">3.2.8</span> 帮助系统</h4>
+<div id="outline-container-org4e7941d" class="outline-4">
+<h4 id="org4e7941d"><span class="section-number-4">3.2.8</span> 帮助系统</h4>
 <div class="outline-text-4" id="text-3-2-8">
 <ul class="org-ul">
 <li><code>C-h m</code>: 列出当前打开的所有插件，以及对应的按键绑定</li>
@@ -837,8 +839,8 @@ ediff-current-file: 对当前文件更改前后的内容进行比较
 </div>
 </div>
 
-<div id="outline-container-org4230980" class="outline-3">
-<h3 id="org4230980"><span class="section-number-3">3.3</span> 一些函数</h3>
+<div id="outline-container-org5e0f51e" class="outline-3">
+<h3 id="org5e0f51e"><span class="section-number-3">3.3</span> 一些函数</h3>
 <div class="outline-text-3" id="text-3-3">
 <ul class="org-ul">
 <li>flush-lines: 删除匹配的行，空行的正则表达式为"^\s-?+$" （即使有空白符，也算空行）</li>
@@ -862,8 +864,8 @@ delete-duplicate-lines:
 </div>
 </div>
 
-<div id="outline-container-org98360cf" class="outline-3">
-<h3 id="org98360cf"><span class="section-number-3">3.4</span> regexp 正则表达式</h3>
+<div id="outline-container-org32695a1" class="outline-3">
+<h3 id="org32695a1"><span class="section-number-3">3.4</span> regexp 正则表达式</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Regexps.html#Regexps">regexp online doc</a>
@@ -877,12 +879,12 @@ delete-duplicate-lines:
 </div>
 </div>
 
-<div id="outline-container-org4cbb777" class="outline-2">
-<h2 id="org4cbb777"><span class="section-number-2">4</span> 中文</h2>
+<div id="outline-container-org0aa8ec8" class="outline-2">
+<h2 id="org0aa8ec8"><span class="section-number-2">4</span> 中文</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-orgd182ccf" class="outline-3">
-<h3 id="orgd182ccf"><span class="section-number-3">4.1</span> 字体</h3>
+<div id="outline-container-orgc17a401" class="outline-3">
+<h3 id="orgc17a401"><span class="section-number-3">4.1</span> 字体</h3>
 <div class="outline-text-3" id="text-4-1">
 <ul class="org-ul">
 <li>默认的字体配置在 "~/.spacemacs.d/init.el" 中，见变量 "dotspacemacs-default-font"</li>
@@ -903,8 +905,8 @@ fc-cache
 </div>
 </div>
 
-<div id="outline-container-org149fc15" class="outline-3">
-<h3 id="org149fc15"><span class="section-number-3">4.2</span> 输入法</h3>
+<div id="outline-container-org8650c94" class="outline-3">
+<h3 id="org8650c94"><span class="section-number-3">4.2</span> 输入法</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 本配置中有两个输入方案可供使用：
@@ -940,19 +942,19 @@ fc-cache
 </div>
 </div>
 </div>
-<div id="outline-container-orgc49ef27" class="outline-2">
-<h2 id="orgc49ef27"><span class="section-number-2">5</span> Awesome Modes</h2>
+<div id="outline-container-org68eaf03" class="outline-2">
+<h2 id="org68eaf03"><span class="section-number-2">5</span> Awesome Modes</h2>
 <div class="outline-text-2" id="text-5">
 </div>
-<div id="outline-container-org5d5e62a" class="outline-3">
-<h3 id="org5d5e62a"><span class="section-number-3">5.1</span> Verilog-mgde</h3>
+<div id="outline-container-orgd782a14" class="outline-3">
+<h3 id="orgd782a14"><span class="section-number-3">5.1</span> Verilog-mgde</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 一般遇到的问题、需求，别人已经帮我们解决,见<a href="https://www.veripool.org/projects/verilog-mode/wiki/Faq">Faq</a>;在 verilog 模式下通过 ctrl + 鼠标右键呼出菜单，有3个 verilog 相关的菜单可关注一下
 </p>
 </div>
-<div id="outline-container-org321b7ca" class="outline-4">
-<h4 id="org321b7ca"><span class="section-number-4">5.1.1</span> 配置</h4>
+<div id="outline-container-orgaea7bd1" class="outline-4">
+<h4 id="orgaea7bd1"><span class="section-number-4">5.1.1</span> 配置</h4>
 <div class="outline-text-4" id="text-5-1-1">
 <p>
 verilog相关插件有两个：
@@ -964,8 +966,8 @@ verilog相关插件有两个：
 </div>
 </div>
 
-<div id="outline-container-orgb980743" class="outline-4">
-<h4 id="orgb980743"><span class="section-number-4">5.1.2</span> verilog-auto</h4>
+<div id="outline-container-orgb0e1db4" class="outline-4">
+<h4 id="orgb0e1db4"><span class="section-number-4">5.1.2</span> verilog-auto</h4>
 <div class="outline-text-4" id="text-5-1-2">
 <p>
 当执行verilog-auto时，可能出现提示 "end xxxxx properties"信息，但verilog-auto并没有执行完成，使用emacs的batch mode解决
@@ -984,8 +986,8 @@ verilog相关插件有两个：
 </div>
 </div>
 
-<div id="outline-container-org9bf75bb" class="outline-4">
-<h4 id="org9bf75bb"><span class="section-number-4">5.1.3</span> 常用的一些功能</h4>
+<div id="outline-container-org9d5cfb0" class="outline-4">
+<h4 id="org9d5cfb0"><span class="section-number-4">5.1.3</span> 常用的一些功能</h4>
 <div class="outline-text-4" id="text-5-1-3">
 <ul class="org-ul">
 <li>verilog-header: 原定义在verilog-mode.el中，我做了一定修改，放在my-verilog.el中，哪天跳槽了记得要改（前面已经说过了怎么查该函数对应的快捷键）</li>
@@ -1245,8 +1247,8 @@ plantuml 代码
 </ul>
 </div>
 </div>
-<div id="outline-container-org4c73e37" class="outline-4">
-<h4 id="org4c73e37"><span class="section-number-4">5.1.4</span> AUTOOUTPUT</h4>
+<div id="outline-container-orgaeaf7aa" class="outline-4">
+<h4 id="orgaeaf7aa"><span class="section-number-4">5.1.4</span> AUTOOUTPUT</h4>
 <div class="outline-text-4" id="text-5-1-4">
 <p>
 使用以下变量可将不希望出现再端口列表中的信号排除
@@ -1276,8 +1278,8 @@ plantuml 代码
 </div>
 </div>
 
-<div id="outline-container-orgb1e00d5" class="outline-4">
-<h4 id="orgb1e00d5"><span class="section-number-4">5.1.5</span> 跳转</h4>
+<div id="outline-container-orge0536fd" class="outline-4">
+<h4 id="orge0536fd"><span class="section-number-4">5.1.5</span> 跳转</h4>
 <div class="outline-text-4" id="text-5-1-5">
 <ul class="org-ul">
 <li>通过 Project 中介绍 ctags，可跳转到 module/task/function/class 等的的定义处</li>
@@ -1342,8 +1344,8 @@ plantuml 代码
 </div>
 </div>
 </div>
-<div id="outline-container-orgf01c52b" class="outline-4">
-<h4 id="orgf01c52b"><span class="section-number-4">5.1.6</span> flycheck</h4>
+<div id="outline-container-org5da4b97" class="outline-4">
+<h4 id="org5da4b97"><span class="section-number-4">5.1.6</span> flycheck</h4>
 <div class="outline-text-4" id="text-5-1-6">
 <ul class="org-ul">
 <li>默认打开此功能，调用EDA工具对代码进行实时编译，简单低级错误可以立即提示，马上改掉。</li>
@@ -1375,8 +1377,8 @@ verilog-verilator
 </div>
 </div>
 
-<div id="outline-container-orga2b36c1" class="outline-4">
-<h4 id="orga2b36c1"><span class="section-number-4">5.1.7</span> 代码折叠</h4>
+<div id="outline-container-org86c8c5a" class="outline-4">
+<h4 id="org86c8c5a"><span class="section-number-4">5.1.7</span> 代码折叠</h4>
 <div class="outline-text-4" id="text-5-1-7">
 <p>
 eamcs里代码太长的时候，可以使用下面的函数对begin-end代码进行折叠
@@ -1388,8 +1390,8 @@ eamcs里代码太长的时候，可以使用下面的函数对begin-end代码进
 </div>
 </div>
 </div>
-<div id="outline-container-org1bd7697" class="outline-3">
-<h3 id="org1bd7697"><span class="section-number-3">5.2</span> Org-mode</h3>
+<div id="outline-container-org73604c7" class="outline-3">
+<h3 id="org73604c7"><span class="section-number-3">5.2</span> Org-mode</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 <a href="https://orgmode.org">Document</a>
@@ -1477,8 +1479,8 @@ eamcs里代码太长的时候，可以使用下面的函数对begin-end代码进
 </ul>
 </div>
 </div>
-<div id="outline-container-org279ceed" class="outline-3">
-<h3 id="org279ceed"><span class="section-number-3">5.3</span> awesome-pair</h3>
+<div id="outline-container-orgbd78a38" class="outline-3">
+<h3 id="orgbd78a38"><span class="section-number-3">5.3</span> awesome-pair</h3>
 <div class="outline-text-3" id="text-5-3">
 <p>
 web:<a href="https://github.com/manateelazycat/awesome-pair.git">https://github.com/manateelazycat/awesome-pair.git</a>, 其提供的 function 可方便进行成对的括号 <code>()[]{}\"\"</code> 插入与删除，其包含了一些边界算法。配置中的按键绑定与示例不同，见文件 ~/.spacemacs.d/layers/my-config/keybindings.el
@@ -1496,8 +1498,8 @@ fo|o bar      spc m (    (foo) bar
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="author">Author: DESKTOP-FF9JGDI</p>
-<p class="date">Created: 2020-08-20 四 15:50</p>
+<p class="author">Author: 何云</p>
+<p class="date">Created: 2020-09-04 五 09:23</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
