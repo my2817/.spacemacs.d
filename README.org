@@ -462,7 +462,7 @@
        //  my-verilog-auto-align:t
        // End:
      #+end_src
-   + verilog-insert-indices：从“0”开始在当前列插入编号；如下代码，光标移动到第一行代码的“a”后面执行本命令，按提示输入编号的最大值
+   + verilog-insert-indices：从“0”开始在当前列插入索引号；如下代码，光标移动到第一行代码的“a”后面执行本命令，按提示输入编号的最大值
      #+begin_src  verilog
        a| = b                          a[  0] = b
        a = b                           a[  1] = b
@@ -486,6 +486,7 @@
        buf buf                             buf buf007
        buf buf                             buf buf008"
      #+end_example
+   + my-insert-indices: 功能同上两个，可以指定插入的起始值、插入格式
    + 嵌入其他格式代码
      + 本配置可识别以下格式的多行注释，其内部会被识别为 org-mode, 从而使用 org-mode 的 source code 编辑功能
         #+begin_src verilog
