@@ -95,6 +95,10 @@
     (vc-msg :location (recipe
                        :fetcher github
                        :repo redguardtoo/vc-msg))
+    (flywrap :location local)
+    (avy-thing-edit :location (recipe
+                       :fetcher github
+                       :repo lyjdwh/avy-thing-edit))
   )
 
   "The list of Lisp packages required by the my-config layer.
@@ -707,6 +711,14 @@ See URL `irun -helpall'"
       (require 'thing-edit)
       )))
 
+(defun my-config/init-avy-thing-edit ()
+  (use-package avy-thing-edit
+    :defer t
+    :init
+    (progn
+      (require 'avy-thing-edit)
+      )))
+
 (defun my-config/init-aweshell ()
   (use-package aweshell
     :defer t
@@ -829,4 +841,13 @@ See URL `irun -helpall'"
   (use-package vc-msg
     :defer t
     ))
+
+(defun my-config/init-flywrap ()
+  (use-package flywrap
+    :defer t
+    :init
+    (progn
+      (require 'flywrap)
+      ))
+  )
 ;;; packages.el ends here
