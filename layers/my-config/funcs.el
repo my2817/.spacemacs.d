@@ -590,3 +590,22 @@ argument the push-remote can be changed before pushed to it."
     ["Configure"
      ("C" "Set variables..."  magit-branch-configure)])
   )
+
+
+(defun my-insert-indices ()
+  "Insert a set of generated numbers into a rectangle."
+  (interactive)
+  (let ((fmt (read-string "Number Format:" "%0d"))
+        (n (read-number "Start number:" 0))
+        (step (read-number "Step value:" 1))
+        (max (read-number "Stop number:" 3))
+        (col (current-column))
+        )
+    (save-excursion
+      (while (<= n max)
+        (insert (format fmt n))
+        (forward-line 1)
+        (if (eobp)
+            (setq n max)
+          (setq n (1+ n))
+          (move-to-column col t))))))
