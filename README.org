@@ -34,6 +34,19 @@
     - [[#代码折叠][代码折叠]]
   - [[#org-mode][Org-mode]]
   - [[#awesome-pair][awesome-pair]]
+- [[#awesome-tools][Awesome Tools]]
+  - [[#fzf][fzf]]
+  - [[#ripegrep][ripegrep]]
+  - [[#universal-ctag][universal-ctag]]
+  - [[#oh-my-zsh][oh-my-zsh]]
+    - [[#插件][插件]]
+  - [[#autohotkey][autohotkey]]
+    - [[#example][Example]]
+  - [[#everything][Everything]]
+  - [[#utools][utools]]
+  - [[#total-commander][Total Commander]]
+  - [[#snipaste][Snipaste]]
+  - [[#switcheroo][Switcheroo]]
 
 * 系统环境
   tips: 以下系统环境安装过程中，如果下载包比较慢，可以试试搜索一下其对应的国内源，说不一定可以加速
@@ -713,3 +726,44 @@
     |(foo bar)|   spc m {    {(foo bar)}
     (foo |bar)    spc m )    foo bar
   #+end_example
+
+* Awesome Tools
+  本节集中罗列一下我平时用到的工具
+
+** fzf
+   https://github.com/junegunn/fzf
+
+** ripegrep
+   https://github.com/BurntSushi/ripgrep
+
+** universal-ctag
+   https://github.com/universal-ctags/ctags
+
+** oh-my-zsh
+   https://ohmyz.sh
+
+*** 插件
+    #+begin_src sh
+      plugins=(git zsh-syntax-highlighting zsh-autosuggestions fzf)
+    #+end_src
+
+** autohotkey
+   https://www.autohotkey.com/
+
+*** Example
+    搜索、激活窗口任务，默认绑定在大小写按键上:https://autohotkey.com/board/topic/30487-iswitchw-cosmetically-enhanced-edition/
+
+** Everything
+   快速文件搜索
+
+** utools
+   https://u.tools/, 其可以集成 everything 的搜索结果，但不止与此，其还包含其他插件功能，比如聚合翻译、窗口切换（ https://yuanliao.info/d/1461 可绑定快捷键到功能关键字上（比如 alt+` = winman））、迅飞ocr 文字识别。
+
+** Total Commander
+   多文件管理器，可多标签，且标签下的路径可更改（重新打激活标签后复位到原值）或固定
+
+** Snipaste
+   截图工具，两点在于可以贴图，把截图固定在桌面的最上层（可以固定多个截图）
+
+** Switcheroo
+   https://github.com/kvakulo/Switcheroo, 又一个窗口切换，类似于 iswitchw 和 utools 的 winman 插件, 在设置里勾选 "Activate Switcheroo with Alt+Tab", 替换 windows 默认的 Alt+Tab 功能
