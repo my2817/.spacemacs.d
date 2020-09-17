@@ -403,6 +403,8 @@ Each entry is either:
       ;; 用於加密的 GPG 金鑰
       ;; 可以設定任何 ID 或是設成 nil 來使用對稱式加密 (symmetric encryption)
       (setq org-crypt-key nil)
+      ;; (custom-set-variables '(org-superstar-headline-bullets-list '("Ⅰ" "Ⅱ" "Ⅲ" "Ⅳ" "Ⅴ" "Ⅵ" "Ⅶ" "Ⅷ" "Ⅸ" "Ⅹ" "Ⅺ" "Ⅻ" "Ⅼ" "Ⅽ" "Ⅾ" "Ⅿ" )))
+      (custom-set-variables '(org-superstar-headline-bullets-list '("○" "✿" "✸" "◉")))
       ))
   )
 (defun my-config/init-compilation-mode()
