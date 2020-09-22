@@ -99,6 +99,9 @@
     (avy-thing-edit :location (recipe
                        :fetcher github
                        :repo lyjdwh/avy-thing-edit))
+    (multi-translate :location (recipe
+                                :fetcher github
+                                :repo twlz0ne/multi-translate.el))
   )
 
   "The list of Lisp packages required by the my-config layer.
@@ -852,4 +855,11 @@ See URL `irun -helpall'"
       (require 'flywrap)
       ))
   )
+
+
+(defun my-config/init-multi-translate ()
+  (use-package multi-translate
+    :defer t
+    ))
+
 ;;; packages.el ends here
