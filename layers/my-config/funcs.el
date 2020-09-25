@@ -595,17 +595,20 @@ argument the push-remote can be changed before pushed to it."
 (defun my-insert-indices ()
   "Insert a set of generated numbers into a rectangle."
   (interactive)
-  (let ((fmt (read-string "Number Format:" "%0d"))
-        (n (read-number "Start number:" 0))
-        (step (read-number "Step value:" 1))
-        (max (read-number "Stop number:" 3))
-        (col (current-column))
+  (let (
+        (n    (read-number "the indices should start at:" 0))
+        (max  (read-number "the indices should end at:" 3))
+        (step (read-number "the step betweeen indices:" 1))
+        (fmt  (read-string "format of indices:" "%0d"))
+        (col  (current-column))
         )
     (save-excursion
       (while (<= n max)
         (insert (format fmt n))
         (forward-line 1)
         (if (eobp)
-            (setq n max)
-          (setq n (1+ n))
-          (move-to-column col t))))))
+            (progn
+             (setq n (1+ max))
+             (message "End of buffer, can't insert more indics..."))
+          (setq n (1+ n)))
+          (move-to-column col t)))))
