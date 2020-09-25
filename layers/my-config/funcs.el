@@ -608,7 +608,7 @@ argument the push-remote can be changed before pushed to it."
         (forward-line 1)
         (if (eobp)
             (progn
-             (setq n (1+ max))
+             (setq n (+ step max))
              (message "End of buffer, can't insert more indics..."))
-          (setq n (1+ n)))
+          (setq n (+ step n)))
           (move-to-column col t)))))
