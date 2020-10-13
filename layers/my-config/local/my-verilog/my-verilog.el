@@ -98,7 +98,7 @@
     (fset 'verilog-match-string 'match-string)
   (fset 'verilog-match-string 'match-string-no-properties))
 
-(defvar verilog-imenu-flatten nil
+(defvar verilog-imenu-flatten t
   "*Non-nil means flatten the heirarchical imenu output.")
 
 (defvar verilog-imenu-show-instance-type t
@@ -1087,9 +1087,10 @@ imp step:
           (message "indent port entity (%2d/%2d) : %s %s" inst-index inst-count inst-type inst-name)
           (setq inst-index (+ 1 inst-index))
 
-          (save-excursion
+          ;; (save-excursion
             (goto-char (point-min))
-            (setq updated-alist (verilog-imenu-create-find-instances-or-modports (point-max))))
+            (setq updated-alist (verilog-imenu-create-find-instances-or-modports (point-max)))
+            ;; )
           (setq inst-pos (cdr (assoc (car entity) updated-alist)))
           (if (not (string= (car inst-type) "<module>"))
               (progn
@@ -1126,9 +1127,10 @@ imp step:
 
           (message "indent ports list: (%2d/%2d) %s %s" inst-index inst-count inst-type inst-name)
           (setq inst-index (+ 1 inst-index))
-          (save-excursion
+          ;; (save-excursion
             (goto-char (point-min))
-            (setq updated-alist (verilog-imenu-create-find-instances-or-modports (point-max))))
+            (setq updated-alist (verilog-imenu-create-find-instances-or-modports (point-max)))
+            ;; )
           (setq inst-pos (cdr (assoc (car entity) updated-alist)))
           (if (not (string= (car inst-type) "<module>"))
               (progn
