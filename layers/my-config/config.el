@@ -109,6 +109,7 @@
 (add-hook 'conf-mode-hook (lambda ()
                             (spacemacs/toggle-relative-line-numbers-on)))
 (add-hook 'company-mode-hook 'company-posframe-mode)
+(add-hook 'text-mode-hook 'smartparens-mode)
 
 (mapc #'wttr/prepend-to-exec-path
       (reverse
