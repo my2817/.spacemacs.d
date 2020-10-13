@@ -408,6 +408,9 @@ Each entry is either:
       (setq org-crypt-key nil)
       ;; (custom-set-variables '(org-superstar-headline-bullets-list '("Ⅰ" "Ⅱ" "Ⅲ" "Ⅳ" "Ⅴ" "Ⅵ" "Ⅶ" "Ⅷ" "Ⅸ" "Ⅹ" "Ⅺ" "Ⅻ" "Ⅼ" "Ⅽ" "Ⅾ" "Ⅿ" )))
       (custom-set-variables '(org-superstar-headline-bullets-list '("○" "✿" "✸" "◉")))
+      ;; after org9.2 [[https://orgmode.org/Changes.html][changlog]]
+      ;; prefer using previous patterns, e.g. <s, goto org-tempo.el for more information
+      (add-to-list 'org-modules 'org-tempo)
       ))
   )
 (defun my-config/init-compilation-mode()
