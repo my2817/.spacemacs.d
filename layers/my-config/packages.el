@@ -354,6 +354,8 @@ Each entry is either:
          (ditaa . t)
          (mermaid . t)
          ))
+
+      (setq ob-mermaid-cli-path "~/node_modules/.bin/mmdc")
       (setq org-todo-keywords
            '((type "WORK(!)" "STUDY(!)" "|")
              (type "heyun(!)" "xulinliang(!)" "lina(!)" "chenshuxian(!)" "wangjunjie(!)" "huanqin(!)" "|" "DONE(!)")
