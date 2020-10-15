@@ -480,6 +480,7 @@ See URL `irun -helpall'"
      ;; (error line-start "ncvlog: *E," (id (1+ "A-Z")) "(" (file-name) "," line "|" column "):" (message))
      ;; ncvlog: *E,EXPLPA (SYN_CODE_GEN_tb.sv,25|14): expecting a left parenthesis ('(') [12.1.2][7.1(IEEE)]
      (error line-start "ncvlog: *E,"  (id (* (char "A-Z"))) " " "(" (file-name) "," line "|" (* (char "0-9")) ")" ":" (message))
+     (error line-start "irun: *E,"  (id (* (char "A-Z"))) ": "  (message))
      )
     :modes verilog-mode
     )

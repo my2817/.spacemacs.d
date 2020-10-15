@@ -815,6 +815,7 @@ endmodule // tb
   (setq my-verilog-inst-ports (verilog-read-decls))
   (switch-to-buffer (format "%s_tb.v" my-verilog-inst-name))
   (verilog-mode)
+  (goto-char (point-max))
   (my-verilog-insert-tb my-verilog-inst-name)
   (goto-line 1)
   (search-forward "<REFERENCE>") (replace-match my-verilog-inst-name t t);
