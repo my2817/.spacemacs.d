@@ -84,20 +84,24 @@
   :group 'company-verilog
   )
 (defcustom company-verilog-keywords-user
-  '("class_uvm_component" "class_uvm_object")
+  '("class_uvm_component" "class_uvm_object"
+    "autoinput" "autooutput" "autowire" "autoreginput" "autoargs" "verilog-library-flags")
   "user define key words"
   :group 'company-verilog)
+
 (defcustom company-verilog-keywords nil
   "keywords for company-verilog "
   :group 'company-verilog
  )
+(defun company-verilog-make-key-words ()
+  "merge `company-verilog-keywords-ieee' and `company-verilog-keywords-user'"
+  (mapcar (lambda (keyword)
+            (add-to-list 'company-verilog-keywords keyword))
+          company-verilog-keywords-ieee)
+  (mapcar (lambda (keyword)
+            (add-to-list 'company-verilog-keywords keyword))
+          company-verilog-keywords-user))
 
-(mapcar (lambda (keyword)
-          (add-to-list 'company-verilog-keywords keyword))
-        company-verilog-keywords-ieee)
-(mapcar (lambda (keyword)
-          (add-to-list 'company-verilog-keywords keyword))
-        company-verilog-keywords-user)
 (defun company-verilog-backend (command &optional arg &rest ignored)
   "company backend for veriog"
   (interactive (list 'interactive))

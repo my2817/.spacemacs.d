@@ -1,0 +1,5 @@
+# name: `verilog-library-flags` of verilog-auto
+# key: verilog-library-flags
+# group: verilog
+# --
+veriog-library-flags: ("-f $0")
