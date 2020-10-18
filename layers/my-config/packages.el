@@ -456,7 +456,8 @@ for the reasion described above, use bash to start verilator
     ((warning line-start "%Warning-" (zero-or-more not-newline) ": "
               (file-name) ":" line ": " (message) line-end)
      (error line-start "%Error: " (file-name) ":"
-            line ": " (message) line-end))
+            line ": " (message) line-end)
+     (error line-start "%Error: " (message)))
     :modes verilog-mode)
   (flycheck-define-checker verilog-iverilog
     "A verilog syntax checker using icarus-verilog.
@@ -485,7 +486,7 @@ See URL `irun -helpall'"
     :modes verilog-mode
     )
   (add-to-list 'flycheck-checkers 'verilog-leda)
-  (add-to-list 'flycheck-checkers 'my-verilog-verilator)
+  (add-to-list 'flycheck-checkers 'verilog-verilator)
   (add-to-list 'flycheck-checkers 'verilog-iverilog)
   (add-to-list 'flycheck-checkers 'verilog-irun)
   )
