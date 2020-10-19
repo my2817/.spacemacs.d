@@ -83,11 +83,16 @@
   "A key-words list of verilog-mode "
   :group 'company-verilog
   )
-(defcustom company-verilog-keywords-user
-  '("class_uvm_component" "class_uvm_object"
-    "autoinput" "autooutput" "autowire" "autoreginput" "autoargs" "verilog-library-flags")
+(defcustom company-verilog-keywords-user nil
   "user define key words"
   :group 'company-verilog)
+
+(defun company-verilog-update-keywords-user ()
+  (custom-set-variables
+   '(company-verilog-keywords-user
+     '("class_uvm_component" "class_uvm_object"
+       "AUTOINPUT" "AUTOOUTPUT" "AUTOWIRE" "AUTOREGINPUT" "AUTOARGS" "AUTORESET" "autotags" "verilog-library-flags")))
+  )
 
 (defcustom company-verilog-keywords nil
   "keywords for company-verilog "
@@ -95,6 +100,7 @@
  )
 (defun company-verilog-make-key-words ()
   "merge `company-verilog-keywords-ieee' and `company-verilog-keywords-user'"
+  (company-verilog-update-keywords-user)
   (mapcar (lambda (keyword)
             (add-to-list 'company-verilog-keywords keyword))
           company-verilog-keywords-ieee)
@@ -119,7 +125,9 @@
       key-words
       ))
     (post-completion
-     (expand-abbrev))))
+     ;; (expand-abbrev)
+     (yas/expand)
+     )))
 
 (add-to-list 'company-keywords-alist (cons 'verilog-mode company-verilog-keywords))
 ;; (make-variable-buffer-local 'company-backends)
@@ -136,6 +144,7 @@
 
   (if company-verilog
       (progn
+        (company-verilog-make-key-words)
         (make-local-variable 'company-backends)
         (setq company-backends
               '( company-files
