@@ -1,0 +1,15 @@
+# name: class for uvm object
+# key: class_uvm_object
+# group: verilog
+# --
+class ${1:Name} extends uvm_${2:From};
+
+\`uvm_object_utils_begin( \"$1\" )
+\`uvm_object_utils_end
+
+function new(string name=\"$1\");
+super.new(name);
+endfunction : new
+$0
+
+endclass : $1

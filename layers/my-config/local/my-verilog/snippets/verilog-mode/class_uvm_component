@@ -1,0 +1,16 @@
+# name: class for uvm component
+# key: class_uvm_component
+# group: verilog
+# --
+class ${1:Name} extends uvm_${2:From};
+
+\`uvm_component_utils_begin( \"$1\" )
+\`uvm_component_utils_end
+
+function new(string name=\"$1\", uvm_component parent);
+super.new(name,parent);
+endfunction : new
+
+$0
+
+endclass : $1

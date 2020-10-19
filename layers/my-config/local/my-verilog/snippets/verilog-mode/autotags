@@ -1,0 +1,29 @@
+# name: autos of verilog-auto
+# key: autotags
+# group: verilog
+# --
+//begin: AUTOOUTPUTS
+/*AUTOOUTPUT*/
+
+//begin: AUTOINPUTS
+/*AUTOINPUT*/
+
+//begin: AUTOWIREs
+/*AUTOWIRE*/
+
+//begin: AUTOREGINPUTs
+/*AUTOREGINPUT*/
+
+//begin: AUTOREGs
+/*AUTOREGINPUT*/
+
+//begin: AUTOUNUSEDs
+wire unused_pin;
+assign unused_pin = |{
+                      /*AUTOUNUSED*/
+                      1'b0} ;
+
+//begin: AUTOTIEOFFs
+/*AUTOTIEOFF*/
+
+$0
