@@ -2,6 +2,6 @@
 # key: module
 # group: verilog
 # --
-module ${1:module_name} (/*AUTOARG*/);
+module ${1:`(file-name-base (buffer-name))`} (/*AUTOARG*/);
    $0
 endmodule: $1

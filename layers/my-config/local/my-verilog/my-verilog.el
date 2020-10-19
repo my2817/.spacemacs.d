@@ -579,7 +579,7 @@
 (define-skeleton verilog-sk-module
   "Insert a module definition."
   ()
-  > "module " (file-name-base) " (/*AUTOARG*/ ) ;" \n
+  > "module " (file-name-base (buffer-name)) " (/*AUTOARG*/ ) ;" \n
   > _ \n
   > (- verilog-indent-level-behavioral) "endmodule" (progn (electric-verilog-terminate-line) nil))
 
