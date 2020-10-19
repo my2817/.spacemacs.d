@@ -674,3 +674,17 @@ argument the push-remote can be changed before pushed to it."
              (message "End of buffer, can't insert more indics..."))
           (setq n (+ step n)))
           (move-to-column col t)))))
+
+(defun qr-code-region (start end)
+  "Show a QR code of the region.
+A simple way to transfer text to the phone...
+https://www.emacswiki.org/emacs/QR_Code"
+  (interactive "r")
+  (let ((buf (get-buffer-create "*QR*"))
+        (inhibit-read-only t))
+    (with-current-buffer buf
+      (erase-buffer))
+    (let ((coding-system-for-read 'raw-text))
+      (shell-command-on-region start end "qrencode -o -" buf))
+    (switch-to-buffer buf)
+    (image-mode)))
