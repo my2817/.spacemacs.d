@@ -1,8 +1,8 @@
-# name: always @()
+# name: always @(posedge CLK or negedge RSTN)
 # key: always
 # group: verilog
 # --
-always @ (posedge ${1:CLK} or negedge ${2:RSTN}) begin
+always @(posedge ${1:CLK} or negedge ${2:RSTN}) begin
    if (~$2) begin
       /*AUTORESET*/
    end

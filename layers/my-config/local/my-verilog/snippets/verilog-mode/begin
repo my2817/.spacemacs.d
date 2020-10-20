@@ -1,0 +1,8 @@
+# name: begin
+# key: begin
+# group: verilog
+# --
+
+begin
+   $0
+end

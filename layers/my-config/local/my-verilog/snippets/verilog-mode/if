@@ -1,10 +1,11 @@
-# name: if
+# name: if begin ... end else begin ... end
 # key: if
 # group: verilog
 # --
 if ($1) begin
    $0
 end
-else begin
-
+${2:else begin
+/*C-d to skip this field*/
 end
+}
