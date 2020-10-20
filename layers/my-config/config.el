@@ -91,25 +91,34 @@
                                               (point-max))
                                     ))))
 ;;(add-hook 'verilog-mode-hook 'turn-on-ctags-auto-update-mode)
-(add-hook 'makefile-bsdmake-mode-hook (lambda ()
-                                        (company-mode)
-                                        (setq-local company-backends '(company-files
-                                                                       (company-dabbrev-code company-gtags company-etags company-keywords)
-                                                                       company-oddmuse company-dabbrev))))
-(add-hook 'makefile-gmake-mode-hook (lambda ()
-                                        (company-mode)
-                                        (setq-local company-backends '(company-files
-                                                                       (company-dabbrev-code company-gtags company-etags company-keywords)
-                                                                       company-oddmuse company-dabbrev))))
-(add-hook 'text-mode-hook (lambda ()
-                                      (company-mode)
-                                      (setq-local company-backends '(company-files
-                                                                     (company-dabbrev-code company-gtags company-etags company-keywords)
-                                                                     company-oddmuse company-dabbrev))))
+(add-hook 'makefile-bsdmake-mode-hook
+          (lambda ()
+            (company-mode)
+            (setq-local company-backends
+                        '(company-files
+                          (company-dabbrev-code company-gtags company-etags company-keywords)
+                          company-oddmuse company-dabbrev))))
+(add-hook 'makefile-gmake-mode-hook
+          (lambda ()
+            (company-mode)
+            (setq-local company-backends
+                        '(company-files
+                          (company-dabbrev-code company-gtags company-etags company-keywords)
+                          company-oddmuse company-dabbrev))))
+(add-hook 'text-mode-hook
+          (lambda ()
+            (company-mode)
+            (setq-local company-backends
+                        '(company-files
+                          (company-dabbrev-code company-gtags company-etags company-keywords)
+                          company-oddmuse company-dabbrev))))
+
 (add-hook 'conf-mode-hook (lambda ()
                             (spacemacs/toggle-relative-line-numbers-on)))
 (add-hook 'company-mode-hook 'company-posframe-mode)
 (add-hook 'text-mode-hook 'smartparens-mode)
+;; turnoff `display-line-numbers-mode' in `artist-mode'
+(add-hook 'artist-mode-hook (lambda () (display-line-numbers-mode -1)))
 
 (mapc #'wttr/prepend-to-exec-path
       (reverse
