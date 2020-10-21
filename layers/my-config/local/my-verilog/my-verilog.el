@@ -624,9 +624,10 @@
 
 
 (defadvice verilog-header (around my-verilog-header
-                                  (&optional opt_arg))
+                                  (&optional quiet))
   "Insert a standard Verilog file header.
-See also `verilog-sk-header' for an alternative format."
+See also `verilog-sk-header' for an alternative format.
+QUIET: be quiet and don't promote anything if t"
   (goto-line 1)
   (interactive)
   (let ((start (point)))
@@ -651,13 +652,23 @@ See also `verilog-sk-header' for an alternative format."
 
 ")
     (goto-char start)
-    (let (string)
-      (setq string (read-string "Company: "   "ImageDesign"))
-      (setq verilog-company string)
+    (let (compnay-name module-name project-name)
+      (if (not quiet)
+          (progn
+            (setq company-name (read-string "Company: "   "ImageDesign"))
+            (setq module-name (read-string "module: " (file-name-base (buffer-name))))
+            (setq project-name (read-string "project: " (projectile-project-name)))
+            )
+        (progn
+          (setq company-name "ImageDesign")
+          (setq module-name  (file-name-base (buffer-name)))
+          (setq project-name (projectile-project-name))
+          ))
+      (setq verilog-company company-name)
       ;;(search-forward "<company>") (replace-match string t t)
-      (search-forward "<company>") (replace-match string t t)
-      (search-forward "<company>") (replace-match string t t)
-      (search-forward "<company>") (replace-match string t t)
+      (search-forward "<company>") (replace-match company-name t t)
+      (search-forward "<company>") (replace-match company-name t t)
+      (search-forward "<company>") (replace-match company-name t t)
       (goto-char start)
       (search-forward "<year>") (replace-match "" t t)
       (verilog-insert-year)
@@ -665,11 +676,9 @@ See also `verilog-sk-header' for an alternative format."
       (search-forward "<lastdate>") (replace-match "" t t)
       (verilog-insert-time)
       (goto-char start)
-      (setq string (read-string "module: " (file-name-base (buffer-name))))
-      (search-forward "<module>") (replace-match string t t)
-      (setq string (read-string "project: " (projectile-project-name)))
-      (setq verilog-project string)
-      (search-forward "<project>") (replace-match string t t)
+      (search-forward "<module>") (replace-match module-name t t)
+      (setq verilog-project project-name)
+      (search-forward "<project>") (replace-match project-name t t)
       (search-forward "<author>") (replace-match "" t t)
       (insert (user-full-name))
       (insert "<" (user-login-name) "@" (system-name) ">")
@@ -1389,10 +1398,22 @@ indent all left-pair of signals to COLUMN, stop when get to the position of END-
           (if (search-forward "Engineer    : " nil t)
               (progn
                 (kill-line)
+                (insert (user-full-name))
                 (insert "<" (user-login-name) "@" (system-name) ">"))
                 (message "Can't find the position to update \"Engineer\""))
           ))))
 
+(defcustom my-verilog-auto-insert-header t
+  " when it's value is t, emacs will execute `verilog-header' when open an empty buffer with minor mode `my-verilog',
+to turn off it globally by:
+(customize-set-variable 'my-verilog-auto-insert-header nil)
+or add following line into end of buffer:
+
+# Local \Variables:
+# eval:(custom-set-variables '(my-verilog-auto-insert-header nil))
+# End:
+"
+  :group 'verilog-mode)
 ;;;###autoload
 (define-minor-mode my-verilog
   "It is my configuration of verilog-mode"
@@ -1407,7 +1428,8 @@ indent all left-pair of signals to COLUMN, stop when get to the position of END-
   ;; (set (make-local-variable 'indent-line-function)
   ;;      #'my-verilog-indent-line-relative)
   (local-set-key (kbd "C-=") 'verilog-sk-nonblock-assign)
-  (if (= (point-max) 1)
+  (if (and my-verilog-auto-insert-header
+       (= (point-max) 1))
       (if (yes-or-no-p "Buffer is empty, let's insert verilog-header?")
-          (verilog-header)))
+          (verilog-header t)))
   )
