@@ -102,6 +102,8 @@
     (multi-translate :location (recipe
                                 :fetcher github
                                 :repo twlz0ne/multi-translate.el))
+    org-roam
+    org-roam-server
   )
 
   "The list of Lisp packages required by the my-config layer.
@@ -869,4 +871,13 @@ See URL `irun -helpall'"
     :defer t
     ))
 
+(defun my-config/init-org-roam()
+  (use-package org-roam
+    :defer t
+    ))
+
+(defun my-config/init-org-roam-server()
+  (use-package org-roam-server
+    :defer t
+    ))
 ;;; packages.el ends here
