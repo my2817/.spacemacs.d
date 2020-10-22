@@ -415,6 +415,7 @@ Each entry is either:
       ;; after org9.2 [[https://orgmode.org/Changes.html][changlog]]
       ;; prefer using previous patterns, e.g. <s, goto org-tempo.el for more information
       (add-to-list 'org-modules 'org-tempo)
+      (add-to-list 'org-modules 'ox-freemind)
       ))
   )
 (defun my-config/init-compilation-mode()
