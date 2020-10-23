@@ -90,8 +90,7 @@
 (defun company-verilog-update-keywords-user ()
   (custom-set-variables
    '(company-verilog-keywords-user
-     '("class_uvm_component" "class_uvm_object"
-       "AUTOINPUT" "AUTOOUTPUT" "AUTOWIRE" "AUTOREGINPUT" "AUTOARGS" "AUTORESET" "autotags" "verilog-library-flags")))
+     '("AUTOINPUT" "AUTOOUTPUT" "AUTOWIRE" "AUTOREGINPUT" "AUTOARG" "AUTORESET" "autotags" "verilog-library-flags")))
   )
 
 (defcustom company-verilog-keywords nil

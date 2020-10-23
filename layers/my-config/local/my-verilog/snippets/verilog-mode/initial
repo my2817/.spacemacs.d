@@ -7,7 +7,7 @@ initial begin: init_blk
 /*$sdf_annotate ( <"sdf_file">, <module_instance>?,
 <"config_file">?, <"log_file">?, <"mtm_spec">?,
 <"scale_factors">?, <"scale_type">? );*/
-$shm_open("wave");
-$shm_probe(test_top_tb,"ASC");$0
+//$shm_open("wave");
+//$shm_probe(test_top_tb,"ASC");$0
 
 end: init_blk

@@ -1,8 +1,8 @@
 # name: class for uvm object
-# key: class_uvm_object
+# key: class
 # group: verilog
 # --
-class ${1:Name} extends uvm_${2:From};
+class ${1:Name} extends ${2:uvm_From};
 
 \`uvm_object_utils_begin( \"$1\" )
 \`uvm_object_utils_end

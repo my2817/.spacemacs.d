@@ -1,0 +1,7 @@
+# name: else if () begin ... end
+# key: else
+# group: verilog
+# --
+else if ($1) begin
+   $0
+end
