@@ -415,6 +415,18 @@ Each entry is either:
       ;; after org9.2 [[https://orgmode.org/Changes.html][changlog]]
       ;; prefer using previous patterns, e.g. <s, goto org-tempo.el for more information
       (add-to-list 'org-modules 'org-tempo)
+      ;; export into freemind *.mm file, and open with freemplane
+      ;; to support chinese in freeplane, should do the following
+      ;; - linux
+      ;;   export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dsun.java2d.xrender=true -Dfile.encoding=UTF8 $_JAVA_OPTIONS"
+      ;; - window 需要找到Freeplane的安装路径（我的为D:\Program Files\Freeplane），将其加入到启动配置文件freeplane.l4j.ini中
+      ;;   #+begin_example
+      ;;     -Dawt.useSystemAAFontSettings=on
+      ;;     -Dswing.aatext=true
+      ;;     -Dsun.java2d.xrender=true
+      ;;     -Dfile.encoding=UTF8
+      ;;   #+end_example
+      ;;
       (add-to-list 'org-modules 'ox-freemind)
       ))
   )
@@ -523,6 +535,7 @@ See URL `irun -helpall'"
     (progn
       ;; (autoload 'company-english-helper "company-english-helper" "En-helper" t)
       (require 'company-english-helper)
+      (toggle-company-english-helper)
       )
     ))
 
@@ -530,7 +543,6 @@ See URL `irun -helpall'"
   (use-package awesome-tab
     :init
     (progn
-      ;; (autoload 'company-english-helper "company-english-helper" "En-helper" t)
       ;; need all-the-icon fonts: https://github.com/domtronn/all-the-icons.el/tree/master/fonts
       (require 'awesome-tab)
       ;; (awesome-tab-mode)

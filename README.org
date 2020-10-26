@@ -178,7 +178,9 @@
       +------mode line---------+--------mode line---------+
       |               minibuffer                          |
       +---------------------------------------------------+
-
+      - this diagram is drawed in artist-mode
+      - don't enable line number in artist-mode
+      - use set-mouse-color after exit artist-mode
     #+end_src
     + ~spc w /~ 左右分割 window
     + ~spc w -~ 上下分割 window
