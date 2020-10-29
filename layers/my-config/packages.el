@@ -354,7 +354,7 @@ Each entry is either:
          (C . t)
          (awk . t)
          (ditaa . t)
-         (mermaid . t)
+         ;; (mermaid . t)
          ))
 
       (setq ob-mermaid-cli-path "~/node_modules/.bin/mmdc")
