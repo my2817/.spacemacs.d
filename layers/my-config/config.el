@@ -119,6 +119,7 @@
 (add-hook 'text-mode-hook 'smartparens-mode)
 ;; turnoff `display-line-numbers-mode' in `artist-mode'
 (add-hook 'artist-mode-hook (lambda () (display-line-numbers-mode -1)))
+(add-hook 'sh-mode-hook 'company-mode)
 
 (mapc #'wttr/prepend-to-exec-path
       (reverse
