@@ -55,8 +55,8 @@
                   (concat "/" exwm-title)))
          (name (concat part1 (or part2 "")))
          (maxlen 40))
-    (exwm-workspace-rename-buffer (if (> (length name) maxlen)
-                                      (concat (subseq name 0 (- maxlen 3)) "...")
+    (exwm-workspace-rename-buffer (if (> (length exwm-title) maxlen)
+                                      (concat exwm-class-name "<...>" (subseq exwm-title (- 0 maxlen)))
                                     name))))
 
 (defun spacemacs/exwm-workspace-next ()
