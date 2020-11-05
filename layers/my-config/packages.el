@@ -77,6 +77,7 @@
     (aweshell :location (recipe
                          :fetcher github
                          :repo manateelazycat/aweshell))
+    ;; (eaf :location local)
     magit-todos
     (magit-gerrit :location (recipe
                              :fetcher github
@@ -892,5 +893,29 @@ See URL `irun -helpall'"
 (defun my-config/init-org-roam-server()
   (use-package org-roam-server
     :defer t
+    ))
+
+(defun my-config/init-eaf()
+  "wsl:
+git clone eaf into ./local/eaf
+apt install -y pyqt5 pyqt5-dev
+pip install PyQt5 PyQtWebEngine
+
+shell:
+eval $(dbus-launch)
+export DBUS_SESSION_BUS_ADDRESS
+emacs
+
+
+"
+  (use-package eaf
+    :defer t
+    :init (require 'eaf)
+    :custom
+    (eaf-find-alternate-file-in-dired t)
+    :config
+    (eaf-bind-key scroll_up "C-n" eaf-pdf-viewer-keybinding)
+    (eaf-bind-key scroll_down "C-p" eaf-pdf-viewer-keybinding)
+    (eaf-bind-key take_photo "p" eaf-camera-keybinding)
     ))
 ;;; packages.el ends here
