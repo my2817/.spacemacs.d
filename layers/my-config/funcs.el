@@ -694,32 +694,26 @@ https://www.emacswiki.org/emacs/QR_Code"
 use last 40 chars as buffer name if the title name is too long.
 "
 
-  (let* ((part1 exwm-class-name)
-         (part2 (when (not (string-equal exwm-class-name exwm-title))
-                  (concat "/" exwm-title)))
-         (name (concat part1 (or part2 "")))
-         (maxlen 40)
-         (fn-pos (when (string-match "[./~]+[0-9a-zA-Z/_+-.]+" exwm-title)
+  (let* (
+         ;; (maxlen 40)
+         (fn-pos (when (string-match "[~.]?/[0-9a-zA-Z/_+-.]+" exwm-title)
                    (match-data)))
-         (fn
-          (when fn-pos
-            (substring exwm-title (car fn-pos) (cadr fn-pos))))
+         (fn (when fn-pos
+               (substring exwm-title (car fn-pos) (cadr fn-pos))))
          ;;project-root
-         (pr (when fn (projectile-project-root fn)))
+         (pr (when (projectile-project-p fn)
+               ;; remove last "/" if exist
+               (replace-regexp-in-string "/$" "" (projectile-project-root fn))))
          ;; project-name
-         (pn (when (file-exists-p fn)
+         (pn (when pr
                (projectile-project-name pr)))
          (collapse-title (when pn
                            (replace-regexp-in-string pr (concat "<" pn ">") exwm-title)))
          )
-    ;; (message "pr is:%s" pr)
-    ;; (message "pn is:%s" pn)
-    ;; (message "fn is:%s" fn)
-    ;; (message "exwm-title is:%s" exwm-title)
-    ;; (message "collapse-title is:%s" collapse-title)
     (exwm-workspace-rename-buffer (if (not collapse-title)
-                                      (if (> (length exwm-title) maxlen)
-                                          (concat exwm-class-name "<...>" (subseq exwm-title (- 0 maxlen)))
-                                        (concat exwm-class-name "::" exwm-title)
-                                        )
-                                    (concat exwm-class-name collapse-title)))))
+                                      ;; (if (> (length exwm-title) maxlen)
+                                      ;;     (concat exwm-class-name "|" (subseq exwm-title (- 0 maxlen)))
+                                      ;;   (concat exwm-class-name "|" exwm-title)
+                                      ;;   )
+                                      (concat exwm-class-name "|" exwm-title)
+                                    (concat exwm-class-name "|" collapse-title)))))

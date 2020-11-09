@@ -294,3 +294,7 @@
 
 (with-eval-after-load 'dired
   (setq dired-listing-switches (purecopy "-alh")))
+
+(with-eval-after-load 'exwm
+  (setq exwm-update-title-hook 'my-exwm-rename-buffer)
+  )
