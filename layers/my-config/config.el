@@ -283,7 +283,7 @@
 
 (setq epa-pinentry-mode 'loopback)
 (setq epa-file-cache-passphrase-for-symmetric-encryption t)
-(setq ob-mermaid-cli-path "~/node_modules/.bin/mmdc")
+
 
 ;;
 ;; speedup magit

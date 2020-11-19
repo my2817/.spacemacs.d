@@ -36,6 +36,7 @@
     ;blink-cursor-mode
     ;; psvn
     (my-verilog :location local)
+    verilog-mode
     ;;(mmm-mode :location local)
     mmm-mode
     highlight-symbol
@@ -105,6 +106,7 @@
                                 :repo twlz0ne/multi-translate.el))
     org-roam
     org-roam-server
+    mermaid-mode
   )
 
   "The list of Lisp packages required by the my-config layer.
@@ -185,10 +187,15 @@ Each entry is either:
     :defer t
     :init
     (progn
-      ;; (require 'my-verilog)
       (autoload 'my-verilog "my-verilog" "my configuration of verilog-mode " t)
-      (add-hook 'verilog-mode-hook 'my-verilog)
-    )
+    )))
+
+(defun my-config/init-verilog-mode ()
+  (use-package verilog-mode
+    :defer t
+    :config
+    (modify-syntax-entry ?` "." verilog-mode-syntax-table)
+    (add-hook 'verilog-mode-hook 'my-verilog)
     ))
 
 (defun my-config/post-init-mmm-mode ()
@@ -355,7 +362,7 @@ Each entry is either:
          (C . t)
          (awk . t)
          (ditaa . t)
-         ;; (mermaid . t)
+         (mermaid . t)
          ))
 
       (setq ob-mermaid-cli-path "~/node_modules/.bin/mmdc")
@@ -917,5 +924,12 @@ emacs
     (eaf-bind-key scroll_up "C-n" eaf-pdf-viewer-keybinding)
     (eaf-bind-key scroll_down "C-p" eaf-pdf-viewer-keybinding)
     (eaf-bind-key take_photo "p" eaf-camera-keybinding)
+    ))
+
+(defun my-config/init-mermaid-mode()
+  (use-package mermaid-mode
+    :defer t
+    :config
+    (setq ob-mermaid-cli-path "~/node_modules/.bin/mmdc")
     ))
 ;;; packages.el ends here
