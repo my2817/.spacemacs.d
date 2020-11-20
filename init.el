@@ -61,6 +61,7 @@ This function should only modify configuration layer settings."
      html
      vimscript
      python
+     (c-c++ :variables c-basic-offset 4)
      )
 
    ;; List of additional packages that will be installed without being
