@@ -715,6 +715,20 @@ QUIET: be quiet and don't promote anything if t"
       (insert (format-time-string "%Y-%m-%d %H:%M:%S"))
     (insert (format-time-string "%d.%m.%Y-%H:%M:%S"))))
 
+(defun my-verilog-pretty-autoreset()
+  "Search region of AUTORESET, then excute `verilog-pretty-expr'"
+  (interactive)
+  (when (or (eq 'all verilog-auto-lineup)
+            (eq 'assignment verilog-auto-lineup))
+    (save-excursion
+      (goto-line 1)
+      (while (re-search-forward "/\\*autoreset\\*/\\|/\\*AUTORESET\\*/" nil t)
+        (next-line)
+        (beginning-of-line)
+        (when (search-forward "// Beginning of autoreset for uninitialized flops" (point-at-eol) t)
+          (next-line)
+          (verilog-pretty-expr))))))
+
 (defadvice verilog-auto (after verilog-last-update
                                (&optional opt_arg))
   "update \"Last Update:\" before 'verilog-inject-auto.
@@ -725,7 +739,7 @@ see also:
   (save-excursion
     (goto-line 1)
     (if (buffer-modified-p)
-        (if (search-forward "Last Update : " nil nil)
+        (if (search-forward "Last Update : " nil t)
             (progn
               (kill-line)
               (verilog-insert-time))
@@ -733,6 +747,7 @@ see also:
   (imenu-list-rescan-imenu)
   (if my-verilog-auto-align
       (my-verilog-align-indent-inst-signal))
+  (my-verilog-pretty-autoreset)
   )
 (ad-activate 'verilog-auto)
 
@@ -882,113 +897,6 @@ endmodule // tb
     )
   )
 
-(defun my-verilog-align-inst-signal ()
-  "DONT use this function, `my-verilog-align-indent-inst-signal' is better
-
-align all inst entity's left-pair(parameter entity included) and all inst's port list
-
-Useage: 1) Format inst's port list(include parameter list) to single line(one port, one line) before call this function
-        2)
-   submod-1 #(//inst parameter)
-   inst1( <- pos-inst-start locate the left-paren of inst
-                  .a1(a), <- pos-port-left-paren locate the left-paren of port list
-                  .aa2(a), <- pos-port-right-paren locate the right-paren of port list
-                  .aaaa3(a));
-   submod-1 inst2_foo(
-                      .ab1(a),
-                      .ab2(a),
-                      .abbbb4(a));
-
- ==>
-   submod-1 inst1    (  <- align to inst2_foo
-                      .a1     (a),
-                      .aa2    (a),
-                      .aaaa3  (a));
-   submod-1 inst2_foo(
-                      .ab1    (a),
-                      .ab2    (a),
-                      .abbbb4 (a));
-
- - Get all inst position in alist whitch create by `verilog-imenu-create-find-instances-or-modports'
- - alist format: ((\"uut2 <tt_b>\" . 1295) (\"uut <tt_b>\" . 1134) (\"test <module>\" . 732))
-"
-  ;; (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (let ((inst-alist '()) (final-alist '())
-          (pos-inst-start '0) (pos-port-end '0) (pos-port-right-paren '0) (pos-current '0) (pos-parent-end '0)
-          (left-pair "(") (right-pair ")"))
-      ;; remove module entity from inst-alist
-      (setq inst-alist (verilog-imenu-create-find-instances-or-modports (point-max)))
-      (dolist (entity inst-alist) ;; get maxmum column of insts and ports
-        (let ((param-entiy)
-              (inst-name (car (split-string (car entity))))
-              (inst-type (cdr (split-string (car entity))))
-              (inst-pos (cdr entity)))
-          ;; jump through module entity
-          (if (not (string= (car inst-type) "<module>"))
-              (progn
-                (push entity final-alist)
-                ;; search most right position of left-pair
-                (goto-char inst-pos)
-                (goto-char (point-at-bol))
-                ;; parameter list
-                (if (verilog-re-search-forward "#(" (point-at-eol) t)
-                    (progn
-                      (setq param-entiy t)
-                      (verilog-re-search-backward "[a-zA-Z0-9_]" (point-at-bol) t)
-                      (if (< pos-inst-start (current-column))
-                          (setq pos-inst-start (+ (current-column) 3)));; "#(" has two chars
-                      ;; get max-column of parameter list
-                      (setq pos-parent-end (my-verilog-search-pair-end-position left-pair right-pair))
-                      (setq pos-current (my-verilog-port-end-max-column-by-search-parent left-pair right-pair))
-                      (if (< pos-port-end pos-current)
-                          (setq pos-port-end pos-current))
-                      (goto-char pos-parent-end)
-                      (next-line)
-                      (goto-char (point-at-bol)))
-                  (setq param-entiy nil))
-                ;; get max-column of signal port list
-                (verilog-re-search-forward "(" nil t)
-                (verilog-re-search-backward "[a-zA-Z0-9_]" (point-at-bol) t)
-                (if (< pos-inst-start (current-column))
-                    (setq pos-inst-start (+ 2 (current-column))))
-                ;; (setq pos-parent-end (my-verilog-search-pair-end-position left-pair right-pair))
-                (setq pos-current (my-verilog-port-end-max-column-by-search-parent left-pair right-pair))
-                (if (< pos-port-end pos-current)
-                    (setq pos-port-end pos-current))
-                ))))
-      ;; (message-box "port column: %d\ninst column: %d" pos-port-end pos-inst-start)
-      (dolist (entity inst-alist) ;; indent to position
-        (let ((param-entiy)
-              (end-pattern)
-              (inst-name (car (split-string (car entity))))
-              (inst-type (cdr (split-string (car entity))))
-              (inst-pos (cdr entity)))
-          (if (not (string= (car inst-type) "<module>"))
-              (progn
-                (goto-char inst-pos)
-                (goto-char (point-at-bol))
-                ;; parameter list
-                (if (verilog-re-search-forward "\\s-?+#(" (point-at-eol) t)
-                    (progn
-                      (replace-match "#(" t t)
-                      (backward-char)(backward-char) ;; indent "#(" to `pos-inst-start'
-                      (while (< (current-column) (- pos-inst-start 1))
-                        (insert " "))
-                      ;; (next-line)
-                      (my-verilog-indent-inst-port-to-column-by-search-parent (+ pos-port-end 2) left-pair right-pair)
-                      ;; goto end of parameter list
-                      (goto-char (my-verilog-search-pair-end-position left-pair right-pair))
-                      (verilog-re-search-forward "(" nil t)))
-                (goto-char (point-at-bol))
-                (verilog-re-search-forward "\\s-?+(" (point-at-eol) t)
-                (replace-match "(" t t)
-                (backward-char)
-                (while (< (current-column)  pos-inst-start )
-                  (insert " "))
-                (my-verilog-indent-inst-port-to-column-by-search-parent (+ pos-port-end 2) left-pair right-pair)
-                )))))))
 
 (defcustom my-verilog-min-spc-for-align 1
   "submodule uut (
@@ -1052,7 +960,7 @@ imp step:
                 (push entity final-alist)
                 ;; search most right position of left-pair
                 (goto-char inst-pos)
-                (goto-char (point-at-bol))
+                (beginning-of-line)
                 ;; parameter list
                 (if (verilog-re-search-forward "#(" (point-at-eol) t)
                     (progn
@@ -1067,7 +975,7 @@ imp step:
                           (setq port-length length-current))
                       (goto-char pos-parent-end)
                       (next-line)
-                      (goto-char (point-at-bol)))
+                      (beginning-of-line))
                   (setq param-entiy nil))
                 ;; get max-column of signal port list
                 (verilog-re-search-forward "(" nil t)
@@ -1105,7 +1013,7 @@ imp step:
           (if (not (string= (car inst-type) "<module>"))
               (progn
                 (goto-char inst-pos)
-                (goto-char (point-at-bol))
+                (beginning-of-line)
                 ;; parameter list
                 (if (verilog-re-search-forward "\\s-?+#(" (point-at-eol) t)
                     (progn
@@ -1117,7 +1025,7 @@ imp step:
                       ;; goto end of parameter list
                       (goto-char (my-verilog-search-pair-end-position left-pair right-pair))
                       (verilog-re-search-forward "(" nil t)))
-                (goto-char (point-at-bol))
+                (beginning-of-line)
                 (verilog-re-search-forward "\\s-?+(" (point-at-eol) t)
                 (replace-match "(" t t)
                 (backward-char)
@@ -1145,7 +1053,7 @@ imp step:
           (if (not (string= (car inst-type) "<module>"))
               (progn
                 (goto-char inst-pos)
-                (goto-char (point-at-bol))
+                (beginning-of-line)
                 ;; parameter list
                 (if (verilog-re-search-forward "\\s-?+#(" (point-at-eol) t)
                     (progn
@@ -1154,7 +1062,7 @@ imp step:
                       ;; goto end of parameter list
                       (goto-char (my-verilog-search-pair-end-position left-pair right-pair))
                       (verilog-re-search-forward "(" nil t)))
-                (goto-char (point-at-bol))
+                (beginning-of-line)
                 (verilog-re-search-forward "\\s-?+(" (point-at-eol) t)
                 (backward-char)
                 (my-verilog-indent-inst-signal-with-offset-by-search-parent port-length left-pair right-pair)
@@ -1166,7 +1074,7 @@ imp step:
 (defun my-verilog-search-pair-end-position (left-pair right-pair)
     "Return the position of matched right-pair"
     (save-excursion
-    (goto-char (point-at-bol))
+    (beginning-of-line)
     (verilog-re-search-forward left-pair nil t)
     (let ((depth 1))
       (while (progn
@@ -1181,13 +1089,13 @@ imp step:
 (defun my-verilog-indent-in-pair (left-pair right-pair)
   "indent inside region LEFT-PAIR and RIGHT-PAIR"
   (save-excursion
-    (goto-char (point-at-bol))
+    (beginning-of-line)
     (verilog-re-search-forward left-pair nil t)
     (let ((depth 1))
       (while (progn
                (while (not (verilog-re-search-forward (concat "\\([" left-pair right-pair "]\\)") (point-at-eol) t))
                  (next-line)
-                 (goto-char (point-at-bol))
+                 (beginning-of-line)
                  (electric-verilog-tab)
                  )
                (if (string= (verilog-match-string 1) left-pair)
@@ -1199,23 +1107,6 @@ imp step:
       (backward-char)
       (point))))
 
-(defun my-verilog-port-end-max-pos (end)
-  "DONT use thise, `my-verilog-port-max-length-by-search-parent' is better
-Return max column of ports' name end"
-  (save-excursion
-    (let ((column 0) (depth 1))
-      ;; (while (not (verilog-re-search-forward ");" (point-at-eol) t))
-      (while (< (point) end)
-        (next-line)
-        (goto-char (point-at-bol))
-        (if (verilog-re-search-forward "(" nil t)
-            (progn
-              (backward-char)
-              (skip-chars-backward " \t")
-              (backward-char)
-              (if (< column (current-column))
-                  (setq column (current-column))))))
-      column)))
 
 (defun my-verilog-port-end-max-column-by-search-parent (left-pair right-pair)
   "Return max column of ports' name end inside LEFT-PARENT and RIGHT-PARENT
@@ -1284,27 +1175,6 @@ rease to 2, \")\": depth decrease to 1
                 (> depth 0)))
       length )))
 
-(defun my-verilog-indent-to-column (column regexp-end-pattern)
-  "DONT use, `my-verilog-indent-inst-port-to-column-by-search-parent' is better
-indent all left-pair of signals to COLUMN, stop when get to the position of END-PATTEN"
-  (save-excursion
-    (let ((boundry nil))
-      (while (not boundry)
-        (goto-char (point-at-bol))
-        (verilog-re-search-forward "(" nil t)
-        (goto-char (point-at-bol))
-        (if (verilog-re-search-forward "\\s-+(" (point-at-eol) t)
-            (replace-match "(" t t)
-          (verilog-re-search-forward "(" nil t))
-        (backward-char)
-        (while (< (current-column) column)
-          (insert " "))
-        (if (and (not (verilog-re-search-forward "," (point-at-eol) t))
-                 (verilog-re-search-forward regexp-end-pattern nil t))
-            (setq boundry t)
-          (next-line))
-        ))))
-
 (defun my-verilog-indent-inst-port-to-column-by-search-parent (column left-pair right-pair)
   "indent all left-pair of signals to COLUMN, search boundry like `my-verilog-port-end-max-column-by-search-parent'"
   (save-excursion
@@ -1319,9 +1189,9 @@ indent all left-pair of signals to COLUMN, stop when get to the position of END-
                 (if (and (string= (verilog-match-string 1) left-pair)
                          (= depth 2))
                     (progn
-                      (goto-char (point-at-bol))
+                      (beginning-of-line)
                       (verilog-re-search-forward "(" nil t)
-                      (goto-char (point-at-bol))
+                      (beginning-of-line)
                       (if (verilog-re-search-forward "\\s-+(" (point-at-eol) t)
                           (replace-match "(" t t)
                         (verilog-re-search-forward "(" nil t))
@@ -1347,9 +1217,9 @@ indent all left-pair of signals to COLUMN, stop when get to the position of END-
                 (if (and (string= (verilog-match-string 1) left-pair)
                          (= depth 2))
                     (progn
-                      (goto-char (point-at-bol))
+                      (beginning-of-line)
                       (verilog-re-search-forward "(" nil t)
-                      (goto-char (point-at-bol))
+                      (beginning-of-line)
                       (if (verilog-re-search-forward "\\s-+(" (point-at-eol) t)
                           (replace-match "(" t t)
                         (verilog-re-search-forward "(" nil t))
