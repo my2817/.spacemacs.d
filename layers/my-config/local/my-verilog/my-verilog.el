@@ -1018,11 +1018,12 @@ imp step:
                 (if (verilog-re-search-forward "\\s-?+#(" (point-at-eol) t)
                     (progn
                       (replace-match "#(" t t)
-                      (backward-char)(backward-char) ;; indent "#(" to `pos-inst-start'
+                      (backward-char 2) ;; indent "#(" to `pos-inst-start'
                       (insert (make-string (- (- pos-inst-start 1) (current-column)) ? ))
                       ;; (next-line)
                       ;; (my-verilog-indent-in-pair left-pair right-pair)
                       ;; goto end of parameter list
+                      (my-verilog-indent-inst-signal-with-offset-by-search-parent port-length left-pair right-pair pos-inst-start)
                       (goto-char (my-verilog-search-pair-end-position left-pair right-pair))
                       (verilog-re-search-forward "(" nil t)))
                 (beginning-of-line)
@@ -1030,44 +1031,8 @@ imp step:
                 (replace-match "(" t t)
                 (backward-char)
                 (insert (make-string (- pos-inst-start (current-column)) ? ))
-                ;; (my-verilog-indent-in-pair left-pair right-pair)
+                (my-verilog-indent-inst-signal-with-offset-by-search-parent port-length left-pair right-pair pos-inst-start)
                 ))))
-      ;; align port signals and parameter symbol
-
-      (setq inst-index 1)
-      (dolist (entity inst-alist) ;; indent to position
-        (let ((param-entiy)
-              (end-pattern)
-              (inst-name (car (split-string (car entity))))
-              (inst-type (cdr (split-string (car entity))))
-              (updated-alist '())
-              (inst-pos))
-
-          (message "indent ports list: (%2d/%2d) %s %s" inst-index inst-count inst-type inst-name)
-          (setq inst-index (+ 1 inst-index))
-          ;; (save-excursion
-            (goto-char (point-min))
-            (setq updated-alist (verilog-imenu-create-find-instances-or-modports (point-max)))
-            ;; )
-          (setq inst-pos (cdr (assoc (car entity) updated-alist)))
-          (if (not (string= (car inst-type) "<module>"))
-              (progn
-                (goto-char inst-pos)
-                (beginning-of-line)
-                ;; parameter list
-                (if (verilog-re-search-forward "\\s-?+#(" (point-at-eol) t)
-                    (progn
-                      (backward-char)(backward-char) ;; indent "#(" to `pos-inst-start'
-                      (my-verilog-indent-inst-signal-with-offset-by-search-parent port-length left-pair right-pair)
-                      ;; goto end of parameter list
-                      (goto-char (my-verilog-search-pair-end-position left-pair right-pair))
-                      (verilog-re-search-forward "(" nil t)))
-                (beginning-of-line)
-                (verilog-re-search-forward "\\s-?+(" (point-at-eol) t)
-                (backward-char)
-                (my-verilog-indent-inst-signal-with-offset-by-search-parent port-length left-pair right-pair)
-                ))))
-      (indent-region (point-min) (point-max))
       )))
 
 
@@ -1203,23 +1168,28 @@ rease to 2, \")\": depth decrease to 1
                 (> depth 0)))
       )))
 
-(defun my-verilog-indent-inst-signal-with-offset-by-search-parent (offset left-pair right-pair)
+(defun my-verilog-indent-inst-signal-with-offset-by-search-parent (offset left-pair right-pair port-st-pos)
   "indent all left-pair of signals by offset, search boundry like `my-verilog-port-end-max-column-by-search-parent'"
   (save-excursion
-    (let ((depth 1))
+    (let ((depth 1)
+          (char )
+          )
       (verilog-re-search-forward left-pair nil t)
       (while  (progn
                 (verilog-re-search-forward (concat "\\([" left-pair  right-pair "]\\)") nil t)
-                (if (string= (verilog-match-string 1) left-pair)
+                (setq char (verilog-match-string 1))
+                (if (string= char left-pair)
                     (setq depth (1+ depth))
                   (setq depth (1- depth)))
 
-                (if (and (string= (verilog-match-string 1) left-pair)
+                (if (and (string= char left-pair)
                          (= depth 2))
                     (progn
                       (beginning-of-line)
-                      (verilog-re-search-forward "(" nil t)
-                      (beginning-of-line)
+                      (verilog-re-search-forward "^\\s-?+" nil t)
+                      (replace-match (make-string (+ 1 port-st-pos) ? ) t t)
+                      ;; (verilog-re-search-forward "(" nil t)
+                      ;; (beginning-of-line)
                       (if (verilog-re-search-forward "\\s-+(" (point-at-eol) t)
                           (replace-match "(" t t)
                         (verilog-re-search-forward "(" nil t))
