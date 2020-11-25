@@ -729,27 +729,64 @@ QUIET: be quiet and don't promote anything if t"
           (next-line)
           (verilog-pretty-expr))))))
 
-(defadvice verilog-auto (after verilog-last-update
-                               (&optional opt_arg))
-  "update \"Last Update:\" before 'verilog-inject-auto.
-see also:
-`my-verilog-auto-align'
-`my-verilog-align-indent-inst-signal'
+;; (defadvice verilog-auto (after verilog-last-update
+;;                                (&optional opt_arg))
+;;   "update \"Last Update:\" before 'verilog-inject-auto.
+;; see also:
+;; `my-verilog-auto-align'
+;; `my-verilog-align-indent-inst-signal'
+;; "
+;;   (save-excursion
+;;     (goto-line 1)
+;;     (if (buffer-modified-p)
+;;         (if (search-forward "Last Update : " nil t)
+;;             (progn
+;;               (kill-line)
+;;               (verilog-insert-time))
+;;           (message "Can't find the position to update the \"last updated timing\""))))
+;;   (imenu-list-rescan-imenu)
+;;   (if my-verilog-auto-align
+;;       (my-verilog-align-indent-inst-signal))
+;;   (my-verilog-pretty-autoreset)
+;;   )
+
+;; (ad-activate 'verilog-auto)
+
+(defcustom verilog-auto-before-hook nil
+  "Hook run after graphviz-dot-mode is loaded"
+  :type 'hook
+  :group 'verilog-mode)
+
+(defun my-verilog-auto ()
+  "Do something before run `verilog-auto'
+use `verilog-auto-hook' to do something after that
 "
-  (save-excursion
-    (goto-line 1)
-    (if (buffer-modified-p)
-        (if (search-forward "Last Update : " nil t)
-            (progn
-              (kill-line)
-              (verilog-insert-time))
-          (message "Can't find the position to update the \"last updated timing\""))))
-  (imenu-list-rescan-imenu)
-  (if my-verilog-auto-align
-      (my-verilog-align-indent-inst-signal))
-  (my-verilog-pretty-autoreset)
-  )
-(ad-activate 'verilog-auto)
+  (interactive)
+  (let ((flycheck-status (if (fboundp 'flycheck-mode) flycheck-mode nil)))
+    (if flycheck-status
+        (flycheck-mode 0))
+    (run-hooks verilog-auto-before-hook)
+    (verilog-auto)
+    (save-excursion
+      (goto-line 1)
+      (if (buffer-modified-p)
+          (if (search-forward "Last Update : " nil t)
+              (progn
+                (kill-line)
+                (verilog-insert-time))
+            (message "Can't find the position to update the \"last updated timing\""))))
+    (imenu-list-rescan-imenu)
+    (if my-verilog-auto-align
+        (my-verilog-align-indent-inst-signal))
+    (my-verilog-pretty-autoreset)
+    (if flycheck-status
+        (flycheck-mode 1)
+      (flycheck-mode 0)
+      )
+    ))
+
+(define-key verilog-mode-map "\C-c\C-a" 'my-verilog-auto)
+
 
 
 (defun my-verilog-insert-seq-always ()
