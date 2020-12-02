@@ -310,6 +310,10 @@ find the errors."
   )
 (ad-activate 'plantuml-indent-line)
 
+(defadvice org-edit-src-exit (after restore-window-config activate)
+  (winner-undo))
+(ad-activate 'org-edit-src-exit)
+
 
 (defun org-projectile/update-agenda-files ()
   "Update org-agenda-files based on `org-projectile-todo-files'
