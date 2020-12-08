@@ -107,6 +107,7 @@
     org-roam
     org-roam-server
     mermaid-mode
+    (hideshowvis :location local)
   )
 
   "The list of Lisp packages required by the my-config layer.
@@ -899,11 +900,17 @@ See URL `irun -helpall'"
 (defun my-config/init-org-roam()
   (use-package org-roam
     :defer t
+    :config
+    (progn (setq org-roam-directory "/mnt/c/Users/User/Documents/gtd"))
+    :init
+    (progn (org-roam-mode))
     ))
 
 (defun my-config/init-org-roam-server()
   (use-package org-roam-server
     :defer t
+    :init
+    (progn (org-roam-server-mode))
     ))
 
 (defun my-config/init-eaf()
@@ -936,4 +943,20 @@ emacs
     :config
     (setq ob-mermaid-cli-path "~/node_modules/.bin/mmdc")
     ))
+
+(defun my-config/init-hideshowvis()
+  (use-package hideshowvis
+    :defer t
+    :init
+    (autoload 'hideshowvis-enable "hideshowvis" "Highlight foldable regions")
+    (autoload 'hideshowvis-minor-mode
+      "hideshowvis"
+      "Will indicate regions foldable with hideshow in the fringe."
+      'interactive)
+    (dolist (hook (list 'emacs-lisp-mode-hook
+                        'c++-mode-hook
+                        'verilog-mode-hook
+                        ))
+      (add-hook hook 'hideshowvis-enable))
+  ))
 ;;; packages.el ends here
