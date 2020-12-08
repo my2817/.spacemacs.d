@@ -275,7 +275,7 @@ Each entry is either:
     :config
     (progn
       (setq plantuml-indent-regexp-end "^[ \t]*\\(?:@enduml\\|end\s+fork\\|fork\s+again\\|end\s+note\\|endif\\|end\\|elseif\\|else\\|endwhile\\|repeat\s+while\\|stop\\|}\\)")
-      (setq plantuml-indent-regexp-start "^[ \t]*\\(?:@startuml\\|fork\s+again\\|fork\\|start\\|if\\|elseif\\|else\\|while\\|loop\\|repeat$\\|\\(?:.*\\)?\s*\\(?:[<>.*a-z-|]+\\)?\s*\\(?:\\[[a-zA-Z]+\\]\\)?\s+if\\|note\s+over\\|note\s+\\(\\(?:\\(?:buttom\\|left\\|right\\|top\\)\\)\\)\\(?:\s+of\\)?\\|.*{\\)")
+      (setq plantuml-indent-regexp-start "^[ \t]*\\(?:@startuml\\|fork\s+again\\|fork\\|start\\|if\\|elseif\\|else\\|while\\|loop\\|alt\\|repeat$\\|\\(?:.*\\)?\s*\\(?:[<>.*a-z-|]+\\)?\s*\\(?:\\[[a-zA-Z]+\\]\\)?\s+if\\|note\s+over\\|note\s+\\(\\(?:\\(?:buttom\\|left\\|right\\|top\\)\\)\\)\\(?:\s+of\\)?\\|.*{\\)")
       (defvar plantuml-indent-regexp-arrow "^[ \t]*\\(?:\\(?:<\\|<|\\|o\\|\\*\\)\\(?:\\.\\|-\\)\\(?:down\\|up\\|left\\|right\\)?\\(?:\\.\\|-\\)\\|\\(?:-\\|\\.\\)\\(?:down\\|up\\|left\\|right\\)?\\(?:-\\|\\.\\)\\(?:>\\||>\\|\\*\\|o\\)\\)")
       (defvar plantuml-indent-regexp-arrow-1 "\\(?:\\(?:<\\|<|\\|o\\|\\*\\)\\(?:\\.\\|-\\)\\(?:down\\|up\\|left\\|right\\)?\\(?:\\.\\|-\\)\\|\\(?:-\\|\\.\\)\\(?:down\\|up\\|left\\|right\\)?\\(?:-\\|\\.\\)\\(?:>\\||>\\|\\*\\|o\\)\\)")
       (defvar plantuml-indent-regexp-arrow-2 "^\s*.+\s+\\(?:\\(?:<\\|<|\\|o\\|\\*\\)\\(?:\\.\\|-\\)\\(?:down\\|up\\|left\\|right\\)?\\(?:\\.\\|-\\)\\|\\(?:-\\|\\.\\)\\(?:down\\|up\\|left\\|right\\)?\\(?:-\\|\\.\\)\\(?:>\\||>\\|\\*\\|o\\)\\)")
@@ -286,6 +286,13 @@ Each entry is either:
                                            #'plantuml-indent-line)))
       (add-hook 'plantuml-mode-hook 'company-mode)
       (add-hook 'plantuml-mode-hook 'electric-spacing-mode)
+      (add-hook 'plantuml-mode-hook (lambda ()
+                                      (set (make-local-variable 'pyim-english-input-switch-functions)
+                                           '(;;pyim-probe-dynamic-english
+                                             pyim-probe-isearch-mode
+                                             ;;pyim-probe-program-mode
+                                             pyim-probe-org-speed-commands
+                                             pyim-probe-org-structure-template))))
       (make-local-variable 'company-backends)
       (setq company-backends
             '( company-files
