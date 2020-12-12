@@ -107,7 +107,7 @@
     org-roam
     org-roam-server
     mermaid-mode
-    (hideshowvis :location local)
+    ;; (hideshowvis :location local)
   )
 
   "The list of Lisp packages required by the my-config layer.
