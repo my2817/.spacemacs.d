@@ -124,7 +124,7 @@
   (save-excursion
     (let ((instance-alist '()))
       (while (verilog-re-search-forward
-              "^\\s-*\\([a-zA-Z0-9_]+\\)\\([ \t\n]+#([-+/a-zA-Z0-9._*,'() \t\n]*)\\)?[ \t\n]+\\([a-zA-Z0-9_]+\\)\\([ \t\n]*\\[[]0-9a-zA-Z: \t\n_-]*\\)?[ \t\n]*("
+              "^\\s-*\\([a-zA-Z0-9_]+\\)\\([ \t\n]+#([-+/a-zA-Z0-9._*,`() \t\n]*)\\)?[ \t\n]+\\([a-zA-Z0-9_]+\\)\\([ \t\n]*\\[[]0-9a-zA-Z: `\t\n_-]*\\)?[ \t\n]*("
               end t)
         (condition-case nil
             (let ((instance-type (verilog-match-string 1)) (instance-name (verilog-match-string 3))
@@ -1289,6 +1289,35 @@ or add following line into end of buffer:
 # End:
 "
   :group 'verilog-mode)
+
+(defun my-hideshowvis-fringe ()
+  (interactive )
+  (end-of-line)
+  (if (save-excursion
+        (end-of-line 1)
+        (or (hs-already-hidden-p)
+            (progn
+              (forward-char 1)
+              (hs-already-hidden-p))))
+      (hs-show-block)
+    (hs-hide-block)
+    ;; (beginning-of-line)
+    ))
+
+(defun my-verilog-indent/hs ()
+  "work around `electric-verilog-tab', indent or hide/show fring.
+If `buffer-read-only' is non-nil, execute `my-hideshowvis-fringe'.
+If `electric-verilog-tab' don't change position, execute `my-hideshowvis-fringe'.
+"
+  (interactive)
+  (if (or buffer-read-only
+          (let* ((old-position (point))
+                 (new-position (progn (electric-verilog-tab)
+                                      (point))))
+            (= old-position new-position))
+          )
+      (my-hideshowvis-fringe)))
+
 ;;;###autoload
 (define-minor-mode my-verilog
   "It is my configuration of verilog-mode"

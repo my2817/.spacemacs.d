@@ -195,6 +195,7 @@ Each entry is either:
   (use-package verilog-mode
     :defer t
     :config
+    (define-key verilog-mode-map "\t" 'my-verilog-indent/hs)
     ;; (modify-syntax-entry ?` "." verilog-mode-syntax-table)
     ;; `electric-verilog-tab' error while excute `verilog-calculate-indent'
     ;;  because "`" is not a word-constituent from the last line, we need to move "`" outside of "\\<" in verilog-directive-re-1
