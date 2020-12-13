@@ -748,3 +748,15 @@ i.e. change right window to bottom, or change bottom window to right."
                     (split-window-vertically)
                   (split-window-horizontally))
                 (set-window-buffer (windmove-find-other-window neighbour-dir) other-buf))))))))
+
+(define-advice dired-do-print (:override (&optional _))
+  ;; 修改自 https://www.emacswiki.org/emacs/DiredOmitMode
+  "Show/hide dotfiles. Bind to \"P\" in dired-mode"
+  (interactive)
+  (if (or (not (boundp 'dired-dotfiles-show-p)) dired-dotfiles-show-p)
+      (progn
+        (setq-local dired-dotfiles-show-p nil)
+        (dired-mark-files-regexp "^\\.")
+        (dired-do-kill-lines))
+    (revert-buffer)
+    (setq-local dired-dotfiles-show-p t)))
