@@ -1304,6 +1304,17 @@ or add following line into end of buffer:
     ;; (beginning-of-line)
     ))
 
+(defun my-verilog-readonly ()
+  "set buffer to read-only if Engineer field of header not equal to `uer-login-name' "
+  (save-excursion
+    (goto-line 1)
+    (search-forward "Engineer    : " nil t)
+    (forward-char)
+    (let ((system-user (user-login-name))
+          (file-author (symbol-at-point)))
+      (and (not (string= system-user file-author))
+           (read-only-mode 1))
+      )))
 (defun my-verilog-indent/hs ()
   "work around `electric-verilog-tab', indent or hide/show fring.
 If `buffer-read-only' is non-nil, execute `my-hideshowvis-fringe'.
@@ -1336,4 +1347,5 @@ If `electric-verilog-tab' don't change position, execute `my-hideshowvis-fringe'
        (= (point-max) 1))
       (if (yes-or-no-p "Buffer is empty, let's insert verilog-header?")
           (verilog-header t)))
+  (my-verilog-readonly)
   )
