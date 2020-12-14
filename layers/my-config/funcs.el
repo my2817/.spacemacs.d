@@ -760,3 +760,43 @@ i.e. change right window to bottom, or change bottom window to right."
         (dired-do-kill-lines))
     (revert-buffer)
     (setq-local dired-dotfiles-show-p t)))
+
+(defun my-insert-change-log ()
+" Inter change log from the result of `my-parse-git-diff'
+"
+  (interactive)
+  (let* ((changes (my-parse-git-diff)))
+    (dolist (file-changes changes)
+      (insert (car file-changes))
+      (insert "\n")
+      (dolist (change (cadr file-changes))
+        (insert (format "    %s\n" change))))))
+
+(defun my-parse-git-diff ()
+  "Parse change log from output of \"git diff\"
+the change log should be style with :
+ // 2020-12-14 comment string
+or
+ // 2020-12-14 12:12:12 comment string
+
+Return alist with structure: '( (fn1 (log-str log-str)) (fn2 (log-str log-str)) )
+"
+  (let* ((fn nil)
+         (log-strings)
+         (file-result);; '(fn (log-str1 ...))
+         (alist (process-lines  "git" "--no-pager" "diff" "--no-color" "-U0" "--cached")))
+    (dolist (line alist)
+      (and (string-prefix-p "diff --git a/" line)
+           (or (and fn
+                    (add-to-list 'file-result (list fn log-strings)))
+               t)
+           ;; save filename
+           (setq fn (substring (nth 2 (split-string line)) 2))
+           (setq log-strings '()))
+      (and (string-match (concat "\\(//\\s-?+"
+                                 (format-time-string "%Y-%m-%d");; date 2020-12-14
+                                 "\\)"
+                                 "\\(\\s-?+[0-9:]+\\)?";; time h:m:s
+                                 "\\s-?\\(.*$\\)") line)
+           (add-to-list 'log-strings (match-string 3 line))))
+    (add-to-list 'file-result (list fn log-strings))))

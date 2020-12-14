@@ -33,7 +33,7 @@
   '(
     auto-complete
     ;; graphviz-dot-mode ;; it has been configured by graphviz layer
-    ;blink-cursor-mode
+    ;;blink-cursor-mode
     ;; psvn
     (my-verilog :location local)
     verilog-mode
@@ -41,7 +41,7 @@
     mmm-mode
     highlight-symbol
     (tcl-dc-mode :location local)
-    ;htmlize
+    ;;htmlize
     electric-spacing
     ;; ctags
     ctags-update
@@ -59,7 +59,7 @@
     (company-english-helper :location local)
     (awesome-tab :location (recipe
                             :fetcher github
-                            :repo manateelazycat/awesome-tab));;from [https://github.com/manateelazycat/awesome-tab]
+                            :repo manateelazycat/awesome-tab)) ;;from [https://github.com/manateelazycat/awesome-tab]
     ;; header2
     (awesome-pair :location (recipe
                              :fetcher github
@@ -82,14 +82,14 @@
     magit-todos
     (magit-gerrit :location (recipe
                              :fetcher github
-                             :repo zeph1e/magit-gerrit));; https://github.com/terranpro/magit-gerrit/pull/56
+                             :repo zeph1e/magit-gerrit)) ;; https://github.com/terranpro/magit-gerrit/pull/56
 
     (separedit :location (recipe
-                         :fetcher github
-                         :repo twlz0ne/separedit.el))
-;;    (snails :location (recipe
-;;                         :fetcher github
-;;                         :repo manateelazycat/snails))
+                          :fetcher github
+                          :repo twlz0ne/separedit.el))
+    ;;    (snails :location (recipe
+    ;;                         :fetcher github
+    ;;                         :repo manateelazycat/snails))
     (rime :location (recipe
                      :fetcher github
                      :repo DogLooksGood/emacs-rime))
@@ -99,8 +99,8 @@
                        :repo redguardtoo/vc-msg))
     (flywrap :location local)
     (avy-thing-edit :location (recipe
-                       :fetcher github
-                       :repo lyjdwh/avy-thing-edit))
+                               :fetcher github
+                               :repo lyjdwh/avy-thing-edit))
     (multi-translate :location (recipe
                                 :fetcher github
                                 :repo twlz0ne/multi-translate.el))
@@ -108,7 +108,8 @@
     org-roam-server
     mermaid-mode
     ;; (hideshowvis :location local)
-  )
+    atomic-chrome
+    )
 
   "The list of Lisp packages required by the my-config layer.
 
@@ -189,7 +190,7 @@ Each entry is either:
     :init
     (progn
       (autoload 'my-verilog "my-verilog" "my configuration of verilog-mode " t)
-    )))
+      )))
 
 (defun my-config/init-verilog-mode ()
   (use-package verilog-mode
@@ -379,12 +380,12 @@ Each entry is either:
 
       (setq ob-mermaid-cli-path "~/node_modules/.bin/mmdc")
       (setq org-todo-keywords
-           '((type "WORK(!)" "STUDY(!)" "|")
-             (type "heyun(!)" "xulinliang(!)" "lina(!)" "chenshuxian(!)" "wangjunjie(!)" "huanqin(!)" "|" "DONE(!)")
-             (sequence "TODO(t!)" "|" "DONE(d!)")
-             ;; debug sequence
-             (sequence "REPORT(r@/!)" "DEBUG(b@/!)" "KNOWNCAUSE(k@/!)" "|" "FIXED(f@/!)" "NOT_FIX(@/!)")
-             (sequence "|" "CANCEL(c@/!)")
+            '((type "WORK(!)" "STUDY(!)" "|")
+              (type "heyun(!)" "xulinliang(!)" "lina(!)" "chenshuxian(!)" "wangjunjie(!)" "huanqin(!)" "|" "DONE(!)")
+              (sequence "TODO(t!)" "|" "DONE(d!)")
+              ;; debug sequence
+              (sequence "REPORT(r@/!)" "DEBUG(b@/!)" "KNOWNCAUSE(k@/!)" "|" "FIXED(f@/!)" "NOT_FIX(@/!)")
+              (sequence "|" "CANCEL(c@/!)")
               ))
       (setq org-tag-alist '(
                             (:startgroup . nil)
@@ -464,8 +465,8 @@ Each entry is either:
               ))
       (require 'compile)
       (my-config-error-regexp-add-emacs fm-error-regexp-emacs-alist))
-      )
     )
+  )
 
 (defun my-config/post-init-flycheck ()
   (dolist (mode '(verilog-mode))
@@ -568,7 +569,7 @@ See URL `irun -helpall'"
       ;; (awesome-tab-mode)
       )
     :config
-      (custom-set-variables '(awesome-tab-height 120))
+    (custom-set-variables '(awesome-tab-height 120))
     ))
 
 (defun my-config/init-awesome-pair()
@@ -643,7 +644,7 @@ See URL `irun -helpall'"
     :init
     (progn
       (require 'pyim)
-            )
+      )
     :bind
     (("C-c M-j" . pyim-convert-string-at-point) ;与 pyim-probe-dynamic-english 配合
      )
@@ -733,7 +734,7 @@ See URL `irun -helpall'"
     :init
     (progn
       ;; (beacon-mode)
-    )))
+      )))
 
 (defun my-config/init-company-tabnine ()
   (use-package company-tabnine
@@ -966,5 +967,14 @@ emacs
                         'verilog-mode-hook
                         ))
       (add-hook hook 'hideshowvis-enable))
-  ))
+    ))
+
+(defun my-config/init-atomic-chrome()
+  ;; 浏览器文本编辑区域调用外部编辑器
+  ;; firefox extension: GhostText
+  (use-package atomic-chrome
+    :defer t
+    :config
+    (atomic-chrome-start-server)
+    ))
 ;;; packages.el ends here
