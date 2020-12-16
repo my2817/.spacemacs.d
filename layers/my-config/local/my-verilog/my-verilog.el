@@ -6,11 +6,16 @@
 (require 'verilog-mode)
 (unless (fboundp 'hs-special-modes-alist)
   (defvar hs-special-modes-alist nil))
-(add-hook 'verilog-mode-hook 'hs-minor-mode)
+
+;; remove origin verilog-mode from hs-special-modes-alist
+(let* (tmp)
+  (dolist (mode-special hs-special-modes-alist)
+    (if (not (string= (car mode-special) "verilog-mode"))
+        (add-to-list 'tmp mode-special)))
+  (setq hs-special-modes-alist tmp))
 (add-to-list 'hs-special-modes-alist '(verilog-mode  "\\<begin\\>\\|\\<task\\>\\|\\<function\\>\\|\\<class\\>\\|\\<interface\\>\\|\\<fork\\>\\|("
                                                      "\\<end\\>\\|\\<endtask\\>\\|\\<endfunction\\>\\|\\<endclass\\>\\|\\<endinterface\\>\\|\\<join\\>\\|)"
                                                      nil  verilog-forward-sexp-function))
-
 ;;; Port copy/paste
 
 (require 'align)
@@ -487,6 +492,7 @@
   (setq imenu-create-index-function 'verilog-imenu-create-index-function)
   ;;(setq align-mode-rules-list align-verilog-rules-list)
   ;;(setq align-exclude-rules-list align-exclude-verilog-rules-list)
+  (hs-minor-mode 1)
   )
 
 (defvar my-verilog-menu
