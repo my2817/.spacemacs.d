@@ -21,4 +21,4 @@
 (spacemacs/set-leader-keys "m)" 'awesome-pair-unwrap)
 (spacemacs/set-leader-keys "m<" 'awesome-pair-jump-left)
 (spacemacs/set-leader-keys "m>" 'awesome-pair-jump-right)
-(spacemacs/set-leader-keys "wpr" 'window-toggle-split-direction)
+(spacemacs/set-leader-keys "wpr" 'toggle-window-split)
