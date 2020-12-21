@@ -44,7 +44,7 @@ This function should only modify configuration layer settings."
      (ivy :variables ivy-xref-use-file-path t)
      auto-completion
      better-defaults
-     emacs-lisp
+     (emacs-lisp :variables tab-width 8)
      git
      markdown
      (org :variables org-projectile-file "TODOs.org")
@@ -616,7 +616,9 @@ Put your configuration code here, except for variables that  should be set befor
           (counsel-describe-variable . "")
           (counsel-org-capture . "^")
           (Man-completion-table . "^")
-          (woman . "^"))
+          (woman . "^")
+          (ivy-xref-show-xrefs . projectile-project-name)
+          )
         )
   (delete "dired-mode" golden-ratio-exclude-modes)
   (spacemacs/set-leader-keys "ss" 'spacemacs/swiper-region-or-symbol)
