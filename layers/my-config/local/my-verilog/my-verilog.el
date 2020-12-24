@@ -13,8 +13,8 @@
     (if (not (string= (car mode-special) "verilog-mode"))
         (add-to-list 'tmp mode-special)))
   (setq hs-special-modes-alist tmp))
-(add-to-list 'hs-special-modes-alist '(verilog-mode  "\\<begin\\>\\|\\<task\\>\\|\\<function\\>\\|\\<class\\>\\|\\<interface\\>\\|\\<fork\\>\\|("
-                                                     "\\<end\\>\\|\\<endtask\\>\\|\\<endfunction\\>\\|\\<endclass\\>\\|\\<endinterface\\>\\|\\<join\\>\\|)"
+(add-to-list 'hs-special-modes-alist '(verilog-mode  "\\<begin\\>\\|\\<task\\>\\|\\<function\\>\\|\\<class\\>\\|\\<interface\\>\\|\\<fork\\>\\|(\\|`ifdef"
+                                                     "\\<end\\>\\|\\<endtask\\>\\|\\<endfunction\\>\\|\\<endclass\\>\\|\\<endinterface\\>\\|\\<join\\>\\|)\\|`endif"
                                                      nil  verilog-forward-sexp-function))
 ;;; Port copy/paste
 
@@ -1309,18 +1309,22 @@ or add following line into end of buffer:
     (hs-hide-block)
     ;; (beginning-of-line)
     ))
-
 (defun my-verilog-readonly ()
   "set buffer to read-only if Engineer field of header not equal to `uer-login-name' "
+  (interactive)
   (save-excursion
     (goto-line 1)
     (search-forward "Engineer    : " nil t)
     (forward-char)
     (let ((system-user (user-login-name))
-          (file-author (symbol-at-point)))
+          file-author  (symbol-at-point))
       (and (not (string= system-user file-author))
-           (read-only-mode 1))
+           (require 'git-timemachine)
+           (not git-timemachine-mode)
+           (read-only-mode 1)
+           )
       )))
+
 (defun my-verilog-indent/hs ()
   "work around `electric-verilog-tab', indent or hide/show fring.
 If `buffer-read-only' is non-nil, execute `my-hideshowvis-fringe'.
@@ -1349,6 +1353,7 @@ If `electric-verilog-tab' don't change position, execute `my-hideshowvis-fringe'
   ;; (set (make-local-variable 'indent-line-function)
   ;;      #'my-verilog-indent-line-relative)
   (local-set-key (kbd "C-=") 'verilog-sk-nonblock-assign)
+  (define-key verilog-mode-map "\t" 'my-verilog-indent/hs)
   (if (and my-verilog-auto-insert-header
        (= (point-max) 1))
       (if (yes-or-no-p "Buffer is empty, let's insert verilog-header?")

@@ -189,6 +189,7 @@ Each entry is either:
     :defer t
     :init
     (progn
+      (add-hook 'verilog-mode-hook 'my-verilog)
       (autoload 'my-verilog "my-verilog" "my configuration of verilog-mode " t)
       )))
 
@@ -196,12 +197,10 @@ Each entry is either:
   (use-package verilog-mode
     :defer t
     :config
-    (define-key verilog-mode-map "\t" 'my-verilog-indent/hs)
     ;; (modify-syntax-entry ?` "." verilog-mode-syntax-table)
     ;; `electric-verilog-tab' error while excute `verilog-calculate-indent'
     ;;  because "`" is not a word-constituent from the last line, we need to move "`" outside of "\\<" in verilog-directive-re-1
     ;; (defconst verilog-directive-re-1 "[ 	]*`\\<\\(\\(?:__\\(?:FILE__\\|LINE\\)\\|begin_keywords\\|c\\(?:\\(?:as\\|elldefin\\)e\\)\\|def\\(?:ault\\(?:_nettype\\)?\\|ine\\)\\|e\\(?:ls\\(?:e\\|if\\)\\|nd\\(?:_keywords\\|celldefine\\|for\\|if\\|protect\\|switch\\|while\\)\\)\\|for\\(?:mat\\)?\\|i\\(?:f\\(?:n?def\\)?\\|nclude\\)\\|l\\(?:et\\|ine\\)\\|nounconnected_drive\\|pr\\(?:agma\\|otect\\)\\|resetall\\|switch\\|time\\(?:_?scale\\)\\|u\\(?:n\\(?:connected_drive\\|def\\(?:ineall\\)?\\)\\|selib\\)\\|while\\)\\)\\>")
-    (add-hook 'verilog-mode-hook 'my-verilog)
     ))
 
 (defun my-config/post-init-mmm-mode ()
