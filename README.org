@@ -650,6 +650,7 @@
     - hs-hide-block，折叠前，光标要在begin的下一行
     - hs-show-block, 展开光标所有行被折叠的代码
     - 按键 tab: 先执行缩进，如果缩进没有改变光标位置，则尝试将光标区隐藏、显示
+    - 目前不能处理 `ifdef `ifndef 相互嵌套的情景
 
 *** 自动只读
     打开 verilog/SystemVerilog 文件后，自动在文件中搜索“Engineer     : <user-login-name@system-name>”，并找到 user-login-name, 如果与当前用户名不一致，则将当前 buffer 设置为只读
