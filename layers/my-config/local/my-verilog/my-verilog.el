@@ -1255,34 +1255,41 @@ rease to 2, \")\": depth decrease to 1
           (inst-left-parent-pos) (inst-right-parent-pos))
       )))
 
+(defcustom my-verilog-update-header-before-save t
+  "True: update file header of verilog-mode"
+  :group 'verilog-mode
+  :type 'boolean)
+(put 'my-verilog-update-header-before-save 'safe-local-variable 'integerp)
+
 (defun my-update-last-update-stamp ()
   "update \"Last Update:\""
-  (save-excursion
-    (goto-line 1)
-    (if (buffer-modified-p)
-        (progn
-          (if (search-forward "Last Update : " nil t)
-              (progn
-                (kill-line)
-                (verilog-insert-time))
-            (message "Can't find the position to update \"Last Updated timing\""))
-          (if (search-forward "Module Name : " nil t)
-              (progn
-                (kill-line)
-                (insert (file-name-base (buffer-name))))
-            (message "Can't find the position to update \"Module Name\""))
-          (if (search-forward "Project Name: " nil t)
-              (progn
-                (kill-line)
-                (insert  (projectile-project-name)))
-            (message "Can't find the position to update \"Project Name\""))
-          (if (search-forward "Engineer    : " nil t)
-              (progn
-                (kill-line)
-                (insert (user-full-name))
-                (insert "<" (user-login-name) "@" (system-name) ">"))
-                (message "Can't find the position to update \"Engineer\""))
-          ))))
+  (when my-verilog-update-header-before-save
+    (save-excursion
+      (goto-line 1)
+      (if (buffer-modified-p)
+          (progn
+            (if (search-forward "Last Update : " nil t)
+                (progn
+                  (kill-line)
+                  (verilog-insert-time))
+              (message "Can't find the position to update \"Last Updated timing\""))
+            (if (search-forward "Module Name : " nil t)
+                (progn
+                  (kill-line)
+                  (insert (file-name-base (buffer-name))))
+              (message "Can't find the position to update \"Module Name\""))
+            (if (search-forward "Project Name: " nil t)
+                (progn
+                  (kill-line)
+                  (insert  (projectile-project-name)))
+              (message "Can't find the position to update \"Project Name\""))
+            (if (search-forward "Engineer    : " nil t)
+                (progn
+                  (kill-line)
+                  (insert (user-full-name))
+                  (insert "<" (user-login-name) "@" (system-name) ">"))
+              (message "Can't find the position to update \"Engineer\""))
+            )))))
 
 (defcustom my-verilog-auto-insert-header t
   " when it's value is t, emacs will execute `verilog-header' when open an empty buffer with minor mode `my-verilog',
