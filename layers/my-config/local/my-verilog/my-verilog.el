@@ -13,8 +13,8 @@
     (if (not (string= (car mode-special) "verilog-mode"))
         (add-to-list 'tmp mode-special)))
   (setq hs-special-modes-alist tmp))
-(add-to-list 'hs-special-modes-alist '(verilog-mode  "\\<begin\\>\\|\\<task\\>\\|\\<function\\>\\|\\<class\\>\\|\\<interface\\>\\|\\<fork\\>\\|(\\|\\<`ifdef\\>\\|\\<`ifndef\\>"
-                                                     "\\<end\\>\\|\\<endtask\\>\\|\\<endfunction\\>\\|\\<endclass\\>\\|\\<endinterface\\>\\|\\<join\\>\\|)\\|\\<`endif\\>"
+(add-to-list 'hs-special-modes-alist '(verilog-mode  "\\<begin\\>\\|\\<task\\>\\|\\<function\\>\\|\\<class\\>\\|\\<interface\\>\\|\\<fork\\>\\|(\\|\\<`ifdef\\>\\|\\<`ifndef\\>\\|{"
+                                                     "\\<end\\>\\|\\<endtask\\>\\|\\<endfunction\\>\\|\\<endclass\\>\\|\\<endinterface\\>\\|\\<join\\>\\|)\\|\\<`endif\\>\\|}"
                                                      nil  verilog-forward-sexp-function))
 ;;; Port copy/paste
 
