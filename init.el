@@ -641,6 +641,9 @@ Put your configuration code here, except for variables that  should be set befor
 
   (setq ediff-whitespace " \n\t\f\r\240,")
   (make-variable-buffer-local 'ediff-whitespace)
+  (setq exwm-update-title-hook 'my-exwm-rename-buffer)
+  (setq magit-commit-show-diff nil)
+  (setq display-line-numbers 'visual)
 
 
 
