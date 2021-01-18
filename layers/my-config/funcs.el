@@ -125,6 +125,7 @@ Version 2015-11-30"
       (start-process "" nil openFileProgram "."))
     ;; (shell-command "xdg-open .") ;; 2013-02-10 this sometimes froze emacs till the folder is closed. For example: with nautilus
     )))
+
 (defun xah-open-in-terminal ()
   "Open the current dir in a new terminal window.
 URL `http://ergoemacs.org/emacs/emacs_dired_open_file_in_ext_apps.html'
@@ -137,10 +138,20 @@ Version 2015-12-10"
    ((string-equal system-type "darwin")
     (message "Mac not supported. File a bug report or pull request."))
    ((string-equal system-type "gnu/linux")
-    (let ((process-connection-type nil))
-      (start-process "" nil "gnome-terminal"
-                     (concat "--working-directory=" default-directory)
-                     "--profile=zsh") ))))
+    (let ((process-connection-type nil)
+          ;; refer to following variables/funcs to get right desktop environment
+          ;; `spacemacs-ignored-environment-variables'
+          ;; `spacemacs/force-init-spacemacs-env'
+          (desktop (getenv "XDG_CURRENT_DESKTOP")))
+      (cond ((string-equal "GNOME" desktop)
+             (start-process "" nil "gnome-terminal"
+                            (concat "--working-directory=" default-directory)
+                            "--profile=zsh"))
+            ((string-equal "XFCE" desktop)
+             (start-process "" nil "xfce4-terminal"
+                            (concat "--default-working-directory=" default-directory)))
+            (t
+             (message "Error:unknown desktop environment of \"XDG_CURRENT_DESKTOP\":%s" desktop)))))))
 
 (defun my-config-error-regexp-add-emacs (regexp-alist)
   " add regexp-alist to `compilation-error-regexp-alist'
