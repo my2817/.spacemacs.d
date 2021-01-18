@@ -129,7 +129,7 @@
   (save-excursion
     (let ((instance-alist '()))
       (while (verilog-re-search-forward
-              "^\\s-*\\([a-zA-Z0-9_]+\\)\\([ \t\n]+#([-+/a-zA-Z0-9._*,`() \t\n]*)\\)?[ \t\n]+\\([a-zA-Z0-9_]+\\)\\([ \t\n]*\\[[]0-9a-zA-Z: `\t\n_-]*\\)?[ \t\n]*("
+              "^\\s-*\\([a-zA-Z0-9_]+\\)\\([ \t\n]+#([-+/a-zA-Z0-9._*,`() \t\n']*)\\)?[ \t\n]+\\([a-zA-Z0-9_]+\\)\\([ \t\n]*\\[[]0-9a-zA-Z: `\t\n_-']*\\)?[ \t\n]*("
               end t)
         (condition-case nil
             (let ((instance-type (verilog-match-string 1)) (instance-name (verilog-match-string 3))
