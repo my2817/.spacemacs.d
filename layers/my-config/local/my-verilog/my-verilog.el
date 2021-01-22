@@ -1316,21 +1316,23 @@ or add following line into end of buffer:
     (hs-hide-block)
     ;; (beginning-of-line)
     ))
+
 (defun my-verilog-readonly ()
   "set buffer to read-only if Engineer field of header not equal to `uer-login-name' "
   (interactive)
-  (save-excursion
-    (goto-line 1)
-    (search-forward "Engineer    : " nil t)
-    (forward-char)
-    (let ((system-user (user-login-name))
-          file-author  (symbol-at-point))
-      (and (not (string= system-user file-author))
-           (require 'git-timemachine)
-           (not git-timemachine-mode)
-           (read-only-mode 1)
-           )
-      )))
+  (and
+   (not (string> (buffer-name) "timemachine:" ))
+   (save-excursion
+     (goto-line 1)
+     (search-forward "Engineer    : " nil t)
+     (forward-char)
+     (let ((system-user (user-login-name))
+           (file-author (symbol-at-point)))
+       (and (not (string= system-user file-author))
+            (require 'git-timemachine)
+            (read-only-mode 1)
+            )
+       ))))
 
 (defun my-verilog-indent/hs ()
   "work around `electric-verilog-tab', indent or hide/show fring.
@@ -1362,8 +1364,10 @@ If `electric-verilog-tab' don't change position, execute `my-hideshowvis-fringe'
   (local-set-key (kbd "C-=") 'verilog-sk-nonblock-assign)
   (define-key verilog-mode-map "\t" 'my-verilog-indent/hs)
   (if (and my-verilog-auto-insert-header
-       (= (point-max) 1))
-      (if (yes-or-no-p "Buffer is empty, let's insert verilog-header?")
+           (= (point-max) 1))
+      (if (and
+           (not (string> (buffer-name) "timemachine:" ))
+           (yes-or-no-p "Buffer is empty, let's insert verilog-header?"))
           (verilog-header t)))
   (my-verilog-readonly)
   )
