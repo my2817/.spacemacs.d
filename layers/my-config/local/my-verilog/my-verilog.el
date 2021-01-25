@@ -585,7 +585,7 @@
 (define-skeleton verilog-sk-module
   "Insert a module definition."
   ()
-  > "module " (file-name-base (buffer-name)) " (/*AUTOARG*/ ) ;" \n
+  > "module " (file-name-base (buffer-file-name)) " (/*AUTOARG*/ ) ;" \n
   > _ \n
   > (- verilog-indent-level-behavioral) "endmodule" (progn (electric-verilog-terminate-line) nil))
 
@@ -662,12 +662,12 @@ QUIET: be quiet and don't promote anything if t"
       (if (not quiet)
           (progn
             (setq company-name (read-string "Company: "   "ImageDesign"))
-            (setq module-name (read-string "module: " (file-name-base (buffer-name))))
+            (setq module-name (read-string "module: " (file-name-base (buffer-file-name))))
             (setq project-name (read-string "project: " (projectile-project-name)))
             )
         (progn
           (setq company-name "ImageDesign")
-          (setq module-name  (file-name-base (buffer-name)))
+          (setq module-name  (file-name-base (buffer-file-name)))
           (setq project-name (projectile-project-name))
           ))
       (setq verilog-company company-name)
@@ -1276,7 +1276,7 @@ rease to 2, \")\": depth decrease to 1
             (if (search-forward "Module Name : " nil t)
                 (progn
                   (kill-line)
-                  (insert (file-name-base (buffer-name))))
+                  (insert (file-name-base (buffer-file-name))))
               (message "Can't find the position to update \"Module Name\""))
             (if (search-forward "Project Name: " nil t)
                 (progn
