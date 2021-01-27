@@ -2,28 +2,28 @@
 # key: autotags
 # group: verilog
 # --
-//begin: AUTOOUTPUTS
+// begin: AUTOOUTPUTS
 /*AUTOOUTPUT*/
 
-//begin: AUTOINPUTS
+// begin: AUTOINPUTS
 /*AUTOINPUT*/
 
-//begin: AUTOWIREs
+// begin: AUTOWIREs
 /*AUTOWIRE*/
 
-//begin: AUTOREGINPUTs
+// begin: AUTOREGINPUTs
 /*AUTOREGINPUT*/
 
-//begin: AUTOREGs
+// begin: AUTOREGs
 /*AUTOREGINPUT*/
 
-//begin: AUTOUNUSEDs
+// begin: AUTOUNUSEDs
 wire unused_pin;
 assign unused_pin = |{
                       /*AUTOUNUSED*/
                       1'b0} ;
 
-//begin: AUTOTIEOFFs
+// begin: AUTOTIEOFFs
 /*AUTOTIEOFF*/
 
 $0
