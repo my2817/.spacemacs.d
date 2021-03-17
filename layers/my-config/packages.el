@@ -80,9 +80,9 @@
                          :repo manateelazycat/aweshell))
     ;; (eaf :location local)
     magit-todos
-    (magit-gerrit :location (recipe
-                             :fetcher github
-                             :repo zeph1e/magit-gerrit)) ;; https://github.com/terranpro/magit-gerrit/pull/56
+    ;; (magit-gerrit :location (recipe
+    ;;                          :fetcher github
+    ;;                          :repo zeph1e/magit-gerrit)) ;; https://github.com/terranpro/magit-gerrit/pull/56
 
     (separedit :location (recipe
                           :fetcher github
@@ -104,9 +104,9 @@
     (multi-translate :location (recipe
                                 :fetcher github
                                 :repo twlz0ne/multi-translate.el))
-    org-roam
-    org-roam-server
-    mermaid-mode
+    ;; org-roam
+    ;; org-roam-server
+    ;; mermaid-mode
     ;; (hideshowvis :location local)
     atomic-chrome
     )
@@ -374,7 +374,7 @@ Each entry is either:
          (C . t)
          (awk . t)
          (ditaa . t)
-         (mermaid . t)
+         ;; (mermaid . t)
          ))
 
       (setq ob-mermaid-cli-path "~/node_modules/.bin/mmdc")
@@ -932,18 +932,33 @@ eval $(dbus-launch)
 export DBUS_SESSION_BUS_ADDRESS
 emacs
 
+win10:
+git clone eaf
+install python3
+install pip
+install node
+win10菜单搜索【管理应用执行别名】关闭下面两个 python/python3的选项
+PowerShell: cd to eaf
+node install-eaf-win32.js
 
 "
   (use-package eaf
-    :defer t
-    :init (require 'eaf)
+    :load-path "~/.spacemacs.d/layers/my-config/local/eaf" ; Set to "/usr/share/emacs/site-lisp/eaf" if installed from AUR
+    :init
+    (use-package epc :defer t :ensure t)
+    (use-package ctable :defer t :ensure t)
+    (use-package deferred :defer t :ensure t)
+    (use-package s :defer t :ensure t)
     :custom
-    (eaf-find-alternate-file-in-dired t)
+    (eaf-browser-continue-where-left-off t)
     :config
-    (eaf-bind-key scroll_up "C-n" eaf-pdf-viewer-keybinding)
-    (eaf-bind-key scroll_down "C-p" eaf-pdf-viewer-keybinding)
-    (eaf-bind-key take_photo "p" eaf-camera-keybinding)
-    ))
+    ;; (eaf-setq eaf-browser-enable-adblocker "true")
+    ;; (eaf-bind-key scroll_up "C-n" eaf-pdf-viewer-keybinding)
+    ;; (eaf-bind-key scroll_down "C-p" eaf-pdf-viewer-keybinding)
+    ;; (eaf-bind-key take_photo "p" eaf-camera-keybinding)
+    ;; (eaf-bind-key nil "M-q" eaf-browser-keybinding)
+    )
+  )
 
 (defun my-config/init-mermaid-mode()
   (use-package mermaid-mode

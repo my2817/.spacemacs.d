@@ -56,9 +56,9 @@ This function should only modify configuration layer settings."
      version-control
      ;themes-megapack
      my-config
-     games
-     latex
-     html
+     ;; games
+     ;; latex
+     ;; html
      vimscript
      python
      (c-c++ :variables c-basic-offset 4)
@@ -621,7 +621,7 @@ Put your configuration code here, except for variables that  should be set befor
           )
         )
   (delete "dired-mode" golden-ratio-exclude-modes)
-  (spacemacs/set-leader-keys "ss" 'spacemacs/swiper-region-or-symbol)
+  (spacemacs/set-leader-keys "ss" 'swiper-thing-at-point)
   (spacemacs/set-leader-keys "sS" 'swiper)
 
   (set-face-attribute

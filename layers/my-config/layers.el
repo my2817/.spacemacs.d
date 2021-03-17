@@ -16,5 +16,5 @@
                                       ;; zilongshanren-org
                                       ;; zilongshanren-better-defaults
                                       (exwm :variables exwm-update-title-hook 'my-exwm-rename-buffer )
-                                      mermaid
+                                      ;; mermaid
 				      ))
