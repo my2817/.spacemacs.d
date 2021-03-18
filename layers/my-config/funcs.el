@@ -417,29 +417,53 @@ otherwise you will this function don't work and don't know how
     (insert file-link)
     ))
 
-(defun xah-open-in-desktop-from-wsl()
-  "open desktop by send command from wsl into powershell"
-  (interactive)
-  (let* ((powershell "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe")
-         (directory (replace-regexp-in-string "/mnt/\\([a-zA-Z]\\)" "\\1:" default-directory))
-         )
-    (shell-command (concat powershell " -command \"start " directory "\""))
-    )
-  )
+;; (defun xah-open-in-desktop-from-wsl()
+;;   "open desktop by send command from wsl into powershell"
+;;   (interactive)
+;;   (let* ((powershell "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe")
+;;          (directory (replace-regexp-in-string "/mnt/\\([a-zA-Z]\\)" "\\1:" default-directory))
+;;          )
+;;     (shell-command (concat powershell " -command \"start " directory "\""))
+;;     )
+;;   )
 
-(defun xah-open-in-xternal-app-from-wsl()
-  "open desktop by send command from wsl into powershell"
+;; (defun xah-open-in-xternal-app-from-wsl()
+;;   "open desktop by send command from wsl into powershell"
+;;   (interactive)
+;;   (let* ((powershell "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe")
+;;          (directory (replace-regexp-in-string "/mnt/\\([a-zA-Z]\\)" "\\1:" default-directory))
+;;          (-file-list
+;;           (if (string-equal major-mode "dired-mode")
+;;               (dired-get-marked-files)
+;;             (list (buffer-file-name))))
+;;          )
+;;     (shell-command (concat powershell " -command \"start " (replace-regexp-in-string "/mnt/\\([a-zA-Z]\\)" "\\1:" (nth 0 -file-list)) "\""))
+;;     )
+;;   )
+
+;;;###autoload
+
+(defmacro wsl--open-with (id &optional app dir)
+  `(defun ,(intern (format "wsl/%s" id)) ()
+     (interactive)
+     (wsl-open-with ,app ,dir)))
+
+(defun wsl-open-with (&optional app-name path)
+  "Send PATH to APP-NAME on WSL."
   (interactive)
-  (let* ((powershell "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe")
-         (directory (replace-regexp-in-string "/mnt/\\([a-zA-Z]\\)" "\\1:" default-directory))
-         (-file-list
-          (if (string-equal major-mode "dired-mode")
-              (dired-get-marked-files)
-            (list (buffer-file-name))))
-         )
-    (shell-command (concat powershell " -command \"start " (replace-regexp-in-string "/mnt/\\([a-zA-Z]\\)" "\\1:" (nth 0 -file-list)) "\""))
-    )
-  )
+  (let* ((path (expand-file-name
+                (replace-regexp-in-string
+                 "'" "\\'"
+                 (or path (if (derived-mode-p 'dired-mode)
+                              (dired-get-file-for-visit)
+                            (buffer-file-name)))
+                 nil t)))
+         (command (format "%s `wslpath -w %s`" (shell-quote-argument app-name) path)))
+    (shell-command-to-string command)))
+
+(wsl--open-with open-in-default-program "explorer.exe" buffer-file-name)
+(wsl--open-with reveal-in-explorer "explorer.exe" default-directory)
+
 
 (defun xah-open-file-at-cursor ()
   "Open the file path under cursor.
