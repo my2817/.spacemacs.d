@@ -789,7 +789,7 @@ use `verilog-auto-hook' to do something after that
       (flycheck-mode 0)
       )
     )
-  (imenu-list-refresh)
+  (imenu-list-update)
   )
 
 (define-key verilog-mode-map "\C-c\C-a" 'my-verilog-auto)
