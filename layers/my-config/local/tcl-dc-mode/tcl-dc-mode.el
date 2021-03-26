@@ -252,6 +252,7 @@ Key bindings:
 	  '(tcl-font-lock-keywords)))
   ;; miscellaneous
   (set (make-local-variable 'hippie-expand-dabbrev-as-symbol) nil)
+  ;; (set-syntax-table tcl-dc-he-syntax-table)
   (when tcl-dc-mode
     (message "Tcl DC Mode %s.  Type C-c C-h for documentation." tcl-dc-version)))
 
@@ -966,7 +967,7 @@ Key bindings:
     "wired_logic_disable" "wired_or" "xnf_init" "xnf_loc"
     )
   "List of DC attributes (2006.06 release).")
-    
+
 ;; `regexp-opt' undefined (`xemacs-devel' not installed)
 (unless (fboundp 'regexp-opt)
   (defun regexp-opt (strings &optional paren)
@@ -1110,7 +1111,7 @@ If `tcl-dc-intelligent-tab' is nil, always indent line."
   (sort (append tcl-dc-variables
 		(copy-sequence tcl-dc-extra-variables)) 'string<)
   "List of DC variables.")
-  
+
 (defvar tcl-dc-commands-alist (tcl-dc-list-to-alist tcl-dc-commands-list)
   "Alist of `tcl-dc-commands-list'.")
 
