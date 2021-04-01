@@ -52,6 +52,7 @@
     ;; tabbar-ruler
     (sos-mode :location local)
     (org :location built-in)
+    org-appear
     (compilation-mode :location built-in)
     flycheck
     flycheck-plantuml
@@ -78,7 +79,7 @@
     (aweshell :location (recipe
                          :fetcher github
                          :repo manateelazycat/aweshell))
-    ;; (eaf :location local)
+    (eaf :location local)
     magit-todos
     ;; (magit-gerrit :location (recipe
     ;;                          :fetcher github
@@ -448,6 +449,7 @@ Each entry is either:
       ;;   #+end_example
       ;;
       (add-to-list 'org-modules 'ox-freemind)
+      (setq org-hide-emphasis-markers t)
       ))
   )
 (defun my-config/init-compilation-mode()
@@ -990,5 +992,14 @@ node install-eaf-win32.js
     :defer t
     :config
     (atomic-chrome-start-server)
+    ))
+
+(defun my-config/init-org-appear()
+  (use-package org-appear
+    :defer t
+    :init
+    (add-hook 'org-mode-hook 'org-appear-mode)
+    :config
+    (setq org-appear-autolinks t)
     ))
 ;;; packages.el ends here
