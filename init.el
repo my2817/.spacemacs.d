@@ -45,7 +45,7 @@ This function should only modify configuration layer settings."
      auto-completion
      better-defaults
      (emacs-lisp :variables tab-width 8)
-     git
+     (git :variables magit-commit-show-diff nil)
      markdown
      (org :variables org-projectile-file "TODOs.org")
      ;; (shell :variables
@@ -642,7 +642,6 @@ Put your configuration code here, except for variables that  should be set befor
   (setq ediff-whitespace " \n\t\f\r\240,")
   (make-variable-buffer-local 'ediff-whitespace)
   (setq exwm-update-title-hook 'my-exwm-rename-buffer)
-  (setq magit-commit-show-diff nil)
   (setq display-line-numbers 'visual)
 
 
