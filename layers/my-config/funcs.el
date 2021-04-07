@@ -861,3 +861,24 @@ Return alist with structure: '( (fn1 (log-str log-str)) (fn2 (log-str log-str)) 
                                  "\\s-?\\(.*$\\)") line)
            (add-to-list 'log-strings (match-string 3 line))))
     (add-to-list 'file-result (list fn log-strings))))
+
+(defun et/rename-org-link-file (path)
+  ;; https://emacs-china.org/t/gist-org-link/16860/10?u=my2817
+  (interactive
+   (list
+    (let* ((link (org-element-context))
+           (old-path (org-element-property :path link)))
+      (read-string "PATH: " old-path nil old-path))))
+  (let* ((link (org-element-context))
+         (old-path (org-element-property :path link))
+         (ltype (org-element-property :type link)))
+    (if (and (file-exists-p old-path)
+             (member ltype '("file" "docview" "attachment")))
+        (progn (mkdir (file-name-directory path) t)
+               (rename-file old-path path)
+               (save-excursion
+                 (goto-char (point-min))
+                 (while (search-forward old-path nil t)
+                   (replace-match path)))
+               (message (format "Rename %s to %s" old-path path)))
+      (message (format "!!!File type not valid or dose not exist!!! %s %s" ltype old-path)))))
