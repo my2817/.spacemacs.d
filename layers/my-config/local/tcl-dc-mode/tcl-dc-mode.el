@@ -252,7 +252,7 @@ Key bindings:
 	  '(tcl-font-lock-keywords)))
   ;; miscellaneous
   (set (make-local-variable 'hippie-expand-dabbrev-as-symbol) nil)
-  ;; (set-syntax-table tcl-dc-he-syntax-table)
+  (set-syntax-table tcl-dc-he-syntax-table)
   (when tcl-dc-mode
     (message "Tcl DC Mode %s.  Type C-c C-h for documentation." tcl-dc-version)))
 
