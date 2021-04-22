@@ -110,6 +110,7 @@
     ;; mermaid-mode
     ;; (hideshowvis :location local)
     atomic-chrome
+    (liberty-mode :location local)
     )
 
   "The list of Lisp packages required by the my-config layer.
@@ -381,7 +382,6 @@ Each entry is either:
       (setq ob-mermaid-cli-path "~/node_modules/.bin/mmdc")
       (setq org-todo-keywords
             '((type "WORK(!)" "STUDY(!)" "|")
-              (type "heyun(!)" "xulinliang(!)" "lina(!)" "chenshuxian(!)" "wangjunjie(!)" "huanqin(!)" "|" "DONE(!)")
               (sequence "TODO(t!)" "|" "DONE(d!)")
               ;; debug sequence
               (sequence "REPORT(r@/!)" "DEBUG(b@/!)" "KNOWNCAUSE(k@/!)" "|" "FIXED(f@/!)" "NOT_FIX(@/!)")
@@ -400,16 +400,19 @@ Each entry is either:
                             ("DV" . nil)
                             ("DBE" . nil)
                             (:grouptags . nil)
-                            ("何云" . nil)
-                            ("喻义淞" . nil)
-                            ("王俊杰" . nil)
-                            ("陈淑娴" . nil)
-                            ("姜松佐" . nil)
-                            ("黄钦" . nil)
-                            ("陈云鑫" . nil)
-                            ("刘万航" . nil)
-                            ("胡犇犇" . nil)
-                            ("白博" . nil)
+                            ("HeYun" . ?h)
+                            ("YuYisong" . ?y)
+                            ("WangJunjie" . ?w)
+                            ("JiangSongzuo" . ?j)
+                            ("HuangQin" . ?H)
+                            ("LiuWanhang" . ?l)
+                            ("SunYahui" . ?s)
+                            ("BaiBo" . ?b)
+                            ("ShuXin" . ?S)
+                            ("LanTing" . ?L)
+                            ("ZhuoKang" . ?z)
+                            ("ZhangXing" . ?Z)
+                            ("ZhangJianguo" . ?J)
                             (:endgroup . nil)
                             ))
       ;; 让中文也可以不加空格就使用行内格式
@@ -1001,5 +1004,16 @@ node install-eaf-win32.js
     (add-hook 'org-mode-hook 'org-appear-mode)
     :config
     (setq org-appear-autolinks t)
+    ))
+
+(defun my-config/init-liberty-mode()
+  (use-package liberty-mode
+    :defer t
+    :init
+    (progn
+      (autoload 'liberty-mode "liberty-mode.el" "Edite Synopsys liberty library file." t)
+      ;; (sos-mode)
+      )
+    :config
     ))
 ;;; packages.el ends here
