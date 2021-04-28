@@ -1,12 +1,21 @@
 (defun wttr/prepend-to-exec-path (path)
-  "if path is not the head of (getenv \"PATH\"), prepand the path to the emacs intenral `exec-path' and \"PATH\" env variable.
+  "prepand the path to the emacs intenral `exec-path' and \"PATH\" env variable.
     Return the updated `exec-path'"
-  (when (not (string= (car (split-string (getenv "PATH") path-separator)) (expand-file-name path)))
-    (setenv "PATH" (concat (expand-file-name path)
+  (let ((file-path (expand-file-name path))
+        (env-path (getenv "PATH"))
+        )
+    ;; avoid dumplicate
+    (setq env-path (replace-regexp-in-string file-path "" env-path))
+    (setq env-path (replace-regexp-in-string ":+" ":" env-path))
+
+    (setenv "PATH" (concat file-path
                            path-separator
-                           (getenv "PATH")))
+                           env-path))
+
+    ;; avoid dumplicate
+    (setq exec-path (delete file-path exec-path))
     (setq exec-path
-          (cons (expand-file-name path)
+          (cons file-path
                 exec-path))))
 
 (defadvice electric-spacing-. (around my-electric-spacing-.)
