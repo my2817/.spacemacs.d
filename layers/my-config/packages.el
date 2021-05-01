@@ -382,7 +382,7 @@ Each entry is either:
       (setq ob-mermaid-cli-path "~/node_modules/.bin/mmdc")
       (setq org-todo-keywords
             '((type "WORK(!)" "STUDY(!)" "|")
-              (sequence "TODO(t!)" "|" "DONE(d!)")
+              (sequence "TODO(t!)" "ONGOING(o!)" "|" "DONE(d!)")
               ;; debug sequence
               (sequence "REPORT(r@/!)" "DEBUG(b@/!)" "KNOWNCAUSE(k@/!)" "|" "FIXED(f@/!)" "NOT_FIX(@/!)")
               (sequence "|" "CANCEL(c@/!)")
