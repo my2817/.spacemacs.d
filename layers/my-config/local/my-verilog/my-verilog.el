@@ -320,7 +320,7 @@
           (let (sub-entity)
             (setq sub-entity (verilog-imenu-create-parse-entity))
             (when sub-entity
-              (let ((entity-type (car sub-entity)) (entity-info (cdr sub-entity)))
+              (let ((entity-type (caar sub-entity)) (entity-info (cdr sub-entity)))
                 (cond ((string= entity-type "module")
                        (push entity-info module-alist))
                       ((string= entity-type "interface")
