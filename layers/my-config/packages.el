@@ -787,6 +787,8 @@ See URL `irun -helpall'"
     (progn
       (setq magit-todos-nice (if (executable-find "nice") t nil))
       (magit-todos-mode 1)
+      ;;performance, this will check todos in all branches
+      (setq magit-todos-branch-list nil)
       )))
 (defun my-config/init-magit-gerrit ()
   (use-package magit-gerrit
