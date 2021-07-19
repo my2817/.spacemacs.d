@@ -1350,6 +1350,28 @@ If `electric-verilog-tab' don't change position, execute `my-hideshowvis-fringe'
           )
       (my-hideshowvis-fringe)))
 
+(defun my-verilog-set-syntax-entry (arg)
+  "remove char from syntax-table's symbol entry if true
+
+"
+  (interactive)
+  (if arg
+      (modify-syntax-entry ?` ".")
+    (modify-syntax-entry ?` "w"))
+  )
+
+(defun my-verilog-citre-jump ()
+  "Don't treat ` as a symbol"
+  (interactive)
+  (and
+   (string= mode-name "Verilog")
+   (my-verilog-set-syntax-entry t))
+  (citre-jump)
+  (and
+   (string= mode-name "Verilog")
+   (my-verilog-set-syntax-entry nil))
+  )
+
 ;;;###autoload
 (define-minor-mode my-verilog
   "It is my configuration of verilog-mode"
