@@ -79,7 +79,7 @@
     (aweshell :location (recipe
                          :fetcher github
                          :repo manateelazycat/aweshell))
-    (eaf :location local)
+    ;; (eaf :location local)
     magit-todos
     ;; (magit-gerrit :location (recipe
     ;;                          :fetcher github
@@ -111,6 +111,7 @@
     ;; (hideshowvis :location local)
     atomic-chrome
     (liberty-mode :location local)
+    citre
     )
 
   "The list of Lisp packages required by the my-config layer.
@@ -1018,4 +1019,13 @@ node install-eaf-win32.js
       )
     :config
     ))
+
+(defun my-config/init-citre()
+  (use-package citre
+    :init
+    (require 'citre)
+    (require 'citre-config)
+    :defer t
+    ))
+
 ;;; packages.el ends here

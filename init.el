@@ -623,6 +623,11 @@ Put your configuration code here, except for variables that  should be set befor
   (delete "dired-mode" golden-ratio-exclude-modes)
   (spacemacs/set-leader-keys "ss" 'swiper-thing-at-point)
   (spacemacs/set-leader-keys "sS" 'swiper)
+  ;; (define-key evil-motion-state-map (kbd "C-o") 'evil-jump-backward)
+  ;; (define-key evil-motion-state-map "\C-]" 'evil-jump-to-tag)
+  (define-key evil-motion-state-map "\C-]" 'citre-jump)
+  (define-key evil-motion-state-map (kbd "C-o") 'citre-jump-back)
+
 
   (set-face-attribute
    'default nil
