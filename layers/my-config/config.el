@@ -50,7 +50,14 @@
      '((html-java
         :submode javascript-mode
         :front "<script type=\"text/javascript\">"
-        :back "</script>")))))
+        :back "</script>")))
+    (mmm-add-mode-ext-class 'cperl-mode nil 'cperl-org)
+    (mmm-add-classes
+     '((cperl-org
+        :submode org-mode
+        :front "\\#\\+begin_org"
+        :back "\\#\\+end_org")))
+    ))
 
 (add-to-list 'page-break-lines-modes 'verilog-mode)
 (setq evil-want-abbrev-expand-on-insert-exit nil)
