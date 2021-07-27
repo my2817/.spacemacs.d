@@ -414,6 +414,7 @@ Each entry is either:
                             ("ZhuoKang" . ?z)
                             ("ZhangXing" . ?Z)
                             ("ZhangJianguo" . ?J)
+                            ("FengYang" . ?f)
                             (:endgroup . nil)
                             ))
       ;; 让中文也可以不加空格就使用行内格式
