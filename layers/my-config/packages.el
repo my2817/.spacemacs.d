@@ -1028,23 +1028,24 @@ node install-eaf-win32.js
     (require 'citre-config)
     :defer t
     :config
-    (defun my-verilog-get-symbol-atpt ()
-      (let* ((sym (symbol-at-point))
-             (char (substring (symbol-name sym) 0 1))
-             )
-        (if (string= "`" char)
-            (substring (symbol-name sym) 1)
-          (symbol-name sym))
-        )
-      )
-    (defvar citre-lang-verilog-plist
-      `(:get-symbol
-        my-verilog-get-symbol-atpt
-        )
-      "Verilog language support for Citre.")
-
-    (setf (alist-get 'verilog-mode citre-language-support-alist)
-          citre-lang-verilog-plist)
+    ;;;;;
+    ;; the folloing code has been implemented by citre
+    ;; (defun my-verilog-get-symbol-atpt ()
+    ;;   (let* ((sym (symbol-at-point))
+    ;;          (char (substring (symbol-name sym) 0 1))
+    ;;          )
+    ;;     (if (string= "`" char)
+    ;;         (substring (symbol-name sym) 1)
+    ;;       (symbol-name sym))
+    ;;     )
+    ;;   )
+    ;; (defvar citre-lang-verilog-plist
+    ;;   `(:get-symbol
+    ;;     my-verilog-get-symbol-atpt
+    ;;     )
+    ;;   "Verilog language support for Citre.")
+    ;; (setf (alist-get 'verilog-mode citre-language-support-alist)
+    ;;       citre-lang-verilog-plist)
     ))
 
 ;;; packages.el ends here

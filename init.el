@@ -42,7 +42,9 @@ This function should only modify configuration layer settings."
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      (ivy :variables ivy-xref-use-file-path t)
-     auto-completion
+
+     ;; 在 company-verilog 中使用了 company-capf 补全（citre，tags支持），以下配置防止光标会来回跳转
+     (auto-completion :variables company-transformers nil)
      better-defaults
      (emacs-lisp :variables tab-width 8)
      (git :variables magit-commit-show-diff nil)

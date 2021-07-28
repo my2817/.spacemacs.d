@@ -147,7 +147,8 @@
         (make-local-variable 'company-backends)
         (setq company-backends
               '( company-files
-                 (company-verilog-backend company-dabbrev-code company-gtags company-etags)
+                 ;; ( company-verilog-backend company-dabbrev-code company-gtags company-etags)
+                 ( company-verilog-backend company-capf company-dabbrev-code)
                  company-abbrev
                  ))
          (make-local-variable 'company-dabbrev-code-ignore-case)
