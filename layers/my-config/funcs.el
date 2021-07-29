@@ -893,3 +893,20 @@ Return alist with structure: '( (fn1 (log-str log-str)) (fn2 (log-str log-str)) 
                    (replace-match path)))
                (message (format "Rename %s to %s" old-path path)))
       (message (format "!!!File type not valid or dose not exist!!! %s %s" ltype old-path)))))
+
+(defun my--push-point-to-xref-marker-stack (&rest r)
+  "You can jump back with any of them type \\[pop-tag-mark],
+
+For those who are using Citre with other tools (imenu, grep...)"
+  (xref-push-marker-stack (point-marker)))
+(dolist (func '(find-function
+                counsel-imenu
+                helm-imenu
+                projectile-grep
+                helm-grep-ag
+                counsel-rg
+                lsp-ivy-workspace-symbol
+                citre-jump
+                avy-goto-word-or-subword-1
+                ))
+  (advice-add func :before 'my--push-point-to-xref-marker-stack))
