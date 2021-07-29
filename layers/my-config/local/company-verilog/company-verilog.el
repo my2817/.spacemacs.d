@@ -83,29 +83,14 @@
   "A key-words list of verilog-mode "
   :group 'company-verilog
   )
-(defcustom company-verilog-keywords-user nil
+(defcustom company-verilog-keywords-user '("AUTOINPUT" "AUTOOUTPUT" "AUTOWIRE" "AUTOREGINPUT" "AUTOARG" "AUTORESET" "autotags" "verilog-library-flags")
   "user define key words"
   :group 'company-verilog)
 
-(defun company-verilog-update-keywords-user ()
-  (custom-set-variables
-   '(company-verilog-keywords-user
-     '("AUTOINPUT" "AUTOOUTPUT" "AUTOWIRE" "AUTOREGINPUT" "AUTOARG" "AUTORESET" "autotags" "verilog-library-flags")))
-  )
-
-(defcustom company-verilog-keywords nil
-  "keywords for company-verilog "
-  :group 'company-verilog
- )
 (defun company-verilog-make-key-words ()
   "merge `company-verilog-keywords-ieee' and `company-verilog-keywords-user'"
-  (company-verilog-update-keywords-user)
-  (mapcar (lambda (keyword)
-            (add-to-list 'company-verilog-keywords keyword))
-          company-verilog-keywords-ieee)
-  (mapcar (lambda (keyword)
-            (add-to-list 'company-verilog-keywords keyword))
-          company-verilog-keywords-user))
+  `(,@company-verilog-keywords-ieee ,@company-verilog-keywords-user)
+)
 
 (defun company-verilog-backend (command &optional arg &rest ignored)
   "company backend for veriog"
@@ -116,19 +101,20 @@
     (prefix (and (eq major-mode 'verilog-mode)
                  (company-grab-symbol)))
     (candidates
-     (setq-local key-words company-verilog-keywords )
-     (add-to-list 'key-words (format-time-string "%Y-%m-%d %H:%M:%S"))
+     (setq-local key-words `(,@(company-verilog-make-key-words)
+                             ,(format-time-string "%Y-%m-%d %H:%M:%S")
+                             ,(format-time-string "%Y/%m/%d %H:%M:%S")))
      (cl-remove-if-not
       (lambda (c) (string-prefix-p arg c))
-      ;; company-verilog-keywords
       key-words
       ))
+    ;; (annotation " (KeyWord)")
     (post-completion
      ;; (expand-abbrev)
      (yas/expand)
      )))
 
-(add-to-list 'company-keywords-alist (cons 'verilog-mode company-verilog-keywords))
+(add-to-list 'company-keywords-alist (cons 'verilog-mode (company-verilog-make-key-words)))
 ;; (make-variable-buffer-local 'company-backends)
 
 ;; (provide 'company-verilog)
@@ -143,12 +129,11 @@
 
   (if company-verilog
       (progn
-        (company-verilog-make-key-words)
         (make-local-variable 'company-backends)
         (setq company-backends
               '( company-files
-                 ;; ( company-verilog-backend company-dabbrev-code company-gtags company-etags)
-                 ( company-verilog-backend company-capf company-dabbrev-code)
+                 ;; (company-verilog-backend company-dabbrev-code company-gtags company-etags)
+                 (company-verilog-backend company-capf company-dabbrev-code)
                  company-abbrev
                  ))
          (make-local-variable 'company-dabbrev-code-ignore-case)
