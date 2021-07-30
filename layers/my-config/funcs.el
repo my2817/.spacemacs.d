@@ -560,6 +560,8 @@ Version 2018-10-08"
         (ediff-files fileA fileB)
       (ediff-files3 fileA fileB fileC))))
 
+(with-eval-after-load 'dired
+  (define-key dired-mode-map "e" 'ora-ediff-files))
 (defun ora-ediff-files ()
   "
     In case no files are marked, the file at point is used as the first file, and read-file-name is used for the second file. Since I have the magic (setq dired-dwim-target t) in my config, in case a second dired buffer is open, dired-dwim-target-directory will offer it as the starting directory during completion. Very useful to compare two files in two different directories.
@@ -569,6 +571,7 @@ Version 2018-10-08"
     ediff-after-quit-hook-internal is used to restore the previous window configuration after I quit ediff with q.
 "
   (interactive)
+  (require 'dired-aux)
   (let ((files (dired-get-marked-files))
         (wnd (current-window-configuration)))
     (if (<= (length files) 2)
