@@ -490,6 +490,7 @@ before packages are loaded. If you are unsure,  try  setting them in
      ((string= melpa-source "tuna")
       (setq configuration-layer-elpa-archives
             '(("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+              ("nognu" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/")
               ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
               ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/"))))
 
