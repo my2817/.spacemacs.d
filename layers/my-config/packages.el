@@ -1046,6 +1046,11 @@ node install-eaf-win32.js
     ;;   "Verilog language support for Citre.")
     ;; (setf (alist-get 'verilog-mode citre-language-support-alist)
     ;;       citre-lang-verilog-plist)
+    (defun citre-jump+ ()
+      (interactive)
+      (condition-case _
+          (citre-jump)
+        (error (call-interactively #'xref-find-definitions))))
     ))
 
 ;;; packages.el ends here

@@ -99,7 +99,16 @@
   (cl-case command
     (interactive (company-begin-backend 'company-verilog-backend))
     (prefix (and (eq major-mode 'verilog-mode)
-                 (company-grab-symbol)))
+                 ;; company needs backends that in same group return same prefix
+                 ;; this backend remove "`" from symbol that what citre-lang-verilog-get-symbol does
+                 (let* ((sym (symbol-at-point))
+                        (char (substring (symbol-name sym) 0 1))
+                        )
+                   (if (string= "`" char)
+                       (substring (symbol-name sym) 1)
+                     (symbol-name sym))
+                   )
+                 ))
     (candidates
      (setq-local key-words `(,@(company-verilog-make-key-words)
                              ,(format-time-string "%Y-%m-%d %H:%M:%S")
