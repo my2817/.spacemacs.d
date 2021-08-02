@@ -204,6 +204,9 @@ Each entry is either:
     ;; `electric-verilog-tab' error while excute `verilog-calculate-indent'
     ;;  because "`" is not a word-constituent from the last line, we need to move "`" outside of "\\<" in verilog-directive-re-1
     ;; (defconst verilog-directive-re-1 "[ 	]*`\\<\\(\\(?:__\\(?:FILE__\\|LINE\\)\\|begin_keywords\\|c\\(?:\\(?:as\\|elldefin\\)e\\)\\|def\\(?:ault\\(?:_nettype\\)?\\|ine\\)\\|e\\(?:ls\\(?:e\\|if\\)\\|nd\\(?:_keywords\\|celldefine\\|for\\|if\\|protect\\|switch\\|while\\)\\)\\|for\\(?:mat\\)?\\|i\\(?:f\\(?:n?def\\)?\\|nclude\\)\\|l\\(?:et\\|ine\\)\\|nounconnected_drive\\|pr\\(?:agma\\|otect\\)\\|resetall\\|switch\\|time\\(?:_?scale\\)\\|u\\(?:n\\(?:connected_drive\\|def\\(?:ineall\\)?\\)\\|selib\\)\\|while\\)\\)\\>")
+    (remove-hook 'completion-at-point-functions
+                 'verilog-completion-at-point t)
+
     ))
 
 (defun my-config/post-init-mmm-mode ()
