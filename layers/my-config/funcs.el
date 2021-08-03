@@ -911,5 +911,7 @@ For those who are using Citre with other tools (imenu, grep...)"
                 lsp-ivy-workspace-symbol
                 citre-jump
                 avy-goto-word-or-subword-1
+                find-file
+                swiper
                 ))
   (advice-add func :before 'my--push-point-to-xref-marker-stack))
