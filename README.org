@@ -35,6 +35,7 @@
     - [[#自动只读][自动只读]]
   - [[#org-mode][Org-mode]]
   - [[#awesome-pair][awesome-pair]]
+  - [[#citre][citre]]
 - [[#awesome-tools][Awesome Tools]]
   - [[#fzf][fzf]]
   - [[#ripegrep][ripegrep]]
@@ -48,6 +49,7 @@
   - [[#total-commander][Total Commander]]
   - [[#snipaste][Snipaste]]
   - [[#switcheroo][Switcheroo]]
+  - [[#xclip][xclip]]
 
 * 系统环境
   tips: 以下系统环境安装过程中，如果下载包比较慢，可以试试搜索一下其对应的国内源，说不一定可以加速
@@ -734,7 +736,8 @@
     |(foo bar)|   spc m {    {(foo bar)}
     (foo |bar)    spc m )    foo bar
   #+end_example
-
+** citre
+   ctags required, jump to symbols' definition, include third part library
 * Awesome Tools
   本节集中罗列一下我平时用到的工具
 
@@ -775,3 +778,8 @@
 
 ** Switcheroo
    https://github.com/kvakulo/Switcheroo, 又一个窗口切换，类似于 iswitchw 和 utools 的 winman 插件, 在设置里勾选 "Activate Switcheroo with Alt+Tab", 替换 windows 默认的 Alt+Tab 功能
+
+** xclip
+   copy cut file by by terminal command
+   - https://github.com/astrand/xclip
+   - https://github.com/larspontoppidan/clipboard-files
