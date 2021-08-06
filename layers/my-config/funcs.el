@@ -913,5 +913,6 @@ For those who are using Citre with other tools (imenu, grep...)"
                 avy-goto-word-or-subword-1
                 find-file
                 swiper
+                evil-goto-definition
                 ))
   (advice-add func :before 'my--push-point-to-xref-marker-stack))

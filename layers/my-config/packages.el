@@ -658,6 +658,16 @@ See URL `irun -helpall'"
     (("C-c M-j" . pyim-convert-string-at-point) ;与 pyim-probe-dynamic-english 配合
      )
     :config
+    (defun pyim-add-unread-command-events (key &optional reset)
+      " \"no record\" in mini buffer"
+      (when reset
+        (setq unread-command-events nil))
+      (setq unread-command-events
+            (if (characterp key)
+                (cons key unread-command-events)
+              (append (mapcan (lambda (e) (list e))
+                              (append key nil))
+                      unread-command-events))))
     (progn
       (setq default-input-method "pyim")
       ;; 设置 pyim 探针设置，这是 pyim 高级功能设置，可以实现 *无痛* 中英文切换 :-)

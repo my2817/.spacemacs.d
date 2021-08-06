@@ -1350,6 +1350,21 @@ If `electric-verilog-tab' don't change position, execute `my-hideshowvis-fringe'
           )
       (my-hideshowvis-fringe)))
 
+(defun my-verilog-parse-macro-in-portlist ()
+  "Return a list, contain ifdef ifndef else elsif endif
+
+- 寻找端口列表括号的结束点，确定搜索范围
+  - 搜索 ifdef ifndef
+    - 搜索匹配的 endif
+- 拿到一个符号后，需要判断下一个字符： (verilog-re-search-forward \"[^\s-]\" nil t)
+  - 如果是 [: 端口定义放在端口列表中的语法结构，寻找匹配低 ] 的后面低符号
+  - 如果是逗号，逗号前一个符号为端口名
+  - 如果是条件宏，则前一个符号为端口名
+
+"
+;; (verilog-re-search-forward "\\(`ifdef\\)\\|\\(`ifndef\\)\\|\\(`endif\\)" nil t)
+;;
+  )
 
 ;;;###autoload
 (define-minor-mode my-verilog
