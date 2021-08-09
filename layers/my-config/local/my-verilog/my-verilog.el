@@ -1350,19 +1350,53 @@ If `electric-verilog-tab' don't change position, execute `my-hideshowvis-fringe'
           )
       (my-hideshowvis-fringe)))
 
+(defun my-verilog-forward-close-endif ()
+  "Find the close endif that match the current point.
+Ignore other close parenthesis with matching open parens."
+  (let ((parens 1))
+    (while (> parens 0)
+      (unless (verilog-re-search-forward-quick "\\(`ifdef\\|`ifndef\\|`endif\\)" nil t)
+	(error "%s: Mismatching: `endif" (verilog-point-text)))
+      (cond ((string= (verilog-match-string 1) "`ifdef" )
+	     (setq parens (1+ parens)))
+            ((string= (verilog-match-string 1) "`ifndef" )
+	     (setq parens (1+ parens)))
+            ((string= (verilog-match-string 1) "`endif" )
+	     (setq parens (1- parens)))))))
+
 (defun my-verilog-parse-macro-in-portlist ()
-  "Return a list, contain ifdef ifndef else elsif endif
+  "Return a  port list, contain keywords of ifdef ifndef else elsif endif
+
+a module declear can be:
+-----------
+module suba(
+`ifdef a,b,
+`else d,e
+`endif
+f,g)
+------------
+or
+------------
+module subb(
+`ifdef
+input [MAX:MIN]a,b,
+`else
+output d,e,
+`endif
+output f,g)
+`skip-syntax-forward \"'
 
 - 寻找端口列表括号的结束点，确定搜索范围
   - 搜索 ifdef ifndef
     - 搜索匹配的 endif
 - 拿到一个符号后，需要判断下一个字符： (verilog-re-search-forward \"[^\s-]\" nil t)
-  - 如果是 [: 端口定义放在端口列表中的语法结构，寻找匹配低 ] 的后面低符号
+  - 如果是 [: 端口定义放在端口列表中的语法结构，寻找匹配的 ] 的后面的符号
   - 如果是逗号，逗号前一个符号为端口名
   - 如果是条件宏，则前一个符号为端口名
 
 "
-;; (verilog-re-search-forward "\\(`ifdef\\)\\|\\(`ifndef\\)\\|\\(`endif\\)" nil t)
+  ;; (verilog-re-search-forward "\\(`ifdef\\)\\|\\(`ifndef\\)\\|\\(`endif\\)" nil t)
+  ;; Find the file and point at which MODULE is defined: /usr/local/share/emacs/26.3/lisp/progmodes/verilog-mode.el.gz:11796
 ;;
   )
 
