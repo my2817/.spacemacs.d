@@ -34,6 +34,8 @@
     - [[#代码折叠][代码折叠]]
     - [[#自动只读][自动只读]]
   - [[#org-mode][Org-mode]]
+    - [[#variables-or-options][variables or options]]
+    -  [[#code-sample][Code sample]]
   - [[#awesome-pair][awesome-pair]]
   - [[#citre][citre]]
 - [[#awesome-tools][Awesome Tools]]
@@ -661,7 +663,26 @@
 
    [[http://doc.norang.ca/org-mode.html][Orange Your Life In Plain Text!]]
 
-  + 在任何 buffer 中使用插入 org 表格，使用 orgtbl-mode
+   在任何 buffer 中使用插入 org 表格，使用 orgtbl-mode
+*** variables or options
+       - org-export-headline-levels: 保留大纲示图的级数，默认为3, 再大的级别会在导出时转换为列表，同 #+OPTIONS: H:3
+       - org-export-with-sub-superscripts
+         #+begin_src lisp
+           ;;这2个一个是用于 export 的，一个是用于本地显示的，最好配置成一样保证一致性。 都配置成 '{}的话表示_和^后面只有像这样用才会被认为是上标/下标。
+           (setq org-export-with-sub-superscripts '{});; 同 #+OPTIONS: ^:{}
+           (setq org-use-sub-superscripts '{})
+         #+end_src
+       - "#+OPTIONS: ^:nil"，在导出时，不将下划线转换为下标
+         #+begin_example
+           ,#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../style/style.css" />
+           ,#+AUTHOR: 何云
+           ,#+title: Note of Synopsys tool chains
+           ,#+OPTIONS: ^:nil
+         #+end_example
+
+
+
+***  Code sample
   + org-babel，可以让许多不同语言的代码块一起工作
     + 配置
       #+BEGIN_SRC lisp

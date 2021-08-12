@@ -332,9 +332,9 @@ find the errors."
   )
 (ad-activate 'plantuml-indent-line)
 
-(defadvice org-edit-src-exit (after restore-window-config activate)
-  (winner-undo))
-(ad-activate 'org-edit-src-exit)
+;; (defadvice org-edit-src-exit (after restore-window-config activate)
+;;   (winner-undo))
+;; (ad-activate 'org-edit-src-exit)
 
 
 (defun org-projectile/update-agenda-files ()
@@ -914,5 +914,7 @@ For those who are using Citre with other tools (imenu, grep...)"
                 find-file
                 swiper
                 evil-goto-definition
+                evil-previous-line
+                evil-next-line
                 ))
   (advice-add func :before 'my--push-point-to-xref-marker-stack))
