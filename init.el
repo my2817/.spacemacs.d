@@ -45,13 +45,18 @@ This function should only modify configuration layer settings."
 
      ;; 在 company-verilog 中使用了 company-capf 补全（citre，tags支持），以下配置防止光标会来回跳转
      (auto-completion :variables company-transformers nil
-                      :variables company-dabbrev-code-ignore-case t
-                      :variables company-dabbrev-ignore-case t)
+                      company-dabbrev-code-ignore-case t
+                      company-dabbrev-ignore-case t)
      better-defaults
      (emacs-lisp :variables tab-width 8)
-     (git :variables magit-commit-show-diff nil)
+     (git :variables magit-commit-show-diff nil
+          git-enable-magit-todos-plugin t
+          magit-todos-branch-list nil
+          org-enable-valign t )
      markdown
-     (org :variables org-projectile-file "TODOs.org")
+     (org :variables org-projectile-file "TODOs.org"
+          org-enable-appear-support t)
+
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)

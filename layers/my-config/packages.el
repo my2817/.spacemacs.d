@@ -52,7 +52,7 @@
     ;; tabbar-ruler
     (sos-mode :location local)
     (org :location built-in)
-    org-appear
+    ;; org-appear
     (compilation-mode :location built-in)
     flycheck
     flycheck-plantuml
@@ -80,7 +80,7 @@
                          :fetcher github
                          :repo manateelazycat/aweshell))
     ;; (eaf :location local)
-    magit-todos
+    ;; magit-todos
     ;; (magit-gerrit :location (recipe
     ;;                          :fetcher github
     ;;                          :repo zeph1e/magit-gerrit)) ;; https://github.com/terranpro/magit-gerrit/pull/56
