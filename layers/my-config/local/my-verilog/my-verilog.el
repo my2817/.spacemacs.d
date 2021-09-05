@@ -1386,7 +1386,7 @@ output d,e,
 output f,g)
 `skip-syntax-forward \"'
 
-- 寻找端口列表括号的结束点，确定搜索范围
+- 寻找端口列表括号的结束点(verilog-forward-close-paren)，确定搜索范围
   - 搜索 ifdef ifndef
     - 搜索匹配的 endif
 - 拿到一个符号后，需要判断下一个字符： (verilog-re-search-forward \"[^\s-]\" nil t)
@@ -1397,7 +1397,16 @@ output f,g)
 "
   ;; (verilog-re-search-forward "\\(`ifdef\\)\\|\\(`ifndef\\)\\|\\(`endif\\)" nil t)
   ;; Find the file and point at which MODULE is defined: /usr/local/share/emacs/26.3/lisp/progmodes/verilog-mode.el.gz:11796
-;;
+  ;;
+  ;; (while (<= port-end (point))
+  ;;    (let macro-end *)
+  ;;    (goto-back-point)
+  ;;    (while (search-forward \\(Ifdef\\|ifndef\\) to port-end )
+  ;;      (let macro-matched-end *)
+  ;;      (goto-back-point)
+  ;;      (return-array-condMacro-port macro-matched-end)
+  ;;    )
+  ;; )
   )
 
 ;;;###autoload

@@ -52,6 +52,8 @@
   - [[#snipaste][Snipaste]]
   - [[#switcheroo][Switcheroo]]
   - [[#xclip][xclip]]
+  - [[#carnac][Carnac]]
+  - [[#sumatrapdfreader][sumatrapdfreader]]
 
 * 系统环境
   tips: 以下系统环境安装过程中，如果下载包比较慢，可以试试搜索一下其对应的国内源，说不一定可以加速
@@ -804,3 +806,9 @@
    copy cut file by by terminal command
    - https://github.com/astrand/xclip
    - https://github.com/larspontoppidan/clipboard-files
+
+** Carnac
+   电脑实时按键展示
+
+** sumatrapdfreader
+   轻量级pdf阅读器，支持多标签页，高级选项下可直接编辑前景、背景色: https://www.sumatrapdfreader.org/

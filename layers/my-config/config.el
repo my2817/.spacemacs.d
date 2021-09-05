@@ -257,27 +257,6 @@
 
 ;;   )
 
-(with-eval-after-load 'tramp
-  (add-to-list 'tramp-methods
-               '("my-ssh"
-                 (tramp-login-program        "ssh")
-                 (tramp-login-args           (
-                                              ("-o" "PreferredAuthentications=password")
-                                              ("-l" "%u") ("-p" "%p") ("%c")
-                                              ("-e" "none") ("%h")
-                                              ))
-                 (tramp-async-args           (("-q")))
-                 (tramp-remote-shell         "/bin/sh")
-                 (tramp-remote-shell-login   ("-l"))
-                 (tramp-remote-shell-args    ("-c"))
-                 (tramp-gw-args              (
-                                              ("-o" "GlobalKnownHostsFile=/dev/null")
-                                              ("-o" "UserKnownHostsFile=/dev/null")
-                                              ("-o" "StrictHostKeyChecking=no")
-                                              )
-                                             )
-                 (tramp-default-port         22)))
-  )
 
 (with-eval-after-load 'persp-mode
   (setq persp-auto-save-opt 0)
