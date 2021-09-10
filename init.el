@@ -495,7 +495,7 @@ before packages are loaded. If you are unsure,  try  setting them in
      ((string= melpa-source "tuna")
       (setq configuration-layer-elpa-archives
             '(("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-              ("nognu" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/")
+              ("nognu"    . "http://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/")
               ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
               ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/"))))
 
@@ -639,20 +639,20 @@ Put your configuration code here, except for variables that  should be set befor
   (define-key evil-motion-state-map (kbd "C-o") 'citre-jump-back)
 
 
-  (set-face-attribute
-   'default nil
-   :font (font-spec :name "-APPL-Monaco-normal-normal-normal-*-*-*-*-*-*-0-iso10646-1"
-                    :weight 'normal
-                    :slant 'normal
-                    :size 11.5))
-  (dolist (charset '(kana han symbol cjk-misc bopomofo))
-    (set-fontset-font
-     (frame-parameter nil 'font)
-     charset
-     (font-spec :name "-MS  -微软雅黑-bold-normal-normal-*-*-*-*-*-*-0-iso10646-1"
-                :weight 'normal
-                :slant 'normal
-                :size 13.5)))
+  ;; (set-face-attribute
+  ;;  'default nil
+  ;;  :font (font-spec :name "-APPL-Monaco-normal-normal-normal-*-*-*-*-*-*-0-iso10646-1"
+  ;;                   :weight 'normal
+  ;;                   :slant 'normal
+  ;;                   :size 11.5))
+  ;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
+  ;;   (set-fontset-font
+  ;;    (frame-parameter nil 'font)
+  ;;    charset
+  ;;    (font-spec :name "-MS  -微软雅黑-bold-normal-normal-*-*-*-*-*-*-0-iso10646-1"
+  ;;               :weight 'normal
+  ;;               :slant 'normal
+  ;;               :size 13.5)))
 
   (setq ediff-whitespace " \n\t\f\r\240,")
   (make-variable-buffer-local 'ediff-whitespace)
@@ -675,7 +675,12 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(awesome-tab-height 120)
+ '(evil-want-Y-yank-to-eol nil)
+ '(org-superstar-headline-bullets-list (quote ("○" "✿" "✸" "◉")))
+ '(package-selected-packages
+   (quote
+    (editorconfig treemacs-all-the-icons all-the-icons-ivy gendoxy nadvice yasnippet-snippets yapfify ws-butler writeroom-mode winum which-key wgrep web-mode web-beautify volatile-highlights vimrc-mode vi-tilde-fringe vc-msg valign uuidgen use-package unfill undo-tree typit treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-evil toc-org thing-edit tagedit symon symbol-overlay sudoku string-inflection string-edit sphinx-doc spaceline-all-the-icons smex smeargle slim-mode separedit scss-mode sass-mode rime restart-emacs rainbow-delimiters quickrun pytest pyim-wbdict pyenv-mode py-isort pug-mode prettier-js popwin poetry pippel pipenv pip-requirements password-generator paradox pacmacs overseer orgit-forge org-superstar org-roam org-rich-yank org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-brain org-appear open-junk-file nameless mwim multi-translate multi-line move-text mmm-mode markdown-toc magit-todos magit-svn magit-gitflow magit-gerrit macrostep lorem-ipsum live-py-mode link-hint ivy-yasnippet ivy-xref ivy-rtags ivy-purpose ivy-hydra ivy-avy indent-guide importmagic impatient-mode hybrid-mode hungry-delete highlight-symbol highlight-parentheses highlight-numbers highlight-indentation helm-make graphviz-dot-mode google-c-style golden-ratio gnuplot gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ gh-md fuzzy font-lock+ flycheck-ycmd flycheck-rtags flycheck-pos-tip flycheck-plantuml flycheck-package flycheck-elsa flx-ido fill-column-indicator fancy-battery eyebrowse exwm expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-org evil-numbers evil-nerd-commenter evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-easymotion evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu emr emmet-mode elisp-slime-nav electric-spacing dumb-jump drag-stuff dotenv-mode disaster dired-quick-sort diminish define-word dactyl-mode cython-mode ctags-update cpp-auto-include counsel-projectile counsel-css company-ycmd company-web company-tabnine company-rtags company-reftex company-posframe company-plsense company-c-headers company-auctex company-anaconda column-enforce-mode color-theme-sanityinc-tomorrow cnfonts clean-aindent-mode citre centered-cursor-mode browse-at-remote blacken beacon awesome-tab awesome-pair aweshell avy-thing-edit auto-yasnippet auto-highlight-symbol auto-compile atomic-chrome aggressive-indent ace-link ac-ispell 2048-game))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
