@@ -747,7 +747,7 @@ QUIET: be quiet and don't promote anything if t"
 ;;     (if (buffer-modified-p)
 ;;         (if (search-forward "Last Update : " nil t)
 ;;             (progn
-;;               (kill-line)
+;; (delete-region (point) (point-at-eol))
 ;;               (verilog-insert-time))
 ;;           (message "Can't find the position to update the \"last updated timing\""))))
 ;;   (imenu-list-rescan-imenu)
@@ -777,7 +777,7 @@ use `verilog-auto-hook' to do something after that
       (if (buffer-modified-p)
           (if (search-forward "Last Update : " nil t)
               (progn
-                (kill-line)
+                (delete-region (point) (point-at-eol))
                 (verilog-insert-time))
             (message "Can't find the position to update the \"last updated timing\""))))
     (imenu-list-rescan-imenu)
@@ -1272,22 +1272,22 @@ rease to 2, \")\": depth decrease to 1
           (progn
             (if (search-forward "Last Update : " nil t)
                 (progn
-                  (kill-line)
+                  (delete-region (point) (point-at-eol))
                   (verilog-insert-time))
               (message "Can't find the position to update \"Last Updated timing\""))
             (if (search-forward "Module Name : " nil t)
                 (progn
-                  (kill-line)
+                  (delete-region (point) (point-at-eol))
                   (insert (file-name-base (or (buffer-file-name) (buffer-name)))))
               (message "Can't find the position to update \"Module Name\""))
             (if (search-forward "Project Name: " nil t)
                 (progn
-                  (kill-line)
+                  (delete-region (point) (point-at-eol))
                   (insert  (projectile-project-name)))
               (message "Can't find the position to update \"Project Name\""))
             (if (search-forward "Engineer    : " nil t)
                 (progn
-                  (kill-line)
+                  (delete-region (point) (point-at-eol))
                   (insert (user-full-name))
                   (insert "<" (user-login-name) "@" (system-name) ">"))
               (message "Can't find the position to update \"Engineer\""))
