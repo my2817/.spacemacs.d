@@ -355,6 +355,7 @@ Each entry is either:
     :init
     (progn
       (autoload 'sos-mode "sos-mode.el" "some sos command." t)
+      (autoload 'my-verilog-get-last-history-log "my-verilog" "get change log of today" t)
       (sos-mode)
       )))
 (defun my-config/post-init-org()
