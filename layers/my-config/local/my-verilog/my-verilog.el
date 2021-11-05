@@ -1319,6 +1319,10 @@ or add following line into end of buffer:
     ;; (beginning-of-line)
     ))
 
+(defcustom my-verilog-auto-readonly t
+  "make buffer readonly if user-login-name not equal to Engineer of file header"
+  :group 'verilog-mode)
+
 (defun my-verilog-readonly ()
   "set buffer to read-only if Engineer field of header not equal to `uer-login-name' "
   (interactive)
@@ -1430,5 +1434,6 @@ output f,g)
            (not (string> (buffer-name) "timemachine:" ))
            (yes-or-no-p "Buffer is empty, let's insert verilog-header?"))
           (verilog-header t)))
-  (my-verilog-readonly)
+  (if my-verilog-auto-readonly
+      (my-verilog-readonly))
   )
