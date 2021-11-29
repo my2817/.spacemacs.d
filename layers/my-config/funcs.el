@@ -920,3 +920,52 @@ For those who are using Citre with other tools (imenu, grep...)"
                 forward-paragraph
                 ))
   (advice-add func :before 'my--push-point-to-xref-marker-stack))
+
+(defun ediff-make-temp-file (buff &optional prefix given-file start end)
+  (let* ((p (ediff-convert-standard-filename (or prefix "ediff")))
+	 (short-p p)
+	 (coding-system-for-write ediff-coding-system-for-write)
+	 f short-f)
+    (if (and (fboundp 'msdos-long-file-names)
+	     (not (msdos-long-file-names))
+	     (> (length p) 2))
+	(setq short-p (substring p 0 2)))
+
+    (setq f (concat ediff-temp-file-prefix p)
+	  short-f (concat ediff-temp-file-prefix short-p)
+  	  f (cond (given-file)
+		  ((find-file-name-handler f 'insert-file-contents)
+		   ;; to thwart file handlers in write-region, e.g., if file
+		   ;; name ends with .Z or .gz
+		   ;; This is needed so that patches produced by ediff will
+		   ;; have more meaningful names
+		   (ediff-make-empty-tmp-file short-f))
+		  (prefix
+		   ;; Prefix is most often the same as the file name for the
+		   ;; variant.  Here we are trying to use the original file
+		   ;; name but in the temp directory.
+		   (ediff-make-empty-tmp-file f 'keep-name))
+		  (t
+		   ;; If don't care about name, add some random stuff
+		   ;; to proposed file name.
+		   (ediff-make-empty-tmp-file short-f))))
+
+    ;; create the file
+    (ediff-with-current-buffer buff
+      (write-region (if start start (point-min))
+		    (if end end (point-max))
+		    f
+		    nil          ; don't append---erase
+		    'no-message)
+      (set-file-modes f ediff-temp-file-mode)
+      (expand-file-name f))
+    ;; (debug)
+    (with-current-buffer buff
+      (read-only-mode 0)
+      (rename-file f (format "%s.org.gpg" f))
+      (find-file (format "%s.org.gpg" f))
+      (switch-to-buffer buff)
+      (erase-buffer)
+      (insert-buffer (get-buffer (format "%s.%s" (file-name-base (format "%s.org.gpg" f)) (file-name-extension (format "%s.org.gpg" f)))))
+      (expand-file-name (format "%s.org.gpg" f)))
+    ))
