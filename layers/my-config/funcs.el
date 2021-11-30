@@ -921,51 +921,76 @@ For those who are using Citre with other tools (imenu, grep...)"
                 ))
   (advice-add func :before 'my--push-point-to-xref-marker-stack))
 
-(defun ediff-make-temp-file (buff &optional prefix given-file start end)
-  (let* ((p (ediff-convert-standard-filename (or prefix "ediff")))
-	 (short-p p)
-	 (coding-system-for-write ediff-coding-system-for-write)
-	 f short-f)
-    (if (and (fboundp 'msdos-long-file-names)
-	     (not (msdos-long-file-names))
-	     (> (length p) 2))
-	(setq short-p (substring p 0 2)))
+(with-eval-after-load 'ediff
+ (defun ediff-make-temp-file (buff &optional prefix given-file start end)
+   (let* ((p (ediff-convert-standard-filename (or prefix "ediff")))
+          (short-p p)
+          (coding-system-for-write ediff-coding-system-for-write)
+          f short-f)
+     (if (and (fboundp 'msdos-long-file-names)
+              (not (msdos-long-file-names))
+              (> (length p) 2))
+         (setq short-p (substring p 0 2)))
 
-    (setq f (concat ediff-temp-file-prefix p)
-	  short-f (concat ediff-temp-file-prefix short-p)
-  	  f (cond (given-file)
-		  ((find-file-name-handler f 'insert-file-contents)
-		   ;; to thwart file handlers in write-region, e.g., if file
-		   ;; name ends with .Z or .gz
-		   ;; This is needed so that patches produced by ediff will
-		   ;; have more meaningful names
-		   (ediff-make-empty-tmp-file short-f))
-		  (prefix
-		   ;; Prefix is most often the same as the file name for the
-		   ;; variant.  Here we are trying to use the original file
-		   ;; name but in the temp directory.
-		   (ediff-make-empty-tmp-file f 'keep-name))
-		  (t
-		   ;; If don't care about name, add some random stuff
-		   ;; to proposed file name.
-		   (ediff-make-empty-tmp-file short-f))))
+     (setq f (concat ediff-temp-file-prefix p)
+           short-f (concat ediff-temp-file-prefix short-p)
+           f (cond (given-file)
+                   ((find-file-name-handler f 'insert-file-contents)
+                    ;; to thwart file handlers in write-region, e.g., if file
+                    ;; name ends with .Z or .gz
+                    ;; This is needed so that patches produced by ediff will
+                    ;; have more meaningful names
+                    (ediff-make-empty-tmp-file short-f))
+                   (prefix
+                    ;; Prefix is most often the same as the file name for the
+                    ;; variant.  Here we are trying to use the original file
+                    ;; name but in the temp directory.
+                    (ediff-make-empty-tmp-file f 'keep-name))
+                   (t
+                    ;; If don't care about name, add some random stuff
+                    ;; to proposed file name.
+                    (ediff-make-empty-tmp-file short-f))))
 
-    ;; create the file
-    (ediff-with-current-buffer buff
-      (write-region (if start start (point-min))
-		    (if end end (point-max))
-		    f
-		    nil          ; don't append---erase
-		    'no-message)
-      (set-file-modes f ediff-temp-file-mode)
-      (expand-file-name f))
-    ;; (debug)
-    (with-current-buffer buff
-      (read-only-mode 0)
-      (rename-file f (format "%s.org.gpg" f))
-      (find-file (format "%s.org.gpg" f))
-      (switch-to-buffer buff)
-      (erase-buffer)
-      (insert-buffer (get-buffer (format "%s.%s" (file-name-base (format "%s.org.gpg" f)) (file-name-extension (format "%s.org.gpg" f)))))
-      (expand-file-name (format "%s.org.gpg" f)))
-    ))
+     ;; create the file
+     (ediff-with-current-buffer buff
+       (write-region (if start start (point-min))
+                     (if end end (point-max))
+                     f
+                     nil          ; don't append---erase
+                     'no-message)
+       (set-file-modes f ediff-temp-file-mode)
+       (expand-file-name f))
+     ;; if get a gpg file which can be decided by the name style of buffer name
+     ;; 1. append ".gpg" to temp file by rename-file
+     ;; 2. decode gpg file by find-file
+     ;; 3. copy decoded gpg file's content by append-to-buff
+     ;; 4. save decoded buffer's content to tmpfile
+     ;; 5. return tmpfile name
+     (if (string-match "org.gpg" (buffer-name buff))
+         (if (string-match "org.gpg$" (buffer-name buff))
+             (progn ;; file has been decoded, write buffer's conntent to
+               (let* ((f (ediff-make-empty-tmp-file short-f)))
+                 (get-buffer-create "*New-decode*")
+                 (switch-to-buffer buff)
+                 (append-to-buffer "*New-decode*" (point-min) (point-max))
+                 (write-file f nil)
+                 (kill-buffer (get-buffer "*New-decode*"))
+                 (expand-file-name f)
+                 ))
+           (with-current-buffer buff
+             (read-only-mode 0)
+             (erase-buffer)
+             (let* ((f-gpg (format "%s.org.gpg" f))
+                    (buff-decode (format "%s.gpg" (file-name-base f-gpg)))
+                    (file-decode (file-name-sans-extension f-gpg)))
+               (rename-file f f-gpg)
+               (find-file f-gpg)
+               (delete-file f-gpg)
+               (recentf-remove-if-non-kept f-gpg)
+               (write-file file-decode nil)
+               (append-to-buffer buff (point-min) (point-max))
+               (kill-buffer (get-buffer buff-decode))
+               (switch-to-buffer buff)
+               (expand-file-name file-decode))))
+       (expand-file-name f))
+     )))
