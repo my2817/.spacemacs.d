@@ -22,3 +22,6 @@
 (spacemacs/set-leader-keys "m<" 'awesome-pair-jump-left)
 (spacemacs/set-leader-keys "m>" 'awesome-pair-jump-right)
 (spacemacs/set-leader-keys "wpr" 'toggle-window-split)
+
+(define-key evil-motion-state-map "j" 'evil-next-visual-line)
+(define-key evil-motion-state-map "k" 'evil-previous-visual-line)
