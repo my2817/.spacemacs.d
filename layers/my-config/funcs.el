@@ -994,3 +994,11 @@ For those who are using Citre with other tools (imenu, grep...)"
                (expand-file-name file-decode))))
        (expand-file-name f))
      )))
+
+(with-eval-after-load 'git-gutter
+  (defun git-gutter--turn-on ()
+    (when (and (buffer-file-name)
+               (not (memq major-mode git-gutter:disabled-modes))
+               (not (string-match (purecopy "\\.gpg\\(~\\|\\.~[0-9]+~\\)?\\'") buffer-file-name)))
+      (git-gutter-mode +1)))
+  )
