@@ -812,3 +812,6 @@
 
 ** sumatrapdfreader
    轻量级pdf阅读器，支持多标签页，高级选项下可直接编辑前景、背景色: https://www.sumatrapdfreader.org/
+   #+begin_example 豆沙绿
+     BackgroundColor = #c7edcb
+   #+end_example

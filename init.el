@@ -552,12 +552,13 @@ before packages are loaded. If you are unsure,  try  setting them in
   ;;  ;   ("org-cn"   . "http://elpa.zilongshanren.com/org/")
   ;;  ;   ("gnu-cn"   . "http://elpa.zilongshanren.com/gnu/")))
   ;; (package-initialize)
-  (let ((melpa-source "zilongshanren"))
+  (let ((melpa-source "emacs-china"))
     (cond
      ((string= melpa-source "emacs-china")
       (setq configuration-layer-elpa-archives
             '(("melpa-cn" . "http://elpa.emacs-china.org/melpa/")
-              ("org-cn"   . "http://elpa.emacs-china.org/org/")
+              ;; ("org-cn"   . "http://elpa.emacs-china.org/org/")
+              ("nongnu" . "https://elpa.nongnu.org/nongnu/")
               ("gnu-cn"   . "http://elpa.emacs-china.org/gnu/"))))
      ((string= melpa-source "zilongshanren")
       (setq configuration-layer-elpa-archives
