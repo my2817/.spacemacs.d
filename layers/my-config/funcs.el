@@ -896,7 +896,7 @@ Return alist with structure: '( (fn1 (log-str log-str)) (fn2 (log-str log-str)) 
                    (replace-match path)))
                (message (format "Rename %s to %s" old-path path)))
       (message (format "!!!File type not valid or dose not exist!!! %s %s" ltype old-path)))))
-
+(require 'xref)
 (defun my--push-point-to-xref-marker-stack (&rest r)
   "You can jump back with any of them type \\[pop-tag-mark],
 

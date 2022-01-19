@@ -552,7 +552,7 @@ before packages are loaded. If you are unsure,  try  setting them in
   ;;  ;   ("org-cn"   . "http://elpa.zilongshanren.com/org/")
   ;;  ;   ("gnu-cn"   . "http://elpa.zilongshanren.com/gnu/")))
   ;; (package-initialize)
-  (let ((melpa-source "emacs-china"))
+  (let ((melpa-source "tuna"))
     (cond
      ((string= melpa-source "emacs-china")
       (setq configuration-layer-elpa-archives
@@ -563,7 +563,7 @@ before packages are loaded. If you are unsure,  try  setting them in
      ((string= melpa-source "zilongshanren")
       (setq configuration-layer-elpa-archives
             '(("melpa-cn" . "http://elpa.zilongshanren.com/melpa/")
-              ("nognu"    . "http://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/")
+              ;; ("nognu"    . "http://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/")
               ;; ("org-cn"   . "http://elpa.zilongshanren.com/org/")
               ("org"   . "http://elpa.gnu.org/packages/")
               )))
@@ -571,7 +571,6 @@ before packages are loaded. If you are unsure,  try  setting them in
       (setq configuration-layer-elpa-archives
             '(("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
               ("nognu"    . "http://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/")
-              ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
               ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/"))))
 
      ((string= melpa-source "local")
@@ -581,10 +580,12 @@ before packages are loaded. If you are unsure,  try  setting them in
               ("gnu-cn-local"   . "~/.emacs.d/.cache/elpa.emacs-china.org/gnu/"))))
      ((string= melpa-source "elpa")
       (setq configuration-layer-elpa-archives
-            '(("gnu" . "https://elpa.gnu.org/packages/") ;; GNU ELPA repository (Offical)
+            '(
+              ("gnu" . "https://elpa.gnu.org/packages/") ;; GNU ELPA repository (Offical)
               ("melpa" . "https://melpa.org/packages/") ;; MELPA repository
               ("melpa-stable" . "https://stable.melpa.org/packages/") ;; MELPA Stable repository
-              ("org" . "http://orgmode.org/elpa/"))))
+              ("nognu" . "https://elpa.nongnu.org/nongnu/")
+              )))
       (t
       (ignore))
      )
