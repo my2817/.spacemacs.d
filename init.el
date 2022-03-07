@@ -51,10 +51,11 @@ This function should only modify configuration layer settings."
      (git :variables magit-commit-show-diff nil
           git-enable-magit-todos-plugin t
           magit-todos-branch-list nil
-          org-enable-valign t )
+          )
      markdown
      (org :variables org-projectile-file "TODOs.org"
-          org-enable-appear-support t)
+          org-enable-appear-support t
+          org-enable-valign nil  )
 
      ;; (shell :variables
      ;;        shell-default-height 30

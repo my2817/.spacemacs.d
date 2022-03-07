@@ -916,8 +916,11 @@ For those who are using Citre with other tools (imenu, grep...)"
                 evil-goto-definition
                 evil-previous-line
                 evil-next-line
+                evil-avy-goto-word-or-subword-1
                 backward-paragraph
                 forward-paragraph
+                evil-goto-first-line
+                evil-goto-line
                 ))
   (advice-add func :before 'my--push-point-to-xref-marker-stack))
 
