@@ -423,9 +423,11 @@ otherwise you will this function don't work and don't know how
   "call `my-yank-image-from-win-clipboard-through-powershell' and insert image file link with org-mode format"
   (interactive)
   (let* ((file-path (my-yank-image-from-win-clipboard-through-powershell))
-         (file-link (format "[[file:%s][%s]]" file-path (file-name-sans-extension (file-name-nondirectory file-path))))
+         (des (read-string "Description:" (file-name-sans-extension (file-name-nondirectory file-path))))
          )
-    (insert file-link)
+    (if (string= des "")
+        (insert (format "[[file:%s]]" file-path ))
+      (insert (format "[[file:%s][%s]]" file-path des)))
     ))
 
 ;; (defun xah-open-in-desktop-from-wsl()
