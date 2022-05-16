@@ -749,6 +749,17 @@
            }
          }
        #+end_src
+
+#+begin_src plantuml :file 中文.png :cmdline -charset utf-8
+  @startuml
+     start
+        if ( 中文测试，这是什么 )
+           : bbb;
+        endif
+
+  @enduml
+#+end_src
+
 ** awesome-pair
   web:https://github.com/manateelazycat/awesome-pair.git, 其提供的 function 可方便进行成对的括号 ~()[]{}\"\"~ 插入与删除，其包含了一些边界算法。配置中的按键绑定与示例不同，见文件 ~/.spacemacs.d/layers/my-config/keybindings.el
   #+begin_example
