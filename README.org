@@ -161,6 +161,7 @@
     + ~spc p b~: Project 内的 buffer 切换，限定在 Project 内部，再也不怕同时打开多个同名文件
     + ~spc p r~: 打开 Project 内最近打开过的文件
     + ~spc p G~: 根据语法，生成 Project 内所有源码文件的 TAGS 文件，放在 Project 的根目录下
+      + 本快捷键使用 spacemacs 的策略生成 tag ，目前发现 [[#citre][citre]] 更适合自己的使用习惯，请参考该插件的文档使用
       + 需要外部工具 ctags 的支持，建议安装的版本是 [[https://github.com/universal-ctags/ctags][universal-ctags]]
       + TAGS 文件太大，影响查找速度，可以在 .projectile 里增加以下内容将用不上的目录排除，如下：
         #+begin_example
@@ -771,6 +772,7 @@
     (foo |bar)    spc m )    foo bar
   #+end_example
 ** citre
+   https://github.com/universal-ctags/citre
    ctags required, jump to symbols' definition, include third part library
 * Awesome Tools
   本节集中罗列一下我平时用到的工具
