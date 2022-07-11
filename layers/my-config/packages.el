@@ -76,24 +76,22 @@
                            :fetcher github
                            :repo manateelazycat/thing-edit))
     ;; (thing-edit :location local)
-    (aweshell :location (recipe
-                         :fetcher github
-                         :repo manateelazycat/aweshell))
+    ;; (aweshell :location (recipe
+    ;;                      :fetcher github
+    ;;                      :repo manateelazycat/aweshell))
     ;; (eaf :location local)
     ;; magit-todos
     ;; (magit-gerrit :location (recipe
     ;;                          :fetcher github
     ;;                          :repo zeph1e/magit-gerrit)) ;; https://github.com/terranpro/magit-gerrit/pull/56
 
-    (separedit :location (recipe
-                          :fetcher github
-                          :repo twlz0ne/separedit.el))
+    separedit 
     ;;    (snails :location (recipe
     ;;                         :fetcher github
     ;;                         :repo manateelazycat/snails))
-    (rime :location (recipe
-                     :fetcher github
-                     :repo DogLooksGood/emacs-rime))
+    ;; (rime :location (recipe
+    ;;                  :fetcher github
+    ;;                  :repo DogLooksGood/emacs-rime))
 
     (vc-msg :location (recipe
                        :fetcher github
@@ -102,6 +100,11 @@
     (avy-thing-edit :location (recipe
                                :fetcher github
                                :repo lyjdwh/avy-thing-edit))
+    chinese-word-at-point
+    bing-dict
+    google-translate
+    youdao-dictionary
+    sdcv
     (multi-translate :location (recipe
                                 :fetcher github
                                 :repo twlz0ne/multi-translate.el))
@@ -775,6 +778,7 @@ See URL `irun -helpall'"
 (defun my-config/init-thing-edit ()
   (use-package thing-edit
     :defer t
+    :ensure t
     :init
     (progn
       (require 'thing-edit)
@@ -922,6 +926,30 @@ See URL `irun -helpall'"
       ))
   )
 
+(defun my-config/init-chinese-word-at-point ()
+  (use-package chinese-word-at-point
+    :defer t
+    ))
+
+(defun my-config/init-bing-dict ()
+  (use-package bing-dict
+    :defer t
+    ))
+
+(defun my-config/init-google-translate ()
+  (use-package google-translate
+    :defer t
+    ))
+
+(defun my-config/init-youdao-dictionary ()
+  (use-package youdao-dictionary
+    :defer t
+    ))
+
+(defun my-config/init-sdcv ()
+       (use-package sdcv
+         :defer t
+         ))
 
 (defun my-config/init-multi-translate ()
   (use-package multi-translate

@@ -118,7 +118,9 @@
             (setq-local company-backends
                         '(company-files
                           (company-dabbrev-code company-gtags company-etags company-keywords)
-                          company-oddmuse company-dabbrev))))
+                          company-oddmuse company-dabbrev))
+            (setq word-wrap-by-category t)
+            (visual-line-mode 1)))
 
 (add-hook 'conf-mode-hook (lambda ()
                             (spacemacs/toggle-relative-line-numbers-on)))
@@ -127,6 +129,10 @@
 ;; turnoff `display-line-numbers-mode' in `artist-mode'
 (add-hook 'artist-mode-hook (lambda () (display-line-numbers-mode -1)))
 (add-hook 'sh-mode-hook 'company-mode)
+(add-hook 'org-mode-hook
+          (lambda ()
+            (setq word-wrap-by-category t)
+            (visual-line-mode 1)))
 
 (mapc #'wttr/prepend-to-exec-path
       (reverse
