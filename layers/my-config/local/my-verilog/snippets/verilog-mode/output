@@ -1,0 +1,6 @@
+# name: output
+# key: output
+# group: verilog
+# --
+
+output ${1:reg} ${2:[${3:MSB} : ${4:LSB}]} ${5:Name};

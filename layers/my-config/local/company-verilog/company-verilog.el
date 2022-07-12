@@ -36,41 +36,45 @@
   "timeunit" "tran" "tranif0" "tranif1" "tri" "tri0" "tri1" "triand" "trior"
   "trireg" "type" "typedef" "union" "unique" "unsigned" "use" "var" "vectored"
   "virtual" "void" "wait" "wait_order" "wand" "weak0" "weak1" "while" "wildcard"
-  "wire" "with" "within" "wor" "xnor" "xor" "$assertkill" "$assertoff"
-  "$asserton" "$async$and$array" "$async$and$plane" "$async$nand$array"
-  "$async$nand$plane" "$async$nor$array" "$async$nor$plane" "$async$or$array"
-  "$async$or$plane" "$bits" "$bitstoreal" "$bitstoshortreal" "$cast" "$comment"
-  "$countdrivers" "$countones" "$date" "$dimensions" "$display" "$displayb"
-  "$displayh" "$displayo" "$dist_chi_square" "$dist_erlang" "$dist_exponential"
-  "$dist_normal" "$dist_poisson" "$dist_t" "$dist_uniform" "$dumpall"
-  "$dumpfile" "$dumpflush" "$dumplimit" "$dumpoff" "$dumpon" "$dumpports"
-  "$dumpportsall" "$dumpportsflush" "$dumpportslimit" "$dumpportsoff"
-  "$dumpportson" "$dumpvars" "$enddefinitions" "$error" "$exit" "$fatal"
-  "$fclose" "$fdisplay" "$fdisplayb" "$fdisplayf" "$fdisplayh" "$fdisplayo"
-  "$fell" "$feof" "$ferror" "$fflush" "$fgetc" "$fgets" "$finish" "$fmonitor"
-  "$fmonitorb" "$fmonitorf" "$fmonitorh" "$fmonitoro" "$fopen" "$fread"
-  "$fscanf" "$fseek" "$fsscanf" "$fstrobe" "$fstrobeb" "$fstrobef" "$fstrobeh"
-  "$fstrobeo" "$ftell" "$fullskew" "$fwrite" "$fwriteb" "$fwritef" "$fwriteh"
-  "$fwriteo" "$get_coverage" "$getpattern" "$high" "$history" "$hold"
-  "$increment" "$incsave" "$info" "$input" "$isunbounded" "$isunknown" "$itor"
-  "$key" "$left" "$list" "$load_coverage_db" "$log" "$low" "$monitor"
-  "$monitorb" "$monitorh" "$monitoro" "$monitoroff" "$monitoron" "$nochange"
-  "$nokey" "$nolog" "$onehot" "$onehot0" "$past" "$period" "$print" "$q_add"
-  "$q_exam" "$q_full" "$q_initialize" "$q_random" "$q_remove" "$random"
-  "$readmemb" "$readmemh" "$realtime" "$realtobits" "$recovery" "$recrem"
-  "$removal" "$reset" "$reset_count" "$reset_value" "$restart" "$rewind"
-  "$right" "$root" "$rose" "$rtoi" "$sampled" "$save" "$scale" "$scope"
-  "$sdf_annotate" "$set_coverage_db_name" "$setup" "$setuphold" "$sformat"
-  "$sformatf" "$shortrealtobits" "$showscopes" "$showvariables" "$showvars"
-  "$signed" "$size" "$skew" "$sreadmemb" "$sreadmemh" "$sscanf" "$stable"
-  "$stime" "$stop" "$strobe" "$strobeb" "$strobeh" "$strobeo" "$swrite"
-  "$swriteb" "$swriteh" "$swriteo" "$sync$and$array" "$sync$and$plane"
-  "$sync$nand$array" "$sync$nand$plane" "$sync$nor$array" "$sync$nor$plane"
-  "$sync$or$array" "$sync$or$plane" "$test$plusargs" "$time" "$timeformat"
-  "$timescale" "$timeskew" "$typename" "$typeof" "$ungetc" "$unit"
-  "$unpacked_dimensions" "$unsigned" "$upscope" "$urandom" "$urandom_range"
-  "$value$plusargs" "$var" "$vcdclose" "$version" "$warning" "$width" "$write"
-  "$writeb" "$writeh" "$writememb" "$writememh" "$writeo" "accelerate"
+  "wire" "with" "within" "wor" "xnor" "xor" 
+  ;; buildin system tasks
+  "assertkill" "assertoff"
+  "asserton" "async$and$array" "async$and$plane" "async$nand$array"
+  "async$nand$plane" "async$nor$array" "async$nor$plane" "async$or$array"
+  "async$or$plane" "bits" "bitstoreal" "bitstoshortreal" "cast" "comment"
+  "countdrivers" "countones" "date" "dimensions" "display" "displayb"
+  "displayh" "displayo" "dist_chi_square" "dist_erlang" "dist_exponential"
+  "dist_normal" "dist_poisson" "dist_t" "dist_uniform" "dumpall"
+  "dumpfile" "dumpflush" "dumplimit" "dumpoff" "dumpon" "dumpports"
+  "dumpportsall" "dumpportsflush" "dumpportslimit" "dumpportsoff"
+  "dumpportson" "dumpvars" "enddefinitions" "error" "exit" "fatal"
+  "fclose" "fdisplay" "fdisplayb" "fdisplayf" "fdisplayh" "fdisplayo"
+  "fell" "feof" "ferror" "fflush" "fgetc" "fgets" "finish" "fmonitor"
+  "fmonitorb" "fmonitorf" "fmonitorh" "fmonitoro" "fopen" "fread"
+  "fscanf" "fseek" "fsscanf" "fstrobe" "fstrobeb" "fstrobef" "fstrobeh"
+  "fstrobeo" "ftell" "fullskew" "fwrite" "fwriteb" "fwritef" "fwriteh"
+  "fwriteo" "get_coverage" "getpattern" "high" "history" "hold"
+  "increment" "incsave" "info" "input" "isunbounded" "isunknown" "itor"
+  "key" "left" "list" "load_coverage_db" "log" "low" "monitor"
+  "monitorb" "monitorh" "monitoro" "monitoroff" "monitoron" "nochange"
+  "nokey" "nolog" "onehot" "onehot0" "past" "period" "print" "q_add"
+  "q_exam" "q_full" "q_initialize" "q_random" "q_remove" "random"
+  "readmemb" "readmemh" "realtime" "realtobits" "recovery" "recrem"
+  "removal" "reset" "reset_count" "reset_value" "restart" "rewind"
+  "right" "root" "rose" "rtoi" "sampled" "save" "scale" "scope"
+  "sdf_annotate" "set_coverage_db_name" "setup" "setuphold" "sformat"
+  "sformatf" "shortrealtobits" "showscopes" "showvariables" "showvars"
+  "signed" "size" "skew" "sreadmemb" "sreadmemh" "sscanf" "stable"
+  "stime" "stop" "strobe" "strobeb" "strobeh" "strobeo" "swrite"
+  "swriteb" "swriteh" "swriteo" "sync$and$array" "sync$and$plane"
+  "sync$nand$array" "sync$nand$plane" "sync$nor$array" "sync$nor$plane"
+  "sync$or$array" "sync$or$plane" "test$plusargs" "time" "timeformat"
+  "timescale" "timeskew" "typename" "typeof" "ungetc" "unit"
+  "unpacked_dimensions" "unsigned" "upscope" "urandom" "urandom_range"
+  "value$plusargs" "var" "vcdclose" "version" "warning" "width" "write"
+  "writeb" "writeh" "writememb" "writememh" "writeo"
+  ;; macro
+  "accelerate"
   "autoexepand_vectornets" "begin_keywords" "celldefine" "default_decay_time"
   "default_nettype" "default_trieg_distributed" "default_trireg_strength"
   "define" "delay_mode_distributed" "delay_mode_path" "delay_mode_unit"
@@ -104,7 +108,8 @@
                  (let* ((sym (symbol-at-point))
                         (char (substring (symbol-name sym) 0 1))
                         )
-                   (if (string= "`" char)
+                   (if (or (string= "`" char)
+                           (string= "$" char))
                        (substring (symbol-name sym) 1)
                      (symbol-name sym))
                    )
@@ -142,7 +147,8 @@
         (setq company-backends
               '( company-files
                  ;; (company-verilog-backend company-dabbrev-code company-gtags company-etags)
-                 (company-capf company-yasnippet company-keywords company-dabbrev-code)
+                 ;; (company-capf company-yasnippet company-keywords company-dabbrev-code)
+                 (company-capf company-yasnippet company-verilog-backend company-dabbrev-code)
                  ;; company-abbrev
                  ))
          (make-local-variable 'company-dabbrev-code-ignore-case)
