@@ -1,5 +1,7 @@
 * Useage
-requirements: emacs>=28.1, Spacemacs = 1342cb62e92b708253ae542c791930b82b3b00c9
+- requirements: emacs>=28.1, Spacemacs = 1342cb62e92b708253ae542c791930b82b3b00c9
+- untar
 #+begin_src sh
   tar xzvf ./elpa28.1-Spacemacs_42b6.tar.gz -C ~/.emacs.d/
 #+end_src
+- run spacemacs/recompile-elpa in emacs: ~spc f e c~
