@@ -3,4 +3,4 @@
 # group: verilog
 # --
 
-input ${1:[${2:MSB} : ${3:LSB}]} ${4:Name};
+input ${1:[${2:MSB} : ${3:LSB}] }${4:Name};

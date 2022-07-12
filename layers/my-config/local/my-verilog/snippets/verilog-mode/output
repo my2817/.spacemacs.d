@@ -3,4 +3,4 @@
 # group: verilog
 # --
 
-output ${1:reg} ${2:[${3:MSB} : ${4:LSB}]} ${5:Name};
+output ${1:reg }${2:[${3:MSB} : ${4:LSB}] }${5:Name};

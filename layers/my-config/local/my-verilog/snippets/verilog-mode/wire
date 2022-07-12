@@ -3,4 +3,4 @@
 # group: verilog
 # --
 
-wire ${1:[${2:MSB} : ${3:LSB}]} ${4:Name};
+wire ${1:[${2:MSB} : ${3:LSB}] }${4:Name};
