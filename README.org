@@ -104,6 +104,8 @@
    #+end_src
    + 启动 emacs 完成所有依赖的插件安装
      + 终端中输入 "emacs" 启动并开始一大堆未知插件安装……
+       + 经验：vnc 登陆的桌面需要设置环境变量： export DISPLAY=:N.0 (其中 N 为 vnc 端口号)
+       + 在 "~/.spacemacs.d/elpa-backup" 放了一个打包好端插件包，参考内部端说明文件使用
        + 输入命令后 emacs 变为绿色，说明 oh-my-zsh 的 zsh-syntax-highlighting 插件开始工作了
      + 过程中可能需要多次重启
        + 注意观察终端，刚键入 "e" 时，其自动在后面补全了 "macs", 但光标位置不在词尾，说明 oh-my-zsh 的 zsh-autosuggestions 插件开始工作了
