@@ -89,9 +89,7 @@
     ;;    (snails :location (recipe
     ;;                         :fetcher github
     ;;                         :repo manateelazycat/snails))
-    ;; (rime :location (recipe
-    ;;                  :fetcher github
-    ;;                  :repo DogLooksGood/emacs-rime))
+    rime
 
     (vc-msg :location (recipe
                        :fetcher github
@@ -894,7 +892,7 @@ See URL `irun -helpall'"
     :config
     (progn
       (setq rime-user-data-dir "~/.config/fcitx/rime")
-      (setq rime--module-path "~/.emacs.d/.cache/quelpa/build/rime/librime-emacs.so")
+      ;; (setq rime--module-path "~/.emacs.d/.cache/quelpa/build/rime/librime-emacs.so")
 
       (setq rime-posframe-properties
             (list :background-color "#333333"
