@@ -2,11 +2,14 @@
 # key: class
 # group: verilog
 # --
-class ${1:Name} extends ${2:uvm_From};
+class ${1:Name} extends ${2:UserDefComp/C-d to select a predefined}${3:$$(yas-choose-value '("C-g: input UserDef" "uvm_component" "uvm_test" "uvm_env" "uvm_agent" "uvm_moniter" "uvm_scoreboard" "uvm_driver#(SEQ_ITEM)" "uvm_random_stimulus#(UVM_TRANS)" "uvm_push_driver#(SEQ_ITEM)" "uvm_subscriber" "uvm_sequencer_base" "uvm_sequencer_param_base#(SEQ_ITEM)" "uvm_sequencer#(SEQ_ITEM)" "uvm_push_sequencer#(SEQ_ITEM)"))};
+
+// Vars:
 
 \`uvm_component_utils_begin( \"$1\" )
 \`uvm_component_utils_end
 
+// Funcstions:
 function new(string name=\"$1\", uvm_component parent);
 super.new(name,parent);
 endfunction : new

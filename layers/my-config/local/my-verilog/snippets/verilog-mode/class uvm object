@@ -2,11 +2,13 @@
 # key: class
 # group: verilog
 # --
-class ${1:Name} extends ${2:uvm_From};
+class ${1:Name} extends ${2:UserDefObj/C-d to select predefined}${3:$$(yas-choose-value '("C-g: input UserDef" "uvm_sequence_item" "uvm_sequence_base" "uvm_sequence_library#(SEQ_ITEM)" "uvm_sequence#(SEQ_ITEM)"))};
+// Vars:
 
 \`uvm_object_utils_begin( \"$1\" )
 \`uvm_object_utils_end
 
+// Funcstions:
 function new(string name=\"$1\");
 super.new(name);
 endfunction : new
