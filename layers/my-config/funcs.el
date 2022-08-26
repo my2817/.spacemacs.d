@@ -197,13 +197,15 @@ find the errors."
 
   (interactive)
   (let* (
-         (fn (concat (projectile-project-root) ".dir-locals.el")))
+         (fn-dir-local (concat (projectile-project-root) ".dir-locals.el"))
+         (fn-ctags-options (concat (projectile-project-root) ".ctags/options.ctags"))
+         )
     (if (and (projectile-project-p)
-             (not (file-exists-p fn))
+             (not (file-exists-p fn-dir-local))
              )
         (progn
-          (find-file fn)
-          (insert "
+          (with-temp-file fn-dir-local
+           (insert "
 ((verilog-mode . (
                   (eval .
                         (setq verilog-library-directories '(\".\"))
@@ -214,17 +216,30 @@ find the errors."
                            (add-to-list 'verilog-library-directories (file-name-directory file)))
                          (directory-files-recursively
                           (concat (projectile-project-root) \"digital/rtl\") \"\\.[s]?v$\")
-                         )
-                        ))
-               ))
+                         )))))
 ")
-          (save-buffer)
-          (kill-buffer)
-        )
-      (message ".dir-locals exists: %s" fn)
-      )
-    )
-  )
+           )
+          (make-directory (file-name-directory fn-ctags-options))
+          (with-temp-file fn-ctags-options
+            (insert "
+--links=yes
+--langdef=VerilogExt{base=Verilog}
+--kinddef-VerilogExt=t,tags, tags defined by begin:
+--regex-VerilogExt=/begin: *([a-zA-Z0-9_]*)/\\1/t
+
+--exclude-exception=*.lib
+
+--langdef=Liberty
+--map-Liberty=+.lib
+--kinddef-Liberty=l,library, name of liberty library
+--kinddef-Liberty=c,cell, name of liberty cell
+--regex-Liberty=/^library\\\( *\"?([0-9A-Za-z_]*)\"? *\\\)/\\1/l
+--regex-Liberty=/^ *cell\\\( *\"?([a-zA-Z0-9_]*)\"? *\\\)/\\1/c
+
+")
+            ))
+      (message ".dir-locals exists: %s" fn-dir-local)
+      )))
 
 ;; it will give a error like "arguments too long" if list all project file to the command line, so don't use the next adviced function
 ;; (defadvice projectile-regenerate-tags (around my-project-regenerate-tags)
