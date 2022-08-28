@@ -198,7 +198,7 @@ find the errors."
   (interactive)
   (let* (
          (fn-dir-local (concat (projectile-project-root) ".dir-locals.el"))
-         (fn-ctags-options (concat (projectile-project-root) ".ctags/options.ctags"))
+         (fn-ctags-options (concat (projectile-project-root) ".ctags.d/options.ctags"))
          )
     (if (and (projectile-project-p)
              (not (file-exists-p fn-dir-local))
@@ -219,7 +219,8 @@ find the errors."
                          )))))
 ")
            )
-          (make-directory (file-name-directory fn-ctags-options))
+          (if (not (file-exists-p (file-name-directory fn-ctags-options)))
+              (make-directory (file-name-directory fn-ctags-options)))
           (with-temp-file fn-ctags-options
             (insert "
 --links=yes
