@@ -71,7 +71,10 @@
   (if (looking-back (regexp-opt (mapcar 'char-to-string
                                         "@([{}])")))
       (electric-spacing-insert-1 "(" 'middle)
-    (electric-spacing-insert-1 "(" 'before)))
+    (if (looking-back (regexp-opt '("if" "for" "while" "case" "casex" "casez")))
+        (electric-spacing-insert-1 "(" 'before)
+      (electric-spacing-insert-1 "(" 'middle)
+      )))
 
 (defun electric-spacing-verilog-mode-? ()
   (delete-horizontal-space)
