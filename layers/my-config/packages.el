@@ -207,6 +207,8 @@ Each entry is either:
     ;; (defconst verilog-directive-re-1 "[ 	]*`\\<\\(\\(?:__\\(?:FILE__\\|LINE\\)\\|begin_keywords\\|c\\(?:\\(?:as\\|elldefin\\)e\\)\\|def\\(?:ault\\(?:_nettype\\)?\\|ine\\)\\|e\\(?:ls\\(?:e\\|if\\)\\|nd\\(?:_keywords\\|celldefine\\|for\\|if\\|protect\\|switch\\|while\\)\\)\\|for\\(?:mat\\)?\\|i\\(?:f\\(?:n?def\\)?\\|nclude\\)\\|l\\(?:et\\|ine\\)\\|nounconnected_drive\\|pr\\(?:agma\\|otect\\)\\|resetall\\|switch\\|time\\(?:_?scale\\)\\|u\\(?:n\\(?:connected_drive\\|def\\(?:ineall\\)?\\)\\|selib\\)\\|while\\)\\)\\>")
     (remove-hook 'completion-at-point-functions
                  'verilog-completion-at-point t)
+    ;; use electric-spaceing but not 'electric-verilog-colon
+    (define-key verilog-mode-map [remap electric-verilog-colon] 'self-insert-command)
 
     ))
 
@@ -259,6 +261,8 @@ Each entry is either:
   (use-package electric-spacing
     :defer t
     :init
+    :config
+    (setq electric-spacing-operators '(?= ?< ?> ?% ?+ ?- ?* ?/ ?& ?| ?: ?? ?, ?~ ?. ?\( ?^ ?\; ?! ?@))
     ))
 (defun my-config/init-ctags()
   (use-package ctags

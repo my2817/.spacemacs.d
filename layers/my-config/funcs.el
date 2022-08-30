@@ -69,16 +69,24 @@
 (defun electric-spacing-verilog-mode-\( ()
   (delete-horizontal-space)
   (if (looking-back (regexp-opt (mapcar 'char-to-string
-                                        "([{}])")))
+                                        "@([{}])")))
       (electric-spacing-insert-1 "(" 'middle)
     (electric-spacing-insert-1 "(" 'before)))
 
-(defadvice electric-spacing-? (around my-electric-spacing-?)
-  "See `electric-spacing-insert'."
-  (if (string= major-mode "verilog-mode")
-      (electric-spacing-insert "?")
-    (electric-spacing-insert "?" 'before )))
-(ad-activate 'electric-spacing-?)
+(defun electric-spacing-verilog-mode-? ()
+  (delete-horizontal-space)
+  (electric-spacing-insert "?")
+)
+
+(defun electric-spacing-verilog-mode-: ()
+  (delete-horizontal-space)
+  (electric-spacing-insert ":")
+  )
+
+(defun electric-spacing-verilog-mode-@ ()
+  (delete-horizontal-space)
+  (electric-spacing-insert "@" 'before)
+  )
 
 (defun find-file-in-path-list (file path-list )
   "find FILE in path-list, then return the absolute file path"
