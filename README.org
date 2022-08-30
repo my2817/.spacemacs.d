@@ -776,6 +776,7 @@
 ** citre
    https://github.com/universal-ctags/citre
    ctags required, jump to symbols' definition, include third part library
+   在 [[file:layers/my-config/packages.el][package.el]] 中默认将 uvm 源代码添加到 ctags 的索引目录中，见 "citre-edit-cmd-buf-default-cmd", 请按需修改。以便提供 uvm 代码相关的补全及源代码查看跳转
 * Awesome Tools
   本节集中罗列一下我平时用到的工具
 
