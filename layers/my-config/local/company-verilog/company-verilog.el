@@ -114,6 +114,11 @@
     (and (> (length thing) 1)
          (or (string-equal (substring thing 0 1) "$")
              (string-equal (substring thing 0 1) "`"))
+         (all-completions thing  `(,@company-verilog-buildin-task ,@company-verilog-buildin-macro))
+         ;; (cl-remove-if-not
+         ;;  (lambda(c)(string-prefix-p thing c))
+         ;;  `(,@company-verilog-buildin-task ,@company-verilog-buildin-macro) ))
+
          thing
          )))
 
@@ -128,10 +133,11 @@
                  (company-verilog-thing-at-point)
                  ))
     (candidates
-     ;; (setq-local key-words `(,@(company-verilog-make-key-words)
-     ;;                         ,(format-time-string "%Y-%m-%d %H:%M:%S")
-     ;;                         ,(format-time-string "%Y/%m/%d %H:%M:%S")))
      (all-completions arg  `(,@company-verilog-buildin-task ,@company-verilog-buildin-macro)))
+    ;; (cl-remove-if-not
+    ;;  (lambda(c)(string-prefix-p arg c))
+    ;;  `(,@company-verilog-buildin-task ,@company-verilog-buildin-macro) ))
+
     (sorted t)
     (no-cache t)
     ))
