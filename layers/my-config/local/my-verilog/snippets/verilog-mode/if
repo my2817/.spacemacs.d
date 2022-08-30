@@ -4,7 +4,6 @@
 # --
 if ($1) begin
    $0
-end${2:
-else begin
+end${2: else begin
 /*C-d to skip this field or Tab to keep this*/
 end}
