@@ -4,7 +4,7 @@
 (require 'company-keywords)
 
 (defgroup company-verilog nil
-  "Completion backend for CMake."
+  "Completion backend for verilog-mode."
   :group 'company)
 
 (defcustom company-verilog-keywords-ieee
@@ -36,55 +36,63 @@
   "timeunit" "tran" "tranif0" "tranif1" "tri" "tri0" "tri1" "triand" "trior"
   "trireg" "type" "typedef" "union" "unique" "unsigned" "use" "var" "vectored"
   "virtual" "void" "wait" "wait_order" "wand" "weak0" "weak1" "while" "wildcard"
-  "wire" "with" "within" "wor" "xnor" "xor" 
-  ;; buildin system tasks
-  "assertkill" "assertoff"
-  "asserton" "async$and$array" "async$and$plane" "async$nand$array"
-  "async$nand$plane" "async$nor$array" "async$nor$plane" "async$or$array"
-  "async$or$plane" "bits" "bitstoreal" "bitstoshortreal" "cast" "comment"
-  "countdrivers" "countones" "date" "dimensions" "display" "displayb"
-  "displayh" "displayo" "dist_chi_square" "dist_erlang" "dist_exponential"
-  "dist_normal" "dist_poisson" "dist_t" "dist_uniform" "dumpall"
-  "dumpfile" "dumpflush" "dumplimit" "dumpoff" "dumpon" "dumpports"
-  "dumpportsall" "dumpportsflush" "dumpportslimit" "dumpportsoff"
-  "dumpportson" "dumpvars" "enddefinitions" "error" "exit" "fatal"
-  "fclose" "fdisplay" "fdisplayb" "fdisplayf" "fdisplayh" "fdisplayo"
-  "fell" "feof" "ferror" "fflush" "fgetc" "fgets" "finish" "fmonitor"
-  "fmonitorb" "fmonitorf" "fmonitorh" "fmonitoro" "fopen" "fread"
-  "fscanf" "fseek" "fsscanf" "fstrobe" "fstrobeb" "fstrobef" "fstrobeh"
-  "fstrobeo" "ftell" "fullskew" "fwrite" "fwriteb" "fwritef" "fwriteh"
-  "fwriteo" "get_coverage" "getpattern" "high" "history" "hold"
-  "increment" "incsave" "info" "input" "isunbounded" "isunknown" "itor"
-  "key" "left" "list" "load_coverage_db" "log" "low" "monitor"
-  "monitorb" "monitorh" "monitoro" "monitoroff" "monitoron" "nochange"
-  "nokey" "nolog" "onehot" "onehot0" "past" "period" "print" "q_add"
-  "q_exam" "q_full" "q_initialize" "q_random" "q_remove" "random"
-  "readmemb" "readmemh" "realtime" "realtobits" "recovery" "recrem"
-  "removal" "reset" "reset_count" "reset_value" "restart" "rewind"
-  "right" "root" "rose" "rtoi" "sampled" "save" "scale" "scope"
-  "sdf_annotate" "set_coverage_db_name" "setup" "setuphold" "sformat"
-  "sformatf" "shortrealtobits" "showscopes" "showvariables" "showvars"
-  "signed" "size" "skew" "sreadmemb" "sreadmemh" "sscanf" "stable"
-  "stime" "stop" "strobe" "strobeb" "strobeh" "strobeo" "swrite"
-  "swriteb" "swriteh" "swriteo" "sync$and$array" "sync$and$plane"
-  "sync$nand$array" "sync$nand$plane" "sync$nor$array" "sync$nor$plane"
-  "sync$or$array" "sync$or$plane" "test$plusargs" "time" "timeformat"
-  "timescale" "timeskew" "typename" "typeof" "ungetc" "unit"
-  "unpacked_dimensions" "unsigned" "upscope" "urandom" "urandom_range"
-  "value$plusargs" "var" "vcdclose" "version" "warning" "width" "write"
-  "writeb" "writeh" "writememb" "writememh" "writeo"
-  ;; macro
-  "accelerate"
-  "autoexepand_vectornets" "begin_keywords" "celldefine" "default_decay_time"
-  "default_nettype" "default_trieg_distributed" "default_trireg_strength"
-  "define" "delay_mode_distributed" "delay_mode_path" "delay_mode_unit"
-  "delay_mode_zero" "else" "elsif" "end_keywords" "endcelldefine" "endif"
-  "endprotect" "endprotected" "expand_vectornets" "file" "ifdef" "ifndef"
-  "include" "line" "noaccelerate" "noexpand_vectornets" "noremove_gatenames"
-  "noremove_netnames" "nounconnected_drive" "pragma" "protect" "protected"
-  "remove_gatenames" "remove_netnames" "resetall" "timescale"
-  "unconnected_drive" "undef" "uselib")
+  "wire" "with" "within" "wor" "xnor" "xor" )
   "A key-words list of verilog-mode "
+  :group 'company-verilog
+  )
+(defcustom company-verilog-buildin-task
+  ;; buildin system tasks
+  '("$assertkill" "$assertoff"
+  "$asserton" "$async$and$array" "$async$and$plane" "$async$nand$array"
+  "$async$nand$plane" "$async$nor$array" "$async$nor$plane" "$async$or$array"
+  "$async$or$plane" "$bits" "$bitstoreal" "$bitstoshortreal" "$cast" "$comment"
+  "$countdrivers" "$countones" "$date" "$dimensions" "$display" "$displayb"
+  "$displayh" "$displayo" "$dist_chi_square" "$dist_erlang" "$dist_exponential"
+  "$dist_normal" "$dist_poisson" "$dist_t" "$dist_uniform" "$dumpall"
+  "$dumpfile" "$dumpflush" "$dumplimit" "$dumpoff" "$dumpon" "$dumpports"
+  "$dumpportsall" "$dumpportsflush" "$dumpportslimit" "$dumpportsoff"
+  "$dumpportson" "$dumpvars" "$enddefinitions" "$error" "$exit" "$fatal"
+  "$fclose" "$fdisplay" "$fdisplayb" "$fdisplayf" "$fdisplayh" "$fdisplayo"
+  "$fell" "$feof" "$ferror" "$fflush" "$fgetc" "$fgets" "$finish" "$fmonitor"
+  "$fmonitorb" "$fmonitorf" "$fmonitorh" "$fmonitoro" "$fopen" "$fread"
+  "$fscanf" "$fseek" "$fsscanf" "$fstrobe" "$fstrobeb" "$fstrobef" "$fstrobeh"
+  "$fstrobeo" "$ftell" "$fullskew" "$fwrite" "$fwriteb" "$fwritef" "$fwriteh"
+  "$fwriteo" "$get_coverage" "$getpattern" "$high" "$history" "$hold"
+  "$increment" "$incsave" "$info" "$input" "$isunbounded" "$isunknown" "$itor"
+  "$key" "$left" "$list" "$load_coverage_db" "$log" "$low" "$monitor"
+  "$monitorb" "$monitorh" "$monitoro" "$monitoroff" "$monitoron" "$nochange"
+  "$nokey" "$nolog" "$onehot" "$onehot0" "$past" "$period" "$print" "$q_add"
+  "$q_exam" "$q_full" "$q_initialize" "$q_random" "$q_remove" "$random"
+  "$readmemb" "$readmemh" "$realtime" "$realtobits" "$recovery" "$recrem"
+  "$removal" "$reset" "$reset_count" "$reset_value" "$restart" "$rewind"
+  "$right" "$root" "$rose" "$rtoi" "$sampled" "$save" "$scale" "$scope"
+  "$sdf_annotate" "$set_coverage_db_name" "$setup" "$setuphold" "$sformat"
+  "$sformatf" "$shortrealtobits" "$showscopes" "$showvariables" "$showvars"
+  "$signed" "$size" "$skew" "$sreadmemb" "$sreadmemh" "$sscanf" "$stable"
+  "$stime" "$stop" "$strobe" "$strobeb" "$strobeh" "$strobeo" "$swrite"
+  "$swriteb" "$swriteh" "$swriteo" "$sync$and$array" "$sync$and$plane"
+  "$sync$nand$array" "$sync$nand$plane" "$sync$nor$array" "$sync$nor$plane"
+  "$sync$or$array" "$sync$or$plane" "$test$plusargs" "$time" "$timeformat"
+  "$timescale" "$timeskew" "$typename" "$typeof" "$ungetc" "$unit"
+  "$unpacked_dimensions" "$unsigned" "$upscope" "$urandom" "$urandom_range"
+  "$value$plusargs" "$var" "$vcdclose" "$version" "$warning" "$width" "$write"
+  "$writeb" "$writeh" "$writememb" "$writememh" "$writeo")
+"Buildin task list of verilog-mode "
+:group 'company-verilog
+)
+(defcustom company-verilog-buildin-macro
+  ;; macro
+  '("`accelerate"
+  "`autoexepand_vectornets" "`begin_keywords" "`celldefine" "`default_decay_time"
+  "`default_nettype" "`default_trieg_distributed" "`default_trireg_strength"
+  "`define" "`delay_mode_distributed" "`delay_mode_path" "`delay_mode_unit"
+  "`delay_mode_zero" "`else" "`elsif" "`end_keywords" "`endcelldefine" "`endif"
+  "`endprotect" "`endprotected" "`expand_vectornets" "`file" "`ifdef" "`ifndef"
+  "`include" "`line" "`noaccelerate" "`noexpand_vectornets" "`noremove_gatenames"
+  "`noremove_netnames" "`nounconnected_drive" "`pragma" "`protect" "`protected"
+  "`remove_gatenames" "`remove_netnames" "`resetall" "`timescale"
+  "`unconnected_drive" "`undef" "`uselib")
+  "Macro list of verilog-mode "
   :group 'company-verilog
   )
 (defcustom company-verilog-keywords-user '("AUTOINPUT" "AUTOOUTPUT" "AUTOWIRE" "AUTOREGINPUT" "AUTOARG" "AUTORESET" "autotags" "verilog-library-flags")
@@ -96,40 +104,37 @@
   `(,@company-verilog-keywords-ieee ,@company-verilog-keywords-user)
 )
 
-(defun company-verilog-backend (command &optional arg &rest ignored)
+(add-to-list 'company-keywords-alist (cons 'verilog-mode (company-verilog-make-key-words)))
+
+(defun company-verilog-thing-at-point ()
+  (let* ((b (save-excursion (skip-chars-backward "a-zA-Z0-9_$`") (point)))
+         (e (point))
+         (thing (buffer-substring-no-properties b e)))
+    ;; return nil if not Buildin task/macro, let choice next company-backend
+    (and (> (length thing) 1)
+         (or (string-equal (substring thing 0 1) "$")
+             (string-equal (substring thing 0 1) "`"))
+         thing
+         )))
+
+(defun company-verilog-buildin-task-backend (command &optional arg &rest ignored)
   "company backend for veriog"
   (interactive (list 'interactive))
-
   (cl-case command
-    (interactive (company-begin-backend 'company-verilog-backend))
+    (interactive (company-begin-backend 'company-verilog-buildin-task-backend))
     (prefix (and (eq major-mode 'verilog-mode)
                  ;; company needs backends that in same group return same prefix
                  ;; this backend remove "`" from symbol that what citre-lang-verilog-get-symbol does
-                 (let* ((sym (symbol-at-point))
-                        (char (substring (symbol-name sym) 0 1))
-                        )
-                   (if (or (string= "`" char)
-                           (string= "$" char))
-                       (substring (symbol-name sym) 1)
-                     (symbol-name sym))
-                   )
+                 (company-verilog-thing-at-point)
                  ))
     (candidates
-     (setq-local key-words `(,@(company-verilog-make-key-words)
-                             ,(format-time-string "%Y-%m-%d %H:%M:%S")
-                             ,(format-time-string "%Y/%m/%d %H:%M:%S")))
-     (cl-remove-if-not
-      (lambda (c) (string-prefix-p arg c))
-      key-words
-      ))
-    ;; (annotation " (KeyWord)")
-    (post-completion
-     ;; (expand-abbrev)
-     (yas/expand)
-     )))
-
-(add-to-list 'company-keywords-alist (cons 'verilog-mode (company-verilog-make-key-words)))
-;; (make-variable-buffer-local 'company-backends)
+     ;; (setq-local key-words `(,@(company-verilog-make-key-words)
+     ;;                         ,(format-time-string "%Y-%m-%d %H:%M:%S")
+     ;;                         ,(format-time-string "%Y/%m/%d %H:%M:%S")))
+     (all-completions arg  `(,@company-verilog-buildin-task ,@company-verilog-buildin-macro)))
+    (sorted t)
+    (no-cache t)
+    ))
 
 ;; (provide 'company-verilog)
 ;;;###autoload
@@ -145,12 +150,14 @@
       (progn
         (make-local-variable 'company-backends)
         (setq company-backends
-              '( company-files
-                 ;; (company-verilog-backend company-dabbrev-code company-gtags company-etags)
-                 ;; (company-capf company-yasnippet company-keywords company-dabbrev-code)
-                 (company-capf company-yasnippet company-verilog-backend company-dabbrev-code)
-                 ;; company-abbrev
-                 ))
+              '( 
+                company-files
+                company-verilog-buildin-task-backend
+                ;; (company-verilog-backend company-dabbrev-code company-gtags company-etags)
+                (company-capf company-yasnippet company-keywords company-dabbrev-code)
+                ;; (company-capf company-yasnippet company-dabbrev-code)
+                ;; company-abbrev
+                ))
          (make-local-variable 'company-dabbrev-code-ignore-case)
          (setq company-dabbrev-code-ignore-case t)
          (make-local-variable 'company-dabbrev-code-everywhere)
