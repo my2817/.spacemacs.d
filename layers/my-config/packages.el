@@ -58,9 +58,9 @@
     flycheck-plantuml
     (company-verilog :location local)
     (company-english-helper :location local)
-    (awesome-tab :location (recipe
-                            :fetcher github
-                            :repo manateelazycat/awesome-tab)) ;;from [https://github.com/manateelazycat/awesome-tab]
+    ;; (awesome-tab :location (recipe
+    ;;                         :fetcher github
+    ;;                         :repo manateelazycat/awesome-tab)) ;;from [https://github.com/manateelazycat/awesome-tab]
     ;; header2
     (awesome-pair :location (recipe
                              :fetcher github
@@ -113,6 +113,9 @@
     atomic-chrome
     (liberty-mode :location local)
     citre
+    (all-the-icons :location (recipe
+                              :fetcher github
+                              :repoe domtronn/all-the-icons.el.git))
     )
 
   "The list of Lisp packages required by the my-config layer.
@@ -1110,4 +1113,10 @@ node install-eaf-win32.js
         (error (call-interactively #'xref-find-definitions))))
     ))
 
+(defun my-config/init-all-the-icons()
+  (use-package all-the-icons
+    :defer t
+    :init
+    :config
+    ))
 ;;; packages.el ends here
