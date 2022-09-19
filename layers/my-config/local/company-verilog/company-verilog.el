@@ -76,7 +76,11 @@
   "$timescale" "$timeskew" "$typename" "$typeof" "$ungetc" "$unit"
   "$unpacked_dimensions" "$unsigned" "$upscope" "$urandom" "$urandom_range"
   "$value$plusargs" "$var" "$vcdclose" "$version" "$warning" "$width" "$write"
-  "$writeb" "$writeh" "$writememb" "$writememh" "$writeo")
+  "$writeb" "$writeh" "$writememb" "$writememh" "$writeo" "$fsdbAutoSwitchDumpfile" 
+  ;; verdi3, FSDB Dumping Commands Used with Verilog
+  "$fsdbDumpfile" "$fsdbDumpflush" "$fsdbDumpon", "$fsdbDumpoff" "$fsdbDumpvars" 
+  "$fsdbDumpvarsByFile" "$fsdbDumpFinish" "$fsdbDumpMDA" "$fsdbDumpSVA" "$fsdbLog"
+  "$fsdbLog" "$fsdbReplay" "$fsdbSuppress" "$fsdbSwitchDumpfile"  )
 "Buildin task list of verilog-mode "
 :group 'company-verilog
 )
