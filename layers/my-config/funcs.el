@@ -245,8 +245,8 @@ find the errors."
 --map-Liberty=+.lib
 --kinddef-Liberty=l,library, name of liberty library
 --kinddef-Liberty=c,cell, name of liberty cell
---regex-Liberty=/^library\\\( *\"?([0-9A-Za-z_]*)\"? *\\\)/\\1/l
---regex-Liberty=/^ *cell\\\( *\"?([a-zA-Z0-9_]*)\"? *\\\)/\\1/c
+--regex-Liberty=/^library *\\\( *\"?([0-9A-Za-z_]*)\"? *\\\)/\\1/l
+--regex-Liberty=/^ *cell *\\\( *\"?([a-zA-Z0-9_]*)\"? *\\\)/\\1/c
 
 ")
             ))
