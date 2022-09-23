@@ -116,6 +116,8 @@
     (all-the-icons :location (recipe
                               :fetcher github
                               :repoe domtronn/all-the-icons.el.git))
+    gitlab
+    ivy-gitlab
     )
 
   "The list of Lisp packages required by the my-config layer.
@@ -1115,6 +1117,22 @@ node install-eaf-win32.js
 
 (defun my-config/init-all-the-icons()
   (use-package all-the-icons
+    :defer t
+    :init
+    :config
+    ))
+
+(defun my-config/init-gitlab()
+  (use-package gitlab
+    :defer t
+    :init
+    :config
+    (setq gitlab-host "https://gitlab.com"
+          gitlab-token-id "glpat-rtt5thyLzoCemrYQB2rg" )
+    ))
+
+(defun my-config/init-ivy-gitlab()
+  (use-package ivy-gitlab
     :defer t
     :init
     :config
