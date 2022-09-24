@@ -3,13 +3,14 @@
 (defun gitlab-mr-for-project (&optional project-id)
   "From projects buffer, opens MRs buffer for project at point."
   (interactive)
-  (let ((project (gitlab-get-project (or project-id (tabulated-list-get-id)))))
+  (let* ((project (gitlab-get-project (or project-id (tabulated-list-get-id))))
+         (project-name (assoc-default 'name project)))
     (if project
 	(progn
-	  (pop-to-buffer "*Gitlab MRs*" nil)
-	  (gitlab-issues-mode)
+	  (pop-to-buffer (format "*Gitlab MRs[%s]*" project-name) nil)
+	  (gitlab-mrs-mode)
 	  (setq tabulated-list-entries
-		(create-mr-entries (gitlab-list-project-mrs (assoc-default 'id project))))
+		(create-mr-entries (gitlab-list-project-mrs (assoc-default 'id project) 1 100 (list (cons "state" "opened")))))
 	  (tabulated-list-print t)
 	  (tabulated-list-sort 1))
       (user-error "No project here"))))
@@ -19,8 +20,11 @@
   :group 'gitlab
   (setq tabulated-list-format [;("ID" 5 t)
                                ("State" 10 t)
-                               ("Project" 8 t)
-                               ("Author" 20 t)
+                               ("Merge_status" 20)
+                               ("Source" 15)
+                               ("Target" 15)
+                               ("Project" 15 t)
+                               ("Author" 15 t)
                                ("Assignee" 10 t)
                                ("Title" 0 t)])
   (setq tabulated-list-padding 2)
@@ -50,15 +54,41 @@ PARAMS: an alist for query parameters. Exple: '((state . \"opened\"))"
   "Create entries for 'tabulated-list-entries from MRS."
   (mapcar (lambda (i)
             (let ((id (number-to-string (assoc-default 'id i)))
-                  (author (assoc-default 'author i)))
+                  (author (assoc-default 'author i))
+                  (mr_status (assoc-default 'merge_status i))
+                  (source_branch (assoc-default 'source_branch i))
+                  (target_branch (assoc-default 'target_branch i))
+                  (assignee (assoc-default 'assignee i)) )
               (list i
                     (vector ;id
                      (assoc-default 'state i)
-                     (format "%s" (assoc-default 'project_id i))
+                     mr_status
+                     source_branch
+                     target_branch
+                     (format "%s" (assoc-default 'name (gitlab-get-project (assoc-default 'project_id i))))
                      (assoc-default 'name author)
+                     (or (and (not assignee)
+                              "None")
+                      (gitlab-get-user-name-by-id (assoc-default 'id assignee)))
                      (assoc-default 'title i)))))
           mrs))
 
+(defun gitlab-get-user-name-by-id (id)
+  "go through all pags to find user name"
+  (let* ((per-page 100)
+        (page 1)
+        (x-total-pages (string-to-number (gitlab-get-header "users" "X-Total-Pages" 200 1 per-page)))
+        (user (gitlab-get-user-name (gitlab-list-users page per-page) id))
+        )
+    (catch 'username
+      (loop do
+            (if user
+                (throw 'username user)
+              (setq page (1+ page))
+              (setq user (gitlab-get-user-name (gitlab-list-users page per-page) id))
+              )
+            while (<= page x-total-pages))))
+  )
 
 (defun gitlab-list-users (&optional page per-page params)
   "Get a list of users
@@ -84,3 +114,21 @@ PARAMS: an alist for query parameters. Exple: '((state . \"opened\"))"
             users)
     name
     ))
+
+(defun gitlab-get-header (uri key status-code &optional page per-page params)
+  "return value of header of URI"
+  (let ((params params)
+        (response))
+    (when per-page
+      (add-to-list 'params (cons 'per_page (number-to-string per-page))))
+    (when page
+      (add-to-list 'params (cons 'page (number-to-string page))))
+    (setq response (gitlab--perform-get-request uri params))
+    (if (= status-code (request-response-status-code response))
+        (request-response-header response key)
+      (lwarn '(gitlab)
+             :error "HTTP %s Error %s on URI: %s"
+             "GET"
+             (request-response-status-code response)
+             uri)))
+  )
