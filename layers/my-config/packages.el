@@ -1137,4 +1137,10 @@ node install-eaf-win32.js
     :init
     :config
     ))
+
+(defun my-config/init-my-gitlab ()
+  (use-package my-gitlab
+    :defer t
+    :init (require 'my-gitlab))
+  )
 ;;; packages.el ends here
