@@ -1,21 +1,27 @@
 (require 'gitlab)
 
 (defun gitlab-get-user-name-by-id (id)
-  "go through all pags to find user name"
-  (let* ((per-page 100)
-        (page 1)
-        (x-total-pages (string-to-number (gitlab-get-header "users" "X-Total-Pages" 200 1 per-page)))
-        (user (gitlab-get-user-name (gitlab-list-users page per-page) id))
-        )
-    (catch 'username
-      (loop do
-            (if user
-                (throw 'username user)
-              (setq page (1+ page))
-              (setq user (gitlab-get-user-name (gitlab-list-users page per-page) id))
-              )
-            while (<= page x-total-pages))))
-  )
+  "return user ID by username"
+  (assoc-default 'username (aref (perform-gitlab-request "GET"
+                                                   "users"
+                                                   (list (cons "id" id))
+                                                   200) 0) ))
+;; (defun gitlab-get-user-name-by-id (id)
+;;   "go through all pags to find user name"
+;;   (let* ((per-page 100)
+;;         (page 1)
+;;         (x-total-pages (string-to-number (gitlab-get-header "users" "X-Total-Pages" 200 1 per-page)))
+;;         (user (gitlab-get-user-name (gitlab-list-users page per-page) id))
+;;         )
+;;     (catch 'username
+;;       (loop do
+;;             (if user
+;;                 (throw 'username user)
+;;               (setq page (1+ page))
+;;               (setq user (gitlab-get-user-name (gitlab-list-users page per-page) id))
+;;               )
+;;             while (<= page x-total-pages))))
+;;   )
 
 (defun gitlab-list-users (&optional page per-page params)
   "Get a list of users
@@ -43,23 +49,33 @@ PARAMS: an alist for query parameters. Exple: '((state . \"opened\"))"
     ))
 
 (defun gitlab-get-user-id-by-username (username)
-  "go through all pags to find user name"
-  (let* ((per-page 100)
-         (page 1)
-         (x-total-pages (string-to-number (gitlab-get-header "users" "X-Total-Pages" 200 1 per-page)))
-         (user (gitlab-get-user-id (gitlab-list-users page per-page) username))
-         )
-    (catch 'username
-      (loop do
-            (if user
-                (throw 'username user)
-              (setq page (1+ page))
-              (setq user (gitlab-get-user-id (gitlab-list-users page per-page) username))
-              )
-            while (<= page x-total-pages)))
-    (if (not user)
-        (error "Can't find username in gitlab: %s" username )
-      user)))
+  "return user ID by username"
+  (let* ((user (perform-gitlab-request "GET"
+                                       "users"
+                                       (list (cons "username" username))
+                                       200))
+         (userOK (length user)))
+    (and (= 1 userOK)
+         (assoc-default 'id (aref user  0) ))))
+
+;; (defun gitlab-get-user-id-by-username (username)
+;;   "go through all pags to find user name"
+;;   (let* ((per-page 100)
+;;          (page 1)
+;;          (x-total-pages (string-to-number (gitlab-get-header "users" "X-Total-Pages" 200 1 per-page)))
+;;          (user (gitlab-get-user-id (gitlab-list-users page per-page) username))
+;;          )
+;;     (catch 'username
+;;       (loop do
+;;             (if user
+;;                 (throw 'username user)
+;;               (setq page (1+ page))
+;;               (setq user (gitlab-get-user-id (gitlab-list-users page per-page) username))
+;;               )
+;;             while (<= page x-total-pages)))
+;;     (if (not user)
+;;         (error "Can't find username in gitlab: %s" username )
+;;       user)))
 
 (defun gitlab-get-user-id (users username)
   "Return users->name"

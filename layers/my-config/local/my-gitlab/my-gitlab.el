@@ -11,16 +11,18 @@
   "From projects buffer, opens MRs buffer for project at point."
   (interactive)
   (let* ((project (gitlab-get-project (or project-id (tabulated-list-get-id))))
-         (project-name (assoc-default 'name project)))
+         (project-name (assoc-default 'name project))
+         (state (ivy-completing-read "MR state:" '(opened closed merged))))
     (if project
 	(progn
 	  (pop-to-buffer (format "*Gitlab MRs[%s]*" project-name) nil)
 	  (gitlab-mrs-mode)
           (setq-local gitlab-project project)
 	  (setq tabulated-list-entries
-		(create-mr-entries (gitlab-list-project-mrs (assoc-default 'id project) 1 100 (list (cons "state" "opened")))))
+		(create-mr-entries (gitlab-list-project-mrs (assoc-default 'id project) 1 100 (list (cons "state" state)))))
 	  (tabulated-list-print t)
-	  (tabulated-list-sort 1))
+	  (tabulated-list-sort 1)
+          )
       (user-error "No project here"))))
 
 (defvar gitlab-mrs-mode-map
@@ -29,6 +31,8 @@
     (define-key map (kbd "c") 'gitlab-create-mr)
     (define-key map (kbd "r") 'gitlab-reopen-mr)
     (define-key map (kbd "m") 'gitlab-merge-mr)
+    (define-key map (kbd "R") 'gitlab-refresh-mr-list)
+    (define-key map (kbd "u") 'gitlab-update-mr)
     map)
   "Keymap for `gitlab-mrs-mode' major mode.")
 
@@ -45,7 +49,7 @@
                                ("Merge_status" 20)
                                ("Source" 15)
                                ("Target" 15)
-                               ("Project" 15 t)
+                               ;; ("Project" 15 t) ;; performance, don't use this
                                ("Author" 15 t)
                                ("Assignee" 10 t)
                                ("Title" 0 t)])

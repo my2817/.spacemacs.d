@@ -15,6 +15,9 @@
 
 (defvar widget-mrs-buffer-name "*Creat MRs*"
   "*Name of the widget demo buffer")
+(defvar timer-chk-user nil
+  "use run-with-idle-timer to check if a user is in server")
+(make-variable-buffer-local 'timer-chk-user)
 
 (defun gitlab-list-project-mrs (project-id &optional page per-page params)
   "Get a list of project merge-requsts.
@@ -22,18 +25,38 @@ PROJECT-ID : The ID of a project
 PAGE: current page number
 PER-PAGE: number of items on page max 100
 PARAMS: an alist for query parameters. Exple: '((state . \"opened\"))"
-  (let ((params params))
-    (when page
-      (add-to-list 'params (cons 'per_page (number-to-string per-page))))
-    (when per-page
-      (add-to-list 'params (cons 'page (number-to-string page))))
-    (perform-gitlab-request "GET"
-                            (s-concat "projects/"
-                                      (url-hexify-string
-                                       (format "%s" project-id))
-                                      "/merge_requests")
-                            params
-                            200)))
+  (let ((params params)
+        (mrs)
+        (x-total-pages
+         (string-to-number
+          (gitlab-get-header (s-concat "projects/"
+                                       (url-hexify-string
+                                        (format "%s" project-id))
+                                       "/merge_requests")
+                             "X-Total-Pages"
+                             200
+                             page
+                             per-page
+                             params
+                             ))))
+    ;; (when page
+    ;;   (add-to-list 'params (cons 'per_page (number-to-string per-page))))
+    ;; (when per-page
+    ;;   (add-to-list 'params (cons 'page (number-to-string page))))
+    (loop do
+          (setq mrs (vconcat mrs
+                             (perform-gitlab-request "GET"
+                                                     (s-concat "projects/"
+                                                               (url-hexify-string
+                                                                (format "%s" project-id))
+                                                               "/merge_requests"
+                                                               "?page=" (number-to-string page)
+                                                               "&per_page=" (number-to-string per-page))
+                                                     params
+                                                     200)))
+          (setq page (+ 1 page))
+          while(<= page x-total-pages))
+    mrs))
 
 (defun create-mr-entries (mrs)
   "Create entries for 'tabulated-list-entries from MRS."
@@ -44,17 +67,19 @@ PARAMS: an alist for query parameters. Exple: '((state . \"opened\"))"
                   (source_branch (assoc-default 'source_branch i))
                   (target_branch (assoc-default 'target_branch i))
                   (assignee (assoc-default 'assignee i)) )
-              (list i
+              (list i ;; don't use i, only keep useful info in entriy's id
                     (vector ;id
                      (assoc-default 'state i)
                      mr_status
                      source_branch
                      target_branch
-                     (format "%s" (assoc-default 'name (gitlab-get-project (assoc-default 'project_id i))))
+                     ;; performance, don't use project field
+                     ;; (format "%s" (assoc-default 'name (gitlab-get-project (assoc-default 'project_id i))))
                      (assoc-default 'name author)
                      (or (and (not assignee)
                               "None")
-                      (gitlab-get-user-name-by-id (assoc-default 'id assignee)))
+                         ;; (gitlab-get-user-name-by-id (assoc-default 'id assignee))
+                         (assoc-default 'username assignee))
                      (assoc-default 'title i)))))
           mrs))
 
@@ -71,16 +96,47 @@ PARAMS: an alist for query parameters. Exple: '((state . \"opened\"))"
     (gitlab-create-mr-page project_id))
   )
 
-(defun gitlab-create-mr-page (&optional project_id)
-  "Create a widget buffer to get info of a gitlab MR."
+(defun gitlab-update-mr ()
+  "use widget to create a interface to initial parameters that requied by update a MR"
+  (interactive)
+  (let* ((cur-mr (tabulated-list-get-id))
+         (project_id (or (assoc-default 'project_id cur-mr)
+                         (assoc-default 'id gitlab-project)))
+         (mr_iid (assoc-default 'iid cur-mr))
+         (source (assoc-default 'source_branch cur-mr))
+         (target (assoc-default 'target_branch cur-mr))
+         (description (assoc-default 'description cur-mr))
+         (assignee (assoc-default 'username (assoc-default 'assignee cur-mr)))
+         (title (assoc-default 'title cur-mr)))
+    (gitlab-create-mr-page project_id mr_iid title source target description assignee))
+  )
+
+(defun gitlab-create-mr-page (&optional project_id mr_iid title source target description assignee)
+  "Create a widget buffer to get info of a gitlab MR.
+
+PROJECT_ID: project ID
+MR_IID: None-nil, update this MR; nil, create a new MR
+"
   (interactive)
   (switch-to-buffer widget-mrs-buffer-name)
   (kill-all-local-variables)
   (make-local-variable 'widget-demo-form)
   (make-local-variable 'project_id)
+  (make-local-variable 'mr_iid)
   (let ((inhibit-read-only t))
     (erase-buffer))
   (remove-overlays)
+
+  ;; set default value that required by a MR
+  (when (not mr_iid)
+    (setq title "Draft: ")
+    (setq source "master")
+    (setq target "master")
+    (setq assignee "")
+    (setq description ""))
+  ;; maybe nile
+  (setq assignee (or assignee ""))
+  (setq description (or description ""))
 
   (widget-insert "Create MR:\n\n")
   (widget-insert (format "Project ID: %s" project_id))
@@ -90,14 +146,23 @@ PARAMS: an alist for query parameters. Exple: '((state . \"opened\"))"
    (widget-create 'editable-field
                   :size 13
                   :format "Title: %v " ; Text after the field!
-                  "Draft: "))
+                  title))
+
+  (widget-insert "\nDescription:")
+  (widget-mr-param-form-create
+   'description
+   (widget-create 'editable-field
+                  :size 13
+                  :format " %v " ; Text after the field!
+                  description
+                  ))
 
   (widget-insert "\n")
   (widget-mr-param-form-create
    'source_branch
    (apply 'widget-create 'menu-choice
                    :tag "Source-Branch"
-                   :value "master"
+                   :value source
                    (mapcar (lambda (b)
                              (list 'item :tab b :value b))
                            (gitlab-list-project-branches-name (gitlab-list-project-branches project_id)))
@@ -106,7 +171,7 @@ PARAMS: an alist for query parameters. Exple: '((state . \"opened\"))"
    'target_branch
    (apply 'widget-create 'menu-choice
           :tag "Target-Branch"
-          :value "master"
+          :value target
           (mapcar (lambda (b)
                     (list 'item :tab b :value b))
                   (gitlab-list-project-branches-name (gitlab-list-project-branches project_id)))
@@ -115,7 +180,23 @@ PARAMS: an alist for query parameters. Exple: '((state . \"opened\"))"
    'assignee_id
    (widget-create 'editable-field
                   :format "Assignee: %v"
+                  :value assignee
+                  :notify (lambda (wid &rest ignore)
+                            (let ((newassignee (widget-value wid)))
+                              (when timer-chk-user
+                                (cancel-timer timer-chk-user))
+                              (setq timer-chk-user
+                                    (run-with-idle-timer 1
+                                                         nil
+                                                         (lambda (newassignee)
+                                                           (if (not (gitlab-get-user-id-by-username newassignee))
+                                                               (message-box "Can't find Assignee in gitlab server:\n\t%s\t" newassignee)
+                                                             (message "will assign to: %s" newassignee)
+                                                             ))
+                                                         newassignee))
+                              ))
           ))
+  (widget-insert "\n")
   (widget-create 'push-button
                  :notify (lambda (&rest ignore)
                            (let* ((params (mapcar (lambda (form)
@@ -124,7 +205,7 @@ PARAMS: an alist for query parameters. Exple: '((state . \"opened\"))"
                                   (username (assoc-default 'assignee_id params)))
                              (setq params (assq-delete-all 'assignee_id params))
                              (add-to-list 'params (cons 'assignee_id (gitlab-get-user-id-by-username username)))
-                             (gitlab-perform-create-mr project_id params)
+                             (gitlab-perform-create-mr project_id params mr_iid)
                              (kill-buffer widget-mrs-buffer-name)
                              ))
                  "Comment")
@@ -132,15 +213,17 @@ PARAMS: an alist for query parameters. Exple: '((state . \"opened\"))"
   (widget-setup)
   )
 
-(defun gitlab-perform-create-mr (project_id params)
+(defun gitlab-perform-create-mr (project_id params &optional mr_iid)
   "Create a new MR"
-  (perform-gitlab-request "POST"
+  (perform-gitlab-request (if mr_iid "PUT" "POST")
                           (s-concat "projects/"
                                     (url-hexify-string
                                      (format "%s" project_id))
-                                    "/merge_requests")
+                                    "/merge_requests"
+                                    (and mr_iid
+                                         (format "/%s" mr_iid)))
                           params
-                          201 )
+                          (if mr_iid 200 201) )
   )
 
 (defun gitlab-close-mr ()
@@ -203,5 +286,10 @@ LABELS comma-separated list label names"
                                     mr-iid)
                             nil
                             200)))
+
+(defun gitlab-refresh-mr-list ()
+  "refresh current project's mr list"
+  (interactive)
+  (gitlab-mr-for-project (assoc-default 'id gitlab-project)))
 
 (provide 'my-gitlab-mr)
