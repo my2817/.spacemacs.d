@@ -118,6 +118,7 @@
                               :repoe domtronn/all-the-icons.el.git))
     gitlab
     ivy-gitlab
+    (psvn :location local)
     )
 
   "The list of Lisp packages required by the my-config layer.
@@ -1142,5 +1143,11 @@ node install-eaf-win32.js
   (use-package my-gitlab
     :defer t
     :init (require 'my-gitlab))
+  )
+
+(defun my-config/init-psvn ()
+  (use-package psvn
+    :defer t
+    :init (require 'psvn))
   )
 ;;; packages.el ends here
