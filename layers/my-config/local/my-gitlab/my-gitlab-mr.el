@@ -292,4 +292,24 @@ LABELS comma-separated list label names"
   (interactive)
   (gitlab-mr-for-project (assoc-default 'id gitlab-project)))
 
+(defun gitlab-get-project-id-by-name (name)
+  "Return the ID of project NAME
+
+NAME: a string of project name"
+  (let* ((projects (gitlab-list-all-projects))
+         (pname))
+    (catch 'pname
+      (mapcar (lambda (p)
+                (if (string= (downcase name) (downcase (assoc-default 'name p)))
+                    (throw 'pname (assoc-default 'id p))))
+              projects)
+      (error (format "Can't find a project whose name downcase to: %s" name)))
+    ))
+
+(defun gitlab-show-mr-current-project ()
+  "Show MRs of current project, `projectile-project-name' to get project name"
+  (interactive)
+  (gitlab-mr-for-project (gitlab-get-project-id-by-name (projectile-project-name)))
+  )
+
 (provide 'my-gitlab-mr)
