@@ -648,6 +648,21 @@ Version 2018-10-08"
         )
       (select-window window-cur))))
 
+(defun my-highlight-symbol-in-region ()
+  "run `highlight-symbol' go through selected region"
+  (interactive)
+  (let* ((regiong-p (region-active-p))
+         (p-region-start (and (region-active-p) (region-beginning)))
+         (p-region-end (and (region-active-p) (region-end))))
+    (if (not (region-active-p))
+        (highlight-symbol)
+      (save-excursion
+        (goto-char p-region-start)
+        (while (< (point) p-region-end)
+          (and (symbol-at-point)
+               (highlight-symbol))
+          (evil-forward-WORD-begin))))))
+
 ;; bsub as proxy of git to rd3
 (defun my-git-fetch-through-by-bsub ()
   "send \"git fetch --all\" to bsub "
