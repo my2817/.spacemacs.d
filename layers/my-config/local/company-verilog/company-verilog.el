@@ -111,18 +111,26 @@
 (add-to-list 'company-keywords-alist (cons 'verilog-mode (company-verilog-make-key-words)))
 
 (defun company-verilog-thing-at-point ()
-  (let* ((b (save-excursion (skip-chars-backward "a-zA-Z0-9_$`") (point)))
+  "Return thing at point
+
+skip whitespace if there is, the whitespace maybe insert by `electric-spacing' after \"<=\"
+"
+  (let* ((b (save-excursion (skip-chars-backward " " (point-at-bol))
+                            (skip-chars-backward "a-zA-Z0-9_$`<=" (point-at-bol)) (point)))
          (e (point))
          (thing (buffer-substring-no-properties b e)))
     ;; return nil if not Buildin task/macro, let choice next company-backend
     (and (> (length thing) 1)
          (or (string-equal (substring thing 0 1) "$")
-             (string-equal (substring thing 0 1) "`"))
-         (all-completions thing  `(,@company-verilog-buildin-task ,@company-verilog-buildin-macro))
+             (string-equal (substring thing 0 1) "`")
+             (string-equal (substring thing 0 1) "<"))
+
+         (all-completions thing  `(,@company-verilog-buildin-task
+                                   ,@company-verilog-buildin-macro
+                                   ,(format "<= %s" verilog-assignment-delay)))
          ;; (cl-remove-if-not
          ;;  (lambda(c)(string-prefix-p thing c))
-         ;;  `(,@company-verilog-buildin-task ,@company-verilog-buildin-macro) ))
-
+         ;;  `(,@company-verilog-buildin-task ,@company-verilog-buildin-macro) )
          thing
          )))
 
@@ -137,7 +145,9 @@
                  (company-verilog-thing-at-point)
                  ))
     (candidates
-     (all-completions arg  `(,@company-verilog-buildin-task ,@company-verilog-buildin-macro)))
+     (all-completions arg  `(,@company-verilog-buildin-task
+                             ,@company-verilog-buildin-macro
+                             ,(format "<= %s" verilog-assignment-delay))))
     ;; (cl-remove-if-not
     ;;  (lambda(c)(string-prefix-p arg c))
     ;;  `(,@company-verilog-buildin-task ,@company-verilog-buildin-macro) ))
