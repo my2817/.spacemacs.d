@@ -1150,4 +1150,14 @@ node install-eaf-win32.js
     :defer t
     :init (require 'psvn))
   )
+
+(defun my-config/init-liberty-mode ()
+  (use-package liberty-mode
+    :defer t
+    :init
+    (progn
+      (add-to-list 'auto-mode-alist '("\\.lib\\'" . liberty-mode))
+      (autoload 'liberty-mode "liberty-mode" "Synopsys NLDM" t))
+    ))
+
 ;;; packages.el ends here

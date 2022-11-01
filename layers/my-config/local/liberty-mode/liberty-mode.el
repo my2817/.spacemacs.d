@@ -18,7 +18,7 @@
     (modify-syntax-entry ?> "." table)
     (modify-syntax-entry ?& "." table)
     (modify-syntax-entry ?| "." table)
-    (modify-syntax-entry ?` "w" table)  ; ` is part of definition symbols in Verilog
+    ;; (modify-syntax-entry ?` "w" table)  ; ` is part of definition symbols in Verilog
     (modify-syntax-entry ?_ "w" table)
     (modify-syntax-entry ?\' "." table)
 
@@ -27,7 +27,7 @@
   "Syntax table used in Liberty mode buffers.")
 
 ;;;###autoload
-(define-derived-mode liberty-mode prog-mode "Liberty"
+(define-derived-mode liberty-mode fundamental-mode "Liberty"
   "Major mode for editing synopsys liberty file."
   ;; :abbrev-table verilog-mode-abbrev-table
   ;; (set (make-local-variable 'beginning-of-defun-function)
@@ -70,7 +70,7 @@
        liberty-imenu-generic-expression)
   ;; Tell which-func-modes that imenu knows about verilog
   (when (and (boundp 'which-func-modes) (listp which-func-modes))
-    (add-to-list 'which-func-modes 'verilog-mode))
+    (add-to-list 'which-func-modes 'liberty-mode))
   ;; hideshow support
   ;; (when (boundp 'hs-special-modes-alist)
   ;;   (unless (assq 'verilog-mode hs-special-modes-alist)
