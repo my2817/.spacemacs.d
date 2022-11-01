@@ -79,6 +79,9 @@
     ;; (aweshell :location (recipe
     ;;                      :fetcher github
     ;;                      :repo manateelazycat/aweshell))
+    (color-rg :location (recipe
+                         :fetcher github
+                         :repo manateelazycat/color-rg))
     ;; (eaf :location local)
     ;; magit-todos
     ;; (magit-gerrit :location (recipe
@@ -1160,4 +1163,9 @@ node install-eaf-win32.js
       (autoload 'liberty-mode "liberty-mode" "Synopsys NLDM" t))
     ))
 
+(defun my-config/init-color-rg ()
+  (use-package color-rg
+    :defer t
+    :init (require 'color-rg))
+  )
 ;;; packages.el ends here
