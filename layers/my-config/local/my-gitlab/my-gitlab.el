@@ -2,6 +2,7 @@
 (require 'my-gitlab-user)
 (require 'my-gitlab-branche)
 (require 'my-gitlab-mr)
+(require 'my-gitlab-notes)
 
 (defvar-local gitlab-project nil
   "gitlab project info")
