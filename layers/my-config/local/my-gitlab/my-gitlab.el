@@ -3,6 +3,8 @@
 (require 'my-gitlab-branche)
 (require 'my-gitlab-mr)
 (require 'my-gitlab-notes)
+(require 'my-gitlab-issues)
+
 
 (defvar-local gitlab-project nil
   "gitlab project info")

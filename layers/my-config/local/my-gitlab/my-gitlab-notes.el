@@ -22,7 +22,7 @@
     ;; (define-key map (kbd "w") 'gitlab-goto-issue)
     (define-key map (kbd "C-c C-c" ) 'gitlab-comment-new-note)
     map)
-  "Keymap for `gitlab-notes-mode' major mode.")
+  "Keymap for `gitlab-edit-note-mode' major mode.")
 
 (define-derived-mode gitlab-edit-note-mode markdown-mode "Gitlab Edit Notes"
   "major mode for edit note body"
