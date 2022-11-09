@@ -2,12 +2,13 @@
 (require 'markdown-mode)
 
 (define-key gitlab-issues-mode-map (kbd "RET") 'gitlab-show-issue-notes-current)
+(define-key gitlab-mrs-mode-map (kbd "RET") 'gitlab-show-mr-notes-current)
 
 (defvar gitlab-notes-mode-map
   (let ((map (copy-keymap markdown-mode-map)))
     ;; (define-key map (kbd "v") 'print-current-issue-id)
     ;; (define-key map (kbd "w") 'gitlab-goto-issue)
-    (define-key map (kbd "RET") 'gitlab-issue-new-note)
+    (define-key map (kbd "RET") 'gitlab-new-note)
     map)
   "Keymap for `gitlab-notes-mode' major mode.")
 
@@ -29,9 +30,11 @@
   :group 'gitlab
   (use-local-map gitlab-edit-note-mode-map))
 
-(defun gitlab-list-issue-notes (project-id issue-iid &optional page per-page params)
+(defun gitlab-list-notes (project-id gitlab-note-to gitlab-note-to-iid &optional page per-page params)
   "Get a list of issue notes
 PROJECT-ID : The ID of a project
+GITLAB-NOTE-TO: issues or mrege_requests
+GITLAB-NOTE-TO-IID:iid of gitlab-note-to
 PAGE: current page number
 PER-PAGE: number of items on page max 100
 PARAMS: an alist for query parameters. Exple: '((state . \"opened\"))"
@@ -42,7 +45,7 @@ PARAMS: an alist for query parameters. Exple: '((state . \"opened\"))"
           (gitlab-get-header (s-concat "projects/"
                                        (url-hexify-string
                                         (format "%s" project-id))
-                                       "/issues/" (format "%s" issue-iid) "/notes"  )
+                                       (format "/%s/" gitlab-note-to) (format "%s" gitlab-note-to-iid) "/notes"  )
                              "X-Total-Pages"
                              200
                              page
@@ -59,7 +62,7 @@ PARAMS: an alist for query parameters. Exple: '((state . \"opened\"))"
                                                      (s-concat "projects/"
                                                                (url-hexify-string
                                                                 (format "%s" project-id))
-                                                               "/issues/" (format "%s" issue-iid) "/notes"
+                                                               (format "/%s/" gitlab-note-to) (format "%s" gitlab-note-to-iid) "/notes"
                                                                "?page=" (number-to-string page)
                                                                "&per_page=" (number-to-string per-page))
                                                      params
@@ -68,16 +71,18 @@ PARAMS: an alist for query parameters. Exple: '((state . \"opened\"))"
           while(<= page x-total-pages))
     notes))
 
-(defun gitlab-show-issue-notes (project-id issue-iid)
+(defun gitlab-show-notes (project-id gitlab-note-to gitlab-note-to-iid)
   "show notes of issue with a markdown buffer"
   (interactive)
-  (let* ((notes (gitlab-list-issue-notes project-id issue-iid 1 200))
+  (let* ((notes (gitlab-list-notes project-id gitlab-note-to gitlab-note-to-iid 1 200))
          (project-name (assoc-default 'name (gitlab-get-project project-id))))
-    (pop-to-buffer (format "*Gitlab Notes[%s/#%d]*" project-name issue-iid) nil)
+    (pop-to-buffer (format "*Gitlab Notes[%s/#%d]*" project-name gitlab-note-to-iid) nil)
     (gitlab-notes-mode)
     (page-break-lines-mode)
     (make-local-variable 'project-id)
-    (make-local-variable 'issue-iid)
+    (make-local-variable 'gitlab-note-to)
+    (make-local-variable 'gitlab-note-to-iid)
+    (setq-local default-directory (projectile-project-root))
     (setq header-line-format
           (concat (propertize " " 'display '((space :align-to 0)))
                   "Return: create a new note"))
@@ -99,24 +104,32 @@ PARAMS: an alist for query parameters. Exple: '((state . \"opened\"))"
   (interactive)
   (let* ((project-id (assoc-default 'project_id (tabulated-list-get-id)))
          (issue-iid (assoc-default 'iid (tabulated-list-get-id))))
-    (gitlab-show-issue-notes project-id issue-iid)
+    (gitlab-show-notes project-id "issues" issue-iid)
     ))
 
-(defun gitlab-issue-new-note ()
+(defun gitlab-show-mr-notes-current ()
+  "show notes of current issue"
+  (interactive)
+  (let* ((project-id (assoc-default 'project_id (tabulated-list-get-id)))
+         (mr-iid (assoc-default 'iid (tabulated-list-get-id))))
+    (gitlab-show-notes project-id "merge_requests" mr-iid)
+    ))
+
+(defun gitlab-new-note ()
   "call `gitlab-edit-note'"
   (interactive)
   (gitlab-edit-note (list (cons 'project-id project-id)
-                          (cons 'iid issue-iid)
-                          (cons 'scope "issue")))
+                          (cons 'gitlab-note-to-iid gitlab-note-to-iid)
+                          (cons 'gitlab-note-to gitlab-note-to)))
   )
 
 (defun gitlab-edit-note (info)
   "Edit a note's body with markdown-mode, and return it
 
-INFO: a list: ((project-id . N) (iid . N) (scope . STR))
+INFO: a list: ((project-id . N) (iid . N) (gitlab-note-to . STR))
 PROJECT-ID: project id
 IID: id of issue or MR?
-SCOPE: this note is belong to a issue or MR"
+GITLAB-NOTE-TO: this note is belong to a issues or merger_requests"
 
   (interactive)
   (pop-to-buffer (format "*Gitlab Edit Note*") nil)
@@ -124,10 +137,10 @@ SCOPE: this note is belong to a issue or MR"
   (let ()
     (make-local-variable 'project-id)
     (setq-local project-id (assoc-default 'project-id info))
-    (make-local-variable 'iid)
-    (setq-local iid (assoc-default 'iid info))
-    (make-local-variable 'scope)
-    (setq-local scope (assoc-default 'scope info))
+    (make-local-variable 'gitlab-note-to-iid)
+    (setq-local gitlab-note-to-iid (assoc-default 'gitlab-note-to-iid info))
+    (make-local-variable 'gitlab-note-to)
+    (setq-local gitlab-note-to (assoc-default 'gitlab-note-to info))
     )
   (setq header-line-format
         (concat (propertize " " 'display '((space :align-to 0)))
@@ -142,20 +155,20 @@ SCOPE: this note is belong to a issue or MR"
          ;; (scope scope)
          (body (buffer-substring-no-properties (point-min) (point-max)))
          (params (list (cons 'body body))))
-    (pcase scope
-      ("issue"
+    (cond
+     ((member gitlab-note-to '("issues" "merge_requests"))
        (progn (perform-gitlab-request "POST"
                                        (s-concat "projects/"
                                                  (url-hexify-string
                                                   (format "%s" project-id))
-                                                 "/issues/" (format "%s" iid)
+                                                 (format "/%s/" gitlab-note-to) (format "%s" gitlab-note-to-iid)
                                                  "/notes"
                                                  )
                                        params
                                        201 )
               (kill-buffer (buffer-name))))
-      (_
-        (user-error (format "undefined action to scope %s" scope)))))
+      (t
+        (user-error (format "undefined action to scope %s" gitlab-note-to)))))
   )
 
 (provide 'my-gitlab-notes)
