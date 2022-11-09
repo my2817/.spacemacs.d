@@ -9,6 +9,8 @@
     ;; (define-key map (kbd "v") 'print-current-issue-id)
     ;; (define-key map (kbd "w") 'gitlab-goto-issue)
     (define-key map (kbd "RET") 'gitlab-new-note)
+    (define-key map (kbd "q") 'kill-buffer-and-window)
+    (define-key map (kbd "r") 'gitlab-refresh-note)
     map)
   "Keymap for `gitlab-notes-mode' major mode.")
 
@@ -98,6 +100,14 @@ PARAMS: an alist for query parameters. Exple: '((state . \"opened\"))"
               )
             notes)
     (read-only-mode 1)))
+
+(defun gitlab-refresh-note ()
+  "Refresh note content"
+  (interactive)
+  (read-only-mode -1)
+  (erase-buffer)
+  (gitlab-show-notes project-id gitlab-note-to gitlab-note-to-iid)
+  )
 
 (defun gitlab-show-issue-notes-current ()
   "show notes of current issue"
