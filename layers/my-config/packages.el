@@ -122,6 +122,7 @@
     gitlab
     ivy-gitlab
     (psvn :location local)
+    evil
     )
 
   "The list of Lisp packages required by the my-config layer.
@@ -1167,5 +1168,13 @@ node install-eaf-win32.js
   (use-package color-rg
     :defer t
     :init (require 'color-rg))
+  )
+(defun my-config/post-init-evil ()
+
+  (with-eval-after-load 'evil
+    (progn
+      (define-key evil-normal-state-map [remap find-file-at-point] 'xah-open-file-at-cursor)
+      ))
+
   )
 ;;; packages.el ends here
