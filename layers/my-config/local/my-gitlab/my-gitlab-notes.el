@@ -154,7 +154,9 @@ GITLAB-NOTE-TO: this note is belong to a issues or merger_requests"
     )
   (setq header-line-format
         (concat (propertize " " 'display '((space :align-to 0)))
-                "C-c C-c to comment this"))
+                (format "[%s] C-c C-c: finish Edit; Kill Buffer: Abort" (projectile-project-name))))
+  (insert (format "SHA-1: %s\n\nFile: "
+                  (magit-rev-parse "--short" "HEAD")))
   )
 
 (defun gitlab-comment-new-note ()
