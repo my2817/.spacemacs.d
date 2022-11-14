@@ -1,7 +1,7 @@
 (require 'gitlab)
 
 (define-key gitlab-issues-mode-map (kbd "R") 'gitlab-issues-refresh)
-(define-key gitlab-issues-mode-map (kbd "c") 'gitlab-issues-create)
+(define-key gitlab-issues-mode-map (kbd "n") 'gitlab-issues-create)
 (define-key gitlab-issues-mode-map (kbd "u") 'gitlab-issues-modi)
 ;; duplicate define funcs
 (define-derived-mode gitlab-issues-mode tabulated-list-mode "Gitlab issues"
@@ -113,7 +113,8 @@ ISSUE-ID: nil to create a new ISSUE; or update a issue"
                     (format "TITLE")))
          (description (or (and issue-id
                                (assoc-default 'description issue))
-                          (format "DESCRIPTION")))
+                          (format "SHA-1: %s\n\nFile: "
+                                  (magit-rev-parse "--short" "HEAD"))))
          (assignee (or (and issue-id
                             (assoc-default 'name (assoc-default 'assignee issue)))
                        (format "ASSIGNEE")))

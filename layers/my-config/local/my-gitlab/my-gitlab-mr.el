@@ -335,9 +335,9 @@ NAME: a string of project name"
 
 (defvar gitlab-mrs-mode-map
   (let ((map (make-keymap)))
-    (define-key map (kbd "C") 'gitlab-close-mr)
-    (define-key map (kbd "c") 'gitlab-create-mr)
-    (define-key map (kbd "r") 'gitlab-reopen-mr)
+    (define-key map (kbd "c") 'gitlab-close-mr)
+    (define-key map (kbd "n") 'gitlab-create-mr)
+    (define-key map (kbd "o") 'gitlab-reopen-mr)
     (define-key map (kbd "m") 'gitlab-merge-mr)
     (define-key map (kbd "R") 'gitlab-refresh-mr-list)
     (define-key map (kbd "u") 'gitlab-update-mr)

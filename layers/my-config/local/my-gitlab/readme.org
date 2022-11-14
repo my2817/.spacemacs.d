@@ -1,0 +1,44 @@
+* Key bindings
+** projects-mode
+| Key | Function                   |
+|-----+----------------------------|
+| ~i~   | gitlab-issues-for-project) |
+| ~m~   | gitlab-mr-for-project)     |
+
+** issues-mode
+| Key | Function                        |
+|-----+---------------------------------|
+| ~c~   | gitlab-close-issue              |
+| ~o~   | gitlab-open-issue               |
+| ~R~   | gitlab-issues-refresh           |
+| ~n~   | gitlab-issues-create            |
+| ~u~   | gitlab-issues-modi              |
+| ~RET~ | gitlab-show-issue-notes-current |
+
+** mrs-mode
+
+| Key | Function                     |
+|-----+------------------------------|
+| ~c~   | gitlab-close-mr              |
+| ~n~   | gitlab-create-mr             |
+| ~o~   | gitlab-reopen-mr             |
+| ~m~   | gitlab-merge-mr              |
+| ~R~   | gitlab-refresh-mr-list       |
+| ~u~   | gitlab-update-mr             |
+| ~RET~ | gitlab-show-mr-notes-current |
+|     |                              |
+
+** notes-mode
+
+| Key | Function               |
+|-----+------------------------|
+| ~RET~ | gitlab-new-note        |
+| ~q~   | kill-buffer-and-window |
+| ~R~   | gitlab-refresh-note    |
+|     |                        |
+
+** edit-note-mode
+| Key     | Function                |
+|---------+-------------------------|
+| ~C-c C-c~ | gitlab-comment-new-note |
+|         |                         |

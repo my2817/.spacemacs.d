@@ -10,7 +10,7 @@
     ;; (define-key map (kbd "w") 'gitlab-goto-issue)
     (define-key map (kbd "RET") 'gitlab-new-note)
     (define-key map (kbd "q") 'kill-buffer-and-window)
-    (define-key map (kbd "r") 'gitlab-refresh-note)
+    (define-key map (kbd "R") 'gitlab-refresh-note)
     map)
   "Keymap for `gitlab-notes-mode' major mode.")
 
