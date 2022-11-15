@@ -1305,20 +1305,6 @@ or add following line into end of buffer:
 "
   :group 'verilog-mode)
 
-(defun my-hideshowvis-fringe ()
-  (interactive )
-  (end-of-line)
-  (if (save-excursion
-        (end-of-line 1)
-        (or (hs-already-hidden-p)
-            (progn
-              (forward-char 1)
-              (hs-already-hidden-p))))
-      (hs-show-block)
-    (hs-hide-block)
-    ;; (beginning-of-line)
-    ))
-
 (defcustom my-verilog-auto-readonly t
   "make buffer readonly if user-login-name not equal to Engineer of file header"
   :group 'verilog-mode)

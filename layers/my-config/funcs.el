@@ -1049,3 +1049,18 @@ For those who are using Citre with other tools (imenu, grep...)"
                (not (string-match (purecopy "\\.gpg\\(~\\|\\.~[0-9]+~\\)?\\'") buffer-file-name)))
       (git-gutter-mode +1)))
   )
+
+(defun my-hideshowvis-fringe ()
+  (interactive )
+  (end-of-line)
+  (if (save-excursion
+        (end-of-line 1)
+        (or (hs-already-hidden-p)
+            (progn
+              (forward-char 1)
+              (hs-already-hidden-p))))
+      (hs-show-block)
+    (hs-hide-block)
+    ;; (beginning-of-line)
+    ))
+

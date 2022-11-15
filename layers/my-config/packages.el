@@ -123,6 +123,7 @@
     ivy-gitlab
     (psvn :location local)
     evil
+    cc-mode
     )
 
   "The list of Lisp packages required by the my-config layer.
@@ -1176,5 +1177,25 @@ node install-eaf-win32.js
       (define-key evil-normal-state-map [remap find-file-at-point] 'xah-open-file-at-cursor)
       ))
 
+  )
+
+(defun my-config/post-init-cc-mode ()
+  (with-eval-after-load 'cc-mode
+    (progn
+      (defun my-c++-indent/hs ()
+        "work around `c-indent-line-or-region', indent or hide/show fring.
+If `buffer-read-only' is non-nil, execute `my-hideshowvis-fringe'.
+If `electric-verilog-tab' don't change position, execute `my-hideshowvis-fringe'.
+"
+        (interactive)
+        (if (or buffer-read-only
+                (let* ((old-position (point))
+                       (new-position (progn (c-indent-line-or-region)
+                                            (point))))
+                  (= old-position new-position))
+                )
+            (my-hideshowvis-fringe)))
+      (define-key c++-mode-map [remap c-indent-line-or-region] 'my-c++-indent/hs)
+      ))
   )
 ;;; packages.el ends here
