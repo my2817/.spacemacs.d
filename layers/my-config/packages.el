@@ -48,6 +48,8 @@
     ;; auctex
     ;; auto-complete-auctex
     plantuml-mode
+    ;; a tool to generate relevatn Mindmap or structrue diagram from org/json/yaml
+    (plantuml :location local)
     ;; tabbar
     ;; tabbar-ruler
     (sos-mode :location local)
@@ -124,6 +126,8 @@
     (psvn :location local)
     evil
     cc-mode
+    json-mode
+    yaml-mode
     )
 
   "The list of Lisp packages required by the my-config layer.
@@ -1198,4 +1202,21 @@ If `electric-verilog-tab' don't change position, execute `my-hideshowvis-fringe'
       (define-key c++-mode-map [remap c-indent-line-or-region] 'my-c++-indent/hs)
       ))
   )
+
+(defun my-config/init-plantuml ()
+  (use-package plantuml
+    :defer t
+    :init (require 'plantuml))
+  )
+
+(defun my-config/init-json-mode ()
+  (use-package json-mode
+    :defer t
+  ))
+
+(defun my-config/init-yaml-mode ()
+  (use-package yaml-mode
+    :defer t
+    ))
+
 ;;; packages.el ends here
