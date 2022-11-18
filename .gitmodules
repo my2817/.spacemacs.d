@@ -4,4 +4,4 @@
 
 [submodule "layers/my-config/local/C4-Plantuml"]
 	path = layers/my-config/local/C4-Plantuml
-	url = https://github.com/RicardoNiepel/C4-PlantUML
+	url = https://github.com/plantuml-stdlib/C4-PlantUML
