@@ -1059,8 +1059,28 @@ For those who are using Citre with other tools (imenu, grep...)"
             (progn
               (forward-char 1)
               (hs-already-hidden-p))))
-      (hs-show-block)
+      (progn
+        (hs-show-block)
+        (backward-char))
+
     (hs-hide-block)
+    (backward-char)
     ;; (beginning-of-line)
     ))
 
+(defun my-indent/hs ()
+  "work around `indent-for-tab-command', indent or hide/show fring.
+If `buffer-read-only' is non-nil, execute `my-hideshowvis-fringe'.
+If `electric-verilog-tab' don't change position, execute `my-hideshowvis-fringe'.
+"
+  (interactive)
+  (if (or buffer-read-only
+          (let* ((old-position (point))
+                 (new-position (progn (indent-for-tab-command)
+                                      (point))))
+            (= old-position new-position))
+          )
+      (my-hideshowvis-fringe)))
+
+
+(define-key global-map [remap indent-for-tab-command] 'my-indent/hs)
