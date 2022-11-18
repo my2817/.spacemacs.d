@@ -1218,6 +1218,9 @@ rease to 2, \")\": depth decrease to 1
         (char )
         )
     (verilog-re-search-forward left-pair nil t)
+    ;; if a port connection on current line, break it to next line
+    (if (verilog-re-search-forward "\\." (point-at-eol) t)
+        (replace-match "\n." t t))
     (while  (progn
               (verilog-re-search-forward (concat "\\([" left-pair  right-pair "]\\)") nil t)
               (setq char (verilog-match-string 1))
@@ -1233,9 +1236,8 @@ rease to 2, \")\": depth decrease to 1
                     (replace-match (make-string (+ 1 port-st-pos) ? ) t t)
                     ;; (verilog-re-search-forward "(" nil t)
                     ;; (beginning-of-line)
-                    (if (verilog-re-search-forward "\\s-+(" (point-at-eol) t)
-                        (replace-match "(" t t)
-                      (verilog-re-search-forward "(" nil t))
+                    (verilog-re-search-forward "\\s-?+(" (point-at-eol) t)
+                    (replace-match "(" t t)
                     (backward-char)
                     ;; (while (< (current-column) offset)
                     ;;   (insert " "))
