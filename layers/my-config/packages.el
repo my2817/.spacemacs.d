@@ -1114,10 +1114,16 @@ node install-eaf-win32.js
 --extras=*
 --extras=-{qualified}
 -R
+./
 ;; add dirs/files to scan here, one line per dir/file
 ;; see \"citre-edit-cmd-buf-default-cmd\" to change the default value
 /md3200/tools/tools2/cadence2015/INCISIVE152/tools/methodology/UVM/CDNS-1.1d/sv/src
 " )
+    (custom-set-variables '(citre-completion-backends '(tags global))
+                          '(citre-find-definition-backends '(tags global))
+                          '(citre-find-reference-backends '(tags global))
+                          '(citre-tags-in-buffer-backends '(tags global))
+                          '(citre-auto-enable-citre-mode-backends '(tags global)))
     (defun citre-jump+ ()
       (interactive)
       (condition-case _
