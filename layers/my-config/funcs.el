@@ -1013,7 +1013,9 @@ For those who are using Citre with other tools (imenu, grep...)"
      ;; 3. copy decoded gpg file's content by append-to-buff
      ;; 4. save decoded buffer's content to tmpfile
      ;; 5. return tmpfile name
-     (if (string-match "org.gpg" (buffer-name buff))
+     (if (string-match "org.gpg" (or (and (bufferp buff)
+                                          (buffer-name buff))
+                                     buff))
          (if (string-match "org.gpg$" (buffer-name buff))
              (progn ;; file has been decoded, write buffer's conntent to
                (let* ((f (ediff-make-empty-tmp-file short-f)))
