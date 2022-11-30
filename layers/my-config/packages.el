@@ -1143,8 +1143,6 @@ node install-eaf-win32.js
     :defer t
     :init
     :config
-    (setq gitlab-host "https://gitlab.com"
-          gitlab-token-id "glpat-rtt5thyLzoCemrYQB2rg" )
     ))
 
 (defun my-config/init-ivy-gitlab()
