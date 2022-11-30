@@ -25,3 +25,5 @@
 
 (define-key evil-motion-state-map "j" 'evil-next-visual-line)
 (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
+
+(spacemacs/set-leader-keys "pG" 'citre-update-this-tags-file)
