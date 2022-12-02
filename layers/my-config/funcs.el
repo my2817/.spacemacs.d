@@ -661,7 +661,7 @@ Version 2018-10-08"
         (while (< (point) p-region-end)
           (and (symbol-at-point)
                (highlight-symbol))
-          (evil-forward-WORD-begin))))))
+          (forward-symbol 1))))))
 
 ;; bsub as proxy of git to rd3
 (defun my-git-fetch-through-by-bsub ()
