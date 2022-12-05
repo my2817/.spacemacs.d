@@ -395,18 +395,31 @@ and return as PATH-to-FILE::Line-Number."
   )
 (ad-activate 'counsel-imenu)
 
+(require 'popup)
 (defun my-bin2dec(&optional arg)
   (interactive "P")
   (let* ((local-word (replace-regexp-in-string "^[0-9]?+'?[bB]" "" (thing-at-point 'symbol 'no-properties)))
          (local-word (replace-regexp-in-string "_" "" local-word)))
-    (message (format "bin2hex: %s -> %d" (symbol-at-point) (string-to-number  local-word 2))) )
+    (message (format "bin2hex: %s -> %d" (symbol-at-point) (string-to-number  local-word 2)))
+    (popup-tip (format "dec:%d"  (string-to-number  local-word 2)) :point (point) :nowait nil))
   )
 
 (defun my-bin2hex(&optional arg)
   (interactive "P")
   (let* ((local-word (replace-regexp-in-string "^[0-9]?+'?[bB]" "" (thing-at-point 'symbol 'no-properties)))
          (local-word (replace-regexp-in-string "_" "" local-word)))
-    (message (format "bin2hex: %s -> %x" (symbol-at-point) (string-to-number  local-word 2))) )
+    (message (format "bin2hex: %s -> %x" (symbol-at-point) (string-to-number  local-word 2)))
+    (popup-tip (format "hex:%x"  (string-to-number  local-word 2)) :point (point) :nowait nil) )
+  )
+
+(defun my-bin2xx(&optional arg)
+  (interactive "P")
+  (let* ((local-word (replace-regexp-in-string "^[0-9]?+'?[bB]" "" (thing-at-point 'symbol 'no-properties)))
+         (local-word (replace-regexp-in-string "_" "" local-word)))
+    (message (format "bin2hex: %s -> %x" (symbol-at-point) (string-to-number  local-word 2)))
+    (popup-tip (format "dec:%d\nhex:%x"
+                       (string-to-number local-word 2)
+                       (string-to-number  local-word 2)) :point (point) :nowait nil) )
   )
 
 (defun my-dec2hex(&optional arg)
@@ -416,7 +429,8 @@ and return as PATH-to-FILE::Line-Number."
                          (ivy-completing-read "input dec: " nil)
                        (replace-regexp-in-string "^[0-9]?+'?[dD]" "" (thing-at-point 'word 'no-properties))))
          (local-word (replace-regexp-in-string "_" "" local-word)))
-    (message (format "dex2hex : %s -> %x" (symbol-at-point) (string-to-number  local-word 10))) )
+    (message (format "dex2hex : %s -> %x" (symbol-at-point) (string-to-number  local-word 10)))
+    (popup-tip (format "hex:%x"  (string-to-number  local-word 10)) :point (point) :nowait nil) )
   )
 
 (defun my-hex2dec(&optional arg)
@@ -426,7 +440,8 @@ and return as PATH-to-FILE::Line-Number."
                          (ivy-completing-read "input hex: " nil)
                        (replace-regexp-in-string "^[0-9]?+'?[xXhH]" "" (thing-at-point 'word 'no-properties))))
          (local-word (replace-regexp-in-string "_" "" local-word)))
-    (message (format "dex2hex : %s -> %d" (symbol-at-point) (string-to-number  local-word 16))) )
+    (message (format "dex2hex : %s -> %d" (symbol-at-point) (string-to-number  local-word 16)))
+    (popup-tip (format "dec:%d"  (string-to-number  local-word 16)) :point (point) :nowait nil) )
   )
 
 (defun my-yank-image-from-win-clipboard-through-powershell()
