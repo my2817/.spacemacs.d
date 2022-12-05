@@ -13,7 +13,13 @@
 
 (spacemacs/set-leader-keys "aou" 'org-projectile/update-agenda-files)
 (spacemacs/set-leader-keys "Dfm" 'ora-ediff-files)
-(spacemacs/set-leader-keys "gg" 'magit-gerrit-popup)
+
+(spacemacs/declare-prefix "gg" "gitlab")
+(spacemacs/set-leader-keys "ggi" 'gitlab-show-issues-current-project)
+(spacemacs/set-leader-keys "ggm" 'gitlab-show-mergerequest-current-project)
+(spacemacs/set-leader-keys "ggp" 'gitlab-show-projects)
+
+
 (spacemacs/set-leader-keys "m[" 'awesome-pair-wrap-bracket )
 (spacemacs/set-leader-keys "m(" 'awesome-pair-wrap-round )
 (spacemacs/set-leader-keys "m{" 'awesome-pair-wrap-curly )
