@@ -659,9 +659,8 @@ Version 2018-10-08"
       (save-excursion
         (goto-char p-region-start)
         (while (< (point) p-region-end)
-          (and (symbol-at-point)
-               (highlight-symbol))
-          (forward-symbol 1))))))
+          (and (forward-symbol 1)
+               (highlight-symbol)))))))
 
 ;; bsub as proxy of git to rd3
 (defun my-git-fetch-through-by-bsub ()
