@@ -9,6 +9,7 @@
 
 (eval-when-compile
   (require 'wid-edit))
+(require 'popup)
 
 (defvar widget-demo-form nil
   "A table for lookup widget created in current buffer.")
@@ -190,8 +191,10 @@ MR_IID: None-nil, update this MR; nil, create a new MR
                                                          nil
                                                          (lambda (newassignee)
                                                            (if (not (gitlab-get-user-id-by-username newassignee))
-                                                               (message-box "Can't find Assignee in gitlab server:\n\t%s\t" newassignee)
-                                                             (message "will assign to: %s" newassignee)
+                                                               (popup-tip (format "User Name Error: %s"
+                                                                                  newassignee) :point (point) :nowait nil)
+                                                             (popup-tip (format "User Name OK: %s"
+                                                                                newassignee) :point (point) :nowait nil)
                                                              ))
                                                          newassignee))
                               ))
