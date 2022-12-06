@@ -174,7 +174,7 @@ skip whitespace if there is, the whitespace maybe insert by `electric-spacing' a
                 company-files
                 company-verilog-buildin-task-backend
                 ;; (company-verilog-backend company-dabbrev-code company-gtags company-etags)
-                (company-capf company-yasnippet company-keywords company-dabbrev-code)
+                (company-yasnippet company-keywords company-capf company-dabbrev-code :separate)
                 ;; (company-capf company-yasnippet company-dabbrev-code)
                 ;; company-abbrev
                 ))
