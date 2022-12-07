@@ -2,6 +2,7 @@
 # key: for
 # group: verilog
 # --
-for (${1:Initial}; ${2:Condition}; ${3:Iterate}) begin
-   $0
+genvar ${1:i};
+for ($1 = ${2:0}; ${3:$1 <= 15}; ${4:$1 = $1 + 1}) begin: ${5:for_$1}
+$0
 end

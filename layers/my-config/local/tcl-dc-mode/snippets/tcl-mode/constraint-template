@@ -1,0 +1,8 @@
+# name: sta constraint template
+# key: template-constraint
+# group: tcl
+# --
+create-clock -period ${1:period} -name ${2:name} ${3:$2}
+set_input_delay 0 -clock $2 ${4:[all_inputs]}${5:[remove_from_collection [all_inputs] $3]}
+set_output_dely 0 -clock $2 [all_outputs]
+$0

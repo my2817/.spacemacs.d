@@ -271,6 +271,8 @@
 (with-eval-after-load 'yasnippet-snippets
   (add-to-list 'yas-snippet-dirs "~/.spacemacs.d/layers/my-config/local/my-verilog/snippets")
   (yas-load-directory "~/.spacemacs.d/layers/my-config/local/my-verilog/snippets" t)
+  (add-to-list 'yas-snippet-dirs "~/.spacemacs.d/layers/my-config/local/tcl-dc-mode/snippets")
+  (yas-load-directory "~/.spacemacs.d/layers/my-config/local/tcl-dc-mode/snippets" t)
   )
 
 (setq epa-pinentry-mode 'loopback)

@@ -266,7 +266,7 @@ Each entry is either:
                 (lambda ()
                   (company-mode)
                   (setq-local company-backends '(company-files
-                                                 (company-dabbrev-code company-gtags company-etags company-keywords)
+                                                 (company-yasnippet company-dabbrev-code company-capf company-gtags company-keywords)
                                                  company-oddmuse company-dabbrev)))
                 )
       )
