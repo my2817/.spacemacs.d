@@ -36,7 +36,7 @@
     ;;blink-cursor-mode
     ;; psvn
     (my-verilog :location local)
-    verilog-mode
+    (verilog-mode :location local)
     ;;(mmm-mode :location local)
     mmm-mode
     highlight-symbol
