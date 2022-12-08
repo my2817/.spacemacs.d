@@ -104,7 +104,8 @@
     ;; `exwm-input-set-key' allows you to set a global key binding (available in
     ;; any case). Following are a few examples.
     ;; + We always need a way to go back to line-mode from char-mode
-    (exwm-input-set-key (kbd "s-<escape>") 'exwm-reset)
+    ;; (exwm-input-set-key (kbd "s-<escape>") 'exwm-reset)
+    (exwm-input-set-key (kbd "M-[") 'exwm-reset)
 
     (exwm-input-set-key (kbd "s-f") #'spacemacs/exwm-layout-toggle-fullscreen)
     (exwm-input-set-key (kbd "<s-tab>") #'spacemacs/exwm-jump-to-last-exwm)
