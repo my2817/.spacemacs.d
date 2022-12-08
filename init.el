@@ -741,7 +741,7 @@ Put your configuration code here, except for variables that  should be set befor
   (spacemacs/set-leader-keys "sS" 'swiper)
   ;; (define-key evil-motion-state-map (kbd "C-o") 'evil-jump-backward)
   ;; (define-key evil-motion-state-map "\C-]" 'evil-jump-to-tag)
-  (define-key evil-motion-state-map "\C-]" 'citre-jump)
+  (define-key evil-motion-state-map "\C-]" 'citre-jump+)
   (define-key evil-motion-state-map (kbd "C-o") 'citre-jump-back)
 
 
