@@ -91,6 +91,41 @@
   (electric-spacing-insert "@" 'before)
   )
 
+(defun electric-spacing-plantuml-mode-@ ()
+  (delete-horizontal-space)
+  (electric-spacing-insert "@" 'middle)
+  )
+
+(defun electric-spacing-\( ()
+  (delete-horizontal-space)
+  (if (looking-back (regexp-opt (mapcar 'char-to-string
+                                        "@([{}])")))
+      (electric-spacing-insert-1 "(" 'middle)
+    (if (looking-back (regexp-opt '("if" "for" "while" "case" "casex" "casez")))
+        (electric-spacing-insert-1 "(" 'before)
+      (electric-spacing-insert-1 "(" 'middle)
+      )))
+
+(defun electric-spacing-plantuml-mode-\( ()
+  (delete-horizontal-space)
+  (if (looking-back (regexp-opt (mapcar 'char-to-string
+                                        "@([{}])")))
+      (electric-spacing-insert-1 "(" 'middle)
+    (if (looking-back (regexp-opt '("if" "for" "while" "case" "casex" "casez")))
+        (electric-spacing-insert-1 "(" 'before)
+      (electric-spacing-insert-1 "(" 'middle)
+      )))
+
+(defun electric-spacing-cc-mode-\( ()
+  (delete-horizontal-space)
+  (if (looking-back (regexp-opt (mapcar 'char-to-string
+                                        "@([{}])")))
+      (electric-spacing-insert-1 "(" 'middle)
+    (if (looking-back (regexp-opt '("if" "for" "while" "case" "casex" "casez")))
+        (electric-spacing-insert-1 "(" 'before)
+      (electric-spacing-insert-1 "(" 'middle)
+      )))
+
 (defun find-file-in-path-list (file path-list )
   "find FILE in path-list, then return the absolute file path"
   (when path-list
