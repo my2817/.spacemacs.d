@@ -327,11 +327,11 @@ find the errors."
     (if (bobp)
         (indent-line-to 0)
       (let ((not-indented t) cur-indent var-indent)
-        (if (looking-at plantuml-indent-regexp-end)
+        (if (looking-at my-plantuml-indent-regexp-end)
             (progn
               (save-excursion
                 (forward-line -1)
-                (if (looking-at plantuml-indent-regexp-start)
+                (if (looking-at my-plantuml-indent-regexp-start)
                     (setq cur-indent (current-indentation))
                   (setq cur-indent(- (current-indentation)
                                      plantuml-indent-offset))))
@@ -341,23 +341,23 @@ find the errors."
             (while not-indented
               (forward-line -1)
               (cond
-               ((looking-at plantuml-indent-regexp-start)
+               ((looking-at my-plantuml-indent-regexp-start)
                 (setq cur-indent (+ (current-indentation)
                                     plantuml-indent-offset)
                       not-indented nil))
-               ((looking-at plantuml-indent-regexp-end)
+               ((looking-at my-plantuml-indent-regexp-end)
                 (setq cur-indent (current-indentation)
                       not-indented nil))
                ((progn (forward-line 1)
                        (setq var-indent
-                             (looking-at plantuml-indent-regexp-arrow))
+                             (looking-at my-plantul-indent-regexp-arrow))
                        (forward-line -1)
                        var-indent)
                 (cond
                  ((> (setq var-indent
                            (string-match
                             (progn (string-match
-                                    plantuml-indent-regexp-arrow-1
+                                    my-plantul-indent-regexp-arrow-1
                                     (current-line-string))
                                    (match-string-no-properties
                                     0
@@ -367,7 +367,7 @@ find the errors."
                         not-indented nil))))
                ((progn (forward-line 1)
                        (setq var-indent
-                             (looking-at plantuml-indent-regexp-arrow-2))
+                             (looking-at my-plantul-indent-regexp-arrow-2))
                        (forward-line -1)
                        var-indent)
                 (cond
@@ -377,10 +377,10 @@ find the errors."
                       (incf var-count)
                       (forward-line -1)
                       (cond ((bobp) (setq var-flag nil))
-                            ((looking-at plantuml-indent-regexp-arrow) nil)
+                            ((looking-at my-plantul-indent-regexp-arrow) nil)
                             ((looking-at "^\s+$") nil)
-                            ((looking-at plantuml-indent-regexp-end) nil)
-                            ((looking-at plantuml-indent-regexp-start) nil)
+                            ((looking-at my-plantuml-indent-regexp-end) nil)
+                            ((looking-at my-plantuml-indent-regexp-start) nil)
                             ('t (setq cur-indent (current-indentation)
                                       not-indented nil
                                       var-flag nil))))
