@@ -8,11 +8,14 @@
   (defvar hs-special-modes-alist nil))
 
 ;; remove origin verilog-mode from hs-special-modes-alist
-(let* (tmp)
-  (dolist (mode-special hs-special-modes-alist)
-    (if (not (string= (car mode-special) "verilog-mode"))
-        (add-to-list 'tmp mode-special)))
-  (setq hs-special-modes-alist tmp))
+;; (let* (tmp)
+;;   (dolist (mode-special hs-special-modes-alist)
+;;     (if (not (string= (car mode-special) "verilog-mode"))
+;;         (add-to-list 'tmp mode-special)))
+;;   (setq hs-special-modes-alist tmp))
+(setq hs-special-modes-alist
+      (assq-delete-all 'verilog-mode
+                       hs-special-modes-alist))
 (add-to-list 'hs-special-modes-alist
              `(verilog-mode  ,(concat "\\<begin\\>"
                                       "\\|\\<task\\>"
