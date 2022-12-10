@@ -126,8 +126,10 @@
     (psvn :location local)
     evil
     cc-mode
+    c-mode
     json-mode
     yaml-mode
+    ;; orderless
     )
 
   "The list of Lisp packages required by the my-config layer.
@@ -1184,10 +1186,11 @@ node install-eaf-win32.js
     ;;   "Verilog language support for Citre.")
     ;; (setf (alist-get 'verilog-mode citre-language-support-alist)
     ;;       citre-lang-verilog-plist)
-    (setq citre-edit-cmd-buf-default-cmd
+    (setq citre-ctags-cmd-buf-default-cmd
           "ctags
 -o
 %TAGSFILE%
+--languages=all
 --kinds-all=*
 --fields=*
 --extras=*
@@ -1272,7 +1275,7 @@ node install-eaf-win32.js
       (defun my-c++-indent/hs ()
         "work around `c-indent-line-or-region', indent or hide/show fring.
 If `buffer-read-only' is non-nil, execute `my-hideshowvis-fringe'.
-If `electric-verilog-tab' don't change position, execute `my-hideshowvis-fringe'.
+If `c-indent-line-or-region' don't change position, execute `my-hideshowvis-fringe'.
 "
         (interactive)
         (if (or buffer-read-only
@@ -1283,6 +1286,26 @@ If `electric-verilog-tab' don't change position, execute `my-hideshowvis-fringe'
                 )
             (my-hideshowvis-fringe)))
       (define-key c++-mode-map [remap c-indent-line-or-region] 'my-c++-indent/hs)
+      ))
+  )
+
+(defun my-config/post-init-c-mode ()
+  (with-eval-after-load 'c-mode
+    (progn
+      (defun my-c-indent/hs ()
+        "work around `c-indent-line-or-region', indent or hide/show fring.
+If `buffer-read-only' is non-nil, execute `my-hideshowvis-fringe'.
+If `c-indent-line-or-region' don't change position, execute `my-hideshowvis-fringe'.
+"
+        (interactive)
+        (if (or buffer-read-only
+                (let* ((old-position (point))
+                       (new-position (progn (c-indent-line-or-region)
+                                            (point))))
+                  (= old-position new-position))
+                )
+            (my-hideshowvis-fringe)))
+      (define-key c-mode-map [remap c-indent-line-or-region] 'my-c-indent/hs)
       ))
   )
 
@@ -1301,5 +1324,10 @@ If `electric-verilog-tab' don't change position, execute `my-hideshowvis-fringe'
   (use-package yaml-mode
     :defer t
     ))
-
+(defun my-config/init-orderless ()
+ (use-package orderless
+   :ensure t
+   :custom
+   (completion-styles '(orderless basic))
+   (completion-category-overrides '((file (styles basic partial-completion))))))
 ;;; packages.el ends here
