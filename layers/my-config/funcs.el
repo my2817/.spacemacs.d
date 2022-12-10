@@ -1110,19 +1110,20 @@ For those who are using Citre with other tools (imenu, grep...)"
 
 (defun my-hideshowvis-fringe ()
   (interactive )
-  (end-of-line)
+  ;; (end-of-line)
   (if (save-excursion
-        (end-of-line 1)
+        ;; (end-of-line 1)
         (or (hs-already-hidden-p)
             (progn
-              (forward-char 1)
+              ;; (forward-char 1)
               (hs-already-hidden-p))))
       (progn
         (hs-show-block)
-        (backward-char))
+        ;; (backward-char)
+        )
 
     (hs-hide-block)
-    (backward-char)
+    ;; (backward-char)
     ;; (beginning-of-line)
     ))
 
