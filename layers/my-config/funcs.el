@@ -394,6 +394,100 @@ find the errors."
   )
 (ad-activate 'plantuml-indent-line)
 
+(defconst plantuml-beg-block-re-ordered
+  (concat "\\(^[ \t]*\\(@startuml\\)" ; 1 -> @enduml
+          "\\|\\(^\s+fork\s+again\\)"       ; 2 -> "fork again" or "end fork"
+          "\\|\\(^\s+fork\\)"               ; 3 -> "fork again" or "end fork"
+          "\\|\\({start}\\)"            ; 4 -> "{end}"
+          "\\|\\(^\s+if\\)"                 ; 5 -> "else" "elseif", "endif"
+          "\\|\\(^\s+elseif\\)"             ; 6 -> "elseif" "else" "endif"
+          "\\|\\(^\s+else\\)"               ; 7 -> "endif"
+          "\\|\\(^\s+while\\)"              ; 8 -> "endwhile"
+          "\\|\\(^\s+loop\\)"               ; 9 -> "end"
+          "\\|\\(^\s+alt\\)"                ; 10 -> "else" "end"
+          "\\|\\(^\s+repeat$\\)"             ; 11 -> "repeat while"
+          "\\|\\(^\s+note\\)"               ; 12 -> "end note", "note.*:" is signal line note, without "end note"
+          ;; "\\|\\(?:.*\\)?\s*\\(?:[<>.*a-z-|]+\\)?\s*\\(?:\\[[a-zA-Z]+\\]\\)?\s+if"
+          ;; "\\|note\s+\\(\\(?:\\(?:buttom" "\\|left" "\\|right" "\\|top\\)\\)\\)\\(?:\s+of\\)?"
+          ))
+(defun plantuml-forward-sexp ()
+  (let ((reg)
+	(md 2)
+	(st (point))
+	(nest 'yes))
+    (unless (looking-at "\\<")
+      (forward-word-strictly -1))
+    (cond
+     ((save-excursion
+        (goto-char st)
+        (member (following-char) '(?\( ?\{ ?\[)))
+      (goto-char st)
+      (forward-sexp 1))
+     ((looking-at plantuml-beg-block-re-ordered)
+      (cond
+       ((match-end 1)
+        (setq reg "\\(@startuml\\)\\|\\(@enduml\\)")
+        (setq nest 'no))
+       ((match-end 2)
+        (setq reg "\\(fork\s+again$\\)\\|\\(end\s+fork\\)"))
+       ((match-end 3)
+        (setq reg "\\(fork$\\)\\|\\(\\<fork\s+again\\>\\|\\<end\s+fork$\\>\\)"))
+       ((match-end 4)
+        (setq reg "\\({start}\\)\\|\\({end}\\)")
+        (setq nest 'no))
+       ((match-end 5)
+        (setq reg "\\(if\\)\\|\\(\\<elseif\\>\\>\\|\\<else\\>\\|\\<endif\\>\\)"))
+       ((match-end 6)
+        (setq reg "\\(\\<elseif\\>\\|\\<if\\>\\)\\|\\(\\<elseif\\>\\>\\|\\<else\\>\\|\\<endif\\>\\)"))
+       ((match-end 7)
+        (setq reg "\\(\\<else\\>\\|\\<if\\>\\)\\|\\(endif\\)"))
+       ((match-end 8)
+        (setq reg "\\(while\\)\\|\\(endwhile\\)"))
+       ((match-end 9)
+        (setq reg "\\(loop\\)\\|\\(end\\)"))
+       ((match-end 10)
+        (setq reg "\\(alt\\)\\|\\(\\<else\\>\\|\\<end\\>\\)"))
+       ((match-end 11)
+        (setq reg "\\(repeat\\)\\|\\(repeat\s+while\\)"))
+       ((match-end 12)
+        (setq reg "\\(note\\)\\|\\(end\s+note\\)")
+        (setq nest 'no))
+       ))
+     (if (and reg
+	       (forward-word-strictly 1))
+	  (catch 'skip
+	    (if (eq nest 'yes)
+		(let ((depth 1)
+		      here)
+		  (while (re-search-forward reg nil 'move)
+		    (cond
+		     ((and (or (match-end md)
+                               (and (member (match-string-no-properties 1) '("else" "elsif"))
+                                    (= 1 depth)))
+                           (or (and (member (match-string-no-properties 2) '("else" "elsif"))
+                                    (= 1 depth)) ;; stop at `else/`elsif which matching ifn?def (or `elsif with same depth)
+                               (not (member (match-string-no-properties 2) '("else" "elsif"))))) ; a closer in regular expression, so we are climbing out
+		      (setq depth (1- depth))
+		      (if (= 0 depth) ; we are out!
+			  (throw 'skip 1)))
+		     ((and (match-end 1) ; an opener in the r-e, so we are in deeper now
+                           (not (member (match-string-no-properties 1) '("else" "elsif"))))
+		      (setq here (point)) ; remember where we started
+		      (goto-char (match-beginning 1))
+		      (cond
+                       ((if
+                          (progn  ; it is a simple fork (or has nothing to do with fork)
+			    (goto-char here)
+			    (setq depth (1+ depth))))))))))
+	      (if (re-search-forward reg nil 'move)
+		  (throw 'skip 1))))))))
+
+(setq hs-special-modes-alist (assq-delete-all 'plantuml-mode hs-special-modes-alist))
+(add-to-list 'hs-special-modes-alist
+             `(plantuml-mode ,(concat "@startuml")
+                             ,(concat "@enduml")
+                             nil plantuml-forward-sexp))
+
 ;; (defadvice org-edit-src-exit (after restore-window-config activate)
 ;;   (winner-undo))
 ;; (ad-activate 'org-edit-src-exit)
