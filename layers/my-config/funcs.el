@@ -392,10 +392,11 @@ find the errors."
   (if (bolp)
       (end-of-line))
   )
-(ad-activate 'plantuml-indent-line)
+;; TODO: go back to original, but need re-cal indent level after "repeat while..."
+;; (ad-activate 'plantuml-indent-line)
 
 (defconst plantuml-beg-block-re-ordered
-  (concat "\\(^[ \t]*\\(@startuml\\)" ; 1 -> @enduml
+  (concat "\\(^[ \t]*@startuml\\)" ; 1 -> @enduml
           "\\|\\(^\s+fork\s+again\\)"       ; 2 -> "fork again" or "end fork"
           "\\|\\(^\s+fork\\)"               ; 3 -> "fork again" or "end fork"
           "\\|\\({start}\\)"            ; 4 -> "{end}"
@@ -410,6 +411,14 @@ find the errors."
           ;; "\\|\\(?:.*\\)?\s*\\(?:[<>.*a-z-|]+\\)?\s*\\(?:\\[[a-zA-Z]+\\]\\)?\s+if"
           ;; "\\|note\s+\\(\\(?:\\(?:buttom" "\\|left" "\\|right" "\\|top\\)\\)\\)\\(?:\s+of\\)?"
           ))
+
+(defun plantuml-forward-sexp-function (arg)
+  "Move forward ARG sexps."
+  ;; Used by hs-minor-mode
+  (if (< arg 0)
+      (plantuml-backward-sexp)
+    (plantuml-forward-sexp)))
+(setq plantuml-indent-level 3)
 (defun plantuml-forward-sexp ()
   (let ((reg)
 	(md 2)
@@ -452,8 +461,8 @@ find the errors."
        ((match-end 12)
         (setq reg "\\(note\\)\\|\\(end\s+note\\)")
         (setq nest 'no))
-       ))
-     (if (and reg
+       )
+      (if (and reg
 	       (forward-word-strictly 1))
 	  (catch 'skip
 	    (if (eq nest 'yes)
@@ -476,17 +485,18 @@ find the errors."
 		      (goto-char (match-beginning 1))
 		      (cond
                        ((if
-                          (progn  ; it is a simple fork (or has nothing to do with fork)
-			    (goto-char here)
-			    (setq depth (1+ depth))))))))))
+                            (progn  ; it is a simple fork (or has nothing to do with fork)
+			      (goto-char here)
+			      (setq depth (1+ depth))))))))))
 	      (if (re-search-forward reg nil 'move)
-		  (throw 'skip 1))))))))
+		  (throw 'skip 1)))))))))
 
 (setq hs-special-modes-alist (assq-delete-all 'plantuml-mode hs-special-modes-alist))
 (add-to-list 'hs-special-modes-alist
              `(plantuml-mode ,(concat "@startuml")
                              ,(concat "@enduml")
-                             nil plantuml-forward-sexp))
+                             nil plantuml-forward-sexp-function))
+(add-hook 'plantuml-mode-hook 'hs-minor-mode)
 
 ;; (defadvice org-edit-src-exit (after restore-window-config activate)
 ;;   (winner-undo))
