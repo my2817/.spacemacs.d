@@ -406,7 +406,7 @@ find the errors."
           "\\|\\(\\<while\\)"              ; 8 -> "endwhile"
           "\\|\\(\\<loop\\)"               ; 9 -> "end"
           "\\|\\(\\<alt\\)"                ; 10 -> "else" "end"
-          "\\|\\(\\<repeat$\\)"             ; 11 -> "repeat while"
+          "\\|\\(\\<repeat\s+\:\\)"             ; 11 -> "repeat while"
           "\\|\\(\\<note\\)"               ; 12 -> "end note", "note.*:" is signal line note, without "end note"
           ;; "\\|\\(?:.*\\)?\s*\\(?:[<>.*a-z-|]+\\)?\s*\\(?:\\[[a-zA-Z]+\\]\\)?\s+if"
           ;; "\\|note\s+\\(\\(?:\\(?:buttom" "\\|left" "\\|right" "\\|top\\)\\)\\)\\(?:\s+of\\)?"
@@ -440,7 +440,7 @@ find the errors."
        ((match-end 2)
         (setq reg "\\(\\<fork\s+again\\>\\|\\<fork\\>$\\)\\|\\(end\s+fork\\)"))
        ((match-end 3)
-        (setq reg "\\(^\s?+fork$\\)\\|\\(\\<fork\s+again\\>\\|\\<end\s+fork$\\>\\)"))
+        (setq reg "\\(^\s?+fork$\\)\\|\\(\\<fork\s+again\\>\\|\\<end\s+fork\\>\\)"))
        ((match-end 4)
         (setq reg "\\({start}\\)\\|\\({end}\\)")
         (setq nest 'no))
@@ -457,7 +457,7 @@ find the errors."
        ((match-end 10)
         (setq reg "\\(alt\\)\\|\\(\\<else\\>\\|\\<end\\>\\)"))
        ((match-end 11)
-        (setq reg "\\(repeat\\)\\|\\(repeat\s+while\\)"))
+        (setq reg "\\(repeat\s+\:\\)\\|\\(\\<repeat\s+while\\>\\)"))
        ((match-end 12)
         (setq reg "\\(note\\)\\|\\(end\s+note\\)")
         (setq nest 'no))
@@ -497,12 +497,14 @@ find the errors."
                                       "\\|\\(\\<if\\>\\)"
                                       "\\|\\(\\<elseif\\>\\)"
                                       "\\|\\(\\<else\\>\\)"
+                                      "\\|\\(\\<repeat\s+\:\\)"
                                       )
                              ,(concat "\\(@enduml\\)"
                                       "\\|\\(\\<end\s+fork\\>\\)"
                                       "\\|\\(\\<fork\s+again\\>\\)"
                                       "\\|\\(\\<endif\\>\\)"
                                       "\\|\\(\\<elseif\\>\\)"
+                                      "\\|\\(\\<repeat\s+while\\>\\)"
                                       )
                              nil plantuml-forward-sexp-function))
 (add-hook 'plantuml-mode-hook 'hs-minor-mode)

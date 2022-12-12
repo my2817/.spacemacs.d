@@ -325,7 +325,7 @@ Each entry is either:
                                                     "\\|while"
                                                     "\\|loop"
                                                     "\\|alt"
-                                                    "\\|repeat";; work with "repeat while *"
+                                                    "\\|repeat\s+:";; work with "repeat while *"
                                                     "\\|\\(?:.*\\)?\s*\\(?:[<>.*a-z-|]+\\)?\s*\\(?:\\[[a-zA-Z]+\\]\\)?\s+if"
                                                     "\\|note\s+over"
                                                     "\\|note\s+\\(\\(?:\\(?:buttom"
