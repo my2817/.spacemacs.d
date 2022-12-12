@@ -393,21 +393,21 @@ find the errors."
       (end-of-line))
   )
 ;; TODO: go back to original, but need re-cal indent level after "repeat while..."
-;; (ad-activate 'plantuml-indent-line)
+(ad-activate 'plantuml-indent-line)
 
 (defconst plantuml-beg-block-re-ordered
-  (concat "\\(^[ \t]*@startuml\\)" ; 1 -> @enduml
-          "\\|\\(^\s+fork\s+again\\)"       ; 2 -> "fork again" or "end fork"
-          "\\|\\(^\s+fork\\)"               ; 3 -> "fork again" or "end fork"
+  (concat "\\(\\<@startuml\\>\\)" ; 1 -> @enduml
+          "\\|\\(\\<fork\s+again\\>$\\)"       ; 2 -> "fork again" or "end fork"
+          "\\|\\(fork$\\)"               ; 3 -> "fork again" or "end fork"
           "\\|\\({start}\\)"            ; 4 -> "{end}"
-          "\\|\\(^\s+if\\)"                 ; 5 -> "else" "elseif", "endif"
-          "\\|\\(^\s+elseif\\)"             ; 6 -> "elseif" "else" "endif"
-          "\\|\\(^\s+else\\)"               ; 7 -> "endif"
-          "\\|\\(^\s+while\\)"              ; 8 -> "endwhile"
-          "\\|\\(^\s+loop\\)"               ; 9 -> "end"
-          "\\|\\(^\s+alt\\)"                ; 10 -> "else" "end"
-          "\\|\\(^\s+repeat$\\)"             ; 11 -> "repeat while"
-          "\\|\\(^\s+note\\)"               ; 12 -> "end note", "note.*:" is signal line note, without "end note"
+          "\\|\\(\\<if\\>\\)"                 ; 5 -> "else" "elseif", "endif"
+          "\\|\\(\\<elseif\\>\\)"             ; 6 -> "elseif" "else" "endif"
+          "\\|\\(\\<else\\>\\)"               ; 7 -> "endif"
+          "\\|\\(\\<while\\)"              ; 8 -> "endwhile"
+          "\\|\\(\\<loop\\)"               ; 9 -> "end"
+          "\\|\\(\\<alt\\)"                ; 10 -> "else" "end"
+          "\\|\\(\\<repeat$\\)"             ; 11 -> "repeat while"
+          "\\|\\(\\<note\\)"               ; 12 -> "end note", "note.*:" is signal line note, without "end note"
           ;; "\\|\\(?:.*\\)?\s*\\(?:[<>.*a-z-|]+\\)?\s*\\(?:\\[[a-zA-Z]+\\]\\)?\s+if"
           ;; "\\|note\s+\\(\\(?:\\(?:buttom" "\\|left" "\\|right" "\\|top\\)\\)\\)\\(?:\s+of\\)?"
           ))
@@ -435,12 +435,12 @@ find the errors."
      ((looking-at plantuml-beg-block-re-ordered)
       (cond
        ((match-end 1)
-        (setq reg "\\(@startuml\\)\\|\\(@enduml\\)")
+        (setq reg "\\(@startuml\\>\\)\\|\\(@enduml\\)")
         (setq nest 'no))
        ((match-end 2)
-        (setq reg "\\(fork\s+again$\\)\\|\\(end\s+fork\\)"))
+        (setq reg "\\(\\<fork\s+again\\>\\|\\<fork\\>$\\)\\|\\(end\s+fork\\)"))
        ((match-end 3)
-        (setq reg "\\(fork$\\)\\|\\(\\<fork\s+again\\>\\|\\<end\s+fork$\\>\\)"))
+        (setq reg "\\(^\s?+fork$\\)\\|\\(\\<fork\s+again\\>\\|\\<end\s+fork$\\>\\)"))
        ((match-end 4)
         (setq reg "\\({start}\\)\\|\\({end}\\)")
         (setq nest 'no))
@@ -449,7 +449,7 @@ find the errors."
        ((match-end 6)
         (setq reg "\\(\\<elseif\\>\\|\\<if\\>\\)\\|\\(\\<elseif\\>\\>\\|\\<else\\>\\|\\<endif\\>\\)"))
        ((match-end 7)
-        (setq reg "\\(\\<else\\>\\|\\<if\\>\\)\\|\\(endif\\)"))
+        (setq reg "\\(\\<else\\>\\|\\<if\\>\\)\\|\\(\\<endif\\>\\)"))
        ((match-end 8)
         (setq reg "\\(while\\)\\|\\(endwhile\\)"))
        ((match-end 9)
@@ -471,30 +471,39 @@ find the errors."
 		  (while (re-search-forward reg nil 'move)
 		    (cond
 		     ((and (or (match-end md)
-                               (and (member (match-string-no-properties 1) '("else" "elsif"))
+                               (and (member (match-string-no-properties 1) '("else" "elseif" "fork again"))
                                     (= 1 depth)))
-                           (or (and (member (match-string-no-properties 2) '("else" "elsif"))
+                           (or (and (member (match-string-no-properties 2) '("else" "elseif" "fork again"))
                                     (= 1 depth)) ;; stop at `else/`elsif which matching ifn?def (or `elsif with same depth)
-                               (not (member (match-string-no-properties 2) '("else" "elsif"))))) ; a closer in regular expression, so we are climbing out
+                               (not (member (match-string-no-properties 2) '("else" "elseif" "fork again"))))) ; a closer in regular expression, so we are climbing out
 		      (setq depth (1- depth))
 		      (if (= 0 depth) ; we are out!
 			  (throw 'skip 1)))
 		     ((and (match-end 1) ; an opener in the r-e, so we are in deeper now
-                           (not (member (match-string-no-properties 1) '("else" "elsif"))))
+                           (not (member (match-string-no-properties 1) '("else" "elseif" "fork again"))))
 		      (setq here (point)) ; remember where we started
 		      (goto-char (match-beginning 1))
-		      (cond
-                       ((if
-                            (progn  ; it is a simple fork (or has nothing to do with fork)
-			      (goto-char here)
-			      (setq depth (1+ depth))))))))))
+                      (progn ; it is a simple fork (or has nothing to do with fork)
+			(goto-char here)
+			(setq depth (1+ depth)))))))
 	      (if (re-search-forward reg nil 'move)
 		  (throw 'skip 1)))))))))
 
 (setq hs-special-modes-alist (assq-delete-all 'plantuml-mode hs-special-modes-alist))
 (add-to-list 'hs-special-modes-alist
-             `(plantuml-mode ,(concat "@startuml")
-                             ,(concat "@enduml")
+             `(plantuml-mode ,(concat "\\(\\<@startuml\\>\\)"
+                                      "\\|\\(\\<fork\\>$\\)"
+                                      "\\|\\(\\<fork\s+again\\>$\\)"
+                                      "\\|\\(\\<if\\>\\)"
+                                      "\\|\\(\\<elseif\\>\\)"
+                                      "\\|\\(\\<else\\>\\)"
+                                      )
+                             ,(concat "\\(@enduml\\)"
+                                      "\\|\\(\\<end\s+fork\\>\\)"
+                                      "\\|\\(\\<fork\s+again\\>\\)"
+                                      "\\|\\(\\<endif\\>\\)"
+                                      "\\|\\(\\<elseif\\>\\)"
+                                      )
                              nil plantuml-forward-sexp-function))
 (add-hook 'plantuml-mode-hook 'hs-minor-mode)
 
