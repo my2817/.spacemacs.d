@@ -1187,21 +1187,23 @@ node install-eaf-win32.js
     ;;   "Verilog language support for Citre.")
     ;; (setf (alist-get 'verilog-mode citre-language-support-alist)
     ;;       citre-lang-verilog-plist)
-    (setq citre-ctags-cmd-buf-default-cmd
-          "ctags
--o
-%TAGSFILE%
---languages=all
---kinds-all=*
---fields=*
---extras=*
---extras=-{qualified}
--R
-./
-;; add dirs/files to scan here, one line per dir/file
-;; see \"citre-edit-cmd-buf-default-cmd\" to change the default value
-/md3200/tools/tools2/cadence2015/INCISIVE152/tools/methodology/UVM/CDNS-1.1d/sv/src
-" )
+
+;; TODO: when add a third directory, imenu error with submodule env
+;;     (setq citre-ctags-cmd-buf-default-cmd
+;;           "ctags
+;; -o
+;; %TAGSFILE%
+;; --languages=all
+;; --kinds-all=*
+;; --fields=*
+;; --extras=*
+;; --extras=-{qualified}
+;; -R
+;; ./
+;; ;; add dirs/files to scan here, one line per dir/file
+;; ;; see \"citre-edit-cmd-buf-default-cmd\" to change the default value
+;; /md3200/tools/tools2/cadence2015/INCISIVE152/tools/methodology/UVM/CDNS-1.1d/sv/src
+;; " )
     (custom-set-variables '(citre-completion-backends '(tags global))
                           '(citre-find-definition-backends '(tags global))
                           '(citre-find-reference-backends '(tags global))
