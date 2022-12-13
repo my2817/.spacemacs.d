@@ -554,6 +554,27 @@ Version 2018-10-08"
           (setq n (+ step n)))
           (move-to-column col t)))))
 
+(defun my-repeat-current-line-with-indices ()
+  "Insert a set of generated numbers into a rectangle."
+  (interactive)
+  (let (
+        (n    (read-number "the indices should start at:" 0))
+        (max  (read-number "the indices should end at:" 3))
+        (step (read-number "the step betweeen indices:" 1))
+        (fmt  (read-string "format of indices:" "%0d"))
+        (col  (current-column))
+        (line (buffer-substring-no-properties (point-at-bol) (point-at-eol)))
+        )
+    (save-excursion
+      (while (<= n max)
+        (insert (format fmt n))
+        (goto-char (point-at-eol))
+        (and (< n max)
+             (insert (format "\n%s" line)))
+        (goto-char (point-at-bol))
+        (move-to-column col t)
+        (setq n (+ n 1))))))
+
 (defun qr-code-region (start end)
   "Show a QR code of the region.
 A simple way to transfer text to the phone...
