@@ -49,6 +49,7 @@
     ;; auto-complete-auctex
     plantuml-mode
     ;; a tool to generate relevatn Mindmap or structrue diagram from org/json/yaml
+    (my-plantuml :location local)
     (plantuml :location local)
     ;; tabbar
     ;; tabbar-ruler
@@ -303,120 +304,25 @@ Each entry is either:
       )
     :config
     (progn
-      (setq my-plantuml-indent-regexp-end (concat "^[ \t]*\\(?:@enduml"
-                                                  "\\|end\s+fork"
-                                                  "\\|fork\s+again"
-                                                  "\\|end\s+note"
-                                                  "\\|endif"
-                                                  "\\|end"
-                                                  "\\|elseif"
-                                                  "\\|else"
-                                                  "\\|endwhile"
-                                                  "\\|repeat\s+while"
-                                                  "\\|stop"
-                                                  "\\|}\\)"))
-      (setq my-plantuml-indent-regexp-start (concat "^[ \t]*\\(?:@startuml"
-                                                    "\\|fork\s+again"
-                                                    "\\|fork"
-                                                    "\\|start"
-                                                    "\\|if"
-                                                    "\\|elseif"
-                                                    "\\|else"
-                                                    "\\|while"
-                                                    "\\|loop"
-                                                    "\\|alt"
-                                                    "\\|repeat\s+:";; work with "repeat while *"
-                                                    "\\|\\(?:.*\\)?\s*\\(?:[<>.*a-z-|]+\\)?\s*\\(?:\\[[a-zA-Z]+\\]\\)?\s+if"
-                                                    "\\|note\s+over"
-                                                    "\\|note\s+\\(\\(?:\\(?:buttom"
-                                                    "\\|left"
-                                                    "\\|right"
-                                                    "\\|top\\)\\)\\)\\(?:\s+of\\)?"
-                                                    "\\|.*{\\)"))
-      (defvar my-plantul-indent-regexp-arrow (concat "^[ \t]*\\(?:\\(?:<"
-                                                     "\\|<|"
-                                                     "\\|o"
-                                                     "\\|\\*\\)\\(?:\\."
-                                                     "\\|-\\)\\(?:down"
-                                                     "\\|up"
-                                                     "\\|left"
-                                                     "\\|right\\)?\\(?:\\."
-                                                     "\\|-\\)"
-                                                     "\\|\\(?:-"
-                                                     "\\|\\.\\)\\(?:down"
-                                                     "\\|up"
-                                                     "\\|left"
-                                                     "\\|right\\)?\\(?:-"
-                                                     "\\|\\.\\)\\(?:>"
-                                                     "\\||>"
-                                                     "\\|\\*"
-                                                     "\\|o\\)\\)"))
-      (defvar my-plantul-indent-regexp-arrow-1 (concat "\\(?:\\(?:<"
-                                                       "\\|<|"
-                                                       "\\|o"
-                                                       "\\|\\*\\)\\(?:\\."
-                                                       "\\|-\\)\\(?:down"
-                                                       "\\|up"
-                                                       "\\|left"
-                                                       "\\|right\\)?\\(?:\\."
-                                                       "\\|-\\)"
-                                                       "\\|\\(?:-"
-                                                       "\\|\\.\\)\\(?:down"
-                                                       "\\|up"
-                                                       "\\|left"
-                                                       "\\|right\\)?\\(?:-"
-                                                       "\\|\\.\\)\\(?:>"
-                                                       "\\||>"
-                                                       "\\|\\*"
-                                                       "\\|o\\)\\)"))
-      (defvar my-plantul-indent-regexp-arrow-2 (concat "^\s*.+\s+\\(?:\\(?:<"
-                                                       "\\|<|"
-                                                       "\\|o"
-                                                       "\\|\\*\\)\\(?:\\."
-                                                       "\\|-\\)\\(?:down"
-                                                       "\\|up"
-                                                       "\\|left"
-                                                       "\\|right\\)?\\(?:\\."
-                                                       "\\|-\\)"
-                                                       "\\|\\(?:-"
-                                                       "\\|\\.\\)\\(?:down"
-                                                       "\\|up"
-                                                       "\\|left"
-                                                       "\\|right\\)?\\(?:-"
-                                                       "\\|\\.\\)\\(?:>"
-                                                       "\\||>"
-                                                       "\\|\\*"
-                                                       "\\|o\\)\\)"))
-
-      (defvar plantuml-indent-offset 3)
-
+      (setq plantuml-default-exec-mode 'jar)
       (add-hook 'plantuml-mode-hook (lambda ()
                                       (set (make-local-variable 'indent-line-function)
                                            #'plantuml-indent-line)))
       (add-hook 'plantuml-mode-hook 'company-mode)
       (add-hook 'plantuml-mode-hook 'electric-spacing-mode)
-      (add-hook 'plantuml-mode-hook (lambda ()
-                                      (set (make-local-variable 'pyim-english-input-switch-functions)
-                                           '(;;pyim-probe-dynamic-english
-                                             pyim-probe-isearch-mode
-                                             ;;pyim-probe-program-mode
-                                             pyim-probe-org-speed-commands
-                                             pyim-probe-org-structure-template))))
-      (make-local-variable 'company-backends)
-      (setq company-backends
-            '( company-files
-               (company-dabbrev-code company-gtags company-etags)
-               company-abbrev
-               ))
-      (make-local-variable 'company-dabbrev-code-ignore-case)
-      (setq company-dabbrev-code-ignore-case t)
-      (make-local-variable 'company-dabbrev-code-everywhere)
-      (setq company-dabbrev-code-everywhere t)
-
-      (setq plantuml-default-exec-mode 'jar)
-
+      (add-hook 'plantuml-mode-hook 'my-plantuml)
       )
     ))
+
+(defun my-config/init-my-plantuml ()
+  (use-package my-plantuml
+    :defer t
+    :init (progn
+           (autoload 'my-plantuml "my-plantuml" "my configuration of plantuml-mode " t)
+           )
+    :config
+    )
+  )
 
 (defun my-config/init-auctex()
   (use-package auctex
