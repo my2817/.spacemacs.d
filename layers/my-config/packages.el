@@ -43,6 +43,7 @@
     (tcl-dc-mode :location local)
     ;;htmlize
     electric-spacing
+    (my-electric-spacing :location local)
     ;; ctags
     ctags-update
     ;; auctex
@@ -282,6 +283,14 @@ Each entry is either:
     :config
     (setq electric-spacing-operators '(?= ?< ?> ?% ?+ ?- ?* ?/ ?& ?| ?: ?? ?, ?~ ?. ?\( ?^ ?\; ?! ?@))
     ))
+
+(defun my-config/init-my-electric-spacing()
+  (use-package my-electric-spacing
+    :defer t
+    :init
+    (autoload 'my-electric-spacing  "my-electric-spacing" "customize of electric-spacing" t)
+    (add-hook 'electric-spacing-mode-hook 'my-electric-spacing)))
+
 (defun my-config/init-ctags()
   (use-package ctags
     :defer t
