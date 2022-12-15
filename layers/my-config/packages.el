@@ -1159,6 +1159,10 @@ node install-eaf-win32.js
   )
 
 (defun my-config/init-psvn ()
+  ;; 如果需要保存密码：
+  ;; ~/.subversion/config: password-stores = gpg-agent,gnome-keyring,kwallet
+  ;; ~/.subversion/servers: store-passwords = yes
+  ;; gpg-agent --daemon
   (use-package psvn
     :defer t
     :init (require 'psvn))
