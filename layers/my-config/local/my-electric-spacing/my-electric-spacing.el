@@ -78,7 +78,7 @@
 
 (defun electric-spacing-plantuml-mode-* ()
   (delete-horizontal-space)
-  (electric-spacing-insert "@" 'middle)
+  (electric-spacing-insert "*" 'middle)
   )
 
 (defun electric-spacing-\( ()
