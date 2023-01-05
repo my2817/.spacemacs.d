@@ -76,6 +76,14 @@
   (electric-spacing-insert "@" 'middle)
   )
 
+(defun electric-spacing-verilog-mode-* ()
+  (delete-horizontal-space)
+  (electric-spacing-insert-1 "*" nil)
+  (and (< (point) (point-at-eol))
+       (looking-at-p ")")
+       (delete-horizontal-space))
+  )
+
 (defun electric-spacing-plantuml-mode-* ()
   (delete-horizontal-space)
   (electric-spacing-insert "*" 'middle)
