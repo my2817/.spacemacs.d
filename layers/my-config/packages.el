@@ -132,6 +132,7 @@
     json-mode
     yaml-mode
     ;; orderless
+    (vba-mode :location local)
     )
 
   "The list of Lisp packages required by the my-config layer.
@@ -1252,4 +1253,11 @@ If `c-indent-line-or-region' don't change position, execute `my-hideshowvis-frin
    :custom
    (completion-styles '(orderless basic))
    (completion-category-overrides '((file (styles basic partial-completion))))))
+
+(defun my-config/init-vba-mode ()
+  (use-package vba-mode
+    :defer t
+    :init (require 'vba-mode)
+    :config (setq vba-mode-indent 4)
+    ))
 ;;; packages.el ends here

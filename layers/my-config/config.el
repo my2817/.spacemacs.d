@@ -76,6 +76,7 @@
 (add-to-list 'auto-mode-alist '("\\.log\\'" . compilation-mode))
 (add-to-list 'auto-mode-alist '("\\.txt\\'" . text-mode))
 (add-to-list 'auto-mode-alist '("\\.list\\'" . text-mode))
+(add-to-list 'auto-mode-alist '("\\.vba\\'" . vba-mode))
 
 ;;;
 ;;; Hooks
