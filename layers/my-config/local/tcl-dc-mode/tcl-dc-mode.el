@@ -254,6 +254,9 @@ Key bindings:
   (set (make-local-variable 'hippie-expand-dabbrev-as-symbol) nil)
   (set-syntax-table tcl-dc-he-syntax-table)
   (when tcl-dc-mode
+    (local-unset-key "\t")
+    (set (make-local-variable 'indent-line-function)
+         #'tcl-dc-electric-tab)
     (message "Tcl DC Mode %s.  Type C-c C-h for documentation." tcl-dc-version)))
 
 
