@@ -1183,13 +1183,15 @@ node install-eaf-win32.js
     :defer t
     :init (require 'color-rg))
   )
-(defun my-config/post-init-evil ()
 
+(defun my-config/post-init-evil ()
   (with-eval-after-load 'evil
     (progn
       (define-key evil-normal-state-map [remap find-file-at-point] 'xah-open-file-at-cursor)
+      (evil-set-initial-state 'gitlab-mrs-mode 'normal)
+      (evil-set-initial-state 'gitlab-projects-mode 'normal)
+      (evil-set-initial-state 'gitlab-issues-mode 'normal)
       ))
-
   )
 
 (defun my-config/post-init-cc-mode ()
