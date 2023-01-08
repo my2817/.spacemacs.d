@@ -32,7 +32,8 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(perl5
+   '(autohotkey
+     perl5
      ;; helm
      graphviz
      ;; ----------------------------------------------------------------
@@ -63,7 +64,8 @@ This function should only modify configuration layer settings."
      ;;        shell-default-position 'bottom)
      ;; spell-checking
      syntax-checking
-     version-control
+     (version-control :variables version-control-diff-tool 'diff-hl
+                      version-control-diff-side 'left)
      ;themes-megapack
      my-config
      ;; games
@@ -764,6 +766,7 @@ Put your configuration code here, except for variables that  should be set befor
   (make-variable-buffer-local 'ediff-whitespace)
   (setq exwm-update-title-hook 'my-exwm-rename-buffer)
   (setq display-line-numbers 'visual)
+  (diff-hl-flydiff-mode)
 
 
 
