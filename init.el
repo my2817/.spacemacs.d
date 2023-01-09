@@ -57,7 +57,7 @@ This function should only modify configuration layer settings."
      markdown
      (org :variables org-projectile-file "TODOs.org"
           org-enable-appear-support t
-          org-enable-valign nil  )
+          org-enable-valign t  )
 
      ;; (shell :variables
      ;;        shell-default-height 30

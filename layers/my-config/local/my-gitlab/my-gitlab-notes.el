@@ -9,7 +9,7 @@
     ;; (define-key map (kbd "v") 'print-current-issue-id)
     ;; (define-key map (kbd "w") 'gitlab-goto-issue)
     (define-key map (kbd "RET") 'gitlab-new-note)
-    (define-key map (kbd "q") 'kill-buffer-and-window)
+    (define-key map (kbd "q") 'gitlab-kill-notes)
     (define-key map (kbd "R") 'gitlab-refresh-note)
     map)
   "Keymap for `gitlab-notes-mode' major mode.")
@@ -77,13 +77,16 @@ PARAMS: an alist for query parameters. Exple: '((state . \"opened\"))"
   "show notes of issue with a markdown buffer"
   (interactive)
   (let* ((notes (gitlab-list-notes project-id gitlab-note-to gitlab-note-to-iid 1 200))
-         (project-name (assoc-default 'name (gitlab-get-project project-id))))
+         (project-name (assoc-default 'name (gitlab-get-project project-id)))
+         ;; save window config, restore it by gitlab-kill-notes
+         (win (current-window-configuration)))
     (pop-to-buffer (format "*Gitlab Notes[%s/#%d]*" project-name gitlab-note-to-iid) nil)
     (gitlab-notes-mode)
     (page-break-lines-mode)
     (make-local-variable 'project-id)
     (make-local-variable 'gitlab-note-to)
     (make-local-variable 'gitlab-note-to-iid)
+    (make-local-variable 'win)
     (setq-local default-directory (projectile-project-root))
     (setq header-line-format
           (concat (propertize " " 'display '((space :align-to 0)))
@@ -100,6 +103,13 @@ PARAMS: an alist for query parameters. Exple: '((state . \"opened\"))"
               )
             notes)
     (read-only-mode 1)))
+
+(defun gitlab-kill-notes ()
+  (interactive)
+  (let (
+        (buf (current-buffer)))
+    (set-window-configuration win)
+    (kill-buffer buf)))
 
 (defun gitlab-refresh-note ()
   "Refresh note content"
