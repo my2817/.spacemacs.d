@@ -902,5 +902,8 @@ If `electric-verilog-tab' don't change position, execute `my-hideshowvis-fringe'
           )
       (my-hideshowvis-fringe)))
 
+(defadvice  persp-load-state-from-file (after my-persp-load-state-from-file)
+  (spacemacs/persp-perspectives))
+(ad-activate 'persp-load-state-from-file)
 
 (define-key global-map [remap indent-for-tab-command] 'my-indent/hs)
