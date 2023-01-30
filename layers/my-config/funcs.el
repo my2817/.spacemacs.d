@@ -907,3 +907,7 @@ If `electric-verilog-tab' don't change position, execute `my-hideshowvis-fringe'
 (ad-activate 'persp-load-state-from-file)
 
 (define-key global-map [remap indent-for-tab-command] 'my-indent/hs)
+
+(defadvice pop-tag-mark (after my-pop-tag-mark)
+  (recenter))
+(ad-activate 'pop-tag-mark)

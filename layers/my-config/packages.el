@@ -1105,21 +1105,23 @@ node install-eaf-win32.js
     ;;       citre-lang-verilog-plist)
 
 ;; TODO: when add a third directory, imenu error with submodule env
-;;     (setq citre-ctags-cmd-buf-default-cmd
-;;           "ctags
-;; -o
-;; %TAGSFILE%
-;; --languages=all
-;; --kinds-all=*
-;; --fields=*
-;; --extras=*
-;; --extras=-{qualified}
-;; -R
-;; ./
+    (setq citre-ctags-cmd-buf-default-cmd
+          (concat "ctags
+-o
+%TAGSFILE%
+--languages=all
+--kinds-all=*
+--fields=*
+--extras=*
+--extras=-{qualified}
+-R
+.
+"
 ;; ;; add dirs/files to scan here, one line per dir/file
 ;; ;; see \"citre-edit-cmd-buf-default-cmd\" to change the default value
-;; /md3200/tools/tools2/cadence2015/INCISIVE152/tools/methodology/UVM/CDNS-1.1d/sv/src
-;; " )
+"/md3200/tools/tools2/cadence2015/INCISIVE152/tools/methodology/UVM/CDNS-1.1d/sv/src"
+                  )
+ )
     (custom-set-variables '(citre-completion-backends '(tags global))
                           '(citre-find-definition-backends '(tags global))
                           '(citre-find-reference-backends '(tags global))
@@ -1210,13 +1212,6 @@ If `c-indent-line-or-region' don't change position, execute `my-hideshowvis-frin
                   (= old-position new-position))
                 )
             (my-hideshowvis-fringe)))
-      (define-key c++-mode-map [remap c-indent-line-or-region] 'my-c++-indent/hs)
-      ))
-  )
-
-(defun my-config/post-init-c-mode ()
-  (with-eval-after-load 'c-mode
-    (progn
       (defun my-c-indent/hs ()
         "work around `c-indent-line-or-region', indent or hide/show fring.
 If `buffer-read-only' is non-nil, execute `my-hideshowvis-fringe'.
@@ -1231,6 +1226,8 @@ If `c-indent-line-or-region' don't change position, execute `my-hideshowvis-frin
                 )
             (my-hideshowvis-fringe)))
       (define-key c-mode-map [remap c-indent-line-or-region] 'my-c-indent/hs)
+      (define-key c++-mode-map [remap c-indent-line-or-region] 'my-c++-indent/hs)
+
       ))
   )
 
