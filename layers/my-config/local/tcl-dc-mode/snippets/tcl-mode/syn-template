@@ -10,6 +10,6 @@ create_clock -period ${2:period} -name ${3:name} ${4:$3}
 set_input_delay 0 -clock $3 ${5:[all_inputs]}${6:[remove_from_collection [all_inputs] $4]}
 set_output_delay 0 -clock $3 [all_outputs]
 
-compile_ultra -no_autoungroup
+compile_ultra -no_autoungroup -gate_clock
 my_rpt_qor
 $0

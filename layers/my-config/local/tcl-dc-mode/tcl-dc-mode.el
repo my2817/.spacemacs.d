@@ -149,7 +149,23 @@ If nil, TAB always indents current line."
 ;(define-key tcl-dc-mode-map "\C-c\C-c" 'tcl-dc-comment-uncomment-region)
 (define-key tcl-dc-mode-map "\C-c\C-c" 'comment-dwim)
 ;; add electric key bindings
-(define-key tcl-dc-mode-map "\t" 'tcl-dc-electric-tab)
+(define-key tcl-dc-mode-map "\t" 'my-tcl-dc-indent/hs)
+
+(defun my-tcl-dc-indent/hs ()
+  "work around `indent-for-tab-command', indent or hide/show fring.
+If `buffer-read-only' is non-nil, execute `my-hideshowvis-fringe'.
+If `electric-verilog-tab' don't change position, execute `my-hideshowvis-fringe'.
+"
+  (interactive)
+  (if (or buffer-read-only
+          (let* ((old-position (point))
+                 (new-position (progn (tcl-dc-electric-tab)
+                                      (point))))
+            (= old-position new-position))
+          )
+      (my-hideshowvis-fringe)))
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Syntax table
@@ -254,9 +270,6 @@ Key bindings:
   (set (make-local-variable 'hippie-expand-dabbrev-as-symbol) nil)
   (set-syntax-table tcl-dc-he-syntax-table)
   (when tcl-dc-mode
-    (local-unset-key "\t")
-    (set (make-local-variable 'indent-line-function)
-         #'tcl-dc-electric-tab)
     (message "Tcl DC Mode %s.  Type C-c C-h for documentation." tcl-dc-version)))
 
 
