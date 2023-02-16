@@ -287,6 +287,34 @@ and return as PATH-to-FILE::Line-Number."
     (popup-tip (format "hex:%x"  (string-to-number  local-word 10)) :point (point) :nowait nil) )
   )
 
+(defun my-dec2bin(&optional arg)
+  "C-0 my-dec2hex to accepts user input"
+  (interactive "P")
+  (require 'popup)
+  (let* ((local-word (if arg
+                         (ivy-completing-read "input dec: " nil)
+                       (replace-regexp-in-string "^[0-9]?+'?[dD]" "" (thing-at-point 'word 'no-properties))))
+         (local-word (replace-regexp-in-string "_" "" local-word)))
+    (message (format "dex2bin : %s -> %s" (symbol-at-point) (my-numb2bin (string-to-number  local-word 10))))
+    (popup-tip (format "bin:%s"  (my-numb2bin (string-to-number  local-word 10))) :point (point) :nowait nil) )
+  )
+
+(defun my-numb2bin (n)
+  "Number to binnay string"
+  (interactive)
+  (let* ((i n)
+         (j 0)
+         (str nil))
+    (while (> i 0)
+      (if (and (= (% j 4) 0)
+               (not (= j 0)))
+          (setq str (concat "_" str)))
+      (setq str (concat (number-to-string (% i 2)) str))
+      (setq i (/ i 2))
+      (setq j (+ j 1))
+      )
+    str))
+
 (defun my-hex2dec(&optional arg)
   "C-0 my-hex2dec to accepts user input"
   (interactive "P")
@@ -295,8 +323,20 @@ and return as PATH-to-FILE::Line-Number."
                          (ivy-completing-read "input hex: " nil)
                        (replace-regexp-in-string "^[0-9]?+'?[xXhH]" "" (thing-at-point 'word 'no-properties))))
          (local-word (replace-regexp-in-string "_" "" local-word)))
-    (message (format "dex2hex : %s -> %d" (symbol-at-point) (string-to-number  local-word 16)))
+    (message (format "hex2dec : %s -> %d" (symbol-at-point) (string-to-number  local-word 16)))
     (popup-tip (format "dec:%d"  (string-to-number  local-word 16)) :point (point) :nowait nil) )
+  )
+
+(defun my-hex2bin(&optional arg)
+  "C-0 my-hex2dec to accepts user input"
+  (interactive "P")
+  (require 'popup)
+  (let* ((local-word (if arg
+                         (ivy-completing-read "input hex: " nil)
+                       (replace-regexp-in-string "^[0-9]?+'?[xXhH]" "" (thing-at-point 'word 'no-properties))))
+         (local-word (replace-regexp-in-string "_" "" local-word)))
+    (message (format "hex2bin : %s -> %s" (symbol-at-point) (my-numb2bin (string-to-number  local-word 16))))
+    (popup-tip (format "bin:%s"  (my-numb2bin (string-to-number  local-word 16))) :point (point) :nowait nil) )
   )
 
 (defun my-yank-image-from-win-clipboard-through-powershell()

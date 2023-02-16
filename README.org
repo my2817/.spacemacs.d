@@ -777,6 +777,19 @@
    https://github.com/universal-ctags/citre
    ctags required, jump to symbols' definition, include third part library
    在 [[file:layers/my-config/packages.el][package.el]] 中默认将 uvm 源代码添加到 ctags 的索引目录中，见 "citre-edit-cmd-buf-default-cmd", 请按需修改。以便提供 uvm 代码相关的补全及源代码查看跳转
+
+   在生成 imenu 时，如果 tags 文件过大（citre-tags-imenu-create-tags-file-threshold），其会在临时目录生成当前文件的临时 tags(/tmp/citre-imenu.tags) 文件， read tag 后不会删除该临时文件，其他用户对该文件没有写权限，从而导致其他用户不能更新 imenu( 得到错误的 imenu ), 通过以下修正，在临时文件名中加入登录用户名解决
+   #+begin_src lisp
+     (defun citre-tags--imenu-temp-tags-file-path ()
+       "Return the temporary tags file path for imenu.
+     This also works on a remote machine."
+       (if (file-remote-p default-directory)
+           (expand-file-name (concat (user-login-name) "_citre-imenu.tags")
+                             (tramp-get-remote-tmpdir
+                              (tramp-dissect-file-name default-directory)))
+           (expand-file-name (concat (user-login-name) "_citre-imenu.tags") temporary-file-directory)))
+
+   #+end_src
 * Awesome Tools
   本节集中罗列一下我平时用到的工具
 
