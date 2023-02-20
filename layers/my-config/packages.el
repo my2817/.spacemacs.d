@@ -52,6 +52,7 @@
     ;; a tool to generate relevatn Mindmap or structrue diagram from org/json/yaml
     (my-plantuml :location local)
     (plantuml :location local)
+    (ob-json :location local)
     ;; tabbar
     ;; tabbar-ruler
     (sos-mode :location local)
@@ -383,6 +384,8 @@ Each entry is either:
       ;; if emacs prompt that the launguages can't be evaluate and the setting of following is OK, please do spacemacs/recompile-elpa and try agin
       (setq org-plantuml-jar-path
             (expand-file-name "~/.spacemacs.d/plantuml.jar"))
+      (setq org-json-plantuml-jar-path
+            (expand-file-name "~/.spacemacs.d/plantuml.jar"))
       (setq org-ditaa-jar-path "~/.spacemacs.d/ditaa.jar")
 
       (org-babel-do-load-languages
@@ -399,6 +402,7 @@ Each entry is either:
          (C . t)
          (awk . t)
          (ditaa . t)
+         (json . t)
          ;; (mermaid . t)
          ))
 
@@ -1242,10 +1246,17 @@ If `c-indent-line-or-region' don't change position, execute `my-hideshowvis-frin
     :defer t
   ))
 
+(defun my-config/init-ob-json ()
+  (use-package ob-json
+    :init (require 'ob-json)
+    :defer t
+    ))
+
 (defun my-config/init-yaml-mode ()
   (use-package yaml-mode
     :defer t
     ))
+
 (defun my-config/init-orderless ()
  (use-package orderless
    :ensure t
