@@ -350,6 +350,22 @@ NAME: a string of project name"
 ;; (define-key gitlab-issues-mode-map (kbd "c") 'gitlab-close-issue)
 ;; (define-key gitlab-issues-mode-map (kbd "o") 'gitlab-open-issue)
 
+(define-key gitlab-mrs-mode-map (kbd "?") 'my-gitlab-mrs-menu/body)
+(defhydra my-gitlab-mrs-menu (:hint none)
+  "
+^Actions^
+^^^^^^^^----------------------------------------------------------
+_c_: close MR    _m_: Merge
+_n_: Create New  _R_: Refresh
+_o_: Reopen      _u_: Update
+"
+  ("c" gitlab-close-mr )
+  ("n" gitlab-create-mr )
+  ("o" gitlab-reopen-mr )
+  ("m" gitlab-merge-mr )
+  ("R" gitlab-refresh-mr-list )
+  ("u" gitlab-update-mr )
+  )
 
 
 (define-derived-mode gitlab-mrs-mode tabulated-list-mode "Gitlab MRs"

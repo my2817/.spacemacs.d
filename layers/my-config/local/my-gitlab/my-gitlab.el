@@ -26,4 +26,23 @@
              uri)))
   )
 
+(define-key gitlab-projects-mode-map (kbd "?") 'my-gitlab-projects-menu/body)
+
+(defhydra my-gitlab-projects-menu (:hint none)
+  "
+^Actions^
+^^^^^^^^----------------------------------------------------------
+_v_: project ID
+_w_: Open in web
+_d_: Description
+_m_: Mrs
+_i_: Issues
+"
+  ("v" print-current-project-id )
+  ("w" gitlab-goto-project )
+  ("d" gitlab-describe-project )
+  ("m" gitlab-mr-for-project)
+  ("i" gitlab-issues-for-project)
+  )
+
 (provide 'my-gitlab)

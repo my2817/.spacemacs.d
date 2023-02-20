@@ -3,6 +3,21 @@
 (define-key gitlab-issues-mode-map (kbd "R") 'gitlab-issues-refresh)
 (define-key gitlab-issues-mode-map (kbd "n") 'gitlab-issues-create)
 (define-key gitlab-issues-mode-map (kbd "u") 'gitlab-issues-modi)
+
+(define-key gitlab-issues-mode-map (kbd "?") 'my-gitlab-issues-menu/body)
+(defhydra my-gitlab-issues-menu (:hint none)
+  "
+^Actions^
+^^^^^^^^----------------------------------------------------------
+
+_n_: Create New  _R_: Refresh
+                 _u_: Update
+"
+  ("n" gitlab-issues-create )
+  ("R" gitlab-issues-refresh )
+  ("u" gitlab-issues-modi )
+  )
+
 ;; duplicate define funcs
 (define-derived-mode gitlab-issues-mode tabulated-list-mode "Gitlab issues"
   "Major mode for browsing Gitlab issues."

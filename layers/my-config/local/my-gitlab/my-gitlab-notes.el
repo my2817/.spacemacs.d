@@ -14,6 +14,19 @@
     map)
   "Keymap for `gitlab-notes-mode' major mode.")
 
+(define-key gitlab-notes-mode-map (kbd "?") 'my-gitlab-notes-menu/body)
+(defhydra my-gitlab-notes-menu (:hint none)
+  "
+^Actions^
+^^^^^^^^----------------------------------------------------------
+_RET_: Create New  _R_: Refresh
+                   _q_: kill
+"
+  ("RET" gitlab-new-note )
+  ("R" gitlab-refresh-note )
+  ("q" gitlab-kill-notes )
+  )
+
 (define-derived-mode gitlab-notes-mode markdown-mode "Gitlab Notes"
   "major mode for dispaly notes"
   :group 'gitlab
