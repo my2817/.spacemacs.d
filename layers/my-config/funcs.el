@@ -911,22 +911,14 @@ For those who are using Citre with other tools (imenu, grep...)"
 
 (defun my-hideshowvis-fringe ()
   (interactive )
-  ;; (end-of-line)
-  (if (save-excursion
-        ;; (end-of-line 1)
-        (or (hs-already-hidden-p)
-            (progn
-              ;; (forward-char 1)
-              (hs-already-hidden-p))))
-      (progn
-        (hs-show-block)
-        ;; (backward-char)
-        )
-
-    (hs-hide-block)
-    ;; (backward-char)
-    ;; (beginning-of-line)
-    ))
+  (and (string= (string (char-syntax (char-before)))
+                "w")
+       (string= (string (char-syntax (char-after)))
+                "w")
+       (forward-word))
+  (if (hs-already-hidden-p)
+      (hs-show-block)
+    (hs-hide-block)))
 
 (defun my-indent/hs ()
   "work around `indent-for-tab-command', indent or hide/show fring.

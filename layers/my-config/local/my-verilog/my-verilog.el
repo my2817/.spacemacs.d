@@ -1367,7 +1367,10 @@ If `electric-verilog-tab' don't change position, execute `my-hideshowvis-fringe'
                                       (point))))
             (= old-position new-position))
           )
-      (my-hideshowvis-fringe)))
+      (let* (tmp hs-c-start-regexp)
+        (setq hs-c-start-regexp "")
+        (my-hideshowvis-fringe)
+        (setq hs-c-start-regexp tmp))))
 
 (defun my-verilog-forward-close-endif ()
   "Find the close endif that match the current point.
