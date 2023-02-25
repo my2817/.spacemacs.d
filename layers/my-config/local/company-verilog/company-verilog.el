@@ -76,9 +76,9 @@
   "$timescale" "$timeskew" "$typename" "$typeof" "$ungetc" "$unit"
   "$unpacked_dimensions" "$unsigned" "$upscope" "$urandom" "$urandom_range"
   "$value$plusargs" "$var" "$vcdclose" "$version" "$warning" "$width" "$write"
-  "$writeb" "$writeh" "$writememb" "$writememh" "$writeo" "$fsdbAutoSwitchDumpfile" 
+  "$writeb" "$writeh" "$writememb" "$writememh" "$writeo" "$fsdbAutoSwitchDumpfile"
   ;; verdi3, FSDB Dumping Commands Used with Verilog
-  "$fsdbDumpfile" "$fsdbDumpflush" "$fsdbDumpon", "$fsdbDumpoff" "$fsdbDumpvars" 
+  "$fsdbDumpfile" "$fsdbDumpflush" "$fsdbDumpon", "$fsdbDumpoff" "$fsdbDumpvars"
   "$fsdbDumpvarsByFile" "$fsdbDumpFinish" "$fsdbDumpMDA" "$fsdbDumpSVA" "$fsdbLog"
   "$fsdbLog" "$fsdbReplay" "$fsdbSuppress" "$fsdbSwitchDumpfile"  )
 "Buildin task list of verilog-mode "
@@ -169,15 +169,22 @@ skip whitespace if there is, the whitespace maybe insert by `electric-spacing' a
   (if company-verilog
       (progn
         (make-local-variable 'company-backends)
+        ;; (setq company-backends
+        ;;       '(
+        ;;         company-files
+        ;;         company-verilog-buildin-task-backend
+        ;;         (company-yasnippet company-keywords company-capf company-dabbrev-code :separate)
+        ;;         ))
+        ;; TODO: these backends work OK, but company-dabbrev-code have higher priority than cmpany-capf is better
         (setq company-backends
-              '( 
+              '(
                 company-files
                 company-verilog-buildin-task-backend
-                ;; (company-verilog-backend company-dabbrev-code company-gtags company-etags)
-                (company-yasnippet company-keywords company-capf company-dabbrev-code :separate)
-                ;; (company-capf company-yasnippet company-dabbrev-code)
-                ;; company-abbrev
-                ))
+                (company-capf
+                 company-yasnippet
+                 company-dabbrev-code
+                 company-keywords
+                 )))
          (make-local-variable 'company-dabbrev-code-ignore-case)
          (setq company-dabbrev-code-ignore-case t)
          (make-local-variable 'company-dabbrev-code-everywhere)
