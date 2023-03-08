@@ -180,11 +180,12 @@ skip whitespace if there is, the whitespace maybe insert by `electric-spacing' a
               '(
                 company-files
                 company-verilog-buildin-task-backend
-                (company-capf
+                (
                  company-yasnippet
                  company-dabbrev-code
+                 company-capf
                  company-keywords
-                 )))
+                 :separate)))
          (make-local-variable 'company-dabbrev-code-ignore-case)
          (setq company-dabbrev-code-ignore-case t)
          (make-local-variable 'company-dabbrev-code-everywhere)
