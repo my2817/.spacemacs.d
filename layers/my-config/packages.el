@@ -87,6 +87,9 @@
     (color-rg :location (recipe
                          :fetcher github
                          :repo manateelazycat/color-rg))
+    (auto-save :location (recipe
+                          :fetcher github
+                          :repo manateelazycat/auto-save))
     ;; (eaf :location local)
     ;; magit-todos
     ;; (magit-gerrit :location (recipe
@@ -1190,6 +1193,23 @@ node install-eaf-win32.js
   (use-package color-rg
     :defer t
     :init (require 'color-rg))
+  )
+
+(defun my-config/init-auto-save ()
+  (use-package auto-save
+    :defer t
+    :init (require 'auto-save)
+    :config
+    (auto-save-enable)
+    (setq auto-save-silent t)   ; quietly save
+    ;; (setq auto-save-delete-trailing-whitespace t)  ; automatically delete spaces at the end of the line when saving
+    ;;; custom predicates if you don't want auto save.
+    ;;; disable auto save mode when current filetype is an gpg file.
+    (setq auto-save-disable-predicates
+          '((lambda ()
+              (string-suffix-p
+               "gpg"
+               (file-name-extension (buffer-name)) t)))) )
   )
 
 (defun my-config/post-init-evil ()
