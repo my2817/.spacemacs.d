@@ -8,6 +8,6 @@ initial begin: init_blk
 <"config_file">?, <"log_file">?, <"mtm_spec">?,
 <"scale_factors">?, <"scale_type">? );*/
 //$shm_open("wave");
-//$shm_probe(test_top_tb,"ASC");$0
+//$shm_probe(`(file-name-base (buffer-name))`,"ASC");$0
 
-end: init_blk
+end // init_blk
