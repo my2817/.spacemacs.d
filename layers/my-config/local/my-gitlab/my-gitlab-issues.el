@@ -1,5 +1,24 @@
 (require 'gitlab)
 
+;; fix 'id --> iid
+(defun gitlab-close-issue ()
+  "Close issue at point."
+  (interactive)
+  (let ((issue (tabulated-list-get-id)))
+    (gitlab-edit-issue (assoc-default 'project_id issue) (assoc-default 'iid issue)
+                       nil nil nil nil nil "close")
+    (gitlab-issues-for-project (assoc-default 'project_id issue))))
+
+;; fix 'id --> iid
+(defun gitlab-open-issue ()
+  "Reopen issue at point."
+  (interactive)
+  (let ((issue (tabulated-list-get-id)))
+    (gitlab-edit-issue (assoc-default 'project_id issue) (assoc-default 'iid issue)
+                       nil nil nil nil nil "reopen")
+    (gitlab-issues-for-project (assoc-default 'project_id issue))))
+
+
 (define-key gitlab-issues-mode-map (kbd "R") 'gitlab-issues-refresh)
 (define-key gitlab-issues-mode-map (kbd "n") 'gitlab-issues-create)
 (define-key gitlab-issues-mode-map (kbd "u") 'gitlab-issues-modi)
@@ -10,13 +29,20 @@
 ^Actions^
 ^^^^^^^^----------------------------------------------------------
 
-_n_: Create New  _R_: Refresh
-                 _u_: Update
+_n_: Create New  _R_: Refresh _v_: issue id
+_c_: Close       _u_: Update  _w_: goto web
+_o_: Re-open     _RET_: comment
 "
   ("n" gitlab-issues-create )
   ("R" gitlab-issues-refresh )
+  ("v" print-current-issue-id )
+  ("c" gitlab-close-issue )
   ("u" gitlab-issues-modi )
+  ("w" gitlab-goto-issue )
+  ("o" gitlab-open-issue )
+  ("RET" gitlab-show-issue-notes-current)
   )
+
 
 ;; duplicate define funcs
 (define-derived-mode gitlab-issues-mode tabulated-list-mode "Gitlab issues"
@@ -64,8 +90,8 @@ _n_: Create New  _R_: Refresh
     (if project
 	(progn
 	  (pop-to-buffer "*Gitlab issues*" nil)
-          (make-local-variable 'gitlab-project)
 	  (gitlab-issues-mode)
+          (make-local-variable 'gitlab-project)
           (setq-local gitlab-project project)
 	  (setq tabulated-list-entries
 		(create-issues-entries (gitlab-list-project-issues (assoc-default 'id project))))
