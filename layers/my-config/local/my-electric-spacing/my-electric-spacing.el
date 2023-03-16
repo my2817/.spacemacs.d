@@ -63,8 +63,13 @@
 
 (defun electric-spacing-verilog-mode-: ()
   (delete-horizontal-space)
-  (electric-spacing-insert ":")
-  )
+  (if (string= (char-to-string (char-before)) ":")
+      (progn
+        (backward-char)
+        (delete-horizontal-space)
+        (forward-char)
+        (electric-spacing-insert ":" 'middle))
+    (electric-spacing-insert ":")))
 
 (defun electric-spacing-verilog-mode-@ ()
   (delete-horizontal-space)
