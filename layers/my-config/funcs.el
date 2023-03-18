@@ -436,7 +436,7 @@ Version 2020-10-17"
               (buffer-substring-no-properties (region-beginning) (region-end))
             (let ($p0 $p1 $p2
                       ;; chars that are likely to be delimiters of file path or url, e.g. whitespace, comma. The colon is a problem. cuz it's in url, but not in file name. Don't want to use just space as delimiter because path or url are often in brackets or quotes as in markdown or html
-                      ($pathStops "^  \t\n\"`'‘’“”|[]{}「」<>〔〕〈〉《》【】〖〗«»❮❯❬❭〘〙·。()\\"))
+                      ($pathStops "^  \t\n\"`'‘’“”|[]{}「」<>〔〕〈〉《》【】〖〗«»❮❯❬❭〘〙·。()+\\"))
               (setq $p0 (point))
               (skip-chars-backward $pathStops)
               (setq $p1 (point))
