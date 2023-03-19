@@ -1,0 +1,28 @@
+* flow of update tagsfile
+#+begin_src plantuml :file flow_update_tagsfile.png
+  @startuml
+     : save file hook;
+     if ( a tmp file? ) then (yes)
+        : a process running,  kill it;
+        : query sub_process object from a global table with key_project;
+        : stop-process or signal-process;
+     else (no)
+
+     endif
+     : generate tagsfile with tmp file name;
+     partition gentmp {
+        : get cmd;
+        : get cwd;
+        : copy origin tagsfile to tmp tagsfile;
+        : make sub-process;
+     }
+     : recorde sub_process object; save into a global tale;
+     : replace tagsfile by tme;
+     : citre-clear-tags-file-cache;
+     : remove sub_process object from global table;
+  @enduml
+
+#+end_src
+
+#+RESULTS:
+[[file:flow_update_tagsfile.png]]

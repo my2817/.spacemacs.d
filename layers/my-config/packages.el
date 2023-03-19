@@ -124,6 +124,7 @@
     atomic-chrome
     (liberty-mode :location local)
     citre
+    (citre-auto-update :location local)
     (all-the-icons :location (recipe
                               :fetcher github
                               :repoe domtronn/all-the-icons.el.git))
@@ -1141,6 +1142,13 @@ node install-eaf-win32.js
       (condition-case _
           (citre-jump)
         (error (call-interactively #'xref-find-definitions))))
+    ))
+
+(defun my-config/init-citre-auto-update()
+  (use-package citre-auto-update
+    :defer t
+    :init (require 'citre-auto-update)
+    :config
     ))
 
 (defun my-config/init-all-the-icons()
