@@ -124,13 +124,14 @@ synchronously).  Otherwise return nil."
                                            citre-auto-update-after-process-table)
                                   (make-process
                                    :name (concat tagsfile ".after-proc")
-                                   :buffer (get-buffer-create "**citre-ctags*")
+                                   :buffer (get-buffer-create "*citre-ctags*")
                                    :command (list "sh" (concat citre-auto-update--root "citre-auto-update-after-process.sh")
                                                   tagsfile)
                                    :connection-type 'pipe
                                    :stderr nil
                                    :sentinel (lambda (proc _msg)
                                                (remhash (funcall citre-project-root-function) citre-auto-update-after-process-table)
+                                               ;; (message "Finished auto-updating %s" tagsfile)
                                                (citre-clear-tags-file-cache)))))))
     ;; Workaround: If we put this let into the above `if-let*' spec, even
     ;; if it stops before let-binding `default-directory', later there'll
@@ -153,14 +154,15 @@ synchronously).  Otherwise return nil."
              ('exit
               (pcase (process-exit-status proc)
                 (0 (funcall after-process)
-                   (message "Finished auto-updating %s" tagsfile)
+                   ;; (message "Finished auto-updating %s" tagsfile)
                    )
                 (s (user-error "Ctags exits %s.  See *citre-ctags* buffer"
                                s))))
              (s (user-error "Abnormal status of ctags: %s.  \
 See *citre-ctags* buffer" s))))
          :file-handler t)
-        (message "Auto-updating %s..." tagsfile))
+        ;; (message "Auto-updating %s..." tagsfile)
+        )
       t)))
 
 (defun citre-auto-update-get-ptag-from-cache (ptag)
