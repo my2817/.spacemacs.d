@@ -120,17 +120,18 @@ synchronously).  Otherwise return nil."
                                   (puthash (funcall citre-project-root-function)
                                            (concat tagsfile ".after-proc")
                                            citre-auto-update-after-process-table)
-                                  (make-process
-                                   :name (concat tagsfile ".after-proc")
-                                   :buffer (get-buffer-create "*citre-ctags*")
-                                   :command (list "sh" (concat citre-auto-update--root "citre-auto-update-after-process.sh")
-                                                  tagsfile)
-                                   :connection-type 'pipe
-                                   :stderr nil
-                                   :sentinel (lambda (proc _msg)
-                                               (remhash (funcall citre-project-root-function) citre-auto-update-after-process-table)
-                                               ;; (message "Finished auto-updating %s" tagsfile)
-                                               (citre-clear-tags-file-cache)))))))
+                                  (let ((default-directory cwd))
+                                    (make-process
+                                     :name (concat tagsfile ".after-proc")
+                                     :buffer (get-buffer-create "*citre-ctags*")
+                                     :command (list "sh" (concat citre-auto-update--root "citre-auto-update-after-process.sh")
+                                                    tagsfile)
+                                     :connection-type 'pipe
+                                     :stderr nil
+                                     :sentinel (lambda (proc _msg)
+                                                 (remhash (funcall citre-project-root-function) citre-auto-update-after-process-table)
+                                                 ;; (message "Finished auto-updating %s" tagsfile)
+                                                 (citre-clear-tags-file-cache))))))))
     ;; Workaround: If we put this let into the above `if-let*' spec, even
     ;; if it stops before let-binding `default-directory', later there'll
     ;; be some timer errors.
