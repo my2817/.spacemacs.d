@@ -52,7 +52,6 @@ so that don't block emacs.
   "add `citre-auto-update' to `after-save-hook'"
   (interactive)
   (add-hook 'after-save-hook 'citre-auto-update-run-timer)
-  (advice-add 'citre-update-this-tags-file :after #'citre-auto-update-set-ptag-to-cache)
   (clrhash citre-auto-update-ptag-cache)
   )
 
@@ -60,7 +59,6 @@ so that don't block emacs.
   "remove `citre-auto-update' to `after-save-hook'"
   (interactive)
   (remove-hook 'after-save-hook 'citre-auto-update-run-timer)
-  (advice-remove 'citre-update-this-tags-file #'citre-auto-update-set-ptag-to-cache)
   (clrhash citre-auto-update-ptag-cache)
   )
 
@@ -170,15 +168,18 @@ See *citre-ctags* buffer" s))))
 or update cache if value is nil"
   (let* ((project-root (funcall citre-project-root-function))
          (pvalue  (assoc-default ptag (gethash project-root citre-auto-update-ptag-cache))))
-    (or pvalue (message "run `citre-auto-update-set-ptag-to-cache' to update ptag-cache"))
+    (unless pvalue
+     (message "Please run `citre-auto-update-set-ptag-to-cache', and will update tagsfile next time.")
+     ;; (citre-auto-update-set-ptag-to-cache) ;; if automatic do this, eamcs been blocked, UNKNOWN CASE
+     )
     pvalue))
 
 (defun citre-auto-update-set-ptag-to-cache ()
-  "read CITRE_CMD and TAG_PROC_CWD from tagsfile, set to `citre-auto-update-ptag-cache'.
-run after `citre-update-this-tags-file'
+  "read CITRE_CMD and TAG_PROC_CWD from tagsfile, write to `citre-auto-update-ptag-cache'.
+Because of ctags runing on a async sub-process in `citre-update-this-tags-file', so can't
+run this function immediately.
 "
   (interactive)
-  (sit-for 0.001)
   (let* ((tagsfile (citre-tags-file-path))
          (cmd-ptag (citre--get-pseudo-tag-value "CITRE_CMD" tagsfile))
          (cwd-ptag (citre--get-pseudo-tag-value "TAG_PROC_CWD" tagsfile))
