@@ -1149,6 +1149,7 @@ node install-eaf-win32.js
     :defer t
     :init (require 'citre-auto-update)
     :config
+    (citre-auto-update-enable)
     ))
 
 (defun my-config/init-all-the-icons()

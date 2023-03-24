@@ -943,3 +943,35 @@ If `electric-verilog-tab' don't change position, execute `my-hideshowvis-fringe'
 (defadvice pop-tag-mark (after my-pop-tag-mark)
   (recenter))
 (ad-activate 'pop-tag-mark)
+
+(defun my-update-last-update-stamp ()
+  "update \"Last Update:\""
+  (when (and (string= major-mode "verilog-mode")
+             my-verilog-update-header-before-save
+             )
+    (save-excursion
+      (goto-line 1)
+      (if (buffer-modified-p)
+          (progn
+            (if (search-forward "Last Update : " nil t)
+                (progn
+                  (delete-region (point) (point-at-eol))
+                  (verilog-insert-time))
+              (message "Can't find the position to update \"Last Updated timing\""))
+            (if (search-forward "Module Name : " nil t)
+                (progn
+                  (delete-region (point) (point-at-eol))
+                  (insert (file-name-base (or (buffer-file-name) (buffer-name)))))
+              (message "Can't find the position to update \"Module Name\""))
+            (if (search-forward "Project Name: " nil t)
+                (progn
+                  (delete-region (point) (point-at-eol))
+                  (insert  (projectile-project-name)))
+              (message "Can't find the position to update \"Project Name\""))
+            (if (search-forward "Engineer    : " nil t)
+                (progn
+                  (delete-region (point) (point-at-eol))
+                  (insert (user-full-name))
+                  (insert "<" (user-login-name) "@" (system-name) ">"))
+              (message "Can't find the position to update \"Engineer\""))
+            )))))
