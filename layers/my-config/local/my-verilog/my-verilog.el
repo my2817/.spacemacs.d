@@ -1294,7 +1294,8 @@ rease to 2, \")\": depth decrease to 1
 
 (defun my-update-last-update-stamp ()
   "update \"Last Update:\""
-  (when my-verilog-update-header-before-save
+  (when (and my-verilog-update-header-before-save
+             (string= major-mode "verilog-mode"))
     (save-excursion
       (goto-line 1)
       (if (buffer-modified-p)

@@ -1,0 +1,7 @@
+# name: constraint of random
+# key: constraint
+# group: verilog
+# --
+constraint ${1:Name} {
+$0
+}

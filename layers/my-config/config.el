@@ -89,8 +89,9 @@
 (add-hook 'c++-mode-hook 'electric-spacing-mode)
 (add-hook 'perl-mode-hook 'electric-spacing-mode)
 (add-hook 'c-mode-hook 'electric-spacing-mode)
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-;; (setq indent-tabs-mode nil)
+;; (add-hook 'before-save-hook 'delete-trailing-whitespace) ;; we have auto-save-mode
+(setq indent-tabs-mode nil)
+(add-hook 'before-save-hook 'my-update-last-update-stamp)
 ;; (add-hook 'before-save-hook (lambda ()
 ;;                               (interactive)
 ;;                               (if (string= (substring-no-properties major-mode) "verilog-mode")
