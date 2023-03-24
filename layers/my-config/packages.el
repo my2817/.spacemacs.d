@@ -1218,8 +1218,8 @@ node install-eaf-win32.js
               (string-suffix-p
                "gpg"
                (file-name-extension (buffer-name)) t))
-            (lambda ()
-              (string= major-mode "snippet-mode"))))
+            (lambda () (string= major-mode "snippet-mode"))
+            (lambda () (buffer-live-p (get-buffer " *undo-tree*")))))
     )
   )
 
