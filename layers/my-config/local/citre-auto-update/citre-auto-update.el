@@ -32,7 +32,7 @@ vlaue: '((CITRE_CMD code) (TAG_PROC_CWD value))
   ;; if a after-process is running, don't interrupt it.
   (or (gethash (funcall citre-project-root-function) citre-auto-update-after-process-table)
       (setq citre-auto-update-timer
-            (run-with-idle-timer 6 nil
+            (run-with-idle-timer 1 nil
                                  'citre-auto-update))))
 
 
@@ -220,4 +220,19 @@ run this function immediately.
 ;;            citre-auto-update-process-table)
 ;;   )
 
+(defun citre-jump-input ()
+  "Like `citre-jump', but get symbol from user input
+`while-no-input', get input symbol
+"
+  (interactive)
+  (let* ((symol (make-symbol (read-string "symbol: ")))
+         (tagsfile (citre-tags-file-path))
+         (defs (citre-tags-get-definitions symol tagsfile))
+         (result (cdr defs)))
+    (if (null result)
+        (user-error "Can't find definition: %s" symbol))
+    (citre-jump-show result)
+    (citre-after-jump-action)
+    )
+  )
 (provide 'citre-auto-update)
