@@ -225,13 +225,22 @@ run this function immediately.
 `while-no-input', get input symbol
 "
   (interactive)
-  (let* ((symol (make-symbol (read-string "symbol: ")))
+  (let* ((symbol  (read-string "symbol: "))
          (tagsfile (citre-tags-file-path))
-         (defs (citre-tags-get-definitions symol tagsfile))
+         (defs (citre-tags-get-tags
+                tagsfile symbol 'exact
+                :filter (or (citre-tags--get-value-in-language-alist
+                             :definition-filter symbol)
+                            (citre-tags-definition-default-filter symbol))
+                :sorter (or (citre-tags--get-value-in-language-alist
+                             :definition-sorter symbol)
+                            citre-tags-definition-default-sorter)
+                :require '(name ext-abspath pattern)
+                :optional '(ext-kind-full line typeref scope extras)))
          (result (cdr defs)))
-    (if (null result)
-        (user-error "Can't find definition: %s" symbol))
-    (citre-jump-show result)
+    ;; (if (null result)
+    ;;     (user-error "Can't find definition: %s" symbol))
+    (citre-jump-show defs)
     (citre-after-jump-action)
     )
   )

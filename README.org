@@ -38,6 +38,8 @@
     -  [[#code-sample][Code sample]]
   - [[#awesome-pair][awesome-pair]]
   - [[#citre][citre]]
+    - [[#使用流程][使用流程]]
+    - [[#bug][Bug]]
 - [[#awesome-tools][Awesome Tools]]
   - [[#fzf][fzf]]
   - [[#ripegrep][ripegrep]]
@@ -775,9 +777,27 @@
   #+end_example
 ** citre
    https://github.com/universal-ctags/citre
+
    ctags required, jump to symbols' definition, include third part library
+
    在 [[file:layers/my-config/packages.el][package.el]] 中默认将 uvm 源代码添加到 ctags 的索引目录中，见 "citre-edit-cmd-buf-default-cmd", 请按需修改。以便提供 uvm 代码相关的补全及源代码查看跳转
 
+*** 使用流程
+- spc p G : 生成、更新项目中所有代码的tags 文件
+
+  - 如果是第一次生成项目的 tags 文件。会有几个问题需要回答：
+    - tag 文件保存在何处？没特殊讲究，就选 2 global
+
+    - 后面两个问题默认指向项目的根目录，直接回车就好
+
+    - 最后，如果不需要对项目外的文件生成 tag, 按 buffer 提示，按 C-c C-c 结束；如果需要加入其他路径，在 buffer 最后按需添加文件路径即可，且必须保留一个路径 \".\", 表示当前项目的根目录
+
+
+- C-]: 查找光标所在的 symbol, 如果只有一个则直接跳转到其定义处
+
+- C-O: 反向跳转
+
+*** Bug
    在生成 imenu 时，如果 tags 文件过大（citre-tags-imenu-create-tags-file-threshold），其会在临时目录生成当前文件的临时 tags(/tmp/citre-imenu.tags) 文件， read tag 后不会删除该临时文件，其他用户对该文件没有写权限，从而导致其他用户不能更新 imenu( 得到错误的 imenu ), 通过以下修正，在临时文件名中加入登录用户名解决
    #+begin_src lisp
      (defun citre-tags--imenu-temp-tags-file-path ()

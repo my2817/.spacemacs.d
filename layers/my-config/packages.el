@@ -74,9 +74,9 @@
     pyim
     posframe
     company-posframe
-    cnfonts
+    ;; cnfonts
     beacon
-    company-tabnine
+    ;; company-tabnine
     (thing-edit :location (recipe
                            :fetcher github
                            :repo manateelazycat/thing-edit))
@@ -123,7 +123,9 @@
     ;; (hideshowvis :location local)
     atomic-chrome
     (liberty-mode :location local)
-    citre
+    (citre :location (recipe
+                      :fetcher github
+                      :repoe my2817/citre.git) )
     (citre-auto-update :location local)
     (all-the-icons :location (recipe
                               :fetcher github
