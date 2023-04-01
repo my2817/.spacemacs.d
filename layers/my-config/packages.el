@@ -1132,6 +1132,7 @@ node install-eaf-win32.js
                   "/md3200/tools/tools2/cadence2015/INCISIVE152/tools/methodology/UVM/CDNS-1.1d/sv/src"
                   )
           )
+    (setq citre-completion-case-sensitive nil)
     (custom-set-variables '(citre-completion-backends '(tags global))
                           '(citre-find-definition-backends '(tags global))
                           '(citre-find-reference-backends '(tags global))
