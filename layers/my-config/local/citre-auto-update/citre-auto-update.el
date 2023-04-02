@@ -38,7 +38,7 @@ vlaue: timer object
   ;; TODO: if the timer is very long to decrease the run frequence of ctags,
   ;; maybe we can switch to other project, we need give every project a uniquified timer
   ;; record cwd and tagsfile, so that the timer can be a long time, and we can switch to other project
-  (let* ((cwd (funcall citre-project-root-function))
+  (let* ((cwd (expand-file-name (funcall citre-project-root-function)))
          (tagsfile (citre-tags-file-path))
          (timer (gethash cwd citre-auto-update-timer-cache)))
     (when timer
@@ -46,7 +46,7 @@ vlaue: timer object
     ;; if a after-process is running, don't interrupt it.
     (or (gethash cwd citre-auto-update-after-process-table)
        (setq timer
-             (run-with-idle-timer 1 nil
+             (run-with-idle-timer 20 nil
                                   'citre-auto-update cwd tagsfile)))
     (puthash cwd timer citre-auto-update-timer-cache)))
 
@@ -82,10 +82,10 @@ so that don't block emacs.
   "auto update citre tagsfile of current project if `citre-mode' is non-nil
 "
   (when citre-mode
-    (let* ((default-directory cwd)
+    (let* (;;(default-directory cwd)
            (tagsfile (or tagsfile (citre-tags-file-path)))
            (tagsfile-tmp (concat tagsfile ".auto-update"))
-           (project-root (or cwd (funcall citre-project-root-function)))
+           (project-root (or cwd (expand-file-name (funcall citre-project-root-function))))
            (runing-proc (gethash project-root citre-auto-update-process-table))
            (runing-after-proc (gethash project-root citre-auto-update-after-process-table)) )
       ;; kill runing process
@@ -140,9 +140,9 @@ synchronously).  Otherwise return nil."
                                   ;;this shell scripte getCITRE_CMD and TAG_PROC_CWD from old tagsfile
                                   ;; (start-process (concat tagsfile ".after-proc") "*citre-ctags*"
                                   ;;                "sh" (concat citre-auto-update--root "citre-auto-update-after-process.sh") tagsfile)
-                                  (remhash (or cwd (funcall citre-project-root-function)) citre-auto-update-process-table)
+                                  (remhash (or cwd (expand-file-name (funcall citre-project-root-function))) citre-auto-update-process-table)
 
-                                  (puthash (or cwd (funcall citre-project-root-function))
+                                  (puthash (or cwd (expand-file-name (funcall citre-project-root-function)))
                                            (concat tagsfile ".after-proc")
                                            citre-auto-update-after-process-table)
                                   (let ((default-directory cwd))
@@ -155,13 +155,13 @@ synchronously).  Otherwise return nil."
                                      :connection-type 'pipe
                                      :stderr nil
                                      :sentinel (lambda (proc _msg)
-                                                 (remhash (or cwd (funcall citre-project-root-function)) citre-auto-update-after-process-table)
+                                                 (remhash (or cwd (expand-file-name (funcall citre-project-root-function))) citre-auto-update-after-process-table)
                                                  ;; (message "Finished auto-updating %s" tagsfile)
                                                  (citre-clear-tags-file-cache))))))))
     ;; Workaround: If we put this let into the above `if-let*' spec, even
     ;; if it stops before let-binding `default-directory', later there'll
     ;; be some timer errors.
-    (puthash (or cwd (funcall citre-project-root-function)) proc-name citre-auto-update-process-table)
+    (puthash (or cwd (expand-file-name (funcall citre-project-root-function))) proc-name citre-auto-update-process-table)
     (let ((default-directory cwd))
       (if sync
           (progn (apply #'process-file (car cmd) nil
@@ -193,7 +193,7 @@ See *citre-ctags* buffer" s))))
 (defun citre-auto-update-get-ptag-from-cache (cwd ptag)
   "return ptag's value from `citre-auto-update-ptag-cache';
 or update cache if value is nil"
-  (let* ((project-root (or cwd (funcall citre-project-root-function)))
+  (let* ((project-root (or cwd (expand-file-name (funcall citre-project-root-function))))
          (pvalue  (assoc-default ptag (gethash project-root citre-auto-update-ptag-cache))))
     (or pvalue (message "run `citre-auto-update-set-ptag-to-cache' to update ptag-cache"))
     pvalue))
@@ -207,7 +207,7 @@ run after `citre-update-this-tags-file'
   (let* ((tagsfile (citre-tags-file-path))
          (cmd-ptag (citre--get-pseudo-tag-value "CITRE_CMD" tagsfile))
          (cwd-ptag (citre--get-pseudo-tag-value "TAG_PROC_CWD" tagsfile))
-         (project-root (funcall citre-project-root-function)))
+         (project-root (expand-file-name (funcall citre-project-root-function))))
     (puthash project-root
              (list (cons "CITRE_CMD" cmd-ptag) (cons "TAG_PROC_CWD" cwd-ptag))
              citre-auto-update-ptag-cache)))
